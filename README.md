@@ -1,2 +1,2 @@
 # Prompt-Guide
-GPT, Claude, Gemini, Perplexity and more..
+https://img.shields.io/badge/Made%20for-VSCode-1f425f.svg
