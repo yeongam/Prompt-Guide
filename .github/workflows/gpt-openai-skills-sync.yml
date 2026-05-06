@@ -1,4 +1,4 @@
-name: GPT OpenAI Skills Sync
+name: GPT OpenAI Skills and Hooks Sync
 
 on:
   schedule:
@@ -29,7 +29,7 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Sync GPT skills from official OpenAI repositories
+      - name: Sync GPT skills and hooks from official OpenAI repositories
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python GPT/scripts/sync_openai_skills.py
@@ -53,14 +53,14 @@ jobs:
           git add GPT
 
           if git diff --cached --quiet; then
-            echo "No GPT skill changes."
+            echo "No GPT skill or hook changes."
             exit 0
           fi
 
           git checkout -B automation/gpt-openai-skills-sync
           git fetch origin automation/gpt-openai-skills-sync:refs/remotes/origin/automation/gpt-openai-skills-sync || true
           DATE="$(TZ=Asia/Seoul date +%Y-%m-%d)"
-          git commit -m "chore: sync GPT OpenAI skills ${DATE}"
+          git commit -m "chore: sync GPT OpenAI skills and hooks ${DATE}"
           git push --force-with-lease origin HEAD:automation/gpt-openai-skills-sync
 
           PR_NUMBER="$(gh pr list \
@@ -70,24 +70,25 @@ jobs:
             --json number \
             --jq '.[0].number // empty')"
 
-          PR_BODY="Automated GPT skill sync.
+          PR_BODY="Automated GPT skill and hook sync.
 
           - Runs daily at 00:00 KST.
           - Uses official OpenAI GitHub repositories as source material.
           - Writes skills under \`GPT/skills/YYYY-MM-DD/skills/\`.
+          - Writes hooks under \`GPT/hooks/YYYY-MM-DD/hooks/\`.
           - Writes changelogs under \`GPT/Changelogs/\`.
           - Blocks changes outside \`GPT/\` during routine execution.
           - Opens or updates this PR instead of pushing directly to \`main\`."
 
           if [ -n "$PR_NUMBER" ]; then
             gh pr edit "$PR_NUMBER" \
-              --title "chore: sync GPT OpenAI skills" \
+              --title "chore: sync GPT OpenAI skills and hooks" \
               --body "$PR_BODY"
             echo "Updated PR #$PR_NUMBER"
           else
             gh pr create \
               --base main \
               --head automation/gpt-openai-skills-sync \
-              --title "chore: sync GPT OpenAI skills" \
+              --title "chore: sync GPT OpenAI skills and hooks" \
               --body "$PR_BODY"
           fi
