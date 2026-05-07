@@ -17,6 +17,7 @@ CATALOG_FILE = SKILLS_BASE_DIR / "SKILLS_CATALOG.yaml"
 VERSION_FILE = SKILLS_BASE_DIR / ".version"
 CHANGELOGS_DIR = REPO_ROOT / "Claude" / "Changelogs"
 CLAUDE_MD = REPO_ROOT / "CLAUDE.md"
+GLOBAL_CLAUDE_MD = Path.home() / ".claude" / "CLAUDE.md"
 COMMANDS_DIR = REPO_ROOT / ".claude" / "commands"
 SETTINGS_FILE = REPO_ROOT / ".claude" / "settings.json"
 CHANGELOG_SRC = "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md"
@@ -126,6 +127,13 @@ def write_claude_md(ver: str, date_dir: str) -> None:
     content = generate_claude_md(ver, date_dir)
     CLAUDE_MD.write_text(content, encoding="utf-8")
     print(f"CLAUDE.md updated (v{ver})")
+    # Global: ~/.claude/CLAUDE.md — applies to all sessions on this machine
+    try:
+        GLOBAL_CLAUDE_MD.parent.mkdir(parents=True, exist_ok=True)
+        GLOBAL_CLAUDE_MD.write_text(content, encoding="utf-8")
+        print(f"~/.claude/CLAUDE.md updated (v{ver})")
+    except OSError as e:
+        print(f"Warning: could not write ~/.claude/CLAUDE.md: {e}", file=sys.stderr)
 
 
 # ── .claude/commands/ ────────────────────────────────────────────────────────
