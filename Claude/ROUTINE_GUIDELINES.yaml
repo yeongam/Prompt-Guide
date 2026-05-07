@@ -51,6 +51,13 @@ snapshots:
     - .version
   on_version_change_only: true  # Create snapshot only when upstream version changes
 
+# ─── RESPONSE RULES ──────────────────────────────────────────────────────────
+response:
+  code_first: true               # 코드 작업 시 결과물 먼저, 설명은 필요 시에만
+  skip_preamble: true            # 인사말·마무리·"알겠습니다" 류 생략
+  skip_explanation: true         # 코드 변경 시 변경 이유 설명 생략 (요청 시 제공)
+  concise_updates: true          # 진행 상황은 한 줄 요약만
+
 # ─── COMMANDS RULES ──────────────────────────────────────────────────────────
 commands:
   path: .claude/commands/

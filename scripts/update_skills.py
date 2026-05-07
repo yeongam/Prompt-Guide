@@ -214,6 +214,7 @@ def generate_guidelines_block() -> str:
         "snapshots : 경로=Claude/skills/{YYYY-MM-DD}/ | 버전변경시에만생성",
         "commands  : 매실행갱신 | 필수=skill-status,skill-log,skill-diff,skill-inject",
         "token     : 토큰최소화우선 | 불필요설명제거 | 단일소스원칙",
+        "response  : 코드작업시결과물우선 | 인사말/마무리생략 | 설명은요청시에만 | 진행상황한줄요약",
     ]
     return "\n".join(lines) + "\n"
 
