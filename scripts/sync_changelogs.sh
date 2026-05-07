@@ -4,9 +4,18 @@
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-DESKTOP_DIR="${DESKTOP_LOG_PATH:-/root/바탕화면/Claude-Text/Claude_skills}"
+DESKTOP_DIR="${DESKTOP_LOG_PATH:-$HOME/바탕화면/Claude-Text/Claude_skills}"
 BRANCH="claude/zealous-sagan-FdaL5"
 CHANGELOGS_SRC="$REPO_DIR/Claude/Changelogs"
+
+# cron 환경에서 python3 경로 탐색
+PYTHON3=$(command -v python3 2>/dev/null \
+    || ls /usr/local/bin/python3 /opt/homebrew/bin/python3 /usr/bin/python3 2>/dev/null | head -1 \
+    || echo "")
+if [ -z "$PYTHON3" ]; then
+    echo "ERROR: python3를 찾을 수 없습니다." >&2
+    exit 1
+fi
 
 echo "[$(date -u '+%Y-%m-%d %H:%M UTC')] Starting sync..."
 
@@ -15,8 +24,7 @@ git -C "$REPO_DIR" fetch origin "$BRANCH" --quiet
 git -C "$REPO_DIR" pull origin "$BRANCH" --quiet
 
 # 2. Run update_skills.py — handles ~/.claude/CLAUDE.md (guidelines 1순위 + skills 2순위)
-#    and refreshes .claude/commands/
-python3 "$REPO_DIR/scripts/update_skills.py"
+"$PYTHON3" "$REPO_DIR/scripts/update_skills.py"
 
 # 3. Copy changelogs to desktop
 mkdir -p "$DESKTOP_DIR"
