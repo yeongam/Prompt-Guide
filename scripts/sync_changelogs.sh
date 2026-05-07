@@ -27,10 +27,14 @@ git -C "$REPO_DIR" reset --hard "origin/$BRANCH" --quiet
 # 2. Run update_skills.py — handles ~/.claude/CLAUDE.md (guidelines 1순위 + skills 2순위)
 "$PYTHON3" "$REPO_DIR/scripts/update_skills.py"
 
-# 3. Copy changelogs to desktop
+# 3. Copy changelogs to desktop (rsync: cross-platform, skips unchanged files)
 mkdir -p "$DESKTOP_DIR"
 if ls "$CHANGELOGS_SRC/"*.txt 1>/dev/null 2>&1; then
-    cp -u "$CHANGELOGS_SRC/"*.txt "$DESKTOP_DIR/"
+    if command -v rsync &>/dev/null; then
+        rsync -u "$CHANGELOGS_SRC/"*.txt "$DESKTOP_DIR/"
+    else
+        cp "$CHANGELOGS_SRC/"*.txt "$DESKTOP_DIR/"
+    fi
     echo "Changelogs synced: $(ls "$CHANGELOGS_SRC/"*.txt | wc -l) file(s) → $DESKTOP_DIR"
 else
     echo "No changelogs in Claude/Changelogs/ yet."
