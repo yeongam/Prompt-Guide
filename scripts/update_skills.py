@@ -69,6 +69,14 @@ def current_version() -> str:
     return VERSION_FILE.read_text().strip() if VERSION_FILE.exists() else ""
 
 
+def catalog_version() -> str:
+    """Read version field from SKILLS_CATALOG.yaml (our canonical version)."""
+    if not CATALOG_FILE.exists():
+        return ""
+    m = re.search(r"^version:\s*(.+)$", CATALOG_FILE.read_text(), re.MULTILINE)
+    return m.group(1).strip() if m else ""
+
+
 def parse_catalog_skills() -> list[dict]:
     """Parse SKILLS_CATALOG.yaml skills section into list of dicts."""
     if not CATALOG_FILE.exists():
@@ -92,6 +100,21 @@ def parse_catalog_skills() -> list[dict]:
     if current:
         entries.append(current)
     return entries
+
+
+def get_catalog_commands() -> set[str]:
+    """Return the set of base command names currently in SKILLS_CATALOG.yaml."""
+    skills = parse_catalog_skills()
+    result = set()
+    for s in skills:
+        cmd = s.get("cmd", f"/{s['name']}")
+        result.add(cmd.split()[0])  # strip optional args like [interval]
+    return result
+
+
+def detect_upstream_new(changes: dict, catalog_cmds: set[str]) -> list[str]:
+    """Return skills mentioned in upstream changelog that are NOT in catalog."""
+    return [s for s in changes["skills_added"] if s.split()[0] not in catalog_cmds]
 
 
 def extract_changes(section: str) -> dict:
@@ -286,11 +309,24 @@ def write_commands() -> None:
 
 # ── Changelog entry ──────────────────────────────────────────────────────────
 
-def build_changelog_entry(ver: str, prev: str, section: str, changes: dict, date_dir: str) -> str:
+def build_changelog_entry(ver: str, prev: str, section: str, changes: dict,
+                          date_dir: str, upstream_new: list[str]) -> str:
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
     def block(title: str, items: list, prefix: str = "  ") -> list[str]:
         return [title] + ([f"{prefix}{i}" for i in items] if items else [f"{prefix}(없음)"]) + [""]
+
+    new_section: list[str]
+    if upstream_new:
+        new_section = block(
+            f"[ ★ 신규 감지 스킬 ({len(upstream_new)}개) — 카탈로그 미등록 / Upstream New (Not Applied) ]",
+            [f"? {s}  ← 수동 추가 필요" for s in upstream_new],
+        )
+    else:
+        new_section = block(
+            "[ ★ 신규 감지 스킬 / Upstream New (Not Applied) ]",
+            ["(없음 — 카탈로그에 모두 등록됨)"],
+        )
 
     lines = [
         "=" * 60,
@@ -301,7 +337,7 @@ def build_changelog_entry(ver: str, prev: str, section: str, changes: dict, date
         f"Snapshot: Claude/skills/{date_dir}/",
         "=" * 60,
         "",
-        *block("[ 추가된 스킬 / Added Skills ]", [f"+ {s}" for s in changes["skills_added"]]),
+        *new_section,
         *block("[ 수정된 스킬 / Modified Skills ]", [f"~ {s}" for s in changes["skills_modified"]]),
         *block("[ 삭제된 스킬 / Removed Skills ]", [f"- {s}" for s in changes["skills_removed"]]),
         *block("[ 최적화된 구조 / Structure ]", [
@@ -380,22 +416,34 @@ def main() -> int:
     date_str = now_utc.strftime("%Y%m%d")
     date_dir = now_utc.strftime("%Y-%m-%d")
 
+    changes = extract_changes(section)
+    catalog_cmds = get_catalog_commands()
+    upstream_new = detect_upstream_new(changes, catalog_cmds)
+
+    if upstream_new:
+        print(f"[!] 신규 감지 스킬 ({len(upstream_new)}개) — 카탈로그 미등록:")
+        for s in upstream_new:
+            print(f"    {s}  ← 수동 추가 필요")
+    else:
+        print("[OK] upstream 신규 스킬 없음 (카탈로그 최신 상태)")
+
+    # Always use catalog version for CLAUDE.md header (may include community additions)
+    cat_ver = catalog_version() or ver
+
     if ver == prev:
         print("Version unchanged — refreshing CLAUDE.md and commands only.")
-        write_claude_md(ver, date_dir)
+        write_claude_md(cat_ver, date_dir)
         write_commands()
         return 0
 
-    changes = extract_changes(section)
-
-    write_changelog(build_changelog_entry(ver, prev, section, changes, date_dir), date_str)
+    write_changelog(build_changelog_entry(ver, prev, section, changes, date_dir, upstream_new), date_str)
     VERSION_FILE.write_text(ver)
     update_catalog_version(ver)
-    create_dated_snapshot(ver, date_dir)
-    write_claude_md(ver, date_dir)
+    create_dated_snapshot(cat_ver, date_dir)
+    write_claude_md(cat_ver, date_dir)
     write_commands()
 
-    print(f"Updated: {prev or 'none'} → {ver}")
+    print(f"Updated: {prev or 'none'} → {ver}  (catalog: {cat_ver})")
     return 0
 
 
