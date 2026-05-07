@@ -22,6 +22,12 @@
 `/usage` | user asks about token or cost statistics → Show token usage and cost stats
 `/theme [name]` | user wants to change or create visual theme → Create or switch custom color themes
 `/color` | user wants a session color → Set random session color
+`/login` | user needs to authenticate or switch Anthropic account → Authenticate Claude Code with Anthropic account credentials
+`/status` | user wants to check Claude Code connection or account status → Show current account, model, and connection status
+`/upgrade` | user wants to update Claude Code to the latest version → Upgrade Claude Code CLI to the latest release
+`/mcp` | user wants to list, add, or inspect MCP servers → Manage MCP server connections: list, add, remove, inspect
+`/terminal-setup` | user wants to configure terminal for optimal Claude Code experience → Configure terminal settings, shell integration, and display options
+`/extra-usage` | user wants detailed token or cost breakdown beyond /usage → Show extended token usage stats with per-model and per-session breakdown
 `/commit` | user asks to generate or improve a commit message → Auto-generate conventional commit message from staged diff
 `/debug` | user asks to debug error, test failure, or unexpected behavior → Systematic debug loop: reproduce → trace → fix → verify
 `/batch` | user wants to apply the same operation across multiple files → Batch edit or search across files matching a pattern or glob

@@ -112,6 +112,36 @@ skills:
     desc: Set random session color
 
   # ── Official (new additions) ──────────────────────────────────────────────
+  login:
+    cmd: /login
+    trigger: user needs to authenticate or switch Anthropic account
+    desc: Authenticate Claude Code with Anthropic account credentials
+
+  status:
+    cmd: /status
+    trigger: user wants to check Claude Code connection or account status
+    desc: Show current account, model, and connection status
+
+  upgrade:
+    cmd: /upgrade
+    trigger: user wants to update Claude Code to the latest version
+    desc: Upgrade Claude Code CLI to the latest release
+
+  mcp:
+    cmd: /mcp
+    trigger: user wants to list, add, or inspect MCP servers
+    desc: Manage MCP server connections: list, add, remove, inspect
+
+  terminal-setup:
+    cmd: /terminal-setup
+    trigger: user wants to configure terminal for optimal Claude Code experience
+    desc: Configure terminal settings, shell integration, and display options
+
+  extra-usage:
+    cmd: /extra-usage
+    trigger: user wants detailed token or cost breakdown beyond /usage
+    desc: Show extended token usage stats with per-model and per-session breakdown
+
   commit:
     cmd: /commit
     trigger: user asks to generate or improve a commit message
