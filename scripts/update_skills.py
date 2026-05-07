@@ -101,15 +101,17 @@ def extract_changes(section: str) -> dict:
 
 # ── CLAUDE.md ────────────────────────────────────────────────────────────────
 
-def generate_claude_md(ver: str, date_dir: str) -> str:
+MARKER_START = "<!-- SKILLS-SYNC:START -->"
+MARKER_END   = "<!-- SKILLS-SYNC:END -->"
+
+
+def generate_skills_block(ver: str, date_dir: str) -> str:
     skills = parse_catalog_skills()
-    # Compact inline format: one line per skill to minimize context tokens
     skill_lines = []
     for s in skills:
-        cmd = s.get("cmd", f"/{s['name']}")
-        desc = s.get("desc", "")
+        cmd     = s.get("cmd", f"/{s['name']}")
+        desc    = s.get("desc", "")
         trigger = s.get("trigger", "")
-        # Format: `cmd` | trigger → desc
         skill_lines.append(f"`{cmd}` | {trigger} → {desc}")
 
     lines = [
@@ -118,20 +120,50 @@ def generate_claude_md(ver: str, date_dir: str) -> str:
         "",
         *skill_lines,
         "",
-        f"catalog: Claude/skills/SKILLS_CATALOG.yaml | commands: .claude/commands/",
+        "catalog: Claude/skills/SKILLS_CATALOG.yaml | commands: .claude/commands/",
     ]
     return "\n".join(lines) + "\n"
 
 
+def inject_skills_section(target: Path, skills_block: str) -> str:
+    """Inject or replace the SKILLS-SYNC section in an existing CLAUDE.md.
+
+    - If markers exist: replaces only the section between them.
+    - If no markers: appends the section at the end.
+    Returns 'injected' | 'appended' | 'created'.
+    """
+    wrapped = f"{MARKER_START}\n{skills_block}{MARKER_END}"
+    if not target.exists():
+        target.write_text(wrapped + "\n", encoding="utf-8")
+        return "created"
+    content = target.read_text(encoding="utf-8")
+    if MARKER_START in content and MARKER_END in content:
+        content = re.sub(
+            re.escape(MARKER_START) + ".*?" + re.escape(MARKER_END),
+            wrapped,
+            content,
+            flags=re.DOTALL,
+        )
+        target.write_text(content, encoding="utf-8")
+        return "injected"
+    target.write_text(content.rstrip() + f"\n\n{wrapped}\n", encoding="utf-8")
+    return "appended"
+
+
+def generate_claude_md(ver: str, date_dir: str) -> str:
+    return generate_skills_block(ver, date_dir)
+
+
 def write_claude_md(ver: str, date_dir: str) -> None:
-    content = generate_claude_md(ver, date_dir)
-    CLAUDE_MD.write_text(content, encoding="utf-8")
+    block = generate_skills_block(ver, date_dir)
+    # Repo CLAUDE.md: standalone skills file (no pre-existing project content)
+    CLAUDE_MD.write_text(block, encoding="utf-8")
     print(f"CLAUDE.md updated (v{ver})")
-    # Global: ~/.claude/CLAUDE.md — applies to all sessions on this machine
+    # Global ~/.claude/CLAUDE.md: inject into existing content if any
     try:
         GLOBAL_CLAUDE_MD.parent.mkdir(parents=True, exist_ok=True)
-        GLOBAL_CLAUDE_MD.write_text(content, encoding="utf-8")
-        print(f"~/.claude/CLAUDE.md updated (v{ver})")
+        action = inject_skills_section(GLOBAL_CLAUDE_MD, block)
+        print(f"~/.claude/CLAUDE.md {action} (v{ver})")
     except OSError as e:
         print(f"Warning: could not write ~/.claude/CLAUDE.md: {e}", file=sys.stderr)
 
@@ -158,6 +190,21 @@ Compare the two most recent dated snapshots under `Claude/skills/`.
 List directories sorted by name (date), take the two newest, diff their
 `SKILLS_CATALOG.yaml` files, and summarize: added skills, removed skills,
 version change.
+""",
+    "skill-inject.md": """\
+Inject or update the skills sync section in the current project's CLAUDE.md.
+
+Steps:
+1. Read the latest skills block from `~/.claude/CLAUDE.md` between
+   `<!-- SKILLS-SYNC:START -->` and `<!-- SKILLS-SYNC:END -->` markers.
+   If those markers are absent, read the entire `~/.claude/CLAUDE.md`.
+2. Check if `CLAUDE.md` exists in the current working directory.
+   - If YES and markers present: replace only the section between the markers.
+   - If YES and no markers: append the block (wrapped in markers) at the end.
+   - If NO: create `CLAUDE.md` containing only the skills block.
+3. Report what was done: created / appended / injected, and the version applied.
+
+Never overwrite content outside the marker boundaries.
 """,
 }
 
