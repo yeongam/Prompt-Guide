@@ -1,10 +1,11 @@
 # Claude Code Skills Catalog
-# Source: anthropics/claude-code | auto-updated daily 00:00 UTC
-version: 2.1.132
+# Source: anthropics/claude-code + community (everything-claude-code) | auto-updated daily 00:00 UTC
+version: 2.1.133
 updated: 2026-05-07
 
 # ─── SKILLS ──────────────────────────────────────────────────────────────────
 skills:
+  # ── Official (anthropics/claude-code) ────────────────────────────────────
   init:
     cmd: /init
     trigger: user asks to initialize or document codebase
@@ -109,6 +110,246 @@ skills:
     cmd: /color
     trigger: user wants a session color
     desc: Set random session color
+
+  # ── Official (new additions) ──────────────────────────────────────────────
+  commit:
+    cmd: /commit
+    trigger: user asks to generate or improve a commit message
+    desc: Auto-generate conventional commit message from staged diff
+
+  debug:
+    cmd: /debug
+    trigger: user asks to debug error, test failure, or unexpected behavior
+    desc: Systematic debug loop: reproduce → trace → fix → verify
+
+  batch:
+    cmd: /batch
+    trigger: user wants to apply the same operation across multiple files
+    desc: Batch edit or search across files matching a pattern or glob
+
+  model:
+    cmd: /model
+    trigger: user wants to view or switch the active Claude model
+    desc: Display or change the active model for this session
+
+  skills:
+    cmd: /skills
+    trigger: user wants to list available skills or commands
+    desc: List all available skills, their triggers, and current version
+
+  plugin:
+    cmd: /plugin
+    trigger: user wants to install, list, or remove a Claude Code plugin
+    desc: Manage Claude Code plugins: install, list, remove
+
+  bug:
+    cmd: /bug
+    trigger: user wants to file a bug or investigate unexpected behavior
+    desc: Structured bug report with steps to reproduce, expected vs actual, environment
+
+  # ── Community — Architecture & Infrastructure ─────────────────────────────
+  api-design:
+    cmd: /api-design
+    trigger: user asks to design or review API endpoints
+    desc: Generate REST/GraphQL spec with validation, auth, consistent error responses
+
+  db-migrations:
+    cmd: /db-migrations
+    trigger: user needs a database migration script
+    desc: Write safe reversible migration with rollback and data integrity checks
+
+  docker-patterns:
+    cmd: /docker-patterns
+    trigger: user needs Dockerfile or container configuration
+    desc: Multi-stage Dockerfile with security hardening and compose setup
+
+  deploy-patterns:
+    cmd: /deploy-patterns
+    trigger: user asks about deployment or CI/CD pipeline setup
+    desc: Scaffold CI/CD with rollback, health checks, blue-green or canary strategy
+
+  postgres-patterns:
+    cmd: /postgres-patterns
+    trigger: user asks about PostgreSQL schema, query, or index design
+    desc: Idiomatic Postgres: CTEs, proper indexing, constraints, explain plans
+
+  # ── Community — Language Reviews ──────────────────────────────────────────
+  ts-review:
+    cmd: /ts-review
+    trigger: user asks to review TypeScript code
+    desc: Type-safety review: strict nulls, generics, narrowing, interface design
+
+  py-review:
+    cmd: /py-review
+    trigger: user asks to review Python code
+    desc: Pythonic review: type hints, dataclasses, comprehensions, idiomatic error handling
+
+  go-patterns:
+    cmd: /go-patterns
+    trigger: user needs Go code or idiomatic patterns
+    desc: Idiomatic Go: error wrapping, goroutines, interfaces, zero-value design
+
+  # ── Community — Search & Efficiency ──────────────────────────────────────
+  search-first:
+    cmd: /search-first
+    trigger: user wants to find existing code before writing new code
+    desc: Search codebase for existing patterns before creating; prevents duplication
+
+  iterative-search:
+    cmd: /iterative-search
+    trigger: user needs to locate something specific through progressive narrowing
+    desc: Multi-pass search with narrowing queries until target is found
+
+  cost-aware:
+    cmd: /cost-aware
+    trigger: user wants token- or cost-efficient operation
+    desc: Choose minimal-token paths: targeted reads, diff views, concise outputs
+
+  # ── Community — Automation ────────────────────────────────────────────────
+  auto-loops:
+    cmd: /auto-loops
+    trigger: user wants to automate a repetitive multi-step coding task
+    desc: Structured task loop: plan → execute → validate → repeat until complete
+
+  mcp-patterns:
+    cmd: /mcp-patterns
+    trigger: user wants to build or configure an MCP server
+    desc: Scaffold MCP server with tools, resources, prompts, proper error handling
+
+  # ── Kotlin ────────────────────────────────────────────────────────────────
+  kotlin-patterns:
+    cmd: /kotlin-patterns
+    trigger: user needs Kotlin code or architecture patterns
+    desc: Idiomatic Kotlin: data classes, coroutines, extension functions, DSL patterns
+
+  kotlin-testing:
+    cmd: /kotlin-testing
+    trigger: user needs to write Kotlin tests
+    desc: Kotlin test suite with MockK, Kotest, coroutine test utilities
+
+  kotlin-coroutines-flows:
+    cmd: /kotlin-coroutines-flows
+    trigger: user asks about Kotlin coroutines or Flows
+    desc: Coroutines + Flow patterns: structured concurrency, operators, cancellation
+
+  kotlin-exposed-patterns:
+    cmd: /kotlin-exposed-patterns
+    trigger: user needs Kotlin Exposed ORM code
+    desc: Exposed DSL/DAO patterns with transactions and query optimization
+
+  kotlin-ktor-patterns:
+    cmd: /kotlin-ktor-patterns
+    trigger: user needs Ktor server or client code
+    desc: Ktor routing, plugins, serialization, authentication patterns
+
+  # ── Rust ──────────────────────────────────────────────────────────────────
+  rust-patterns:
+    cmd: /rust-patterns
+    trigger: user needs Rust code or architecture patterns
+    desc: Idiomatic Rust: ownership, lifetimes, traits, error handling with Result
+
+  rust-testing:
+    cmd: /rust-testing
+    trigger: user needs to write Rust tests
+    desc: Rust test suite: unit, integration, mocking, property-based tests
+
+  # ── C# / .NET ─────────────────────────────────────────────────────────────
+  csharp-testing:
+    cmd: /csharp-testing
+    trigger: user needs to write C# tests
+    desc: C# test suite with xUnit/NUnit, Moq, FluentAssertions
+
+  dotnet-patterns:
+    cmd: /dotnet-patterns
+    trigger: user needs .NET architecture or patterns
+    desc: .NET idiomatic patterns: DI, async/await, LINQ, minimal API
+
+  # ── Java / JVM ────────────────────────────────────────────────────────────
+  jpa-patterns:
+    cmd: /jpa-patterns
+    trigger: user needs JPA or Hibernate ORM patterns
+    desc: JPA entities, relationships, queries, N+1 prevention, transaction scope
+
+  # ── Swift / Apple ─────────────────────────────────────────────────────────
+  swift-actor-persistence:
+    cmd: /swift-actor-persistence
+    trigger: user needs Swift actor model with data persistence
+    desc: Swift actors with CoreData/SwiftData; concurrency-safe persistence layer
+
+  swift-protocol-di-testing:
+    cmd: /swift-protocol-di-testing
+    trigger: user needs Swift protocol-based DI or testing patterns
+    desc: Protocol-oriented DI for testability; injectable mocks in Swift
+
+  swift-concurrency-6-2:
+    cmd: /swift-concurrency-6-2
+    trigger: user needs Swift structured concurrency patterns
+    desc: Swift 6.2 concurrency: actors, async/await, task groups, Sendable
+
+  swiftui-patterns:
+    cmd: /swiftui-patterns
+    trigger: user needs SwiftUI views or state management
+    desc: SwiftUI patterns: ObservableObject, @State, MVVM, previews
+
+  # ── ML / AI ───────────────────────────────────────────────────────────────
+  pytorch-patterns:
+    cmd: /pytorch-patterns
+    trigger: user needs PyTorch model code or training loop
+    desc: PyTorch patterns: modules, dataloaders, training loop, device handling
+
+  foundation-models-on-device:
+    cmd: /foundation-models-on-device
+    trigger: user needs on-device ML inference on Apple silicon
+    desc: Foundation Models API for local LLM inference; Apple silicon patterns
+
+  # ── Flutter / Dart ────────────────────────────────────────────────────────
+  dart-flutter-patterns:
+    cmd: /dart-flutter-patterns
+    trigger: user needs Dart or Flutter code
+    desc: Flutter/Dart patterns: widgets, state management, BLoC, Navigator 2.0
+
+  flutter-dart-code-review:
+    cmd: /flutter-dart-code-review
+    trigger: user asks to review Flutter or Dart code
+    desc: Flutter review: widget rebuilds, state isolation, platform channels, performance
+
+  # ── Android ───────────────────────────────────────────────────────────────
+  android-clean-architecture:
+    cmd: /android-clean-architecture
+    trigger: user needs Android architecture patterns
+    desc: Android clean arch: MVVM, Hilt DI, Coroutines+Flow, Repository pattern
+
+  compose-multiplatform-patterns:
+    cmd: /compose-multiplatform-patterns
+    trigger: user needs Compose Multiplatform shared UI code
+    desc: Compose Multiplatform: expect/actual, KMP setup, shared UI, platform APIs
+
+  # ── Web Frameworks ────────────────────────────────────────────────────────
+  nextjs-turbopack:
+    cmd: /nextjs-turbopack
+    trigger: user needs Next.js App Router or Turbopack configuration
+    desc: Next.js 15 App Router: RSC, server actions, Turbopack config, caching
+
+  nuxt4-patterns:
+    cmd: /nuxt4-patterns
+    trigger: user needs Nuxt 4 code or configuration
+    desc: Nuxt 4 patterns: auto-imports, composables, server routes, Nitro config
+
+  nestjs-patterns:
+    cmd: /nestjs-patterns
+    trigger: user needs NestJS backend code or architecture
+    desc: NestJS patterns: modules, providers, interceptors, guards, TypeORM/Prisma
+
+  laravel-plugin-discovery:
+    cmd: /laravel-plugin-discovery
+    trigger: user needs Laravel package or plugin code
+    desc: Laravel package discovery, service providers, facades, Artisan commands
+
+  # ── Data / DB ─────────────────────────────────────────────────────────────
+  clickhouse-io:
+    cmd: /clickhouse-io
+    trigger: user needs ClickHouse schema or query optimization
+    desc: ClickHouse MergeTree design, materialized views, query optimization
 
 # ─── HOOKS ───────────────────────────────────────────────────────────────────
 # Block: exit 2 | {decision:"block",reason:"..."} | Retry: {retry:true} (PermissionDenied only)
