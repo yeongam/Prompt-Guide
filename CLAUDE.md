@@ -11,16 +11,16 @@
 `/fewer-permission-prompts` | user wants fewer permission dialogs → Scan transcripts → add bash/MCP allowlist to .claude/settings.json
 `/loop [interval] [/command]` | user wants recurring task (e.g. "check every 5m", "keep running X") → Run prompt or slash command on recurring interval (default 10m)
 `/claude-api` | code imports anthropic SDK; user asks about Claude API features → Build/debug Claude API apps; prompt caching, tool use, model migration
-`/ultrareview [PR#]` | user says "ultrareview" or wants multi-agent review → Parallel multi-agent cloud code review; no-arg=local branch, arg=GitHub PR
+`/ultrareview [PR#]` | user says "ultrareview" or wants multi-agent review → Parallel multi-agent cloud code review; billed; no-arg=local, arg=GitHub PR
 `/ultraplan` | user wants cloud environment for complex planning → Auto-create cloud worktrees/environments for multi-agent planning tasks
 `/team-onboarding` | user wants teammate ramp-up guide → Generate onboarding guide from local Claude Code usage history/data
-`/effort` | user wants to adjust effort/quality level → Interactive slider for session effort level (also: CLAUDE_EFFORT env var)
+`/effort` | user wants to adjust effort/quality level → Interactive slider for session effort level
 `/powerup` | user wants feature demos or to learn Claude Code features → Interactive animated feature demos with lessons
-`/tui` | rendering looks flickery or user wants full-screen mode → Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)
+`/tui` | rendering looks flickery or user wants full-screen mode → Switch to flicker-free alt-screen TUI rendering
 `/focus` | user wants compact view of conversation → Toggle focus view showing only: prompt + tool summary + final response
-`/undo` | user wants to undo last action → Alias for /rewind; undoes last assistant action
-`/usage` | user asks about token or cost statistics → Show token usage and cost stats (merged /cost + /stats)
+`/undo` | user wants to undo last action → Rewind last assistant action
+`/usage` | user asks about token or cost statistics → Show token usage and cost stats
 `/theme [name]` | user wants to change or create visual theme → Create or switch custom color themes
-`/color` | user wants a session color → Set random session color (no args = random pick)
+`/color` | user wants a session color → Set random session color
 
 catalog: Claude/skills/SKILLS_CATALOG.yaml | commands: .claude/commands/

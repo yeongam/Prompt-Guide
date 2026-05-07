@@ -1,11 +1,9 @@
 # Claude Code Skills Catalog
-# Source: anthropics/claude-code (public)
-# Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
+# Source: anthropics/claude-code | auto-updated daily 00:00 UTC
 version: 2.1.132
 updated: 2026-05-07
 
-# ─── SKILLS ────────────────────────────────────────────────────────────────────
-# Format: cmd | trigger | desc
+# ─── SKILLS ──────────────────────────────────────────────────────────────────
 skills:
   init:
     cmd: /init
@@ -51,22 +49,16 @@ skills:
     cmd: /loop [interval] [/command]
     trigger: user wants recurring task (e.g. "check every 5m", "keep running X")
     desc: Run prompt or slash command on recurring interval (default 10m)
-    example: "/loop 5m /review"
 
   claude-api:
     cmd: /claude-api
     trigger: code imports anthropic SDK; user asks about Claude API features
     desc: Build/debug Claude API apps; prompt caching, tool use, model migration
-    models:
-      opus: claude-opus-4-7
-      sonnet: claude-sonnet-4-6
-      haiku: claude-haiku-4-5-20251001
 
   ultrareview:
     cmd: /ultrareview [PR#]
     trigger: user says "ultrareview" or wants multi-agent review
-    desc: Parallel multi-agent cloud code review; no-arg=local branch, arg=GitHub PR
-    note: Billed; requires git repo; no GitHub remote needed for local mode
+    desc: Parallel multi-agent cloud code review; billed; no-arg=local, arg=GitHub PR
 
   ultraplan:
     cmd: /ultraplan
@@ -81,7 +73,7 @@ skills:
   effort:
     cmd: /effort
     trigger: user wants to adjust effort/quality level
-    desc: Interactive slider for session effort level (also: CLAUDE_EFFORT env var)
+    desc: Interactive slider for session effort level
 
   powerup:
     cmd: /powerup
@@ -91,7 +83,7 @@ skills:
   tui:
     cmd: /tui
     trigger: rendering looks flickery or user wants full-screen mode
-    desc: Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)
+    desc: Switch to flicker-free alt-screen TUI rendering
 
   focus:
     cmd: /focus
@@ -101,12 +93,12 @@ skills:
   undo:
     cmd: /undo
     trigger: user wants to undo last action
-    desc: Alias for /rewind; undoes last assistant action
+    desc: Rewind last assistant action
 
   usage:
     cmd: /usage
     trigger: user asks about token or cost statistics
-    desc: Show token usage and cost stats (merged /cost + /stats)
+    desc: Show token usage and cost stats
 
   theme:
     cmd: /theme [name]
@@ -116,125 +108,69 @@ skills:
   color:
     cmd: /color
     trigger: user wants a session color
-    desc: Set random session color (no args = random pick)
+    desc: Set random session color
 
-# ─── HOOKS ─────────────────────────────────────────────────────────────────────
-# Hooks execute shell commands or MCP tools on lifecycle events.
-# Block: exit 2 OR return JSON {decision:"block", reason:"..."}
-# Retry: return JSON {retry:true} (PermissionDenied only)
-# Conditional: add `if` field using permission rule syntax
+# ─── HOOKS ───────────────────────────────────────────────────────────────────
+# Block: exit 2 | {decision:"block",reason:"..."} | Retry: {retry:true} (PermissionDenied only)
+# invoke types: shell (default) | mcp_tool | http
 hooks:
   PreToolUse:
-    fires: Before any tool execution
+    fires: before tool execution
     can_block: true
-    use: Validate/log before bash/file ops; inject context
+    use: validate/log before bash/file ops; inject context
 
   PostToolUse:
-    fires: After tool completes
-    can_block: false
-    use: Log results, trigger follow-up actions
+    fires: after tool completes
+    use: log results, trigger follow-up actions
 
   Notification:
-    fires: On push-notification events
-    can_block: false
-    use: Forward alerts to mobile/Slack (requires Remote Control setup)
+    fires: on push-notification events
+    use: forward alerts to mobile/Slack
 
   Stop:
-    fires: After assistant turn completes
-    can_block: false
-    use: Post-turn logging, notifications
+    fires: after assistant turn completes
+    use: post-turn logging, notifications
 
   SubagentStop:
-    fires: After subagent turn completes
-    can_block: false
-    use: Subagent result aggregation
+    fires: after subagent turn completes
+    use: subagent result aggregation
 
   PreCompact:
-    fires: Before conversation compaction
+    fires: before conversation compaction
     can_block: true
-    block_method: "exit 2 OR {decision:'block'}"
-    added: v2.1.85
-    use: Prevent compaction during critical operations
+    use: prevent compaction during critical operations
 
   TaskCreated:
-    fires: When task created via TaskCreate tool
-    can_block: false
-    added: v2.1.90
-    use: Log/track task creation events
+    fires: when task created via TaskCreate tool
+    use: log/track task creation events
 
   WorktreeCreate:
-    fires: On worktree creation
-    can_block: false
-    added: v2.1.88
-    type_http: returns hookSpecificOutput.worktreePath
-    use: Custom worktree provisioning via HTTP endpoint
+    fires: on worktree creation
+    use: custom worktree provisioning via HTTP endpoint
 
   PermissionDenied:
-    fires: After auto-mode classifier denial
-    can_block: false
-    retry: "return {retry:true} to re-run classifier"
-    added: v2.1.95
-    use: Custom permission escalation flows
+    fires: after auto-mode classifier denial
+    use: custom permission escalation flows
 
-  hook_invoke_types:
-    - type: shell          # shell command (default)
-    - type: mcp_tool       # invoke MCP tool directly (added v2.1.118)
-    - type: http           # HTTP endpoint (WorktreeCreate)
-
-# ─── SETTINGS ──────────────────────────────────────────────────────────────────
-# Place in .claude/settings.json (project) or ~/.claude/settings.json (user)
+# ─── SETTINGS ────────────────────────────────────────────────────────────────
 settings:
-  skillOverrides:
-    type: "off | user-invocable-only | name-only"
-    desc: "off=hidden from model+slash, user-invocable-only=hidden from model, name-only=minimal exposure"
-    added: v2.1.126
+  skillOverrides: "off | user-invocable-only | name-only"
+  autoScrollEnabled: bool  # disable auto-scroll in TUI
+  showThinkingSummaries: bool  # default false
+  disableSkillShellExecution: bool
+  prUrlTemplate: string  # custom PR footer badge URL
+  sandbox.network.deniedDomains: "list[string]"
 
-  autoScrollEnabled:
-    type: bool
-    desc: Disable auto-scroll in fullscreen TUI mode
-    added: v2.1.100
-
-  showThinkingSummaries:
-    type: bool
-    default: false
-    desc: Control thinking summary generation in responses
-    added: v2.1.95
-
-  disableSkillShellExecution:
-    type: bool
-    desc: Disable inline shell execution within skill definitions
-    added: v2.1.98
-
-  prUrlTemplate:
-    type: string
-    desc: Custom URL template for PR footer badge (e.g. custom code-review tools)
-    added: v2.1.101
-
-  sandbox.network.deniedDomains:
-    type: "list[string]"
-    desc: Block specific domains even when broader allowlists exist
-    added: v2.1.85
-
-# ─── ENV VARS ──────────────────────────────────────────────────────────────────
+# ─── ENV VARS ────────────────────────────────────────────────────────────────
 env:
-  CLAUDE_EFFORT: "Current effort level; usable in skill template strings as ${CLAUDE_EFFORT}"
-  CLAUDE_CODE_NO_FLICKER: "1 = enable alt-screen flicker-free rendering (same as /tui)"
-  CLAUDE_CODE_USE_POWERSHELL_TOOL: "1 = enable PowerShell tool (Windows opt-in preview)"
-  CLAUDE_STREAM_IDLE_TIMEOUT_MS: "Integer ms for streaming idle watchdog timeout"
-  OTEL_LOG_RAW_API_BODIES: "1 = emit full API request/response bodies as OTEL events"
-  DISABLE_UPDATES: "1 = block all update paths including manual 'claude update'"
-  CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1 = opt-in gateway /v1/models discovery"
+  CLAUDE_EFFORT: effort level; usable in skill templates as ${CLAUDE_EFFORT}
+  CLAUDE_CODE_NO_FLICKER: "1 = alt-screen TUI rendering"
+  CLAUDE_CODE_USE_POWERSHELL_TOOL: "1 = enable PowerShell tool (Windows)"
+  CLAUDE_STREAM_IDLE_TIMEOUT_MS: streaming idle watchdog timeout (ms)
+  DISABLE_UPDATES: "1 = block all update paths"
 
-# ─── MODELS ────────────────────────────────────────────────────────────────────
+# ─── MODELS ──────────────────────────────────────────────────────────────────
 models:
-  default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
+  opus: claude-opus-4-7
   sonnet: claude-sonnet-4-6
   haiku: claude-haiku-4-5-20251001
-
-# ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────
-# This catalog is structured for minimal token overhead:
-# - One canonical source (this file); skills reference it rather than duplicate
-# - YAML over JSON/Markdown: ~30% fewer tokens for structured data
-# - Descriptions capped at one line; examples only where non-obvious
-# - "added:" version tags kept for audit; remove if tokens are critical
