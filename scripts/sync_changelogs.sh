@@ -7,7 +7,8 @@ REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 DESKTOP_DIR="${DESKTOP_LOG_PATH:-$HOME/바탕화면/Claude-Text/Claude_skills}"
 BRANCH="claude/zealous-sagan-FdaL5"
 CHANGELOGS_SRC="$REPO_DIR/Claude/Changelogs"
-DATE_STR=$(date -u '+%Y%m%d')
+KST() { TZ='Asia/Seoul' date '+'"$1"; }
+DATE_STR=$(KST '%Y%m%d')
 RUN_LOG="$DESKTOP_DIR/run_log_${DATE_STR}.txt"
 
 # cron 환경에서 python3 경로 탐색
@@ -25,7 +26,7 @@ exec > >(tee -a "$RUN_LOG") 2>&1
 
 echo "========================================"
 echo "Claude Skills Sync Log"
-echo "Date : $(date -u '+%Y-%m-%d %H:%M UTC')"
+echo "Date : $(KST '%Y-%m-%d %H:%M KST')"
 echo "Repo : $REPO_DIR"
 echo "========================================"
 
@@ -53,5 +54,5 @@ fi
 
 echo "========================================"
 echo "Log saved : $RUN_LOG"
-echo "Sync complete : $(date -u '+%Y-%m-%d %H:%M UTC')"
+echo "Sync complete : $(KST '%Y-%m-%d %H:%M KST')"
 echo "========================================"
