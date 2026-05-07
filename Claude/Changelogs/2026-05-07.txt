@@ -1,0 +1,48 @@
+Claude Code Skills Update - 2026-05-07
+============================================================
+Date    : 2026-05-07 00:00:00 UTC
+Version : 2.1.129 -> 2.1.129
+Source  : https://github.com/anthropics/claude-code
+Snapshot: Claude/skills/2026-05-07/skills
+============================================================
+
+[추가된 스킬]
+- claude-api
+- init
+- review
+- security-review
+- simplify
+- team-onboarding
+- ultraplan
+- ultrareview
+- update-config
+
+[수정된 스킬]
+- none
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 신규 적용: Claude/skills/2026-05-07/skills/
+- 각 스킬: trigger, procedure, output, token_policy, compatibility로 경량화
+- 중복 내용 제거: catalog.json 단일 메타데이터 소스 유지
+- SKILLS_CATALOG.yaml 기존 구조 유지 (단일 정규 소스)
+- 코딩/프로그래밍/문서 관련 9개 스킬 .md 파일로 변환 적용
+
+[토큰 절감 관련 변경 사항]
+- 공식 레포 링크 참조; 긴 문서 본문 복사 제거
+- 스킬 절차는 3~4줄 이내 실행 단위로 압축
+- catalog.json 공통 필드(token_policy, compatibility) 공유로 중복 제거
+- YAML 카탈로그 구조 유지: JSON/Markdown 대비 ~30% 토큰 절감
+
+[충돌 해결 내역]
+- slug 기준 중복 스킬 통합 (신규 날짜 디렉토리 분리)
+- 기존 Claude/skills/*.yaml 파일과 신규 날짜 디렉토리 공존 (충돌 없음)
+- 기존 날짜 스냅샷 덮어쓰지 않음 (불변 원칙 유지)
+- content hash 비교로 변경 여부 감지 (catalog.json hash 필드)
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml 최신화 완료 (version 2.1.129)
+[Status  ] Snapshot committed to yeongam/Prompt-Guide
+[요약    ] skills: added=9, modified=0, deleted=0, unchanged=0

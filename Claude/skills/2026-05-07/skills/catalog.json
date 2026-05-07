@@ -1,0 +1,236 @@
+{
+  "date": "2026-05-07",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-05-07T00:00:00Z",
+  "source": "https://github.com/anthropics/claude-code",
+  "version": "2.1.129",
+  "skills": [
+    {
+      "name": "Init (Codebase Docs)",
+      "slug": "init",
+      "hash": "0c0f8a7d5f351787",
+      "trigger": "user asks to initialize or document codebase",
+      "procedure": [
+        "Scan project tree and key config files.",
+        "Draft CLAUDE.md with architecture, conventions, commands.",
+        "Keep entries short; link to files instead of inlining."
+      ],
+      "output": "CLAUDE.md covering project layout, stack, and run commands.",
+      "token_policy": [
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "version": "2.1.129"
+    },
+    {
+      "name": "Review (PR/Branch)",
+      "slug": "review",
+      "hash": "df5aed77c0c1e54c",
+      "trigger": "user asks to review PR or branch changes",
+      "procedure": [
+        "Check logic correctness.",
+        "Flag style and naming deviations.",
+        "Identify security and test gaps.",
+        "Return ranked findings only."
+      ],
+      "output": "Risk-ranked review with actionable fix suggestions.",
+      "token_policy": [
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "version": "2.1.129"
+    },
+    {
+      "name": "Security Review",
+      "slug": "security-review",
+      "hash": "79565adacc660fc4",
+      "trigger": "user asks security audit of current branch changes",
+      "procedure": [
+        "Diff current branch.",
+        "Map findings to OWASP Top 10.",
+        "Rank by severity.",
+        "Output fix snippets for critical/high only."
+      ],
+      "output": "OWASP-mapped findings with severity and fix snippet.",
+      "token_policy": [
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "version": "2.1.129"
+    },
+    {
+      "name": "Simplify (Code Quality)",
+      "slug": "simplify",
+      "hash": "c78a9cc241222df4",
+      "trigger": "user asks to clean up or refactor changed code",
+      "procedure": [
+        "Review changed files only.",
+        "Remove dead code and redundancy.",
+        "Inline single-use helpers.",
+        "Fix issues in-place."
+      ],
+      "output": "Compact, issue-free version of changed code.",
+      "token_policy": [
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "version": "2.1.129"
+    },
+    {
+      "name": "Claude API Programming",
+      "slug": "claude-api",
+      "hash": "97750b20f78fdaa8",
+      "trigger": "code imports anthropic SDK; user asks about Claude API features",
+      "procedure": [
+        "Identify target model from task.",
+        "Enable prompt caching on static context blocks.",
+        "Use tool_use for structured output.",
+        "Reference official SDK for model migration."
+      ],
+      "output": "Working Claude API integration with caching enabled.",
+      "models": {
+        "opus": "claude-opus-4-7",
+        "sonnet": "claude-sonnet-4-6",
+        "haiku": "claude-haiku-4-5-20251001"
+      },
+      "token_policy": [
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "version": "2.1.129"
+    },
+    {
+      "name": "Ultrareview (Multi-Agent Review)",
+      "slug": "ultrareview",
+      "hash": "bd9788f77ec44558",
+      "trigger": "user says 'ultrareview' or wants multi-agent cloud review",
+      "procedure": [
+        "Run /ultrareview [PR#] or no arg for local branch.",
+        "Parallel agents review logic/style/security/tests.",
+        "Aggregate ranked findings."
+      ],
+      "output": "Parallel multi-agent review report.",
+      "note": "Billed; requires git repo; no GitHub remote needed for local mode.",
+      "token_policy": [
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "version": "2.1.129"
+    },
+    {
+      "name": "Ultraplan (Cloud Planning)",
+      "slug": "ultraplan",
+      "hash": "ff4346c39221c6d5",
+      "trigger": "user wants cloud environment for complex multi-step planning",
+      "procedure": [
+        "Run /ultraplan.",
+        "Auto-create cloud worktrees.",
+        "Execute parallel planning agents."
+      ],
+      "output": "Multi-agent plan with actionable steps.",
+      "token_policy": [
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "version": "2.1.129"
+    },
+    {
+      "name": "Update Config (Settings)",
+      "slug": "update-config",
+      "hash": "0bdabbc51a79bcb5",
+      "trigger": "automated behavior requests; allow/deny permissions; set env vars",
+      "procedure": [
+        "Identify target: .claude/settings.json (project) or ~/.claude/settings.json (user).",
+        "Write hooks, permissions, or env entries.",
+        "Validate JSON before saving."
+      ],
+      "output": "Updated settings.json with requested configuration.",
+      "token_policy": [
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "version": "2.1.129"
+    },
+    {
+      "name": "Team Onboarding (Docs)",
+      "slug": "team-onboarding",
+      "hash": "b8fe361641151652",
+      "trigger": "user wants teammate ramp-up guide from project history",
+      "procedure": [
+        "Mine local Claude Code usage history.",
+        "Draft guide: setup, conventions, key commands.",
+        "Keep under 500 tokens."
+      ],
+      "output": "Concise teammate onboarding guide.",
+      "token_policy": [
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "version": "2.1.129"
+    }
+  ],
+  "source_policy": "official Anthropic GitHub repositories only"
+}
