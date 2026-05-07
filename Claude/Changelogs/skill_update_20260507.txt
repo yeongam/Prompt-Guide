@@ -1,0 +1,72 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-05-07 14:48 UTC
+Version : 2.1.129 → 2.1.132
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-05-07/
+============================================================
+
+[ 추가된 스킬 / Added Skills ]
+  + /effort
+  + /extra-usage
+  + /login
+  + /mcp
+  + /status
+  + /terminal-setup
+  + /upgrade
+  + /usage
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /effort
+  ~ /extra-usage
+  ~ /mcp
+  ~ /status
+  ~ /terminal-setup
+  ~ /usage
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-05-07/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed statusline `context_window` token counts reflecting cumulative session totals instead of current context usage
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.132
+
+- Added `CLAUDE_CODE_SESSION_ID` environment variable to the Bash tool subprocess environment, matching the `session_id` passed to hooks
+- Added `CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN=1` env var to opt out of the fullscreen alternate-screen renderer and keep the conversation in the terminal's native scrollback
+- Added a "Pasting…" footer hint while a Ctrl+V image paste is being read from the clipboard
+- Fixed external SIGINT (e.g. IDE stop button, `kill -INT`) not running graceful shutdown — terminal modes are now restored and the `--resume` hint is printed instead of an abrupt exit
+- Fixed an uncaught exception when the terminal is closed or SSH disconnects mid-session under the native build
+- Fixed `--resume` failing with `no low surrogate in string` when a tool error truncation split an emoji; pre-corrupted sessions are sanitized on load
+- Fixed `--permission-mode` flag being ignored when resuming a plan-mode session with `-p --continue`/`--resume`, and plan mode not being re-applied after `ExitPlanMode` within the same session
+- Fixed fullscreen mode showing a blank screen after laptop sleep/wake or Ctrl+Z/`fg` until the next keystroke or stream output
+- Fixed cursor landing mid-grapheme on Ctrl+E/A/K/U/arrow keys when an Indic conjunct or ZWJ emoji wraps across lines
+- Fixed vim operators corrupting text containing decomposed (NFD) accented characters
+- Fixed pasting text starting with `/` silently swallowing the input or triggering an unknown-command reply
+- Fixed pasting dumping stray escape sequences into the prompt when focus events or mouse-tracking reports interleave with the bracketed paste
+- Fixed mouse wheel scrolling being too fast in Cursor and VS Code 1.92–1.104 due to an upstream xterm.js bug
+- Fixed scroll-wheel handling in JetBrains IDE 2025.2 terminals (spurious arrow keys, wrong-direction events, runaway acceleration)
+- Fixed `/usage` Ctrl+S hanging when copying the stats screenshot to the clipboard on Linux/X11
+- Fixed `/terminal-se
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide

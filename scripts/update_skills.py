@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Daily Claude Code skills updater.
 Fetches latest changelog from anthropics/claude-code,
-updates catalog, creates date/skills snapshots, writes changelogs to Claude/Changelogs/.
+updates SKILLS_CATALOG.yaml, CLAUDE.md, .claude/commands/, and Claude/Changelogs/.
 """
 
 import re
@@ -16,6 +16,9 @@ SKILLS_BASE_DIR = REPO_ROOT / "Claude" / "skills"
 CATALOG_FILE = SKILLS_BASE_DIR / "SKILLS_CATALOG.yaml"
 VERSION_FILE = SKILLS_BASE_DIR / ".version"
 CHANGELOGS_DIR = REPO_ROOT / "Claude" / "Changelogs"
+CLAUDE_MD = REPO_ROOT / "CLAUDE.md"
+COMMANDS_DIR = REPO_ROOT / ".claude" / "commands"
+SETTINGS_FILE = REPO_ROOT / ".claude" / "settings.json"
 CHANGELOG_SRC = "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md"
 
 
@@ -38,6 +41,31 @@ def parse_version(changelog: str) -> tuple[str, str]:
 
 def current_version() -> str:
     return VERSION_FILE.read_text().strip() if VERSION_FILE.exists() else ""
+
+
+def parse_catalog_skills() -> list[dict]:
+    """Parse SKILLS_CATALOG.yaml skills section into list of dicts."""
+    if not CATALOG_FILE.exists():
+        return []
+    text = CATALOG_FILE.read_text()
+    skills_section = re.search(r"^skills:\n(.*?)(?=^\w|\Z)", text, re.MULTILINE | re.DOTALL)
+    if not skills_section:
+        return []
+    entries = []
+    current = {}
+    for line in skills_section.group(1).splitlines():
+        name_m = re.match(r"^  (\w[\w-]*):\s*$", line)
+        if name_m:
+            if current:
+                entries.append(current)
+            current = {"name": name_m.group(1)}
+            continue
+        field_m = re.match(r"^    (\w+):\s*(.+)$", line)
+        if field_m and current:
+            current[field_m.group(1)] = field_m.group(2).strip()
+    if current:
+        entries.append(current)
+    return entries
 
 
 def extract_changes(section: str) -> dict:
@@ -70,8 +98,87 @@ def extract_changes(section: str) -> dict:
     }
 
 
+# ── CLAUDE.md ────────────────────────────────────────────────────────────────
+
+def generate_claude_md(ver: str, date_dir: str) -> str:
+    skills = parse_catalog_skills()
+    lines = [
+        "# Claude Code Skills Context",
+        f"> Auto-updated daily from anthropics/claude-code — do not edit manually.",
+        f"> Version: {ver} | Updated: {date_dir}",
+        "",
+        "## Available Skills",
+        "",
+    ]
+    for s in skills:
+        cmd = s.get("cmd", f"/{s['name']}")
+        desc = s.get("desc", "")
+        trigger = s.get("trigger", "")
+        lines.append(f"### `{cmd}`")
+        if trigger:
+            lines.append(f"**Trigger:** {trigger}")
+        if desc:
+            lines.append(f"{desc}")
+        lines.append("")
+    lines += [
+        "## Token Optimization",
+        "- YAML catalog (single source) — ~30% fewer tokens than JSON/Markdown duplication",
+        "- Descriptions capped at one line; examples only where non-obvious",
+        "",
+        "## Sync Info",
+        f"- Catalog: `Claude/skills/SKILLS_CATALOG.yaml`",
+        f"- Snapshot: `Claude/skills/{date_dir}/`",
+        f"- Changelog: `Claude/Changelogs/`",
+        f"- Commands: `.claude/commands/`",
+    ]
+    return "\n".join(lines) + "\n"
+
+
+def write_claude_md(ver: str, date_dir: str) -> None:
+    content = generate_claude_md(ver, date_dir)
+    CLAUDE_MD.write_text(content, encoding="utf-8")
+    print(f"CLAUDE.md updated (v{ver})")
+
+
+# ── .claude/commands/ ────────────────────────────────────────────────────────
+
+COMMANDS = {
+    "skill-status.md": """\
+Show current Claude Code skills sync status.
+
+Read `Claude/skills/.version` and `Claude/skills/SKILLS_CATALOG.yaml`,
+then display: current version, last updated date, and a compact list of
+all available skills with their trigger conditions.
+""",
+    "skill-log.md": """\
+Show the latest skill sync changelog.
+
+Find the most recent `.txt` file in `Claude/Changelogs/` and display its
+full contents, highlighting added, modified, and removed skills.
+""",
+    "skill-diff.md": """\
+Compare the two most recent dated snapshots under `Claude/skills/`.
+
+List directories sorted by name (date), take the two newest, diff their
+`SKILLS_CATALOG.yaml` files, and summarize: added skills, removed skills,
+version change.
+""",
+}
+
+
+def write_commands() -> None:
+    COMMANDS_DIR.mkdir(parents=True, exist_ok=True)
+    for filename, content in COMMANDS.items():
+        path = COMMANDS_DIR / filename
+        path.write_text(content, encoding="utf-8")
+    print(f"Commands updated: {', '.join(COMMANDS.keys())}")
+
+
+# ── Changelog entry ──────────────────────────────────────────────────────────
+
 def build_changelog_entry(ver: str, prev: str, section: str, changes: dict, date_dir: str) -> str:
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+
     def block(title: str, items: list, prefix: str = "  ") -> list[str]:
         return [title] + ([f"{prefix}{i}" for i in items] if items else [f"{prefix}(없음)"]) + [""]
 
@@ -89,8 +196,9 @@ def build_changelog_entry(ver: str, prev: str, section: str, changes: dict, date
         *block("[ 삭제된 스킬 / Removed Skills ]", [f"- {s}" for s in changes["skills_removed"]]),
         *block("[ 최적화된 구조 / Structure ]", [
             "SKILLS_CATALOG.yaml 버전 필드 갱신",
-            f"날짜별 스냅샷 생성: Claude/skills/{date_dir}/",
-            "YAML 구조 유지 (JSON 대비 ~30% 토큰 절감)",
+            f"날짜별 스냅샷: Claude/skills/{date_dir}/",
+            "CLAUDE.md 컨텍스트 주입 파일 갱신",
+            ".claude/commands/ 커스텀 명령어 갱신",
         ]),
         *block("[ 토큰 절감 관련 변경 사항 / Token Optimization ]", changes["token_changes"]),
         *block("[ 충돌 해결 내역 / Conflict Resolution ]",
@@ -103,11 +211,13 @@ def build_changelog_entry(ver: str, prev: str, section: str, changes: dict, date
         section[:2000],
         "",
         "=" * 60,
-        "[적용 상태] SKILLS_CATALOG.yaml 최신화 완료",
-        "[Status]   Catalog updated → yeongam/Prompt-Guide",
+        "[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료",
+        "[Status]   All targets updated → yeongam/Prompt-Guide",
     ]
     return "\n".join(lines)
 
+
+# ── Catalog helpers ───────────────────────────────────────────────────────────
 
 def update_catalog_version(ver: str) -> None:
     if not CATALOG_FILE.exists():
@@ -121,7 +231,6 @@ def update_catalog_version(ver: str) -> None:
 
 
 def create_dated_snapshot(ver: str, date_dir: str) -> None:
-    """Create Claude/skills/{date}/ snapshot."""
     snapshot_dir = SKILLS_BASE_DIR / date_dir
     snapshot_dir.mkdir(parents=True, exist_ok=True)
     if CATALOG_FILE.exists():
@@ -136,6 +245,8 @@ def write_changelog(content: str, date_str: str) -> None:
     log_path.write_text(content, encoding="utf-8")
     print(f"Changelog: {log_path}")
 
+
+# ── Main ──────────────────────────────────────────────────────────────────────
 
 def main() -> int:
     print("Fetching Claude Code changelog...")
@@ -153,21 +264,24 @@ def main() -> int:
     prev = current_version()
     print(f"Latest: {ver}  |  Local: {prev or 'none'}")
 
-    if ver == prev:
-        print("Already up to date.")
-        return 0
-
     now_utc = datetime.now(timezone.utc)
     date_str = now_utc.strftime("%Y%m%d")
     date_dir = now_utc.strftime("%Y-%m-%d")
 
-    changes = extract_changes(section)
-    entry = build_changelog_entry(ver, prev, section, changes, date_dir)
+    if ver == prev:
+        print("Version unchanged — refreshing CLAUDE.md and commands only.")
+        write_claude_md(ver, date_dir)
+        write_commands()
+        return 0
 
-    write_changelog(entry, date_str)
+    changes = extract_changes(section)
+
+    write_changelog(build_changelog_entry(ver, prev, section, changes, date_dir), date_str)
     VERSION_FILE.write_text(ver)
     update_catalog_version(ver)
     create_dated_snapshot(ver, date_dir)
+    write_claude_md(ver, date_dir)
+    write_commands()
 
     print(f"Updated: {prev or 'none'} → {ver}")
     return 0
