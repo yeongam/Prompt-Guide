@@ -1,35 +1,30 @@
 #!/usr/bin/env bash
-# Sync changelogs and CLAUDE.md from repo to local machine.
-# Run manually or via cron: 0 0 * * * /path/to/sync_changelogs.sh
+# Sync: pull latest from remote → run update_skills.py → copy changelogs to desktop.
+# Registered via setup_local_cron.sh (cron: 0 0 * * *)
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 DESKTOP_DIR="${DESKTOP_LOG_PATH:-/root/바탕화면/Claude-Text/Claude_skills}"
 BRANCH="claude/zealous-sagan-FdaL5"
 CHANGELOGS_SRC="$REPO_DIR/Claude/Changelogs"
-GLOBAL_CLAUDE_MD="${HOME}/.claude/CLAUDE.md"
 
 echo "[$(date -u '+%Y-%m-%d %H:%M UTC')] Starting sync..."
 
+# 1. Pull latest from remote
 git -C "$REPO_DIR" fetch origin "$BRANCH" --quiet
 git -C "$REPO_DIR" pull origin "$BRANCH" --quiet
 
-# Changelogs → desktop
+# 2. Run update_skills.py — handles ~/.claude/CLAUDE.md (guidelines 1순위 + skills 2순위)
+#    and refreshes .claude/commands/
+python3 "$REPO_DIR/scripts/update_skills.py"
+
+# 3. Copy changelogs to desktop
 mkdir -p "$DESKTOP_DIR"
 if ls "$CHANGELOGS_SRC/"*.txt 1>/dev/null 2>&1; then
     cp -u "$CHANGELOGS_SRC/"*.txt "$DESKTOP_DIR/"
     echo "Changelogs synced: $(ls "$CHANGELOGS_SRC/"*.txt | wc -l) file(s) → $DESKTOP_DIR"
 else
-    echo "No changelogs found in Claude/Changelogs/."
-fi
-
-# CLAUDE.md → ~/.claude/CLAUDE.md (applies to all sessions globally)
-if [ -f "$REPO_DIR/CLAUDE.md" ]; then
-    mkdir -p "$(dirname "$GLOBAL_CLAUDE_MD")"
-    cp -f "$REPO_DIR/CLAUDE.md" "$GLOBAL_CLAUDE_MD"
-    echo "~/.claude/CLAUDE.md updated (all sessions)"
-else
-    echo "Warning: CLAUDE.md not found in repo."
+    echo "No changelogs in Claude/Changelogs/ yet."
 fi
 
 echo "[$(date -u '+%Y-%m-%d %H:%M UTC')] Sync complete."
