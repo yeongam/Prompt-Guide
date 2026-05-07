@@ -19,8 +19,33 @@ CHANGELOGS_DIR = REPO_ROOT / "Claude" / "Changelogs"
 CLAUDE_MD = REPO_ROOT / "CLAUDE.md"
 GLOBAL_CLAUDE_MD = Path.home() / ".claude" / "CLAUDE.md"
 COMMANDS_DIR = REPO_ROOT / ".claude" / "commands"
-SETTINGS_FILE = REPO_ROOT / ".claude" / "settings.json"
+GUIDELINES_FILE = REPO_ROOT / "Claude" / "ROUTINE_GUIDELINES.yaml"
 CHANGELOG_SRC = "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md"
+
+
+def load_guidelines() -> dict:
+    """Load ROUTINE_GUIDELINES.yaml as a flat key→value dict via simple regex parsing."""
+    if not GUIDELINES_FILE.exists():
+        return {}
+    text = GUIDELINES_FILE.read_text()
+    # Extract leaf key: value lines (skip comments and section headers)
+    rules = {}
+    for line in text.splitlines():
+        m = re.match(r"^\s{2,}([\w_.]+):\s*(.+)$", line)
+        if m:
+            key, val = m.group(1), m.group(2).split("#")[0].strip()
+            if val.lower() in ("true", "false"):
+                rules[key] = val.lower() == "true"
+            else:
+                rules[key] = val
+    return rules
+
+
+def print_guidelines(rules: dict) -> None:
+    if not rules:
+        return
+    active = [k for k, v in rules.items() if v is True]
+    print(f"Guidelines loaded ({len(active)} active rules): {', '.join(active[:6])}{'…' if len(active) > 6 else ''}")
 
 
 def fetch(url: str) -> str:
@@ -292,6 +317,8 @@ def write_changelog(content: str, date_str: str) -> None:
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main() -> int:
+    rules = load_guidelines()
+    print_guidelines(rules)
     print("Fetching Claude Code changelog...")
     try:
         raw = fetch(CHANGELOG_SRC)
