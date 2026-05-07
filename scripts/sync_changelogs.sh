@@ -19,9 +19,9 @@ fi
 
 echo "[$(date -u '+%Y-%m-%d %H:%M UTC')] Starting sync..."
 
-# 1. Pull latest from remote
+# 1. Pull latest from remote (reset to remote — this branch is remote-authoritative)
 git -C "$REPO_DIR" fetch origin "$BRANCH" --quiet
-git -C "$REPO_DIR" pull origin "$BRANCH" --quiet
+git -C "$REPO_DIR" reset --hard "origin/$BRANCH" --quiet
 
 # 2. Run update_skills.py — handles ~/.claude/CLAUDE.md (guidelines 1순위 + skills 2순위)
 "$PYTHON3" "$REPO_DIR/scripts/update_skills.py"
