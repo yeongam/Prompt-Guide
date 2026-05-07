@@ -102,34 +102,22 @@ def extract_changes(section: str) -> dict:
 
 def generate_claude_md(ver: str, date_dir: str) -> str:
     skills = parse_catalog_skills()
-    lines = [
-        "# Claude Code Skills Context",
-        f"> Auto-updated daily from anthropics/claude-code — do not edit manually.",
-        f"> Version: {ver} | Updated: {date_dir}",
-        "",
-        "## Available Skills",
-        "",
-    ]
+    # Compact inline format: one line per skill to minimize context tokens
+    skill_lines = []
     for s in skills:
         cmd = s.get("cmd", f"/{s['name']}")
         desc = s.get("desc", "")
         trigger = s.get("trigger", "")
-        lines.append(f"### `{cmd}`")
-        if trigger:
-            lines.append(f"**Trigger:** {trigger}")
-        if desc:
-            lines.append(f"{desc}")
-        lines.append("")
-    lines += [
-        "## Token Optimization",
-        "- YAML catalog (single source) — ~30% fewer tokens than JSON/Markdown duplication",
-        "- Descriptions capped at one line; examples only where non-obvious",
+        # Format: `cmd` | trigger → desc
+        skill_lines.append(f"`{cmd}` | {trigger} → {desc}")
+
+    lines = [
+        f"# Skills v{ver} ({date_dir})",
+        "> auto-updated from anthropics/claude-code — do not edit",
         "",
-        "## Sync Info",
-        f"- Catalog: `Claude/skills/SKILLS_CATALOG.yaml`",
-        f"- Snapshot: `Claude/skills/{date_dir}/`",
-        f"- Changelog: `Claude/Changelogs/`",
-        f"- Commands: `.claude/commands/`",
+        *skill_lines,
+        "",
+        f"catalog: Claude/skills/SKILLS_CATALOG.yaml | commands: .claude/commands/",
     ]
     return "\n".join(lines) + "\n"
 
