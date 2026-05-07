@@ -142,6 +142,16 @@ skills:
     trigger: user wants detailed token or cost breakdown beyond /usage
     desc: Show extended token usage stats with per-model and per-session breakdown
 
+  compact:
+    cmd: /compact [instructions]
+    trigger: user wants to compress conversation context or reduce token usage mid-session
+    desc: Compress conversation history in-place to reduce token consumption; optional focus instructions
+
+  clear:
+    cmd: /clear
+    trigger: user wants to reset conversation context or start fresh
+    desc: Clear entire conversation history to free context window for a new task
+
   commit:
     cmd: /commit
     trigger: user asks to generate or improve a commit message

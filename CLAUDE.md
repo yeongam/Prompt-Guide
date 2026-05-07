@@ -28,6 +28,8 @@
 `/mcp` | user wants to list, add, or inspect MCP servers → Manage MCP server connections: list, add, remove, inspect
 `/terminal-setup` | user wants to configure terminal for optimal Claude Code experience → Configure terminal settings, shell integration, and display options
 `/extra-usage` | user wants detailed token or cost breakdown beyond /usage → Show extended token usage stats with per-model and per-session breakdown
+`/compact [instructions]` | user wants to compress conversation context or reduce token usage mid-session → Compress conversation history in-place to reduce token consumption; optional focus instructions
+`/clear` | user wants to reset conversation context or start fresh → Clear entire conversation history to free context window for a new task
 `/commit` | user asks to generate or improve a commit message → Auto-generate conventional commit message from staged diff
 `/debug` | user asks to debug error, test failure, or unexpected behavior → Systematic debug loop: reproduce → trace → fix → verify
 `/batch` | user wants to apply the same operation across multiple files → Batch edit or search across files matching a pattern or glob
