@@ -126,8 +126,10 @@ def extract_changes(section: str) -> dict:
 
 # ── CLAUDE.md ────────────────────────────────────────────────────────────────
 
-MARKER_START = "<!-- SKILLS-SYNC:START -->"
-MARKER_END   = "<!-- SKILLS-SYNC:END -->"
+MARKER_START      = "<!-- SKILLS-SYNC:START -->"
+MARKER_END        = "<!-- SKILLS-SYNC:END -->"
+GUIDELINES_MARKER_START = "<!-- GUIDELINES:START -->"
+GUIDELINES_MARKER_END   = "<!-- GUIDELINES:END -->"
 
 
 def generate_skills_block(ver: str, date_dir: str) -> str:
@@ -175,20 +177,60 @@ def inject_skills_section(target: Path, skills_block: str) -> str:
     return "appended"
 
 
+def generate_guidelines_block() -> str:
+    """Convert ROUTINE_GUIDELINES.yaml into compact first-priority instructions."""
+    lines = [
+        "## Routine Guidelines (1순위 — 고정 지침)",
+        "> 아래 규칙은 매 세션에 항상 적용된다. skills 동기화 루틴 및 카탈로그 편집 시 준수.",
+        "",
+        "catalog   : YAML형식 | 설명1줄 | 버전태그제거 | 중복필드제거 | 기본값생략 | 메타문서제거",
+        "skills    : env중복제거(also:ENV_VAR) | note→desc병합 | cmd중복주석제거",
+        "hooks     : 메타정보→주석 | can_block:false 생략(기본값)",
+        "claude_md : 인라인1줄포맷 | ~/.claude/CLAUDE.md동기화 | <!-- SKILLS-SYNC -->마커사용",
+        "changelogs: 경로=Claude/Changelogs/ | 필수6섹션(추가/수정/삭제/구조/토큰/충돌) | skill_update_{YYYYMMDD}.txt",
+        "snapshots : 경로=Claude/skills/{YYYY-MM-DD}/ | 버전변경시에만생성",
+        "commands  : 매실행갱신 | 필수=skill-status,skill-log,skill-diff,skill-inject",
+        "token     : 토큰최소화우선 | 불필요설명제거 | 단일소스원칙",
+    ]
+    return "\n".join(lines) + "\n"
+
+
+def inject_guidelines_section(target: Path, guidelines_block: str) -> str:
+    """Inject or replace the GUIDELINES section (always at top of file)."""
+    wrapped = f"{GUIDELINES_MARKER_START}\n{guidelines_block}{GUIDELINES_MARKER_END}"
+    if not target.exists():
+        return wrapped + "\n"
+    content = target.read_text(encoding="utf-8")
+    if GUIDELINES_MARKER_START in content and GUIDELINES_MARKER_END in content:
+        return re.sub(
+            re.escape(GUIDELINES_MARKER_START) + ".*?" + re.escape(GUIDELINES_MARKER_END),
+            wrapped,
+            content,
+            flags=re.DOTALL,
+        )
+    # No markers yet — prepend
+    return wrapped + "\n\n" + content
+
+
 def generate_claude_md(ver: str, date_dir: str) -> str:
     return generate_skills_block(ver, date_dir)
 
 
 def write_claude_md(ver: str, date_dir: str) -> None:
-    block = generate_skills_block(ver, date_dir)
-    # Repo CLAUDE.md: standalone skills file (no pre-existing project content)
-    CLAUDE_MD.write_text(block, encoding="utf-8")
+    skills_block = generate_skills_block(ver, date_dir)
+    # Repo CLAUDE.md: skills only (project-scoped, no global guidelines needed)
+    CLAUDE_MD.write_text(skills_block, encoding="utf-8")
     print(f"CLAUDE.md updated (v{ver})")
-    # Global ~/.claude/CLAUDE.md: inject into existing content if any
+    # Global ~/.claude/CLAUDE.md: guidelines (1순위) + skills (2순위)
     try:
         GLOBAL_CLAUDE_MD.parent.mkdir(parents=True, exist_ok=True)
-        action = inject_skills_section(GLOBAL_CLAUDE_MD, block)
-        print(f"~/.claude/CLAUDE.md {action} (v{ver})")
+        guidelines_block = generate_guidelines_block()
+        # Step 1: inject/update guidelines section (prepend if missing)
+        content = inject_guidelines_section(GLOBAL_CLAUDE_MD, guidelines_block)
+        GLOBAL_CLAUDE_MD.write_text(content, encoding="utf-8")
+        # Step 2: inject/update skills section (append/replace after guidelines)
+        action = inject_skills_section(GLOBAL_CLAUDE_MD, skills_block)
+        print(f"~/.claude/CLAUDE.md guidelines+skills {action} (v{ver})")
     except OSError as e:
         print(f"Warning: could not write ~/.claude/CLAUDE.md: {e}", file=sys.stderr)
 
