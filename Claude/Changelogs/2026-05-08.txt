@@ -1,0 +1,62 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-05-08 15:04 UTC
+Version : 2.1.129 -> 2.1.133
+Source  : anthropics/claude-code
+============================================================
+
+[스킬 변경 내역 / Skill Changes]
+
+Added    (10): claude-api-coding, init, review, security-review, simplify, documentation-maintenance, update-config, fewer-permission-prompts, loop, session-start-hook
+Modified (0): 없음
+Deleted  (0): 없음
+
+[최적화 구조 / Optimized Structure]
+
+- Snapshot dir : Claude/skills/2026-05-08/skills/
+- Catalog      : catalog.json (slug+hash index for conflict detection)
+- Skill files  : {slug}.md per skill (compact, no filler comments)
+- YAML catalog : SKILLS_CATALOG.yaml (version/date fields updated)
+
+[토큰 절감 / Token Savings]
+
+- YAML over JSON for main catalog (~30% fewer tokens)
+- Descriptions capped at one line per skill
+- Token policy embedded per skill; no global boilerplate repetition
+- Dated snapshots prevent re-fetching unchanged skills
+
+[충돌 해결 / Conflict Resolution]
+
+- Hash-based dedup: skill updated only if slug+desc hash changed
+- Existing dated snapshots never overwritten
+- New slugs added; orphaned slugs flagged as Deleted
+
+[업스트림 신규 항목 / Upstream New Items]
+
+Commands: /effort
+Settings: additionalDirectories
+Env Vars: ECOMPROMISED, HEAD, NO_PROXY
+
+----------------------------------------
+[업스트림 원문 (최신 버전 섹션 / 최대 2000자)]
+
+## 2.1.133
+
+- Added `worktree.baseRef` setting (`fresh` | `head`) to choose whether `--worktree`, `EnterWorktree`, and agent-isolation worktrees branch from `origin/<default>` or local `HEAD`. **Note:** the default `fresh` changes `EnterWorktree`'s base back to `origin/<default>` (it has been local `HEAD` since 2.1.128) — set `worktree.baseRef: "head"` to keep unpushed commits in new worktrees
+- Added `sandbox.bwrapPath` and `sandbox.socatPath` managed settings (Linux/WSL) to specify custom bubblewrap and socat binary locations
+- Added `parentSettingsBehavior` admin-tier key (`'first-wins' | 'merge'`) to let admins opt SDK `managedSettings` (parent tier) into the policy merge
+- Hooks now receive the active effort level via the `effort.level` JSON input field and the `$CLAUDE_EFFORT` environment variable, and Bash tool commands can read `$CLAUDE_EFFORT`
+- Improved focus mode behavior
+- Improved memory usage by releasing warm-spare background workers under memory pressure
+- Fixed parallel sessions all dead-ending at 401 after a refresh-token race wiped shared credentials
+- Fixed `Edit`/`Write` allow rules scoped to a drive root (`C:\`) or POSIX `/` matching incorrectly and always prompting
+- Fixed an unhandled rejection (`ECOMPROMISED`) when a history or session-log file lock is compromised by clock skew or slow disk
+- Fixed pressing Esc during conversation compaction showing a spurious "Error compacting conversation" notification
+- Fixed `HTTP(S)_PROXY` / `NO_PROXY` / mTLS not being respected for the full MCP OAuth flow including discovery, dynamic client registration, token exchange, and token refresh
+- Fixed Read/Write/Edit being denied on mapped network drives passed via `--add-dir` / SDK `additionalDirectories`
+- Fixed Remote Control stop/interrupt from claude.ai not fully canceling the CLI session the same way local Esc does, causing queued messages to never advance after interrupting a stuck tool or prompt
+- Fixed `/effort` in one session unexpectedly changing 
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml 및 스냅샷 최신화 완료
+[Status]   Snapshot committed to yeongam/Prompt-Guide @ claude/zealous-sagan-O7Rhg

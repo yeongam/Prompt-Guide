@@ -1,0 +1,88 @@
+{
+  "date": "2026-05-08",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-05-08T15:04:25.353525+00:00",
+  "source": "anthropics/claude-code",
+  "skills": [
+    {
+      "slug": "claude-api-coding",
+      "name": "Claude API Coding",
+      "hash": "2b918fc9b418f096",
+      "trigger": "code imports anthropic SDK; user asks about Claude API features",
+      "source": "https://github.com/anthropics/anthropic-sdk-python"
+    },
+    {
+      "slug": "init",
+      "name": "Init (Codebase Documentation)",
+      "hash": "0f15b25f24d31d90",
+      "trigger": "user asks to initialize or document codebase",
+      "source": "https://github.com/anthropics/claude-code"
+    },
+    {
+      "slug": "review",
+      "name": "PR Review",
+      "hash": "bcce6e166fb39dc3",
+      "trigger": "user asks to review PR or branch changes",
+      "source": "https://github.com/anthropics/claude-code"
+    },
+    {
+      "slug": "security-review",
+      "name": "Security Review",
+      "hash": "06611f63eeadc57c",
+      "trigger": "user asks for security audit of current branch changes",
+      "source": "https://github.com/anthropics/claude-code"
+    },
+    {
+      "slug": "simplify",
+      "name": "Simplify (Refactor)",
+      "hash": "71d52e1c8f5041c8",
+      "trigger": "user asks to clean up or refactor changed code",
+      "source": "https://github.com/anthropics/claude-code"
+    },
+    {
+      "slug": "documentation-maintenance",
+      "name": "Documentation Maintenance",
+      "hash": "f4530a7792b7a550",
+      "trigger": "user asks to update docs, READMEs, or developer guides",
+      "source": "https://github.com/anthropics/claude-code"
+    },
+    {
+      "slug": "update-config",
+      "name": "Update Config",
+      "hash": "3b5fc86bafdb0b0c",
+      "trigger": "automated behaviors, permissions, env vars, or settings.json changes",
+      "source": "https://github.com/anthropics/claude-code"
+    },
+    {
+      "slug": "fewer-permission-prompts",
+      "name": "Fewer Permission Prompts",
+      "hash": "4aa4a45a0a922f51",
+      "trigger": "user wants fewer permission dialogs during sessions",
+      "source": "https://github.com/anthropics/claude-code"
+    },
+    {
+      "slug": "loop",
+      "name": "Loop (Recurring Task)",
+      "hash": "d75c4bad12170a3e",
+      "trigger": "user wants recurring task or polling (e.g. 'check every 5m')",
+      "source": "https://github.com/anthropics/claude-code"
+    },
+    {
+      "slug": "session-start-hook",
+      "name": "Session Start Hook",
+      "hash": "f34e21c6ced713be",
+      "trigger": "user wants test/lint runners to fire on session start",
+      "source": "https://github.com/anthropics/claude-code"
+    }
+  ],
+  "compatibility": [
+    "Do not overwrite existing dated skill snapshots.",
+    "Integrate only if slug is unique or content hash changed.",
+    "Preserve changelog evidence for every generated update."
+  ],
+  "token_policy": [
+    "Avoid repeated background context.",
+    "Return only decision-critical code or instructions.",
+    "Link to source repo instead of copying long docs."
+  ]
+}
