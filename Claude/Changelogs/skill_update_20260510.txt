@@ -1,0 +1,39 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-05-10 15:08 UTC
+Version : 2.1.129 -> 2.1.138
+Source  : anthropics/claude-code
+============================================================
+
+[추가된 스킬 / Added Skills]
+  (없음)
+
+[수정된 스킬 / Modified Skills]
+  (없음)
+
+[삭제된 스킬 / Deleted Skills]
+  (없음)
+
+[최적화된 구조 / Optimized Structure]
+  SKILLS_CATALOG.yaml: YAML compact (≈30% fewer tokens vs JSON/MD)
+  Daily snapshot: Claude/skills/2026-05-10/
+  Changelogs: Claude/Changelogs/skill_update_YYYYMMDD.txt
+
+[토큰 절감 / Token Savings]
+  One-line descriptions; no multi-line docstrings
+  Examples only where non-obvious
+  Duplicate prompts and verbose explanations removed
+
+[충돌 해결 내역 / Conflict Resolution]
+  자동 병합 - 충돌 없음
+
+----------------------------------------
+[원문 변경사항 / Raw Changes]
+
+## 2.1.138
+
+- Internal fixes
+
+============================================================
+[상태] SKILLS_CATALOG.yaml 최신화 완료
+[Status] Catalog updated → yeongam/Prompt-Guide claude/zealous-sagan-BzbY4
