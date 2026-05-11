@@ -1,0 +1,30 @@
+{
+  "date": "2026-05-11",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-05-11T00:00:00+00:00",
+  "version": "2.1.129",
+  "skills": [
+    {"slug": "init", "cmd": "/init", "source": "https://github.com/anthropics/claude-code", "trigger": "user asks to initialize or document codebase"},
+    {"slug": "review", "cmd": "/review", "source": "https://github.com/anthropics/claude-code", "trigger": "user asks to review PR or branch"},
+    {"slug": "security-review", "cmd": "/security-review", "source": "https://github.com/anthropics/claude-code", "trigger": "user asks security audit of current branch changes"},
+    {"slug": "simplify", "cmd": "/simplify", "source": "https://github.com/anthropics/claude-code", "trigger": "user asks to clean up or refactor changed code"},
+    {"slug": "session-start-hook", "cmd": "/session-start-hook", "source": "https://github.com/anthropics/claude-code", "trigger": "user wants test/lint runners on session start (web Claude Code)"},
+    {"slug": "update-config", "cmd": "/update-config", "source": "https://github.com/anthropics/claude-code", "trigger": "automated behavior requests (\"when X\", \"allow Y\", \"set Z=val\")"},
+    {"slug": "keybindings-help", "cmd": "/keybindings-help", "source": "https://github.com/anthropics/claude-code", "trigger": "user wants to remap keys or add chord shortcuts"},
+    {"slug": "fewer-permission-prompts", "cmd": "/fewer-permission-prompts", "source": "https://github.com/anthropics/claude-code", "trigger": "user wants fewer permission dialogs"},
+    {"slug": "loop", "cmd": "/loop [interval] [/command]", "source": "https://github.com/anthropics/claude-code", "trigger": "user wants recurring task (e.g. \"check every 5m\", \"keep running X\")"},
+    {"slug": "claude-api", "cmd": "/claude-api", "source": "https://github.com/anthropics/claude-code", "trigger": "code imports anthropic SDK; user asks about Claude API features"},
+    {"slug": "ultrareview", "cmd": "/ultrareview [PR#]", "source": "https://github.com/anthropics/claude-code", "trigger": "user says \"ultrareview\" or wants multi-agent review"},
+    {"slug": "ultraplan", "cmd": "/ultraplan", "source": "https://github.com/anthropics/claude-code", "trigger": "user wants cloud environment for complex planning"},
+    {"slug": "team-onboarding", "cmd": "/team-onboarding", "source": "https://github.com/anthropics/claude-code", "trigger": "user wants teammate ramp-up guide"},
+    {"slug": "effort", "cmd": "/effort", "source": "https://github.com/anthropics/claude-code", "trigger": "user wants to adjust effort/quality level"},
+    {"slug": "powerup", "cmd": "/powerup", "source": "https://github.com/anthropics/claude-code", "trigger": "user wants feature demos or to learn Claude Code features"},
+    {"slug": "tui", "cmd": "/tui", "source": "https://github.com/anthropics/claude-code", "trigger": "rendering looks flickery or user wants full-screen mode"},
+    {"slug": "focus", "cmd": "/focus", "source": "https://github.com/anthropics/claude-code", "trigger": "user wants compact view of conversation"},
+    {"slug": "undo", "cmd": "/undo", "source": "https://github.com/anthropics/claude-code", "trigger": "user wants to undo last action"},
+    {"slug": "usage", "cmd": "/usage", "source": "https://github.com/anthropics/claude-code", "trigger": "user asks about token or cost statistics"},
+    {"slug": "theme", "cmd": "/theme [name]", "source": "https://github.com/anthropics/claude-code", "trigger": "user wants to change or create visual theme"},
+    {"slug": "color", "cmd": "/color", "source": "https://github.com/anthropics/claude-code", "trigger": "user wants a session color"}
+  ],
+  "source_policy": "official anthropics/claude-code repository only"
+}
