@@ -1,0 +1,69 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-05-12 00:26 UTC
+Version : 2.1.138 → 2.1.139
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-05-12/
+============================================================
+
+[ ★ 신규 감지 스킬 (4개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /context  ← 수동 추가 필요
+  ? /goal  ← 수동 추가 필요
+  ? /schedule  ← 수동 추가 필요
+  ? /scroll-speed  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /model
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-05-12/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Added `/goal` command: set a completion condition and Claude keeps working across turns until it's met. Works in interactive, `-p`, and Remote Control. Shows live elapsed/turns/tokens as an overlay panel
+  - Added `claude plugin details <name>` to show a plugin's component inventory and projected per-session token cost
+  - Compaction prompt now asks the model to preserve sensitive user instructions
+  - `/context all` per-skill token estimates now account for the model's tokenizer and show rounded values
+  - Remote Control, `/schedule`, claude.ai MCP connectors, and notification preferences are now disabled when `ANTHROPIC_API_KEY` / `apiKeyHelper` / `ANTHROPIC_AUTH_TOKEN` is set, even if a Claude.ai login also exists. Unset the API key to use these features
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Fixed skill argument names containing regex metacharacters breaking argument substitution
+
+[ Hooks ]
+  PostToolUse
+  Press
+  Preview
+
+[ Settings ]
+  PostToolUse
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.139
+
+- Added agent view (Research Preview): a single list of every Claude Code session — running, blocked on you, or done. Run `claude agents` to get started. See https://code.claude.com/docs/en/agent-view
+- Added `/goal` command: set a completion condition and Claude keeps working across turns until it's met. Works in interactive, `-p`, and Remote Control. Shows live elapsed/turns/tokens as an overlay panel
+- Added `/scroll-speed` command to tune mouse wheel scroll speed with a live preview
+- Added `claude plugin details <name>` to show a plugin's component inventory and projected per-session token cost
+- Added transcript view navigation: `?` for keyboard shortcuts, `{`/`}` to jump between user prompts, `v` to toggle shortcut panel
+- Added hook `args: string[]` field (exec form) that spawns the command directly without a shell, so path placeholders never need quoting
+- Added hook `continueOnBlock` config option for `PostToolUse` — set to `true` to feed the hook's rejection reason back to Claude and continue the turn
+- MCP stdio servers now receive `CLAUDE_PROJECT_DIR` in their environment, matching hooks. Plugin configs can reference `${CLAUDE_PROJECT_DIR}` in commands
+- Compaction prompt now asks the model to preserve sensitive user instructions
+- `/mcp` Reconnect now picks up `.mcp.json` edits without a restart, and shows the HTTP status and URL when reconnecting fails
+- `/context all` per-skill token estimates now account for the model's tokenizer and show rounded values
+- `claude plugin install <name>@<marketplace>` now auto-refreshes the marketplace and retries before reporting a plugin as not found
+- `/plugin` installed-plugin details now show hook event names and MCP server names cleanly
+- `/context` now shows the providing plugin's name for plugin-sourced skills
+- Remote MCP server reconnect retry on transient failures is now enabled for all users
+- API requests from subagents now carry `x-claude-code-agent-id` / `x-claude-code-parent-agent-id` heade
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
