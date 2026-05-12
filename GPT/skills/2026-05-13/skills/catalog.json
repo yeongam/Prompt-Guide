@@ -1,0 +1,148 @@
+{
+  "date": "2026-05-13",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-05-13T00:54:40+09:00",
+  "skills": [
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "dd6562b9cf721bfe",
+      "name": "OpenAI API Coding",
+      "output": "Small code-oriented checklist with official-example alignment.",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "openai-api-coding",
+      "source": "https://github.com/openai/openai-cookbook",
+      "source_branch": "main",
+      "source_commit": "9e312635c02b",
+      "summary": "> ✨ Navigate at [cookbook.openai.com](https://cookbook.openai.com) Example code and guides for accomplishing common tasks with the [OpenAI API](https://platform.openai.com/docs/introduction). To run these examples, you'll need an OpenAI account and associated API key ([create a free account here](https://platform.openai.com/signup)). Set an environment variable called `OPENAI_API_KEY` with your API key. Alternativel.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for implementing or debugging OpenAI API calls and examples."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "22b49a102035d30a",
+      "name": "Python SDK Programming",
+      "output": "Minimal Python SDK guidance with verification steps.",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "python-sdk-programming",
+      "source": "https://github.com/openai/openai-python",
+      "source_branch": "main",
+      "source_commit": "38d75d74a562",
+      "summary": "# OpenAI Python API library [![PyPI version](https://img.shields.io/pypi/v/openai.svg?label=pypi%20(stable))](https://pypi.org/project/openai/) The OpenAI Python library provides convenient access to the OpenAI REST API from any Python 3.9+ application. The library includes type definitions for all request params and response fields, and offers both synchronous and asynchronous clients powered by [httpx](https://git.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for Python SDK integration, request structure, and migration checks."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "1d6b2cc5317bdfe9",
+      "name": "TypeScript SDK Programming",
+      "output": "Compact TypeScript SDK implementation checklist.",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "typescript-sdk-programming",
+      "source": "https://github.com/openai/openai-node",
+      "source_branch": "master",
+      "source_commit": "b0e89cddad2e",
+      "summary": "# OpenAI TypeScript and JavaScript API Library [![NPM version]( )](https://npmjs.org/package/openai) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/openai) [![JSR Version](https://jsr.io/badges/@openai/openai)](https://jsr.io/@openai/openai) This library provides convenient access to the OpenAI REST API from TypeScript or JavaScript. It is generated from our [OpenAPI specification](https://github.com/.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for Node.js or TypeScript SDK integration and typed API work."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "91633d0a90894ad1",
+      "name": "Agents Workflow Programming",
+      "output": "Lean agent workflow design and implementation checks.",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "agents-workflow-programming",
+      "source": "https://github.com/openai/openai-agents-python",
+      "source_branch": "main",
+      "source_commit": "564584513f74",
+      "summary": "# OpenAI Agents SDK [![PyPI](https://img.shields.io/pypi/v/openai-agents?label=pypi%20package)](https://pypi.org/project/openai-agents/) The OpenAI Agents SDK is a lightweight yet powerful framework for building multi-agent workflows. It is provider-agnostic, supporting the OpenAI Responses and Chat Completions APIs, as well as 100+ other LLMs. > [!NOTE] > Looking for the JavaScript/TypeScript version? Check out [Ag.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for agent workflows, handoffs, tools, and orchestration code."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "ee6fab5322a2f011",
+      "name": "Documentation Maintenance",
+      "output": "Concise documentation update checklist with source traceability.",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "documentation-maintenance",
+      "source": "https://github.com/openai/openai-cookbook",
+      "source_branch": "main",
+      "source_commit": "9e312635c02b",
+      "summary": "> ✨ Navigate at [cookbook.openai.com](https://cookbook.openai.com) Example code and guides for accomplishing common tasks with the [OpenAI API](https://platform.openai.com/docs/introduction). To run these examples, you'll need an OpenAI account and associated API key ([create a free account here](https://platform.openai.com/signup)). Set an environment variable called `OPENAI_API_KEY` with your API key. Alternativel.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for updating docs, examples, prompts, and developer guides."
+    }
+  ],
+  "source_policy": "official OpenAI GitHub repositories only"
+}
