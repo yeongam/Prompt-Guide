@@ -1,0 +1,95 @@
+SKILLS SYNC CHANGELOG
+Date: 2026-05-12
+Source: anthropics/claude-code (main branch)
+Branch: claude/zealous-sagan-h0URx
+
+================================================================================
+ADDED SKILLS (10 total)
+================================================================================
+
+[plugins] code-review.md
+  - Multi-agent PR review with 4 parallel agents (CLAUDE.md x2, bugs, git blame)
+  - Confidence scoring (threshold 80/100), filters false positives
+  - Command: /code-review [--comment]
+
+[plugins] feature-dev.md
+  - 7-phase feature development workflow
+  - Agents: code-explorer, code-architect, code-reviewer
+  - Command: /feature-dev [description]
+
+[plugins] commit-commands.md
+  - Git automation: /commit, /commit-push-pr, /clean_gone
+  - Auto-generates commit messages matching repo style
+
+[plugins] pr-review-toolkit.md
+  - 6 specialized agents: comment-analyzer, pr-test-analyzer, silent-failure-hunter,
+    type-design-analyzer, code-reviewer, code-simplifier
+  - Structured findings with severity scores
+
+[plugins] agent-sdk-dev.md
+  - Agent SDK scaffolding: /new-sdk-app [project-name]
+  - Verifiers: agent-sdk-verifier-py, agent-sdk-verifier-ts
+  - Output: PASS / PASS WITH WARNINGS / FAIL
+
+[plugins] frontend-design.md
+  - Production-grade frontend generation avoiding generic AI aesthetics
+  - Natural language prompts, no slash command required
+
+[plugins] hookify.md
+  - Hook creation via markdown config
+  - Commands: /hookify, /hookify:list, /hookify:configure, /hookify:help
+  - Actions: warn / block; triggers: bash, file, stop, prompt, all
+
+[plugins] learning-output-style.md
+  - Active learning via SessionStart hook
+  - User contribution requests at key decision points
+  - ★ Insight blocks for implementation context
+
+[plugins] explanatory-output-style.md
+  - Educational context injection via SessionStart hook
+  - Explains codebase patterns, trade-offs, design decisions
+
+[plugins] security-guidance.md
+  - Hook-based security guardrails for dangerous operations
+  - Configurable rules in plugins/security-guidance/hooks/
+
+[builtin] builtin-skills.md
+  - Documented all 10 built-in Claude Code slash commands:
+    /init, /review, /security-review, /simplify, /claude-api,
+    /update-config, /keybindings-help, /session-start-hook,
+    /fewer-permission-prompts, /loop
+
+================================================================================
+MODIFIED SKILLS
+================================================================================
+None (initial sync)
+
+================================================================================
+DELETED SKILLS
+================================================================================
+None (initial sync)
+
+================================================================================
+OPTIMIZED STRUCTURE
+================================================================================
+- Directory format: Claude/skills/YYYY-MM-DD/ (date-based, extensible)
+- Each skill: single .md file, compact format (purpose + commands + behavior)
+- No duplicate content between plugin skills and builtin-skills.md
+- Consistent sections: Purpose / Command / Behavior or Agents / Requirements
+
+================================================================================
+TOKEN SAVINGS
+================================================================================
+- Removed full README prose; retained only actionable fields
+- Eliminated example dialogues and installation step narratives
+- Average file size: ~300–500 bytes vs. original README ~4,000–8,000 bytes
+- Estimated reduction: ~85% per skill file
+
+================================================================================
+CONFLICT RESOLUTION
+================================================================================
+- Existing Claude/ files (Claude-Opus-v4.6, Claude-Sonnet-v.4.6, Claude-in-chrome)
+  are system prompt files; no naming collision with skills/ subdirectory
+- skills/ directory is isolated from root-level model prompt files
+- No overwrites performed on existing content
+================================================================================
