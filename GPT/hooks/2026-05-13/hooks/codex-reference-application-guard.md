@@ -3,7 +3,7 @@
 - Slug: `codex-reference-application-guard`
 - Event: `session_reference`
 - Source: https://github.com/openai/codex
-- Source commit: `5e3ee5eddfa5`
+- Source commit: `d1430fd61e4a`
 - Trigger: Use when Codex works from Prompt-Guide/GPT routine output.
 
 ## Checks

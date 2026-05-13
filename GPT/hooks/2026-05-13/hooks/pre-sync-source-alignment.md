@@ -3,7 +3,7 @@
 - Slug: `pre-sync-source-alignment`
 - Event: `pre_sync`
 - Source: https://github.com/openai/openai-cookbook
-- Source commit: `9e312635c02b`
+- Source commit: `923aaf288813`
 - Trigger: Run before generating GPT skills or hooks.
 
 ## Checks
