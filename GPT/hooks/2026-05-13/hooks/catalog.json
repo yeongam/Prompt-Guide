@@ -1,7 +1,7 @@
 {
   "date": "2026-05-13",
   "directory_rule": "YYYY-MM-DD/hooks",
-  "generated_at": "2026-05-13T00:54:40+09:00",
+  "generated_at": "2026-05-13T10:25:12+09:00",
   "hooks": [
     {
       "actions": [
@@ -19,12 +19,12 @@
         "Record hook conflicts in the same dated changelog as skills."
       ],
       "event": "pre_sync",
-      "hash": "faa8ac2247abefaa",
+      "hash": "1abfc2a99b54c589",
       "name": "Pre Sync Source Alignment",
       "slug": "pre-sync-source-alignment",
       "source": "https://github.com/openai/openai-cookbook",
       "source_branch": "main",
-      "source_commit": "9e312635c02b",
+      "source_commit": "923aaf288813",
       "summary": "Examples and guides for using the OpenAI API",
       "token_policy": [
         "Do not copy upstream documents into hook output.",
@@ -139,12 +139,12 @@
         "Record hook conflicts in the same dated changelog as skills."
       ],
       "event": "post_sync",
-      "hash": "08c523a775bc9c0f",
+      "hash": "c2709810b30e63c6",
       "name": "Post Sync Changelog Guard",
       "slug": "post-sync-changelog-guard",
       "source": "https://github.com/openai/openai-cookbook",
       "source_branch": "main",
-      "source_commit": "9e312635c02b",
+      "source_commit": "923aaf288813",
       "summary": "Documentation and cookbook examples for OpenAI API workflows",
       "token_policy": [
         "Do not copy upstream documents into hook output.",
@@ -169,12 +169,12 @@
         "Record hook conflicts in the same dated changelog as skills."
       ],
       "event": "session_reference",
-      "hash": "97a3a7d675333a9a",
+      "hash": "81cb0138acc426a1",
       "name": "Codex Reference Application Guard",
       "slug": "codex-reference-application-guard",
       "source": "https://github.com/openai/codex",
       "source_branch": "main",
-      "source_commit": "5e3ee5eddfa5",
+      "source_commit": "d1430fd61e4a",
       "summary": "Lightweight coding agent that runs in the terminal",
       "token_policy": [
         "Do not copy upstream documents into hook output.",
