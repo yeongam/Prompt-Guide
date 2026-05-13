@@ -1,7 +1,7 @@
 {
   "date": "2026-05-13",
   "directory_rule": "YYYY-MM-DD/skills",
-  "generated_at": "2026-05-13T10:25:12+09:00",
+  "generated_at": "2026-05-13T10:33:09+09:00",
   "skills": [
     {
       "compatibility": [
@@ -9,7 +9,7 @@
         "Integrate only if slug is unique or content hash changed.",
         "Preserve changelog evidence for every generated update."
       ],
-      "hash": "8dc4b1be5309baa2",
+      "hash": "166b6b7c514ad043",
       "name": "OpenAI API Coding",
       "output": "Small code-oriented checklist with official-example alignment.",
       "procedure": [
@@ -22,7 +22,7 @@
       "slug": "openai-api-coding",
       "source": "https://github.com/openai/openai-cookbook",
       "source_branch": "main",
-      "source_commit": "923aaf288813",
+      "source_commit": "038fadbfa006",
       "summary": "> ✨ Navigate at [cookbook.openai.com](https://cookbook.openai.com) Example code and guides for accomplishing common tasks with the [OpenAI API](https://platform.openai.com/docs/introduction). To run these examples, you'll need an OpenAI account and associated API key ([create a free account here](https://platform.openai.com/signup)). Set an environment variable called `OPENAI_API_KEY` with your API key. Alternativel.",
       "token_policy": [
         "Avoid repeated background context.",
@@ -121,7 +121,7 @@
         "Integrate only if slug is unique or content hash changed.",
         "Preserve changelog evidence for every generated update."
       ],
-      "hash": "633278e091973796",
+      "hash": "04149237d03a21a3",
       "name": "Documentation Maintenance",
       "output": "Concise documentation update checklist with source traceability.",
       "procedure": [
@@ -134,7 +134,7 @@
       "slug": "documentation-maintenance",
       "source": "https://github.com/openai/openai-cookbook",
       "source_branch": "main",
-      "source_commit": "923aaf288813",
+      "source_commit": "038fadbfa006",
       "summary": "> ✨ Navigate at [cookbook.openai.com](https://cookbook.openai.com) Example code and guides for accomplishing common tasks with the [OpenAI API](https://platform.openai.com/docs/introduction). To run these examples, you'll need an OpenAI account and associated API key ([create a free account here](https://platform.openai.com/signup)). Set an environment variable called `OPENAI_API_KEY` with your API key. Alternativel.",
       "token_policy": [
         "Avoid repeated background context.",

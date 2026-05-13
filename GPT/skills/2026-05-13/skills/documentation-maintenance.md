@@ -2,7 +2,7 @@
 
 - Slug: `documentation-maintenance`
 - Source: https://github.com/openai/openai-cookbook
-- Source commit: `923aaf288813`
+- Source commit: `038fadbfa006`
 - Trigger: Use for updating docs, examples, prompts, and developer guides.
 
 ## Procedure

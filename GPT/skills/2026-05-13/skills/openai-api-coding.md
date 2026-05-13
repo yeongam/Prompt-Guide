@@ -2,7 +2,7 @@
 
 - Slug: `openai-api-coding`
 - Source: https://github.com/openai/openai-cookbook
-- Source commit: `923aaf288813`
+- Source commit: `038fadbfa006`
 - Trigger: Use for implementing or debugging OpenAI API calls and examples.
 
 ## Procedure

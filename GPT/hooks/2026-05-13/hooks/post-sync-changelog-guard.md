@@ -3,7 +3,7 @@
 - Slug: `post-sync-changelog-guard`
 - Event: `post_sync`
 - Source: https://github.com/openai/openai-cookbook
-- Source commit: `923aaf288813`
+- Source commit: `038fadbfa006`
 - Trigger: Run after GPT skills and hooks are generated.
 
 ## Checks
