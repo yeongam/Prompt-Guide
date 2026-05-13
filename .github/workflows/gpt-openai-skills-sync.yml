@@ -8,7 +8,6 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 concurrency:
   group: gpt-openai-skills-sync
@@ -43,9 +42,7 @@ jobs:
             exit 1
           fi
 
-      - name: Commit, push, and open PR if changed
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Commit and push to main if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -57,38 +54,7 @@ jobs:
             exit 0
           fi
 
-          git checkout -B automation/gpt-openai-skills-sync
-          git fetch origin automation/gpt-openai-skills-sync:refs/remotes/origin/automation/gpt-openai-skills-sync || true
           DATE="$(TZ=Asia/Seoul date +%Y-%m-%d)"
           git commit -m "chore: sync GPT OpenAI skills and hooks ${DATE}"
-          git push --force-with-lease origin HEAD:automation/gpt-openai-skills-sync
-
-          PR_NUMBER="$(gh pr list \
-            --base main \
-            --head yeongam:automation/gpt-openai-skills-sync \
-            --state open \
-            --json number \
-            --jq '.[0].number // empty')"
-
-          PR_BODY="Automated GPT skill and hook sync.
-
-          - Runs daily at 00:00 KST.
-          - Uses official OpenAI GitHub repositories as source material.
-          - Writes skills under \`GPT/skills/YYYY-MM-DD/skills/\`.
-          - Writes hooks under \`GPT/hooks/YYYY-MM-DD/hooks/\`.
-          - Writes changelogs under \`GPT/Changelogs/\`.
-          - Blocks changes outside \`GPT/\` during routine execution.
-          - Opens or updates this PR instead of pushing directly to \`main\`."
-
-          if [ -n "$PR_NUMBER" ]; then
-            gh pr edit "$PR_NUMBER" \
-              --title "chore: sync GPT OpenAI skills and hooks" \
-              --body "$PR_BODY"
-            echo "Updated PR #$PR_NUMBER"
-          else
-            gh pr create \
-              --base main \
-              --head automation/gpt-openai-skills-sync \
-              --title "chore: sync GPT OpenAI skills and hooks" \
-              --body "$PR_BODY"
-          fi
+          git pull --rebase origin main
+          git push origin HEAD:main
