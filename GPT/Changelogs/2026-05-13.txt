@@ -1,0 +1,53 @@
+Prompt-Guide GPT Skills and Hooks Changelog - 2026-05-13
+
+Snapshot: GPT/skills/2026-05-13/skills
+Hooks: GPT/hooks/2026-05-13/hooks
+Source: official OpenAI GitHub repositories
+
+[추가된 스킬]
+- none
+
+[수정된 스킬]
+- agents-workflow-programming
+- documentation-maintenance
+- openai-api-coding
+- python-sdk-programming
+- typescript-sdk-programming
+
+[삭제된 스킬]
+- none
+
+[추가된 훅]
+- none
+
+[수정된 훅]
+- agent-workflow-guard
+- codex-reference-application-guard
+- post-sync-changelog-guard
+- pre-sync-source-alignment
+- python-sdk-compatibility-check
+- typescript-sdk-compatibility-check
+
+[삭제된 훅]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 유지: skills/2026-05-13/skills
+- 날짜별 훅 스냅샷 구조 유지: hooks/2026-05-13/hooks
+- 각 스킬은 trigger, procedure, output, token_policy, compatibility로 경량화
+- 각 훅은 event, checks, actions, token_policy, compatibility로 경량화
+
+[토큰 절감 관련 변경 사항]
+- 긴 원문 문서 복사를 피하고 공식 레포 링크와 커밋 해시만 저장
+- 스킬 절차와 훅 점검 항목은 짧은 실행 단위로 제한
+- 중복 설명 대신 공통 catalog.json으로 메타데이터 통합
+
+[충돌 해결 내역]
+- slug 기준으로 중복 스킬 통합
+- slug 기준으로 중복 훅 통합
+- 기존 날짜 스킬/훅 스냅샷은 덮어쓰지 않고 신규 날짜에 기록
+- 변경 감지는 hash 비교로 수행
+
+[요약]
+- skills: added=0, modified=5, deleted=0, unchanged=0
+- hooks: added=0, modified=6, deleted=0, unchanged=0
