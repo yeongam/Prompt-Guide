@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.142
+updated: 2026-05-16
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -117,6 +117,24 @@ skills:
     cmd: /color
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
+
+  web-setup:
+    cmd: /web-setup
+    trigger: user wants to configure Claude Code for web or remote environment
+    desc: Set up Claude Code for web sessions; configure remote execution environment
+    added: v2.1.142
+
+  plugin:
+    cmd: /plugin
+    trigger: user wants to install or manage Claude Code plugins
+    desc: Install, update, or remove Claude Code plugins and extensions
+    added: v2.1.142
+
+  model:
+    cmd: /model [name]
+    trigger: user wants to switch or inspect the active model
+    desc: Switch active model within session (Opus/Sonnet/Haiku); show current model
+    added: v2.1.142
 
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.

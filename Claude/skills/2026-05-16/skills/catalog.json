@@ -1,0 +1,466 @@
+{
+  "date": "2026-05-16",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-05-16T00:13:32+09:00",
+  "skills": [
+    {
+      "cmd": "/init",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Generate CLAUDE.md with codebase architecture, conventions, commands",
+      "hash": "a0bc65fdf4668d34",
+      "slug": "init",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user asks to initialize or document codebase",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/review",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Multi-pass PR review; checks logic, style, security, tests",
+      "hash": "e7fbd426967dcab1",
+      "slug": "review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user asks to review PR or branch",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/security-review",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "OWASP-focused audit of pending diffs; risk-ranked findings",
+      "hash": "77ebf46c73213e2f",
+      "slug": "security-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user asks security audit of current branch changes",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/simplify",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Review changed code for reuse/quality/efficiency, then fix issues",
+      "hash": "cf8b74b15f41c794",
+      "slug": "simplify",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user asks to clean up or refactor changed code",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/session-start-hook",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Create SessionStart hook ensuring project can run tests and linters",
+      "hash": "3a464c79c558ff22",
+      "slug": "session-start-hook",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user wants test/lint runners on session start (web Claude Code)",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/update-config",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Configure settings.json; handles hooks, permissions, env vars",
+      "hash": "31df7a89f02d3ca2",
+      "slug": "update-config",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "automated behavior requests ('when X', 'allow Y', 'set Z=val')",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/keybindings-help",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Customize ~/.claude/keybindings.json; supports chord bindings",
+      "hash": "72e34a60d70f939b",
+      "slug": "keybindings-help",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user wants to remap keys or add chord shortcuts",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/fewer-permission-prompts",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Scan transcripts → add bash/MCP allowlist to .claude/settings.json",
+      "hash": "baa812cfdffc2a6d",
+      "slug": "fewer-permission-prompts",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user wants fewer permission dialogs",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/loop [interval] [/command]",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Run prompt or slash command on recurring interval (default 10m)",
+      "hash": "cd77e92577671c1f",
+      "slug": "loop",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user wants recurring task (e.g. 'check every 5m', 'keep running X')",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/claude-api",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Build/debug Claude API apps; prompt caching, tool use, model migration",
+      "hash": "065a1295809c79cb",
+      "slug": "claude-api",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "code imports anthropic SDK; user asks about Claude API features",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/ultrareview [PR#]",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Parallel multi-agent cloud code review; no-arg=local branch, arg=GitHub PR",
+      "hash": "ac4589fa65a04f0c",
+      "slug": "ultrareview",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user says 'ultrareview' or wants multi-agent cloud review",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/ultraplan",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Auto-create cloud worktrees/environments for multi-agent planning tasks",
+      "hash": "0e48063a2b430eef",
+      "slug": "ultraplan",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user wants cloud environment for complex planning",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/team-onboarding",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Generate onboarding guide from local Claude Code usage history/data",
+      "hash": "a09fce4c7ab7ab0f",
+      "slug": "team-onboarding",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user wants teammate ramp-up guide",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/effort",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Interactive slider for session effort level (also: CLAUDE_EFFORT env var)",
+      "hash": "8fde6a352201514d",
+      "slug": "effort",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user wants to adjust effort/quality level",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/powerup",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Interactive animated feature demos with lessons",
+      "hash": "68478f8e6b24e756",
+      "slug": "powerup",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user wants feature demos or to learn Claude Code features",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/tui",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Switch to flicker-free alt-screen TUI rendering",
+      "hash": "2dfa03327705fe00",
+      "slug": "tui",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "rendering looks flickery or user wants full-screen mode",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/focus",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Toggle focus view: prompt + tool summary + final response",
+      "hash": "70b8ba046396b155",
+      "slug": "focus",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user wants compact view of conversation",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/undo",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Alias for /rewind; undoes last assistant action",
+      "hash": "3a4df4f47e2376a0",
+      "slug": "undo",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user wants to undo last action",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/usage",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Show token usage and cost stats (merged /cost + /stats)",
+      "hash": "fa95838bcf9ff728",
+      "slug": "usage",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user asks about token or cost statistics",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/theme [name]",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Create or switch custom color themes",
+      "hash": "cf5f5270a271f724",
+      "slug": "theme",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user wants to change or create visual theme",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/color",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Set random session color (no args = random pick)",
+      "hash": "7f0622c3c969de2f",
+      "slug": "color",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user wants a session color",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/web-setup",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Set up Claude Code for web sessions; configure remote execution environment",
+      "hash": "253762f42edcbee5",
+      "slug": "web-setup",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user wants to configure Claude Code for web or remote environment",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/plugin",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Install, update, or remove Claude Code plugins and extensions",
+      "hash": "d5cf595f2ca59afd",
+      "slug": "plugin",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user wants to install or manage Claude Code plugins",
+      "upstream_version": "2.1.142"
+    },
+    {
+      "cmd": "/model [name]",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Switch active model within session (Opus/Sonnet/Haiku); show current model",
+      "hash": "df4d3a23adf2b6c4",
+      "slug": "model",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "unknown",
+      "token_policy": [
+        "Return only decision-critical instructions.",
+        "Link to source repo instead of copying long docs.",
+        "Avoid repeated background context."
+      ],
+      "trigger": "user wants to switch or inspect the active model",
+      "upstream_version": "2.1.142"
+    }
+  ],
+  "source": "https://github.com/anthropics/claude-code",
+  "source_policy": "official anthropics/claude-code repository",
+  "upstream_version": "2.1.142"
+}
