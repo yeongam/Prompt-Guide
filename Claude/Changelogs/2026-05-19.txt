@@ -1,0 +1,74 @@
+Claude Code Skills Changelog - 2026-05-19
+
+Snapshot : Claude/skills/2026-05-19/skills
+Source   : https://github.com/anthropics/claude-code
+Version  : 2.1.129 -> 2.1.143
+
+[추가된 스킬]
+- claude-api
+- color
+- effort
+- fewer-permission-prompts
+- focus
+- init
+- keybindings-help
+- loop
+- powerup
+- review
+- security-review
+- session-start-hook
+- simplify
+- team-onboarding
+- theme
+- tui
+- ultraplan
+- ultrareview
+- undo
+- update-config
+- usage
+
+[수정된 스킬]
+- none
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷: Claude/skills/2026-05-19/skills
+- 각 스킬: trigger, procedure, output, token_policy, compatibility 경량화
+- 중복 설명 제거; catalog.json으로 메타데이터 통합
+
+[토큰 절감 관련 변경 사항]
+- 원문 문서 복사 없이 공식 레포 링크와 커밋 해시만 저장
+- 스킬 절차는 짧은 실행 단위(5개)로 제한
+- 공통 정책 필드(token_policy, compatibility) 재사용
+
+[충돌 해결 내역]
+- slug 기준 중복 통합 (ensure_unique 검증)
+- 기존 날짜 스냅샷은 덮어쓰지 않고 신규 날짜에 기록
+- 변경 감지: hash 비교
+
+[최신 변경사항 원문 (축약)]
+## 2.1.143
+
+- Added plugin dependency enforcement: `claude plugin disable` now refuses when another enabled plugin depends on the target (with a copy-pasteable disable-chain hint), and `claude plugin enable` force-enables transitive dependencies
+- Added projected context cost (per-turn and per-invocation token estimates) to the `/plugin` marketplace browse pane
+- Added `worktree.bgIsolation: "none"` setting to let background sessions edit the working copy directly without `EnterWorktree`, for repos where worktrees are impractical
+- PowerShell tool now passes `-ExecutionPolicy Bypass`. Opt out with `CLAUDE_CODE_POWERSHELL_RESPECT_EXECUTION_POLICY=1`
+- Background sessions now preserve the model and effort level you set after waking from idle
+- Shift+Tab in attached agent sessions now includes auto mode in the cycle
+- Fixed a corrupt `.credentials.json` with a non-array `scopes` value hanging the CLI on startup or silently aborting OAuth token refresh
+- Fixed right-click paste in `claude agents` on Windows Terminal and WSL
+- Fixed stop hooks that block repeatedly looping forever — the turn now ends with a warning after 8 consecutive blocks (override via `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`)
+- Fixed Esc/Ctrl+C not cancelling a pending `/loop` wakeup while Claude is idle between iterations
+- Fixed `/goal` evaluator firing while background shells or delegated subagents are still running
+- Fixed `NO_COLOR`/`FORCE_COLOR` in settings.json `env` stripping Claude Code's own UI colors — they now apply to subprocesses only
+- Fixed agent view spawning repeated PowerShell processes on Windows when listing sessions
+- Fixed `/bg` without a prompt sending "continue" to the forked session — the fork now waits for input
+- Fixed `--agent <name>` not finding plugin-contributed agents without the `plugin:` prefix
+- Fixed deleting a session from agent view not removing its transcript file
+- Fixed stale-fragment rendering when scrolling in attached background sessions on Windows Terminal
+- Fix
+
+[요약]
+- skills: added=21, modified=0, deleted=0, unchanged=0
