@@ -1,0 +1,110 @@
+{
+  "init": {
+    "cmd": "/init",
+    "trigger": "user asks to initialize or document codebase",
+    "desc": "Generate CLAUDE.md with codebase architecture, conventions, commands"
+  },
+  "review": {
+    "cmd": "/review",
+    "trigger": "user asks to review PR or branch",
+    "desc": "Multi-pass PR review; checks logic, style, security, tests"
+  },
+  "security-review": {
+    "cmd": "/security-review",
+    "trigger": "user asks security audit of current branch changes",
+    "desc": "OWASP-focused audit of pending diffs; outputs risk-ranked findings"
+  },
+  "simplify": {
+    "cmd": "/simplify",
+    "trigger": "user asks to clean up or refactor changed code",
+    "desc": "Review changed code for reuse/quality/efficiency, then fix issues"
+  },
+  "session-start-hook": {
+    "cmd": "/session-start-hook",
+    "trigger": "user wants test/lint runners on session start (web Claude Code)",
+    "desc": "Create SessionStart hook ensuring project can run tests and linters"
+  },
+  "update-config": {
+    "cmd": "/update-config",
+    "trigger": "automated behavior requests (\"when X\", \"allow Y\", \"set Z=val\")",
+    "desc": "Configure settings.json; handles hooks, permissions, env vars"
+  },
+  "keybindings-help": {
+    "cmd": "/keybindings-help",
+    "trigger": "user wants to remap keys or add chord shortcuts",
+    "desc": "Customize ~/.claude/keybindings.json; supports chord bindings"
+  },
+  "fewer-permission-prompts": {
+    "cmd": "/fewer-permission-prompts",
+    "trigger": "user wants fewer permission dialogs",
+    "desc": "Scan transcripts → add bash/MCP allowlist to .claude/settings.json"
+  },
+  "loop": {
+    "cmd": "/loop [interval] [/command]",
+    "trigger": "user wants recurring task (e.g. \"check every 5m\", \"keep running X\")",
+    "desc": "Run prompt or slash command on recurring interval (default 10m)",
+    "example": "\"/loop 5m /review\""
+  },
+  "claude-api": {
+    "cmd": "/claude-api",
+    "trigger": "code imports anthropic SDK; user asks about Claude API features",
+    "desc": "Build/debug Claude API apps; prompt caching, tool use, model migration",
+    "models": ""
+  },
+  "ultrareview": {
+    "cmd": "/ultrareview [PR#]",
+    "trigger": "user says \"ultrareview\" or wants multi-agent review",
+    "desc": "Parallel multi-agent cloud code review; no-arg=local branch, arg=GitHub PR",
+    "note": "Billed; requires git repo; no GitHub remote needed for local mode"
+  },
+  "ultraplan": {
+    "cmd": "/ultraplan",
+    "trigger": "user wants cloud environment for complex planning",
+    "desc": "Auto-create cloud worktrees/environments for multi-agent planning tasks"
+  },
+  "team-onboarding": {
+    "cmd": "/team-onboarding",
+    "trigger": "user wants teammate ramp-up guide",
+    "desc": "Generate onboarding guide from local Claude Code usage history/data"
+  },
+  "effort": {
+    "cmd": "/effort",
+    "trigger": "user wants to adjust effort/quality level",
+    "desc": "Interactive slider for session effort level (also: CLAUDE_EFFORT env var)"
+  },
+  "powerup": {
+    "cmd": "/powerup",
+    "trigger": "user wants feature demos or to learn Claude Code features",
+    "desc": "Interactive animated feature demos with lessons"
+  },
+  "tui": {
+    "cmd": "/tui",
+    "trigger": "rendering looks flickery or user wants full-screen mode",
+    "desc": "Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)"
+  },
+  "focus": {
+    "cmd": "/focus",
+    "trigger": "user wants compact view of conversation",
+    "desc": "Toggle focus view showing only: prompt + tool summary + final response"
+  },
+  "undo": {
+    "cmd": "/undo",
+    "trigger": "user wants to undo last action",
+    "desc": "Alias for /rewind; undoes last assistant action"
+  },
+  "usage": {
+    "cmd": "/usage",
+    "trigger": "user asks about token or cost statistics",
+    "desc": "Show token usage and cost stats (merged /cost + /stats)"
+  },
+  "theme": {
+    "cmd": "/theme [name]",
+    "trigger": "user wants to change or create visual theme",
+    "desc": "Create or switch custom color themes"
+  },
+  "color": {
+    "cmd": "/color",
+    "trigger": "user wants a session color",
+    "desc": "Set random session color (no args = random pick)"
+  }
+}

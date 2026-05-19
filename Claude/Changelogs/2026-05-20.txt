@@ -1,0 +1,54 @@
+Prompt-Guide Claude Skills Changelog - 2026-05-20
+
+Snapshot : Claude/skills/2026-05-20/skills
+Source   : anthropics/claude-code
+Version  : 2.1.129 -> 2.1.144
+
+[추가된 스킬]
+- claude-api
+- color
+- effort
+- fewer-permission-prompts
+- focus
+- init
+- keybindings-help
+- loop
+- powerup
+- review
+- security-review
+- session-start-hook
+- simplify
+- team-onboarding
+- theme
+- tui
+- ultraplan
+- ultrareview
+- undo
+- update-config
+- usage
+
+[수정된 스킬]
+- none
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 유지: skills/2026-05-20/skills
+- 각 스킬은 slug·cmd·trigger·desc·token_policy·compatibility 필드로 경량화
+- SKILLS_CATALOG.yaml을 단일 마스터 소스로 유지
+
+[토큰 절감 관련 변경 사항]
+- 개별 스킬 파일은 `.md` 경량 형식 유지
+- 공통 메타데이터는 `catalog.json`으로 통합 관리
+- 긴 원문 설명 대신 공식 레포 링크 참조 방식 적용
+- slug 기반 중복 통합으로 불필요한 파일 생성 방지
+
+[충돌 해결 내역]
+- slug 기준으로 중복 스킬 통합
+- 기존 날짜 스킬 스냅샷은 덮어쓰지 않고 신규 날짜에 기록
+- 변경 감지는 hash 비교로 수행
+- 신규 스킬 추가 검증: claude-api, color, effort, fewer-permission-prompts, focus, init, keybindings-help, loop, powerup, review, security-review, session-start-hook, simplify, team-onboarding, theme, tui, ultraplan, ultrareview, undo, update-config, usage
+
+[요약]
+- skills: added=21, modified=0, deleted=0, unchanged=0
