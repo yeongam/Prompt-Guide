@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.145
+updated: 2026-05-20
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -117,6 +117,22 @@ skills:
     cmd: /color
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
+
+  verify:
+    cmd: /verify
+    trigger: user asks to verify a change works, confirm a fix, or test manually
+    desc: Run app and observe behavior to confirm change works end-to-end
+
+  run:
+    cmd: /run
+    trigger: user asks to run, start, or screenshot the app
+    desc: Launch project app; detect type (CLI/server/TUI/browser) and confirm readiness
+
+  plugin:
+    cmd: /plugin
+    trigger: user wants to browse, install, or manage Claude Code plugins
+    desc: Discover/Browse plugins; shows commands, agents, skills, hooks, MCP/LSP before install
+    added: v2.1.145
 
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.

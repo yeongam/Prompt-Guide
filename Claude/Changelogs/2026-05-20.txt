@@ -1,0 +1,87 @@
+============================================================
+Claude Code Skills 변경 로그 / Change Report
+날짜    : 2026-05-20 15:08 UTC
+버전    : 2.1.129 -> 2.1.145
+소스    : anthropics/claude-code
+스냅샷  : Claude/skills/2026-05-20/skills/
+============================================================
+
+[추가된 스킬]
+  - Init Codebase (init)
+  - PR Review (review)
+  - Security Review (security-review)
+  - Simplify Code (simplify)
+  - Session Start Hook (session-start-hook)
+  - Update Config (update-config)
+  - Keybindings Help (keybindings-help)
+  - Fewer Permission Prompts (fewer-permission-prompts)
+  - Loop Task (loop)
+  - Claude API (claude-api)
+  - UltraReview (ultrareview)
+  - UltraPlan (ultraplan)
+  - Team Onboarding (team-onboarding)
+  - Effort Level (effort)
+  - Powerup Demos (powerup)
+  - TUI Mode (tui)
+  - Focus View (focus)
+  - Undo Action (undo)
+  - Usage Stats (usage)
+  - Theme (theme)
+  - Session Color (color)
+  - Verify Change (verify)
+  - Run App (run)
+
+[수정된 스킬]
+  - (없음)
+
+[삭제된 스킬]
+  - (없음)
+
+[최적화된 구조]
+  - 날짜/skills 디렉토리 규칙 준수 (YYYY-MM-DD/skills/)
+  - SKILLS_CATALOG.yaml 단일 정규 소스 유지
+  - 각 스킬: {slug}.md + catalog.json 이중 구조
+
+[토큰 절감 관련 변경 사항]
+  - 불필요한 설명 제거; 각 스킬 desc 1줄 제한 유지
+  - procedure/token_policy 리스트 항목 최소화
+  - catalog.json에 source_version 필드 추가로 중복 URL 제거
+
+[충돌 해결 내역]
+  - 충돌 없음
+
+----------------------------------------
+[업스트림 변경 감지 / Upstream Changes Detected]
+
+  Commands/Skills:
+    /plugin
+    /review
+  Hooks:
+    Stop
+    SubagentStop
+
+[원문 (발췌) / Raw Section (excerpt)]
+
+## 2.1.145
+
+- Added `claude agents --json` to list live Claude sessions as JSON for scripting (tmux-resurrect, status bars, session pickers)
+- Added `agent_id` and `parent_agent_id` attributes to `claude_code.tool` OTEL spans, and fixed trace parenting so background subagent spans nest under the dispatching Agent tool span
+- Status line JSON input now includes GitHub repo and PR information when detected
+- `/plugin` Discover and Browse screens now show a plugin's commands, agents, skills, hooks, and MCP/LSP servers before installation
+- `claude agents` terminal tab title now shows the awaiting-input count so an alt-tabbed window tells you when an agent needs attention
+- Slash command and @-mention suggestion list now supports mouse hover and click in fullscreen mode
+- Stop and SubagentStop hook input now includes `background_tasks` and `session_crons` fields
+- Fixed a permission-prompt bypass where bare variable assignments to non-allowlisted environment variables in Bash commands were auto-approved
+- Fixed MCP prompt slash commands showing raw server validation errors when a required argument is omitted — the error now names the missing argument and shows expected usage
+- Fixed the spinner and elapsed-time display freezing until a keypress after the terminal was resized or refocused
+- Fixed the cross-project resume hint failing in default Windows PowerShell 5.1 — Windows now uses `;` as the command separator
+- Fixed voice push-to-talk not working in the agent view's reply pane
+- Fixed task lists rendering in random order when several tasks are created at once
+- Fixed stale "Failed to install Anthropic marketplace" banner showing when the marketplace is already installed
+- Fixed the PR badge in the footer not updating immediately after `gh pr create` and other PR-state-changing commands run in-session
+- Fixed Agent Teams teammates with non-ASCII names failing every API call due to invalid header encoding
+- Fixed `/review` using a deprecated `projectCards` GraphQL qu
+
+============================================================
+[상태] SKILLS_CATALOG.yaml 최신화 완료
+[Status] Snapshot committed to yeongam/Prompt-Guide
