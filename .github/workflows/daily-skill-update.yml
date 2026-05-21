@@ -2,11 +2,16 @@ name: Daily Claude Code Skills Update
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    # 15:00 UTC = 00:00 KST (midnight Korea Standard Time)
+    - cron: "0 15 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
+
+concurrency:
+  group: claude-skills-update
+  cancel-in-progress: false
 
 jobs:
   update-skills:
@@ -14,25 +19,37 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: claude/zealous-sagan-FdaL5
+          ref: claude/zealous-sagan-S9nr0
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Run skill update script
+      - name: Sync Claude Code skills from anthropics/claude-code
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: python scripts/update_skills.py
+
+      - name: Block unexpected changes outside Claude/
+        run: |
+          unexpected="$(git status --porcelain | awk '{print $2}' | grep -Ev '^(Claude/|scripts/)' || true)"
+          if [ -n "$unexpected" ]; then
+            echo "Unexpected changes outside Claude/ or scripts/:"
+            echo "$unexpected"
+            exit 1
+          fi
 
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
+          git add Claude/ scripts/update_skills.py
           if git diff --cached --quiet; then
             echo "No changes - already up to date"
           else
-            DATE=$(date -u +%Y-%m-%d)
+            DATE=$(TZ=Asia/Seoul date +%Y-%m-%d)
             git commit -m "chore: Claude Code skills update ${DATE}"
-            git push -u origin claude/zealous-sagan-FdaL5
+            git push -u origin claude/zealous-sagan-S9nr0
           fi

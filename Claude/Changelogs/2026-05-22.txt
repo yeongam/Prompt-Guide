@@ -1,0 +1,82 @@
+Prompt-Guide Claude Code Skills Changelog - 2026-05-22
+
+Snapshot: Claude/skills/2026-05-22/skills
+Source  : https://github.com/anthropics/claude-code
+Version : 2.1.129 -> 2.1.146
+Generated: 2026-05-22 00:09 KST
+
+[추가된 스킬]
+- claude-api
+- code-review
+- color
+- effort
+- fewer-permission-prompts
+- focus
+- init
+- keybindings-help
+- loop
+- powerup
+- review
+- run
+- security-review
+- session-start-hook
+- simplify
+- statusline-setup
+- team-onboarding
+- theme
+- tui
+- ultraplan
+- ultrareview
+- undo
+- update-config
+- usage
+- verify
+
+[수정된 스킬]
+- none
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 유지: Claude/skills/2026-05-22/skills
+- 각 스킬은 cmd, trigger, desc, token_policy, compatibility로 경량화
+- SKILLS_CATALOG.yaml은 단일 정규 소스로 유지; 날짜 스냅샷과 동기화
+- catalog.json으로 메타데이터 통합; 개별 .md는 경량 카드로 제한
+
+[토큰 절감 관련 변경 사항]
+- 긴 원문 CHANGELOG 복사 대신 버전 번호와 커밋 해시만 저장
+- 스킬 설명은 한 줄로 제한; 중복 컨텍스트 제거
+- token_policy 필드로 각 스킬별 토큰 절감 지침 명시
+- catalog.json 중앙화로 개별 스킬 재로드 없이 메타데이터 조회 가능
+
+[충돌 해결 내역]
+- slug 기준으로 중복 스킬 통합 (hash 비교로 변경 감지)
+- 기존 날짜 스냅샷은 덮어쓰지 않고 신규 날짜에 기록
+- SKILLS_CATALOG.yaml과 날짜 스냅샷 간 버전 동기화
+- 공식 레포 외 출처 스킬은 통합 거부
+
+[요약]
+- skills: added=25, modified=0, deleted=0, unchanged=0
+
+────────────────────────────────────────
+[원문 변경사항 / Raw Changes (truncated)]
+
+## 2.1.146
+
+- Renamed `/simplify` to `/code-review` with an optional effort level (e.g. `/code-review high`)
+- Auto mode no longer suppresses `AskUserQuestion` when the user or a skill explicitly relies on it
+- Fixed Windows PowerShell tool failing with "command line is invalid" when `pwsh` is installed via winget or the Microsoft Store (regression in v2.1.124)
+- Fixed MCP `resources/list`, `resources/templates/list`, and `prompts/list` dropping items past page 1 on paginating servers
+- Fixed full-screen strobing in attached background sessions on Windows Terminal while Claude is streaming
+- Fixed the auto-updater status line not showing your current version when an update fails
+- Fixed on Windows, removing a background-job worktree no longer follows NTFS junctions into the main repo
+- Fixed `/background` refusing sessions whose only typed input was a skill or custom slash command
+- Fixed backgrounded sessions re-prompting for tool permissions you already granted with "don't ask again"
+- Fixed `/theme` color editor and "New custom theme" dialogs not responding to Esc
+- Fixed an uncaught exception at the end of streaming sessions when running via the Agent SDK
+- Fixed `forceLoginOrgUUID` and `forceLoginMethod` managed-settings policies not being enforced against third-party-provider and API-key sessions
+- Fixed GNOME Terminal right-click and middle-click paste not inserting text
+- Fixed `CLAUDE_CODE_SUBAGENT_MODEL` not being forwarded to child processes in multi-agent sessions
+- Improved auto-updater reliability: native version checks and downloads now retry transient network failures instead of failing immediately
+- Improved diff rendering performance for large file edits
