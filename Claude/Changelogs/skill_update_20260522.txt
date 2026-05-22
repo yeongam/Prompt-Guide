@@ -1,0 +1,69 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-05-22 00:30 UTC
+Version : 2.1.145 → 2.1.147
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-05-22/
+============================================================
+
+[ ★ 신규 감지 스킬 (6개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /background  ← 수동 추가 필요
+  ? /code-review  ← 수동 추가 필요
+  ? /help  ← 수동 추가 필요
+  ? /mobile  ← 수동 추가 필요
+  ? /permissions  ← 수동 추가 필요
+  ? /sandbox  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /background
+  ~ /effort
+  ~ /help
+  ~ /permissions
+  ~ /plugin
+  ~ /theme
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-05-22/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  (없음)
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.147
+
+- Pinned background sessions (`Ctrl+T` in `claude agents`) now stay alive when idle, are restarted in place to apply Claude Code updates, and are shed under memory pressure only after non-pinned sessions
+- Renamed `/simplify` to `/code-review`. It now reports correctness bugs at a chosen effort level (e.g., `/code-review high`); pass `--comment` to post findings as inline GitHub PR comments. The old cleanup-and-fix behavior has been removed
+- Improved auto-updater: retries transient network failures, reports specific error categories and OS error codes on failure, and shows the current version when an update fails
+- Improved diff rendering performance for large file edits
+- Prompt history no longer records consecutive duplicate entries — recalling a prompt with arrow-up and submitting it again won't add another copy
+- Fixed enterprise login restrictions (`forceLoginOrgUUID` and `forceLoginMethod` managed-settings) not being enforced against third-party-provider and API-key sessions
+- Fixed `&` in `!` command output displaying as `&amp;`, which broke copy-pasting URLs from commands like `gcloud auth login` on headless machines
+- Fixed unknown slash commands silently doing nothing in headless/SDK mode — they now show an error message
+- Fixed `/help` rendering a broken tab header and showing only one command per page on small terminals when not in fullscreen mode
+- Fixed shell snapshot dropping user functions whose names start with a single underscore, which broke aliases referencing them
+- Fixed plugin agents that declare multiple `Agent(...)` types in `tools:` frontmatter dropping all but the last entry
+- Fixed hook `if` conditions like `PowerShell(git push*)` never matching — only `PowerShell(*)` worked
+- Fixed PowerShell tool dropping output for commands that rely on the default formatter
+- Fixed: on Windows, "Yes, and don't ask again" for a PowerShell script invocation now writes a rule that actually matches on subsequent runs
+- Fixed PowerShell tool f
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
