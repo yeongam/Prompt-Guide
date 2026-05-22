@@ -1,0 +1,188 @@
+{
+  "date": "2026-05-23",
+  "directory_rule": "YYYY-MM-DD/hooks",
+  "generated_at": "2026-05-23T00:53:47+09:00",
+  "hooks": [
+    {
+      "actions": [
+        "Record source URL, branch, and commit in each generated card.",
+        "Use source summaries instead of copying long upstream content."
+      ],
+      "checks": [
+        "Resolve the latest official OpenAI source commit.",
+        "Reject unofficial source material for generated artifacts.",
+        "Confirm skill and hook slugs are unique before writing files."
+      ],
+      "compatibility": [
+        "Do not modify Claude or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "pre_sync",
+      "hash": "cc8bb139e48803d8",
+      "name": "Pre Sync Source Alignment",
+      "slug": "pre-sync-source-alignment",
+      "source": "https://github.com/openai/openai-cookbook",
+      "source_branch": "main",
+      "source_commit": "dfdc98203826",
+      "summary": "Examples and guides for using the OpenAI API",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run before generating GPT skills or hooks."
+    },
+    {
+      "actions": [
+        "Attach commit evidence to Python SDK skill output.",
+        "Flag incompatible examples in the changelog conflict section."
+      ],
+      "checks": [
+        "Verify the Python SDK source commit used by the routine.",
+        "Prefer current SDK request shapes over stale snippets.",
+        "Keep migration notes compact and version-aware."
+      ],
+      "compatibility": [
+        "Do not modify Claude or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "pre_apply",
+      "hash": "f758ef63c17382a1",
+      "name": "Python SDK Compatibility Check",
+      "slug": "python-sdk-compatibility-check",
+      "source": "https://github.com/openai/openai-python",
+      "source_branch": "main",
+      "source_commit": "e75766769547",
+      "summary": "Official Python library for the OpenAI API",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run before applying Python SDK guidance or examples."
+    },
+    {
+      "actions": [
+        "Attach commit evidence to TypeScript SDK skill output.",
+        "Flag cross-language conflicts in the changelog conflict section."
+      ],
+      "checks": [
+        "Verify the TypeScript SDK source commit used by the routine.",
+        "Keep generated guidance aligned with typed SDK usage.",
+        "Avoid duplicating Python-specific patterns in TypeScript output."
+      ],
+      "compatibility": [
+        "Do not modify Claude or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "pre_apply",
+      "hash": "9ec060428ec5f00f",
+      "name": "TypeScript SDK Compatibility Check",
+      "slug": "typescript-sdk-compatibility-check",
+      "source": "https://github.com/openai/openai-node",
+      "source_branch": "master",
+      "source_commit": "200211197931",
+      "summary": "Official JavaScript / TypeScript library for the OpenAI API",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run before applying TypeScript SDK guidance or examples."
+    },
+    {
+      "actions": [
+        "Record agent workflow conflicts in the changelog.",
+        "Keep agent guidance short enough for fast reuse."
+      ],
+      "checks": [
+        "Confirm tools, handoffs, and orchestration guidance stay separated.",
+        "Prefer minimal runnable workflow patterns.",
+        "Preserve existing GPT skill behavior when adding agent guidance."
+      ],
+      "compatibility": [
+        "Do not modify Claude or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "post_apply",
+      "hash": "d9e2c3e403513c96",
+      "name": "Agent Workflow Guard",
+      "slug": "agent-workflow-guard",
+      "source": "https://github.com/openai/openai-agents-python",
+      "source_branch": "main",
+      "source_commit": "fedc809afd5a",
+      "summary": "Framework for multi-agent workflows",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run after applying agent workflow guidance."
+    },
+    {
+      "actions": [
+        "Write one concise changelog under GPT/Changelogs.",
+        "Avoid prompting the user during automated routine execution."
+      ],
+      "checks": [
+        "Compare generated catalogs with the previous dated snapshot.",
+        "List added, modified, and deleted skills and hooks separately.",
+        "Confirm token-saving and conflict-resolution notes are present."
+      ],
+      "compatibility": [
+        "Do not modify Claude or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "post_sync",
+      "hash": "03ca3d3192876be8",
+      "name": "Post Sync Changelog Guard",
+      "slug": "post-sync-changelog-guard",
+      "source": "https://github.com/openai/openai-cookbook",
+      "source_branch": "main",
+      "source_commit": "dfdc98203826",
+      "summary": "Documentation and cookbook examples for OpenAI API workflows",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run after GPT skills and hooks are generated."
+    },
+    {
+      "actions": [
+        "Apply the latest GPT guidance in the active session when relevant.",
+        "Document any required local install step instead of silently editing runtime state."
+      ],
+      "checks": [
+        "Treat the latest GPT skills and hooks snapshots as repo-local guidance.",
+        "Do not assume GitHub Actions changed the live Codex runtime.",
+        "Keep local runtime installation separate from remote repo synchronization."
+      ],
+      "compatibility": [
+        "Do not modify Claude or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "session_reference",
+      "hash": "9ce7b413c5b6285e",
+      "name": "Codex Reference Application Guard",
+      "slug": "codex-reference-application-guard",
+      "source": "https://github.com/openai/codex",
+      "source_branch": "main",
+      "source_commit": "932f72c22588",
+      "summary": "Lightweight coding agent that runs in the terminal",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Use when Codex works from Prompt-Guide/GPT routine output."
+    }
+  ],
+  "source_policy": "official OpenAI GitHub repositories only"
+}
