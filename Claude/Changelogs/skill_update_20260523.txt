@@ -1,0 +1,70 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-05-23 00:29 UTC
+Version : 2.1.147 → 2.1.149
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-05-23/
+============================================================
+
+[ ★ 신규 감지 스킬 (5개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /config  ← 수동 추가 필요
+  ? /diff  ← 수동 추가 필요
+  ? /doctor  ← 수동 추가 필요
+  ? /feedback  ← 수동 추가 필요
+  ? /insights  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /config
+  ~ /doctor
+  ~ /effort
+  ~ /feedback
+  ~ /insights
+  ~ /ultraplan
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-05-23/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed `/config` exit summary reporting phantom changes to auto-compact and theme when toggling unrelated settings
+  - Improved `/feedback` reports to include the conversation that happened before context compaction, making issues from earlier in long sessions easier to triage
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - `/usage` now shows a per-category breakdown of what's driving your limits usage — skills, subagents, plugins, and per-MCP-server cost
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  popd
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.149
+
+- `/usage` now shows a per-category breakdown of what's driving your limits usage — skills, subagents, plugins, and per-MCP-server cost
+- `/diff` detail view can now be scrolled with the keyboard (arrows, `j`/`k`, `PgUp`/`PgDn`, `Space`, `Home`/`End`)
+- Markdown output now renders GFM task list checkboxes (`- [ ] todo` / `- [x] done`) instead of plain bullets
+- Enterprise: added the `allowAllClaudeAiMcps` managed setting to load claude.ai cloud MCP connectors alongside `managed-mcp.json`
+- Fixed a PowerShell permission bypass: built-in `cd` functions (`cd..`, `cd\`, `cd~`, `X:`) changed the working directory undetected, letting a later command read outside the workspace
+- Fixed the sandbox write allowlist in git worktrees covering the entire main repository root instead of only the shared `.git` directory (with `hooks/` and `config` denied)
+- Fixed PowerShell prefix/wildcard allow rules (e.g. `PowerShell(dotnet.exe build *)`) not pre-approving native executables and scripts
+- Fixed a permission-analysis gap where the parser trusted stale variable-tracking values for `PWD`/`OLDPWD`/`DIRSTACK` across `cd`/`pushd`/`popd`
+- Fixed `find` in the Bash tool exhausting the macOS system file/vnode table and crashing the host on large directory trees
+- Fixed the managed-settings approval dialog leaving the terminal frozen after accepting at startup
+- Fixed `/ultraplan` and remote session creation failing with "Could not capture uncommitted changes" when the working tree has no real changes
+- Fixed `otelHeadersHelper` failing silently when the script path contains spaces; helper failures are now reported in `/doctor` and the debug log
+- Fixed the thinking spinner staying amber across tool calls and onto fresh thinking bursts
+- Fixed collapsed Bash output reporting the wrong hidden-line count for outputs with many short lines
+- Fixed slash-command argument-hint clipping trailing typed characters when the hint overflows the input box
+- Fixed argument-hint and progress
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
