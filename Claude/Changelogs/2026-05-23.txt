@@ -1,0 +1,52 @@
+Prompt-Guide Claude Skills Changelog - 2026-05-23
+
+Snapshot : Claude/skills/2026-05-23/skills
+Source   : anthropics/claude-code (main)
+Version  : 2.1.129 -> 2.1.150
+Generated: 2026-05-23 15:09 UTC
+
+[추가된 스킬]
+- claude-api
+- code-review
+- fewer-permission-prompts
+- init
+- keybindings-help
+- loop
+- review
+- run
+- security-review
+- session-start-hook
+- ultrareview
+- update-config
+
+[수정된 스킬]
+- none
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 유지: skills/2026-05-23/skills
+- 각 스킬은 trigger, procedure, output, token_policy, compatibility로 경량화
+- YAML catalog은 단일 정본(SKILLS_CATALOG.yaml) 유지; 날짜 스냅샷은 catalog.json
+
+[토큰 절감 관련 변경 사항]
+- 긴 원문 문서 복사 대신 공식 레포 링크와 버전 정보만 저장
+- 스킬 절차와 정책은 짧은 실행 단위로 제한
+- 중복 설명 제거; 공통 catalog.json으로 메타데이터 통합
+- YAML > JSON/Markdown: 구조화 데이터 약 30% 토큰 절감
+
+[충돌 해결 내역]
+- slug 기준으로 중복 스킬 통합
+- 기존 날짜 스킬 스냅샷은 덮어쓰지 않고 신규 날짜에 기록
+- 변경 감지는 hash 비교로 수행 (content hash 불변 시 수정 항목 제외)
+
+[원문 변경사항 / Upstream CHANGELOG]
+
+## 2.1.150
+
+- Internal infrastructure improvements (no user-facing changes)
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml 최신화 완료
+[Status]   Committed to yeongam/Prompt-Guide branch claude/zealous-sagan-DaZCO
