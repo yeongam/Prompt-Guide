@@ -1,0 +1,30 @@
+{
+  "version": "2.1.150",
+  "skills": [
+    "claude-api",
+    "code-review",
+    "color",
+    "effort",
+    "fewer-permission-prompts",
+    "focus",
+    "init",
+    "keybindings-help",
+    "loop",
+    "powerup",
+    "review",
+    "run",
+    "security-review",
+    "session-start-hook",
+    "simplify",
+    "team-onboarding",
+    "theme",
+    "tui",
+    "ultraplan",
+    "ultrareview",
+    "undo",
+    "update-config",
+    "usage",
+    "verify"
+  ],
+  "updated": "2026-05-24"
+}

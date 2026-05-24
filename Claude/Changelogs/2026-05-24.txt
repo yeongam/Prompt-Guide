@@ -1,0 +1,62 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-05-24 15:13 UTC
+Version : 2.1.129 -> 2.1.150
+Source  : github.com/anthropics/claude-code
+Snapshot: Claude/skills/2026-05-24/skills/
+============================================================
+
+[추가된 스킬 / Added Skills]
+  + claude-api
+  + code-review
+  + color
+  + effort
+  + fewer-permission-prompts
+  + focus
+  + init
+  + keybindings-help
+  + loop
+  + powerup
+  + review
+  + run
+  + security-review
+  + session-start-hook
+  + simplify
+  + team-onboarding
+  + theme
+  + tui
+  + ultraplan
+  + ultrareview
+  + undo
+  + update-config
+  + usage
+  + verify
+
+[수정된 스킬 / Modified Skills]
+  (없음 / none)
+
+[삭제된 스킬 / Deleted Skills]
+  (없음 / none)
+
+[최적화된 구조 / Optimized Structure]
+  새 스냅샷 생성: Claude/skills/2026-05-24/skills/
+  스킬 수: 24개 (SKILLS_CATALOG.yaml 동기화)
+
+[토큰 절감 / Token Savings]
+  YAML 카탈로그 단일 소스 유지 (JSON 대비 ~30% 절감)
+  설명 1줄 제한, 예시는 필요한 경우만 포함
+  중복 배경 컨텍스트 제거, 소스 링크로 대체
+
+[충돌 해결 / Conflict Resolution]
+  충돌 없음 / No conflicts detected
+
+----------------------------------------
+[원문 변경사항 발췌 / Raw Changelog Excerpt]
+
+## 2.1.150
+
+- Internal infrastructure improvements (no user-facing changes)
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml 최신화 완료 (v2.1.150)
+[Status]   Catalog updated → yeongam/Prompt-Guide
