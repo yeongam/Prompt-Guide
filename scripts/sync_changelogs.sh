@@ -5,7 +5,7 @@ set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 DESKTOP_DIR="${DESKTOP_LOG_PATH:-/root/바탕화면/Claude-Text/Claude_skills}"
-BRANCH="claude/kind-feynman-XQCh2"
+BRANCH="claude/zealous-sagan-zuA1B"
 
 echo "[$(date -u '+%Y-%m-%d %H:%M UTC')] Starting sync..."
 

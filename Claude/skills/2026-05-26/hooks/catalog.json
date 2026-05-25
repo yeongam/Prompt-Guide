@@ -1,0 +1,270 @@
+{
+  "date": "2026-05-26",
+  "directory_rule": "YYYY-MM-DD/hooks",
+  "generated_at": "2026-05-26T00:15:52+09:00",
+  "hooks": [
+    {
+      "actions": [
+        "Return exit 2 or {decision:'block',reason:'...'} to block.",
+        "Inject metadata or context into the tool call."
+      ],
+      "checks": [
+        "Confirm tool call parameters are safe before execution.",
+        "Log tool invocation with context for audit.",
+        "Block if tool matches a deny-list pattern."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "PreToolUse",
+      "hash": "70b3a3a27e7c411f",
+      "name": "Pre Tool Use",
+      "slug": "pre-tool-use",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "offline",
+      "summary": "Fires before any tool execution; can block with exit 2 or JSON",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Validate or log before bash/file ops; inject context."
+    },
+    {
+      "actions": [
+        "Forward tool result to external logging system.",
+        "Trigger follow-up automation based on result."
+      ],
+      "checks": [
+        "Verify tool output for unexpected side effects.",
+        "Log result metadata for observability."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "PostToolUse",
+      "hash": "b85c66dce3b51497",
+      "name": "Post Tool Use",
+      "slug": "post-tool-use",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "offline",
+      "summary": "Fires after tool completes; cannot block",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Log results or trigger follow-up actions after tool execution."
+    },
+    {
+      "actions": [
+        "Return {decision:'block'} or exit 2 to delay compaction.",
+        "Log compaction attempt with current operation context."
+      ],
+      "checks": [
+        "Check if active operation is sensitive to context loss.",
+        "Verify compaction timing is safe."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "PreCompact",
+      "hash": "183e89996ab45ab2",
+      "name": "Pre Compact",
+      "slug": "pre-compact",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "offline",
+      "summary": "Fires before conversation compaction; can block (added v2.1.85)",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Prevent compaction during critical operations."
+    },
+    {
+      "actions": [
+        "Send push notification on turn completion.",
+        "Log turn summary to external system."
+      ],
+      "checks": [
+        "Confirm turn completed without errors.",
+        "Check for any required follow-up notifications."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "Stop",
+      "hash": "588c45deaff2f38a",
+      "name": "Stop",
+      "slug": "stop",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "offline",
+      "summary": "Fires after assistant turn completes; cannot block",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Post-turn logging and notifications after assistant responds."
+    },
+    {
+      "actions": [
+        "Aggregate subagent result into parent context.",
+        "Log subagent completion metrics."
+      ],
+      "checks": [
+        "Verify subagent output is complete.",
+        "Check for errors in subagent execution."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "SubagentStop",
+      "hash": "976ab5393963cbd5",
+      "name": "Subagent Stop",
+      "slug": "subagent-stop",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "offline",
+      "summary": "Fires after subagent turn completes; cannot block",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Aggregate subagent results after subagent turn completes."
+    },
+    {
+      "actions": [
+        "Log task creation with ID and parameters.",
+        "Notify external task tracker."
+      ],
+      "checks": [
+        "Verify task parameters are valid.",
+        "Check for duplicate task creation."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "TaskCreated",
+      "hash": "da362c051cd22e13",
+      "name": "Task Created",
+      "slug": "task-created",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "offline",
+      "summary": "Fires when task created via TaskCreate tool; cannot block (added v2.1.90)",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Log or track task creation events."
+    },
+    {
+      "actions": [
+        "Return {retry:true} to re-run the classifier.",
+        "Escalate to user or log denial reason."
+      ],
+      "checks": [
+        "Identify which classifier rule triggered the denial.",
+        "Determine if escalation or retry is appropriate."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "PermissionDenied",
+      "hash": "7b04f926f36c3860",
+      "name": "Permission Denied",
+      "slug": "permission-denied",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "offline",
+      "summary": "Fires after auto-mode classifier denial; supports retry (added v2.1.95)",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Custom permission escalation flows after classifier denial."
+    },
+    {
+      "actions": [
+        "Return hookSpecificOutput.worktreePath for custom path.",
+        "Provision worktree-specific resources (containers, secrets)."
+      ],
+      "checks": [
+        "Verify worktree path is available.",
+        "Confirm branch name is valid."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "WorktreeCreate",
+      "hash": "f78d98f663266a04",
+      "name": "Worktree Create",
+      "slug": "worktree-create",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "offline",
+      "summary": "Fires on worktree creation; supports HTTP endpoint (added v2.1.88)",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Custom worktree provisioning via HTTP endpoint."
+    },
+    {
+      "actions": [
+        "Route notification to configured channels (Slack, mobile, email).",
+        "Log notification delivery status."
+      ],
+      "checks": [
+        "Verify notification payload is valid.",
+        "Check notification routing configuration."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "Notification",
+      "hash": "5961c1efaa5e692d",
+      "name": "Notification",
+      "slug": "notification",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "offline",
+      "summary": "Fires on push-notification events; cannot block",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Forward alerts to mobile/Slack (requires Remote Control setup)."
+    }
+  ],
+  "source_policy": "official Anthropic GitHub repositories only"
+}
