@@ -1,0 +1,46 @@
+Prompt-Guide Claude Skills Changelog - 2026-05-26
+
+Snapshot: Claude/skills/2026-05-26/skills
+Source: anthropics/claude-code
+
+[추가된 스킬]
+- claude-api
+- init
+- loop
+- review
+- security-review
+- session-start-hook
+- simplify
+- update-config
+
+[수정된 스킬]
+- none
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 신규 적용: skills/2026-05-26/skills
+- GPT 디렉토리 구조(YYYY-MM-DD/skills)와 동일한 규칙으로 통일
+- 각 스킬은 trigger, procedure, output, token_policy, compatibility로 경량화
+- catalog.json으로 메타데이터 통합; 개별 .md 파일로 접근성 유지
+- SKILLS_CATALOG.yaml은 단일 소스; 날짜별 스냅샷은 참조용
+- Claude/Changelogs/ 디렉토리 신규 생성 (YYYY-MM-DD.txt 형식)
+
+[토큰 절감 관련 변경 사항]
+- 긴 원문 문서 복사를 피하고 공식 레포 링크와 버전만 저장
+- 스킬 절차는 짧은 실행 단위로 제한 (최대 5단계)
+- 중복 설명 대신 공통 catalog.json으로 메타데이터 통합
+- 코딩/프로그래밍/문서 관련 스킬 8종만 경량화하여 추출 (전체 21종 중)
+
+[충돌 해결 내역]
+- slug 기준으로 중복 스킬 통합
+- 기존 Claude/skills/ 루트 파일(SKILLS_CATALOG.yaml, .version)과 충돌 없이 병행 유지
+- 날짜별 스냅샷은 기존 루트 구조를 덮어쓰지 않음
+- update_skills.py CHANGELOGS_DIR 경로를 changelogs/ -> Claude/Changelogs/ 로 수정
+- GitHub Actions 워크플로우 브랜치를 claude/zealous-sagan-FdaL5 -> claude/zealous-sagan-kyE1G 로 수정
+
+[요약]
+- version: none -> 2.1.129
+- skills: added=8, modified=0, deleted=0, unchanged=0
+- generated: 2026-05-26 00:00:00 UTC

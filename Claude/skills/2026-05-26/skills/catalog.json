@@ -1,0 +1,203 @@
+{
+  "date": "2026-05-26",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-05-26T00:00:00Z",
+  "catalog_version": "2.1.129",
+  "source": "https://github.com/anthropics/claude-code",
+  "source_policy": "official anthropics/claude-code repository only",
+  "skills": [
+    {
+      "slug": "init",
+      "name": "Init",
+      "trigger": "user asks to initialize or document codebase",
+      "procedure": [
+        "Scan project structure and detect language/framework.",
+        "Extract commands from package.json, Makefile, or README.",
+        "Write CLAUDE.md with architecture, conventions, and run commands.",
+        "Keep entries concise; link to source files."
+      ],
+      "output": "CLAUDE.md file with codebase documentation.",
+      "token_policy": [
+        "Avoid duplicating info already in README.",
+        "Link to source paths instead of copying content.",
+        "One-line entries per convention."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "catalog_version": "2.1.129",
+      "hash": "a1b2c3d4e5f67890"
+    },
+    {
+      "slug": "review",
+      "name": "Review",
+      "trigger": "user asks to review PR or branch",
+      "procedure": [
+        "Read changed files and diff.",
+        "Check logic correctness, edge cases, error handling.",
+        "Check style consistency with repo conventions.",
+        "Flag security issues (OWASP top 10).",
+        "Verify test coverage for changed paths."
+      ],
+      "output": "Ranked findings list with file:line references.",
+      "token_policy": [
+        "Skip findings with no actionable fix.",
+        "Group related issues under one finding.",
+        "Cap output at 20 findings; note if truncated."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "catalog_version": "2.1.129",
+      "hash": "b2c3d4e5f6789012"
+    },
+    {
+      "slug": "security-review",
+      "name": "Security Review",
+      "trigger": "user asks security audit of current branch changes",
+      "procedure": [
+        "Diff current branch vs base.",
+        "Check OWASP top 10: injection, XSS, CSRF, auth, secrets.",
+        "Rank findings by severity (critical/high/medium/low).",
+        "Provide fix snippet for each finding."
+      ],
+      "output": "Risk-ranked security findings with remediation.",
+      "token_policy": [
+        "Only report findings with clear impact.",
+        "Omit informational notes unless critical."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "catalog_version": "2.1.129",
+      "hash": "c3d4e5f678901234"
+    },
+    {
+      "slug": "simplify",
+      "name": "Simplify",
+      "trigger": "user asks to clean up or refactor changed code",
+      "procedure": [
+        "Identify duplicate logic across changed files.",
+        "Extract reusable helpers where 3+ repetitions exist.",
+        "Remove dead code and unused imports.",
+        "Apply consistent naming conventions."
+      ],
+      "output": "Refactored code diff with explanation.",
+      "token_policy": [
+        "Don't add comments explaining the refactor.",
+        "Return only the changed hunks."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "catalog_version": "2.1.129",
+      "hash": "d4e5f67890123456"
+    },
+    {
+      "slug": "claude-api",
+      "name": "Claude API",
+      "trigger": "code imports anthropic SDK; user asks about Claude API features",
+      "procedure": [
+        "Check SDK import and version compatibility.",
+        "Apply prompt caching for repeated context.",
+        "Use structured tool_use for function calls.",
+        "Select correct model ID for task.",
+        "Validate response structure before use."
+      ],
+      "output": "Working Claude API implementation with caching.",
+      "token_policy": [
+        "Cache system prompts and long static context.",
+        "Return minimal working example; link to docs."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "catalog_version": "2.1.129",
+      "hash": "e5f6789012345678"
+    },
+    {
+      "slug": "session-start-hook",
+      "name": "Session Start Hook",
+      "trigger": "user wants test/lint runners on session start (web Claude Code)",
+      "procedure": [
+        "Detect test runner (pytest, jest, vitest, etc.).",
+        "Detect linter (eslint, ruff, mypy, etc.).",
+        "Write SessionStart hook to .claude/settings.json.",
+        "Verify hook syntax and permissions."
+      ],
+      "output": "SessionStart hook entry in settings.json.",
+      "token_policy": [
+        "Return only the JSON hook config block."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "catalog_version": "2.1.129",
+      "hash": "f678901234567890"
+    },
+    {
+      "slug": "update-config",
+      "name": "Update Config",
+      "trigger": "automated behavior requests ('when X', 'allow Y', 'set Z=val')",
+      "procedure": [
+        "Parse user intent: hook vs permission vs env var.",
+        "Read current .claude/settings.json.",
+        "Merge new config without breaking existing entries.",
+        "Write updated file."
+      ],
+      "output": "Updated settings.json diff.",
+      "token_policy": [
+        "Return only changed JSON keys."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "catalog_version": "2.1.129",
+      "hash": "1234567890abcdef"
+    },
+    {
+      "slug": "loop",
+      "name": "Loop",
+      "trigger": "user wants recurring task (e.g. 'check every 5m', 'keep running X')",
+      "procedure": [
+        "Parse interval and target command.",
+        "Schedule via Monitor or background Bash.",
+        "Report each iteration result.",
+        "Stop on user request or error threshold."
+      ],
+      "output": "Recurring task status updates.",
+      "token_policy": [
+        "Summarize each run in one line."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "catalog_version": "2.1.129",
+      "hash": "234567890abcdef1"
+    }
+  ]
+}
