@@ -2,7 +2,7 @@ name: Daily Claude Code Skills Update
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 0 * * *"   # 매일 00:00 UTC (한국 시간 09:00)
   workflow_dispatch:
 
 permissions:
@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: claude/zealous-sagan-FdaL5
+          ref: claude/zealous-sagan-vmY17
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-python@v5
@@ -33,6 +33,6 @@ jobs:
             echo "No changes - already up to date"
           else
             DATE=$(date -u +%Y-%m-%d)
-            git commit -m "chore: Claude Code skills update ${DATE}"
-            git push -u origin claude/zealous-sagan-FdaL5
+            git commit -m "chore: Claude Code skills sync ${DATE}"
+            git push -u origin claude/zealous-sagan-vmY17
           fi

@@ -1,0 +1,73 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-05-27 15:10 UTC
+Version : 2.1.129 -> 2.1.152
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-05-27/SKILLS_CATALOG.yaml
+============================================================
+
+[ 추가된 스킬 / Added Skills ]
+  + /doctor          (환경 진단: 설정·의존성·연결 확인)
+  + /reload-skills   (세션 재시작 없이 스킬 디렉토리 재스캔)
+  + /code-review     (--fix로 working tree 직접 수정; ultra=멀티에이전트)
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /simplify        (내부: /code-review --fix 로 위임, 기존 동작 유지)
+  ~ /usage           (large session files 포함, 스트리밍 읽기로 메모리 최적화)
+
+[ 삭제된 스킬 / Deleted Skills ]
+  (이번 릴리즈에서 제거된 항목 없음)
+
+[ 최적화된 구조 / Optimized Structure ]
+  - 스냅샷 디렉토리 생성: Claude/skills/2026-05-27/
+  - SKILLS_CATALOG.yaml: YAML 단일 소스, 중복 제거 유지
+  - 날짜/skills 디렉토리 규칙 (날짜/skills) 준수
+  - /code-review가 /ultrareview 기능을 통합하여 진입점 단일화
+
+[ 토큰 절감 / Token Savings ]
+  이전 카탈로그: ~2,104 tokens
+  현재 카탈로그: ~2,354 tokens
+  변화량       : +250 tokens (신규 스킬 3개 + 훅 1개 + 설정 1개 추가)
+  최적화 방식  : 설명 1줄 제한, YAML 포맷 유지, 중복 프롬프트 없음
+
+[ 충돌 해결 / Conflict Resolutions ]
+  충돌 감지 (2건) — 기존 정의 유지, changelog 감지값 무시:
+    ! /simplify  → 기존 정의 유지 (내부 동작만 /code-review --fix 로 위임)
+    ! /usage     → 기존 정의 유지 (기능 확장, 구조 변경 없음)
+
+[ 추가된 훅 / New Hooks ]
+  + MessageDisplay  (어시스턴트 메시지 표시 전 변환/숨기기, v2.1.152)
+
+[ 추가된 설정 / New Settings ]
+  + pluginSuggestionMarketplaces  (org 마켓플레이스 allowlist)
+
+[ 주요 변경사항 요약 / Key Changes ]
+  - Skills frontmatter에 disallowed-tools 지원 (스킬 활성 중 도구 제거)
+  - SessionStart 훅: reloadSkills:true 반환으로 스킬 즉시 재스캔 가능
+  - SessionStart 훅: hookSpecificOutput.sessionTitle로 세션 제목 설정
+  - Fallback model: 기본 모델 없을 때 --fallback-model로 세션 유지
+  - Auto mode: 옵트인 동의 불필요
+  - Vim mode: NORMAL 모드 / 키로 역방향 히스토리 검색
+
+------------------------------------------------------------
+[ 원문 (최대 2000자) / Raw Upstream Changes ]
+
+## 2.1.152
+
+- `/code-review --fix` now applies review findings to your working tree after the review
+- Skills can now set `disallowed-tools` in frontmatter to remove tools while the skill is active
+- Added `/reload-skills` command to re-scan skill directories without restarting
+- `SessionStart` hooks can now return `reloadSkills: true` to re-scan skill directories
+- `SessionStart` hooks can now set the session title via `hookSpecificOutput.sessionTitle`
+- Added `MessageDisplay` hook event that lets hooks transform or hide assistant message text
+- Added `pluginSuggestionMarketplaces` managed setting for org marketplace allowlists
+- `claude plugin marketplace remove` now accepts `--scope user|project|local`
+- Claude Code now switches to `--fallback-model` when primary model is not found
+- Auto mode no longer requires opt-in consent
+- Vim mode: `/` in NORMAL mode now opens reverse history search
+- `/usage` breakdown now includes large session files with streaming read
+- Thinking summaries stay readable for at least 3 seconds, render as markdown, cap at 10 lines
+
+============================================================
+[상태] SKILLS_CATALOG.yaml 최신화 완료 | Status: catalog updated
+[리포] yeongam/Prompt-Guide @ claude/zealous-sagan-vmY17
