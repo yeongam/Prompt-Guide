@@ -1,0 +1,204 @@
+{
+  "date": "2026-05-29",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-05-29T00:15:19+09:00",
+  "skills": [
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "1c40e7cd70f561ac",
+      "name": "Init — Codebase Initialization",
+      "output": "CLAUDE.md with architecture, conventions, and verified commands.",
+      "procedure": [
+        "Scan repo structure and identify key directories.",
+        "Detect framework, language, test runner, and lint commands.",
+        "Document observed conventions — don't invent them.",
+        "Keep CLAUDE.md under 300 lines; omit obvious things.",
+        "Verify documented commands actually run before writing."
+      ],
+      "slug": "init",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "unknown",
+      "summary": "# Claude Code ![](https://img.shields.io/badge/Node.js-18%2B-brightgreen?style=flat-square) [![npm]](https://www.npmjs.com/package/@anthropic-ai/claude-code) [npm]: https://img.shields.io/npm/v/@anthropic-ai/claude-code.svg?style=flat-square Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use when user asks to initialize, document, or audit codebase architecture."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "9c9d154c3315a623",
+      "name": "Code Review & Security Audit",
+      "output": "Risk-ranked findings: logic errors, security issues, style problems.",
+      "procedure": [
+        "Read the full diff before forming opinions.",
+        "Rank findings: critical > high > medium > low.",
+        "Apply OWASP top-10 lens on user input and auth flows.",
+        "Suggest concrete fixes, not just observations.",
+        "Skip trivial style notes a linter can catch."
+      ],
+      "slug": "code-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "unknown",
+      "summary": "# Claude Code ![](https://img.shields.io/badge/Node.js-18%2B-brightgreen?style=flat-square) [![npm]](https://www.npmjs.com/package/@anthropic-ai/claude-code) [npm]: https://img.shields.io/npm/v/@anthropic-ai/claude-code.svg?style=flat-square Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use when user asks to review code, PR, branch, or run a security audit."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "5f0e83fd18645496",
+      "name": "Claude Code Automation — Hooks & Settings",
+      "output": "Working hook or settings block ready to paste into .claude/settings.json.",
+      "procedure": [
+        "Identify the lifecycle event: PreToolUse, PostToolUse, Stop, Notification, etc.",
+        "Write the hook as a shell command or MCP tool invocation.",
+        "To block: exit 2 or return JSON {decision:'block', reason:'...'}.",
+        "Place project hooks in .claude/settings.json, user hooks in ~/.claude/settings.json.",
+        "Test the hook with a benign tool call before enabling in production."
+      ],
+      "slug": "claude-code-automation",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "unknown",
+      "summary": "# Claude Code ![](https://img.shields.io/badge/Node.js-18%2B-brightgreen?style=flat-square) [![npm]](https://www.npmjs.com/package/@anthropic-ai/claude-code) [npm]: https://img.shields.io/npm/v/@anthropic-ai/claude-code.svg?style=flat-square Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for hooks (PreToolUse, PostToolUse, Stop, etc.), settings.json, and permissions."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "ec7c102a647856e7",
+      "name": "MCP Integration",
+      "output": "Minimal MCP server config ready for claude_desktop_config.json or settings.json.",
+      "procedure": [
+        "Choose transport: stdio (local) or SSE/HTTP (remote).",
+        "Define tool name, description, and input_schema precisely.",
+        "Add server config under mcpServers in settings.json.",
+        "Verify tool appears via /mcp before testing.",
+        "Keep tool descriptions short — they consume context on every call."
+      ],
+      "slug": "mcp-integration",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "unknown",
+      "summary": "# Claude Code ![](https://img.shields.io/badge/Node.js-18%2B-brightgreen?style=flat-square) [![npm]](https://www.npmjs.com/package/@anthropic-ai/claude-code) [npm]: https://img.shields.io/npm/v/@anthropic-ai/claude-code.svg?style=flat-square Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for adding MCP servers, defining tools, and connecting external resources."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "e05ff93a7df8bc9f",
+      "name": "Anthropic Python SDK",
+      "output": "Minimal Python snippet aligned with current SDK version.",
+      "procedure": [
+        "Import anthropic and instantiate client with ANTHROPIC_API_KEY.",
+        "Use messages.create for standard calls; messages.stream for streaming.",
+        "Add cache_control to system prompt and large context blocks for caching.",
+        "Define tools with name, description, and input_schema (JSON Schema).",
+        "Model IDs: claude-sonnet-4-6, claude-opus-4-7, claude-haiku-4-5."
+      ],
+      "slug": "anthropic-python-sdk",
+      "source": "https://github.com/anthropics/anthropic-sdk-python",
+      "source_branch": "main",
+      "source_commit": "unknown",
+      "summary": "# Claude SDK for Python [![PyPI version](https://img.shields.io/pypi/v/anthropic.svg)](https://pypi.org/project/anthropic/) The Claude SDK for Python provides access to the [Claude API](https://docs.anthropic.com/en/api/) from Python applications. ## Documentation Full documentation is available at **[platform.claude.com/docs/en/api/sdks/python](https://platform.claude.com/docs/en/api/sdks/python)**. ## Installation.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for implementing Claude API features in Python: streaming, tool use, prompt caching."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "369e52a43cf0afe9",
+      "name": "Anthropic TypeScript SDK",
+      "output": "Compact TypeScript snippet aligned with current @anthropic-ai/sdk version.",
+      "procedure": [
+        "Install @anthropic-ai/sdk and import Anthropic.",
+        "Instantiate with new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY }).",
+        "Use client.messages.create for calls; client.messages.stream for streaming.",
+        "Pass tools array with name, description, and input_schema.",
+        "Model IDs: claude-sonnet-4-6, claude-opus-4-7, claude-haiku-4-5."
+      ],
+      "slug": "anthropic-typescript-sdk",
+      "source": "https://github.com/anthropics/anthropic-sdk-typescript",
+      "source_branch": "main",
+      "source_commit": "unknown",
+      "summary": "# Claude SDK for TypeScript [![NPM version](https://img.shields.io/npm/v/@anthropic-ai/sdk.svg)](https://npmjs.org/package/@anthropic-ai/sdk) The Claude SDK for TypeScript provides access to the [Claude API](https://docs.anthropic.com/en/api/) from server-side TypeScript or JavaScript applications. ## Documentation Full documentation is available at **[platform.claude.com/docs/en/api/sdks/typescript](https://platfor.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for implementing Claude API features in TypeScript or JavaScript."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "a8c5f22dcc113922",
+      "name": "Documentation Workflow",
+      "output": "Concise documentation update with source traceability.",
+      "procedure": [
+        "Identify the audience: end-user, API developer, or contributor.",
+        "Link to source code instead of copying long code blocks.",
+        "Keep examples runnable and minimal.",
+        "Update changelog when removing or renaming public APIs.",
+        "Verify all commands and code samples before publishing."
+      ],
+      "slug": "documentation-workflow",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "unknown",
+      "summary": "# Claude Code ![](https://img.shields.io/badge/Node.js-18%2B-brightgreen?style=flat-square) [![npm]](https://www.npmjs.com/package/@anthropic-ai/claude-code) [npm]: https://img.shields.io/npm/v/@anthropic-ai/claude-code.svg?style=flat-square Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for writing, updating, or maintaining technical documentation and developer guides."
+    }
+  ],
+  "source_policy": "official Anthropic GitHub repositories only"
+}
