@@ -1,0 +1,63 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-05-29 00:34 UTC
+Version : 2.1.152 → 2.1.154
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-05-29/
+============================================================
+
+[ ★ 신규 감지 스킬 (5개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /chrome  ← 수동 추가 필요
+  ? /command  ← 수동 추가 필요
+  ? /logout  ← 수동 추가 필요
+  ? /remote-control  ← 수동 추가 필요
+  ? /workflows  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /command
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-05-29/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed auto mode incorrectly blocking actions with "could not evaluate this action" when the safety classifier ran out of output tokens while reasoning
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Added Claude Opus 4.8 support and 4.7 → 4.8 migration guidance to the `/claude-api` skill
+  - Deprecated `CLAUDE_CODE_OPUS_4_6_FAST_MODE_OVERRIDE` (will be removed on 06/01). To use fast mode on Opus 4.6, switch with `/model claude-opus-4-6[1m]` and then `/fast on`
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.154
+
+- Opus 4.8 is here! Now defaults to high effort · /effort xhigh for your hardest tasks
+- Introducing dynamic workflows: ask Claude to create a workflow and it orchestrates work across tens to hundreds of agents in the background, so you can take on larger, more complex tasks. Run `/workflows` to view your runs
+- Fast mode on Opus 4.8 is now available at a fraction of its previous cost: 2x the standard rate for 2.5x the speed
+- The lean system prompt is now the default for all models except Haiku, Sonnet, and Opus 4.7 and earlier
+- Claude now reserves the multiple-choice question prompt for decisions it genuinely cannot make itself, instead of asking when it already has enough context to proceed
+- `/simplify` now runs a cleanup-only review (reuse, simplification, efficiency, altitude) and applies the fixes, instead of running the full `/code-review --fix` bug-hunting review
+- Renamed the `/effort` slider labels from "Speed"/"Intelligence" to "Faster"/"Smarter" for clarity
+- `claude agents`: type `! <command>` to run a shell command as a background session you can attach to and detach from. Also available as `claude --bg --exec '<command>'`
+- `claude agents`: `/logout` now signs you out instead of being sent to a background session
+- `←←` to open the agents view now works on Bedrock, Vertex, Foundry, and with telemetry disabled
+- Claude in Chrome: pick which connected browser to use via `/chrome` → "Select browser…", or in-chat when a browser action runs with multiple connected
+- Plugins can now declare `defaultEnabled: false` in `plugin.json` or a marketplace entry; enable them with `/plugin` or `claude plugin enable`. Dependencies of enabled plugins are still enabled automatically
+- The `/plugin` Discover tab now pins plugins whose relevance signals match the current directory with a "suggested for this directory" annotation
+- Streaming tool execution is now always enabled, including when telemetry is disabled or on Bedrock/Vertex/Foundry (previously beh
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
