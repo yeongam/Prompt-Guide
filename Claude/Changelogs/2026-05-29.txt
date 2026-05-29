@@ -1,0 +1,64 @@
+Prompt-Guide Claude Skills Changelog - 2026-05-29
+
+Snapshot: Claude/skills/2026-05-29/skills
+Source: anthropics/claude-code
+Version: 2.1.129 -> 2.1.156
+Generated: 2026-05-29 15:15 UTC
+
+[추가된 스킬]
+- init: Generate CLAUDE.md with architecture, conventions, commands
+- review: Multi-pass PR review: logic, style, security, tests
+- security-review: OWASP-focused audit of pending diffs; risk-ranked findings
+- simplify: Review changed code for reuse/quality/efficiency; apply fixes
+- session-start-hook: Create SessionStart hook in .claude/settings.json
+- update-config: Configure settings.json: hooks, permissions, env vars
+- keybindings-help: Customize ~/.claude/keybindings.json; chord binding support
+- fewer-permission-prompts: Scan transcripts; add bash/MCP allowlist to .claude/settings.json
+- loop: Run prompt or slash command on recurring interval (default 10m)
+- claude-api: Build/debug/migrate Claude API apps; caching, tools, model IDs
+- autopilot: Plan, adversarial critique, implement, bug-hunt, open PR
+- bugfix: Failing repro first, root-cause, minimal fix, regression test, PR
+- docs: Generate/update docs; verify examples and links; open PR
+- deep-research: Fan-out searches, fetch sources, adversarial verify, cited report
+- investigate: Parallel hypotheses, adversarial refutation, root-cause report
+- code-review: Review diff: correctness, reuse, simplification, efficiency
+- run: Launch project app and confirm changes work
+- verify: Run app, exercise change path, confirm correct behavior
+- dashboard: Discover data, design panels, implement, validate, open PR
+- ultrareview: Parallel multi-agent cloud code review; local or GitHub PR
+- ultraplan: Auto-create cloud worktrees for multi-agent planning
+- team-onboarding: Generate onboarding guide from local Claude Code usage history
+- effort: Interactive effort level slider for session
+- powerup: Interactive animated feature demos with lessons
+- tui: Switch to flicker-free alt-screen TUI rendering
+- focus: Toggle focus view: prompt + tool summary + final response only
+- undo: Alias for /rewind; undoes last assistant action
+- usage: Show token usage and cost stats (merged /cost + /stats)
+- theme: Create or switch custom color themes
+- color: Set random session color
+
+[수정된 스킬]
+- none
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 유지: Claude/skills/2026-05-29/skills
+- 각 스킬: .md 파일 (trigger, procedure, output, token_policy, compatibility)
+- catalog.json으로 메타데이터 통합
+
+[토큰 절감 관련 변경 사항]
+- 긴 원문 문서 복사 배제; 공식 레포 링크로 대체
+- 스킬 절차는 짧은 실행 단위로 제한
+- 중복 설명 제거; catalog.json 단일 소스화
+- YAML 구조: JSON/Markdown 대비 ~30% 토큰 절감
+
+[충돌 해결 내역]
+- slug 기준 중복 스킬 통합
+- 기존 날짜 스냅샷 덮어쓰지 않음 (신규 날짜에만 기록)
+- hash 비교로 변경 감지
+
+[요약]
+- version: 2.1.129 -> 2.1.156
+- skills: added=30, modified=0, deleted=0, unchanged=0
