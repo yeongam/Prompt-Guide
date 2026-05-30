@@ -1,0 +1,42 @@
+Prompt-Guide Claude Skills Changelog - 2026-05-30
+
+Snapshot: Claude/skills/2026-05-30/skills
+Source:   anthropics/claude-code (official)
+Catalog:  Claude/skills/SKILLS_CATALOG.yaml v2.1.129
+
+[추가된 스킬]
+- code-review   (/code-review) — diff review with --comment/--fix flags; not in v2.1.129 catalog
+- verify        (/verify)      — end-to-end manual verification; not in v2.1.129 catalog
+- run           (/run)         — launch and drive app; not in v2.1.129 catalog
+- deep-research (/deep-research) — multi-source cited research; not in v2.1.129 catalog
+
+[수정된 스킬]
+- none (initial snapshot; all skills newly snapshotted from live system + catalog)
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 생성: skills/2026-05-30/skills/
+- 코딩/프로그래밍/문서 관련 스킬만 개별 .md 파일 생성 (13개)
+- 전체 21개 스킬은 catalog.json에 통합 관리
+- SKILLS_CATALOG.yaml은 정식 YAML 기준 파일로 유지
+
+[토큰 절감 관련 변경 사항]
+- 개별 .md 파일: trigger + procedure + output + token_policy만 포함 (source summary 없음)
+- catalog.json: one-line desc + token_policy array; 장문 설명 제거
+- 공통 source_policy 및 token_optimization 필드로 중복 제거
+- 코딩/프로그래밍/문서 외 UI/설정 스킬은 .md 없이 catalog.json에만 포함
+
+[충돌 해결 내역]
+- code-review: 카탈로그 미등재 신규 스킬 → 신규 추가 처리
+- verify: 카탈로그 미등재 신규 스킬 → 신규 추가 처리
+- run: 카탈로그 미등재 신규 스킬 → 신규 추가 처리
+- deep-research: 카탈로그 미등재 신규 스킬 → 신규 추가 처리
+- 기존 날짜 스냅샷 없음 → 초기 스냅샷으로 생성
+- slug 기준 중복 검사 통과 (21개 모두 고유)
+
+[요약]
+- skills: added=4 (신규), snapshotted=21 (전체), md_files=13 (코딩/문서 한정), deleted=0
+- catalog_version: 2.1.129
+- next_check: 다음 루틴 실행 시 anthropics/claude-code CHANGELOG.md에서 버전 비교

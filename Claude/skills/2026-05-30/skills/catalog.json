@@ -1,0 +1,224 @@
+{
+  "date": "2026-05-30",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "source": "https://github.com/anthropics/claude-code",
+  "source_branch": "main",
+  "catalog_version": "2.1.129",
+  "generated_at": "2026-05-30T00:00:00Z",
+  "skills": [
+    {
+      "slug": "claude-api",
+      "cmd": "/claude-api",
+      "category": "coding",
+      "trigger": "code imports anthropic SDK; user asks Claude API features, prompt caching, tool use",
+      "desc": "Build/debug Claude API apps; prompt caching, tool use, model migration",
+      "models": {"opus": "claude-opus-4-7", "sonnet": "claude-sonnet-4-6", "haiku": "claude-haiku-4-5-20251001"},
+      "hash": "a1b2c3d4e5f60001",
+      "token_policy": ["Link to docs instead of copying", "Return only decision-critical code", "Avoid repeated background context"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "init",
+      "cmd": "/init",
+      "category": "documentation",
+      "trigger": "user asks to initialize or document codebase",
+      "desc": "Generate CLAUDE.md with architecture, conventions, commands",
+      "hash": "a1b2c3d4e5f60002",
+      "token_policy": ["Link to docs instead of copying", "Return only decision-critical output", "Avoid repeated background context"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "review",
+      "cmd": "/review",
+      "category": "coding",
+      "trigger": "user asks to review PR or branch",
+      "desc": "Multi-pass PR review: logic, style, security, tests",
+      "hash": "a1b2c3d4e5f60003",
+      "token_policy": ["Return ranked findings only", "Avoid repeating file contents", "Link to diff lines"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "code-review",
+      "cmd": "/code-review",
+      "category": "coding",
+      "trigger": "user asks to review diff; correctness bugs, reuse, efficiency",
+      "desc": "Review diff for bugs/reuse/efficiency; --comment posts inline PR comments; --fix applies fixes",
+      "hash": "a1b2c3d4e5f60004",
+      "token_policy": ["Return ranked findings only", "Avoid repeating file contents", "Inline comments reduce back-and-forth"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "security-review",
+      "cmd": "/security-review",
+      "category": "coding",
+      "trigger": "user asks security audit of current branch changes",
+      "desc": "OWASP-focused diff audit; risk-ranked findings",
+      "hash": "a1b2c3d4e5f60005",
+      "token_policy": ["Return risk-ranked list only", "No verbose explanations", "Link OWASP references"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "simplify",
+      "cmd": "/simplify",
+      "category": "coding",
+      "trigger": "user asks to clean up or refactor changed code",
+      "desc": "Review changed code for quality/efficiency; apply fixes (quality only, not bugs)",
+      "hash": "a1b2c3d4e5f60006",
+      "token_policy": ["Apply fixes directly", "No verbose explanations", "Return diff summary"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "verify",
+      "cmd": "/verify",
+      "category": "coding",
+      "trigger": "user asks to verify fix works, test change manually, confirm feature works",
+      "desc": "Run app, observe behavior end-to-end; confirm changes work before reporting done",
+      "hash": "a1b2c3d4e5f60007",
+      "token_policy": ["Report pass/fail only", "Include exact command used", "Note edge cases tested"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "run",
+      "cmd": "/run",
+      "category": "coding",
+      "trigger": "user asks to run, start, screenshot the app, or confirm change works",
+      "desc": "Launch project app; test golden path and edge cases",
+      "hash": "a1b2c3d4e5f60008",
+      "token_policy": ["Report result, not startup log", "Include screenshot if visual", "Note port/URL"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "session-start-hook",
+      "cmd": "/session-start-hook",
+      "category": "coding",
+      "trigger": "user wants test/lint runners on session start (web Claude Code)",
+      "desc": "Create SessionStart hook ensuring project can run tests and linters",
+      "hash": "a1b2c3d4e5f60009",
+      "token_policy": ["Return hook JSON only", "No verbose explanation", "Link docs for hook schema"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "update-config",
+      "cmd": "/update-config",
+      "category": "coding",
+      "trigger": "automated behavior ('when X', 'allow Y', 'set Z=val'); hooks, permissions, env vars",
+      "desc": "Configure settings.json: hooks, permissions, env vars",
+      "hash": "a1b2c3d4e5f60010",
+      "token_policy": ["Return JSON diff only", "No verbose explanation", "Note scope (project/user)"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "fewer-permission-prompts",
+      "cmd": "/fewer-permission-prompts",
+      "category": "coding",
+      "trigger": "user wants fewer permission dialogs in Claude Code",
+      "desc": "Scan transcripts → add bash/MCP allowlist to .claude/settings.json",
+      "hash": "a1b2c3d4e5f60011",
+      "token_policy": ["Return allowlist entries only", "Prioritize most frequent commands", "No verbose explanation"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "loop",
+      "cmd": "/loop [interval] [/command]",
+      "category": "coding",
+      "trigger": "user wants recurring task, polling, or repeated command on interval",
+      "desc": "Run prompt or slash command on recurring interval; default 10m",
+      "hash": "a1b2c3d4e5f60012",
+      "token_policy": ["Minimal per-iteration output", "Summarize on completion", "No redundant context"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "ultrareview",
+      "cmd": "/ultrareview [PR#]",
+      "category": "coding",
+      "trigger": "user says ultrareview or wants multi-agent parallel review",
+      "desc": "Parallel multi-agent cloud review; no-arg=local branch, arg=GitHub PR",
+      "note": "Billed; requires git repo",
+      "hash": "a1b2c3d4e5f60013",
+      "token_policy": ["Return merged findings only", "Deduplicate across agents", "Risk-rank output"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "ultraplan",
+      "cmd": "/ultraplan",
+      "category": "coding",
+      "trigger": "user wants cloud environment for complex multi-agent planning",
+      "desc": "Auto-create cloud worktrees/environments for multi-agent planning tasks",
+      "hash": "a1b2c3d4e5f60014",
+      "token_policy": ["Return plan steps only", "No verbose reasoning", "Link to worktree paths"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "team-onboarding",
+      "cmd": "/team-onboarding",
+      "category": "documentation",
+      "trigger": "user wants teammate ramp-up guide for Claude Code",
+      "desc": "Generate onboarding guide from local Claude Code usage history/data",
+      "hash": "a1b2c3d4e5f60015",
+      "token_policy": ["Concise bullet list format", "Link to local docs", "No verbose prose"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "deep-research",
+      "cmd": "/deep-research",
+      "category": "documentation",
+      "trigger": "user wants deep multi-source fact-checked research report",
+      "desc": "Fan-out web searches, fetch sources, verify claims, synthesize cited report",
+      "hash": "a1b2c3d4e5f60016",
+      "token_policy": ["Cite sources inline", "No uncited claims", "Compress background prose"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "keybindings-help",
+      "cmd": "/keybindings-help",
+      "category": "config",
+      "trigger": "user wants to customize keyboard shortcuts or rebind keys",
+      "desc": "Customize ~/.claude/keybindings.json; supports chord bindings",
+      "hash": "a1b2c3d4e5f60017",
+      "token_policy": ["Return JSON patch only", "No verbose docs", "Link schema reference"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "effort",
+      "cmd": "/effort",
+      "category": "config",
+      "trigger": "user wants to adjust effort or quality level for session",
+      "desc": "Interactive slider for session effort level (also: CLAUDE_EFFORT env var)",
+      "hash": "a1b2c3d4e5f60018",
+      "token_policy": ["One-line confirmation only", "No verbose explanation"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "usage",
+      "cmd": "/usage",
+      "category": "config",
+      "trigger": "user asks about token or cost statistics",
+      "desc": "Show token usage and cost stats (merged /cost + /stats)",
+      "hash": "a1b2c3d4e5f60019",
+      "token_policy": ["Table format only", "No verbose prose"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "tui",
+      "cmd": "/tui",
+      "category": "config",
+      "trigger": "rendering looks flickery or user wants full-screen mode",
+      "desc": "Switch to flicker-free alt-screen TUI (also: CLAUDE_CODE_NO_FLICKER=1)",
+      "hash": "a1b2c3d4e5f60020",
+      "token_policy": ["One-line confirmation only"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    },
+    {
+      "slug": "focus",
+      "cmd": "/focus",
+      "category": "config",
+      "trigger": "user wants compact view of conversation",
+      "desc": "Toggle focus: show only prompt + tool summary + final response",
+      "hash": "a1b2c3d4e5f60021",
+      "token_policy": ["One-line confirmation only"],
+      "compatibility": ["Integrate only if slug unique or hash changed", "Preserve changelog evidence"]
+    }
+  ],
+  "source_policy": "anthropics/claude-code official repository only",
+  "token_optimization": "YAML catalog is canonical; .md files for coding/docs skills only; summaries capped at 1 line"
+}
