@@ -1,0 +1,67 @@
+{
+  "snapshot_date": "2026-05-31",
+  "source": "https://github.com/anthropics/claude-code",
+  "version": "2.1.129",
+  "skills": [
+    {
+      "slug": "init",
+      "cmd": "/init",
+      "trigger": "User asks to initialize or document codebase."
+    },
+    {
+      "slug": "review",
+      "cmd": "/review",
+      "trigger": "User asks to review PR or branch."
+    },
+    {
+      "slug": "security-review",
+      "cmd": "/security-review",
+      "trigger": "User asks for security audit of current branch changes."
+    },
+    {
+      "slug": "simplify",
+      "cmd": "/simplify",
+      "trigger": "User asks to clean up or refactor changed code."
+    },
+    {
+      "slug": "claude-api",
+      "cmd": "/claude-api",
+      "trigger": "Code imports anthropic SDK; user asks about Claude API features."
+    },
+    {
+      "slug": "update-config",
+      "cmd": "/update-config",
+      "trigger": "Automated behavior requests; hook, permission, env var changes."
+    },
+    {
+      "slug": "loop",
+      "cmd": "/loop [interval] [/command]",
+      "trigger": "User wants recurring task, e.g. 'check every 5m'."
+    },
+    {
+      "slug": "fewer-permission-prompts",
+      "cmd": "/fewer-permission-prompts",
+      "trigger": "User wants fewer permission dialogs."
+    },
+    {
+      "slug": "deep-research",
+      "cmd": "/deep-research",
+      "trigger": "User wants multi-source, fact-checked research report."
+    },
+    {
+      "slug": "code-review",
+      "cmd": "/code-review",
+      "trigger": "User asks for code review at specific effort level."
+    },
+    {
+      "slug": "session-start-hook",
+      "cmd": "/session-start-hook",
+      "trigger": "User wants test/lint runners on session start (web Claude Code)."
+    },
+    {
+      "slug": "keybindings-help",
+      "cmd": "/keybindings-help",
+      "trigger": "User wants to remap keys or add chord shortcuts."
+    }
+  ]
+}
