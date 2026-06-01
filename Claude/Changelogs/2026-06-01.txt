@@ -1,0 +1,39 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-06-01 15:11 UTC
+Version : 2.1.129 -> 2.1.159
+Source  : anthropics/claude-code (CHANGELOG.md)
+============================================================
+
+[ 추가된 스킬 / Added Skills ]
+  (없음 / none)
+
+[ 수정된 스킬 / Modified Skills ]
+  (없음 / none)
+
+[ 삭제된 스킬 / Deleted Skills ]
+  (없음 / none)
+
+[ 최적화된 구조 / Optimized Structure ]
+  - 단일 YAML 카탈로그: Claude/skills/SKILLS_CATALOG.yaml
+  - 날짜별 스냅샷: Claude/skills/20260601/
+  - 변경 로그: Claude/Changelogs/YYYY-MM-DD.txt
+
+[ 토큰 절감 변경 사항 / Token Savings ]
+  - 1-line desc caps; examples only where non-obvious
+  - Duplicate entries removed; YAML over JSON (~30% fewer tokens)
+  - version/updated fields auto-patched inline
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - 신규 항목은 기존 키와 충돌 검사 후 key-unique merge 적용
+  - 기존 스킬 동작 보존 우선; 신규 키만 추가
+
+----------------------------------------
+[ 원문 변경사항 / Raw Changelog ]
+
+## 2.1.159
+
+- Internal infrastructure improvements (no user-facing changes)
+
+============================================================
+[Status] Catalog updated to 2.1.159 | Snapshot: Claude/skills/20260601/
