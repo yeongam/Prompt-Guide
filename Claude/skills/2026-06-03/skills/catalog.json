@@ -1,0 +1,109 @@
+{
+  "date": "2026-06-03",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-06-03T15:11:46+00:00",
+  "catalog_version": "2.1.161",
+  "source_policy": "official anthropics/claude-code repository only",
+  "skills": [
+    {
+      "slug": "claude-api-coding",
+      "name": "Claude API Coding",
+      "cmd": "/claude-api",
+      "trigger": "code imports anthropic SDK; user asks about Claude API features, prompt caching, tool use, model migration",
+      "output": "Compact Claude API / Anthropic SDK implementation with caching applied.",
+      "procedure": [
+        "Check official Anthropic SDK alignment first.",
+        "Default to latest capable model.",
+        "Include prompt caching on all builds.",
+        "Prefer smallest working implementation.",
+        "Verify with narrowest relevant command."
+      ],
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "22fd2e0d874ed2a2"
+    },
+    {
+      "slug": "code-review",
+      "name": "Code Review",
+      "cmd": "/review | /security-review | /code-review",
+      "trigger": "user asks to review PR, branch, or security audit of pending changes",
+      "output": "Risk-ranked list of findings with file:line references.",
+      "procedure": [
+        "Multi-pass review: logic correctness, style, security, tests.",
+        "OWASP-focused audit for /security-review.",
+        "Report findings as inline PR comments when --comment used.",
+        "Apply fixes when --fix used.",
+        "Effort levels control finding coverage breadth."
+      ],
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "e6d603f4a4e12efb"
+    },
+    {
+      "slug": "documentation",
+      "name": "Documentation Maintenance",
+      "cmd": "/init",
+      "trigger": "user asks to initialize or document codebase, generate CLAUDE.md",
+      "output": "CLAUDE.md with project overview, directory map, build/test commands, key conventions.",
+      "procedure": [
+        "Scan repo structure, key files, and existing docs.",
+        "Generate CLAUDE.md covering architecture, conventions, commands.",
+        "Keep entries factual and concise.",
+        "Prefer existing naming conventions.",
+        "Verify completeness with grep for undocumented entry points."
+      ],
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "5de377184034ba60"
+    },
+    {
+      "slug": "simplify",
+      "name": "Simplify",
+      "cmd": "/simplify",
+      "trigger": "user asks to clean up or refactor changed code; quality review without bug hunting",
+      "output": "Cleaned diff with concise summary of each simplification applied.",
+      "procedure": [
+        "Review changed code only, not full repo.",
+        "Check for: reuse, simplification, efficiency, altitude cleanups.",
+        "Apply fixes directly.",
+        "Do not hunt for bugs; use /code-review for that.",
+        "No half-finished refactors."
+      ],
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "7a114ab2c4d0784d"
+    }
+  ]
+}

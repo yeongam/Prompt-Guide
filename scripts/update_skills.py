@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """Daily Claude Code skills updater.
-Fetches latest changelog from anthropics/claude-code, updates catalog and changelogs.
+Fetches latest CHANGELOG from anthropics/claude-code, writes dated skill snapshots
+under Claude/skills/YYYY-MM-DD/skills/ and changelogs under Claude/Changelogs/.
 """
 
+import hashlib
+import json
 import os
 import re
 import sys
@@ -14,9 +17,77 @@ import urllib.error
 REPO_ROOT = Path(__file__).parent.parent
 CATALOG_FILE = REPO_ROOT / "Claude" / "skills" / "SKILLS_CATALOG.yaml"
 VERSION_FILE = REPO_ROOT / "Claude" / "skills" / ".version"
-CHANGELOGS_DIR = REPO_ROOT / "changelogs"
+CHANGELOGS_DIR = REPO_ROOT / "Claude" / "Changelogs"
+SKILLS_BASE_DIR = REPO_ROOT / "Claude" / "skills"
 CHANGELOG_SRC = "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md"
-DESKTOP_LOG_DIR = Path(os.environ.get("DESKTOP_LOG_PATH", "/root/바탕화면/Claude-Text/Claude_skills"))
+
+# Coding / programming / doc skills to snapshot (slug -> metadata)
+SKILL_DEFS = {
+    "claude-api-coding": {
+        "name": "Claude API Coding",
+        "cmd": "/claude-api",
+        "trigger": "code imports anthropic SDK; user asks about Claude API features, prompt caching, tool use, model migration",
+        "procedure": [
+            "Check official Anthropic SDK alignment first.",
+            "Default to latest capable model.",
+            "Include prompt caching on all builds.",
+            "Prefer smallest working implementation.",
+            "Verify with narrowest relevant command.",
+        ],
+        "output": "Compact Claude API / Anthropic SDK implementation with caching applied.",
+    },
+    "code-review": {
+        "name": "Code Review",
+        "cmd": "/review | /security-review | /code-review",
+        "trigger": "user asks to review PR, branch, or security audit of pending changes",
+        "procedure": [
+            "Multi-pass review: logic correctness, style, security, tests.",
+            "OWASP-focused audit for /security-review.",
+            "Report findings as inline PR comments when --comment used.",
+            "Apply fixes when --fix used.",
+            "Effort levels control finding coverage breadth.",
+        ],
+        "output": "Risk-ranked list of findings with file:line references.",
+    },
+    "documentation": {
+        "name": "Documentation Maintenance",
+        "cmd": "/init",
+        "trigger": "user asks to initialize or document codebase, generate CLAUDE.md",
+        "procedure": [
+            "Scan repo structure, key files, and existing docs.",
+            "Generate CLAUDE.md covering architecture, conventions, commands.",
+            "Keep entries factual and concise.",
+            "Prefer existing naming conventions.",
+            "Verify completeness with grep for undocumented entry points.",
+        ],
+        "output": "CLAUDE.md with project overview, directory map, build/test commands, key conventions.",
+    },
+    "simplify": {
+        "name": "Simplify",
+        "cmd": "/simplify",
+        "trigger": "user asks to clean up or refactor changed code; quality review without bug hunting",
+        "procedure": [
+            "Review changed code only, not full repo.",
+            "Check for: reuse, simplification, efficiency, altitude cleanups.",
+            "Apply fixes directly.",
+            "Do not hunt for bugs; use /code-review for that.",
+            "No half-finished refactors.",
+        ],
+        "output": "Cleaned diff with concise summary of each simplification applied.",
+    },
+}
+
+COMMON_TOKEN_POLICY = [
+    "Avoid repeated background context.",
+    "Return only decision-critical code or instructions.",
+    "Link to source repo instead of copying long docs.",
+]
+
+COMMON_COMPATIBILITY = [
+    "Do not overwrite existing dated skill snapshots.",
+    "Integrate only if slug is unique or content hash changed.",
+    "Preserve changelog evidence for every generated update.",
+]
 
 
 def fetch(url: str) -> str:
@@ -40,46 +111,109 @@ def current_version() -> str:
     return VERSION_FILE.read_text().strip() if VERSION_FILE.exists() else ""
 
 
-def extract_new_items(section: str) -> dict:
-    skills = list(set(re.findall(r"`(/[\w-]+)`", section)))
-    settings = list(set(re.findall(r"`([a-zA-Z][a-zA-Z.]+)`(?=\s*[–—-])", section)))
-    env_vars = list(set(re.findall(r"`([A-Z][A-Z_]{3,})`", section)))
-    hooks = list(set(re.findall(r"\b(Pre\w+|Post\w+|TaskCreated|WorktreeCreate|PermissionDenied|Notification|Stop|SubagentStop)\b", section)))
-    return {"skills": skills, "settings": settings, "env": env_vars, "hooks": hooks}
+def skill_hash(slug: str, meta: dict) -> str:
+    payload = slug + json.dumps(meta, sort_keys=True)
+    return hashlib.md5(payload.encode()).hexdigest()[:16]
 
 
-def build_changelog_entry(ver: str, prev: str, section: str, items: dict) -> str:
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+def load_existing_snapshot(date_dir: Path) -> dict[str, str]:
+    catalog_path = date_dir / "catalog.json"
+    if not catalog_path.exists():
+        return {}
+    try:
+        data = json.loads(catalog_path.read_text())
+        return {s["slug"]: s.get("hash", "") for s in data.get("skills", [])}
+    except (json.JSONDecodeError, KeyError):
+        return {}
+
+
+def write_skill_md(path: Path, slug: str, meta: dict, ver: str) -> None:
+    cmd = meta["cmd"]
     lines = [
-        "=" * 60,
-        "Claude Code Skills Update Report",
-        f"Date    : {now}",
-        f"Version : {prev or 'none'} -> {ver}",
-        f"Source  : anthropics/claude-code",
-        "=" * 60,
+        f"# {meta['name']}",
         "",
-        "[변경 요약 / Change Summary]",
+        f"- Slug: `{slug}`",
+        f"- Cmd: `{cmd}`",
+        f"- Source: https://github.com/anthropics/claude-code",
+        f"- Source branch: `main`",
+        f"- Catalog version: `{ver}`",
+        f"- Trigger: {meta['trigger']}",
+        "",
+        "## Procedure",
         "",
     ]
-    if items["skills"]:
-        lines += ["Commands/Skills:", *[f"  {s}" for s in sorted(items["skills"])], ""]
-    if items["hooks"]:
-        lines += ["Hooks:", *[f"  {h}" for h in sorted(items["hooks"])], ""]
-    if items["settings"]:
-        lines += ["Settings:", *[f"  {s}" for s in sorted(items["settings"])], ""]
-    if items["env"]:
-        lines += ["Env Vars:", *[f"  {e}" for e in sorted(items["env"])], ""]
+    for i, step in enumerate(meta["procedure"], 1):
+        lines.append(f"{i}. {step}")
     lines += [
-        "-" * 40,
-        "[원문 변경사항 / Raw Changes]",
         "",
-        section[:3000],
+        "## Output",
         "",
-        "=" * 60,
-        f"[적용 상태] SKILLS_CATALOG.yaml 최신화 완료",
-        f"[Status]   Catalog updated, committed to yeongam/Prompt-Guide",
+        meta["output"],
+        "",
+        "## Token Policy",
+        "",
     ]
-    return "\n".join(lines)
+    for item in COMMON_TOKEN_POLICY:
+        lines.append(f"- {item}")
+    lines += [
+        "",
+        "## Compatibility",
+        "",
+    ]
+    for item in COMMON_COMPATIBILITY:
+        lines.append(f"- {item}")
+    lines.append("")
+    path.write_text("\n".join(lines), encoding="utf-8")
+
+
+def write_catalog_json(skills_dir: Path, date_str: str, ver: str, skill_entries: list) -> None:
+    catalog = {
+        "date": date_str,
+        "directory_rule": "YYYY-MM-DD/skills",
+        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S+00:00"),
+        "catalog_version": ver,
+        "source_policy": "official anthropics/claude-code repository only",
+        "skills": skill_entries,
+    }
+    (skills_dir / "catalog.json").write_text(
+        json.dumps(catalog, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+
+
+def generate_dated_snapshot(date_str: str, ver: str, prev_hashes: dict) -> tuple[list, list, list]:
+    """Returns (added, modified, unchanged) slug lists."""
+    skills_dir = SKILLS_BASE_DIR / date_str / "skills"
+    skills_dir.mkdir(parents=True, exist_ok=True)
+
+    added, modified, unchanged = [], [], []
+    skill_entries = []
+
+    for slug, meta in SKILL_DEFS.items():
+        h = skill_hash(slug, meta)
+        prev_h = prev_hashes.get(slug, "")
+        entry = {
+            "slug": slug,
+            "name": meta["name"],
+            "cmd": meta["cmd"],
+            "trigger": meta["trigger"],
+            "output": meta["output"],
+            "procedure": meta["procedure"],
+            "token_policy": COMMON_TOKEN_POLICY,
+            "compatibility": COMMON_COMPATIBILITY,
+            "hash": h,
+        }
+        skill_entries.append(entry)
+        write_skill_md(skills_dir / f"{slug}.md", slug, meta, ver)
+
+        if not prev_h:
+            added.append(slug)
+        elif prev_h != h:
+            modified.append(slug)
+        else:
+            unchanged.append(slug)
+
+    write_catalog_json(skills_dir, date_str, ver, skill_entries)
+    return added, modified, unchanged
 
 
 def update_catalog_version_field(ver: str) -> None:
@@ -91,13 +225,49 @@ def update_catalog_version_field(ver: str) -> None:
     CATALOG_FILE.write_text(text)
 
 
-def write_log(path: Path, content: str, date_str: str) -> None:
-    try:
-        path.mkdir(parents=True, exist_ok=True)
-        (path / f"skill_update_{date_str}.txt").write_text(content, encoding="utf-8")
-        print(f"Log written: {path}/skill_update_{date_str}.txt")
-    except OSError as e:
-        print(f"Warning: {e}", file=sys.stderr)
+def build_changelog(date_str: str, ver: str, prev: str,
+                    added: list, modified: list, deleted: list, unchanged: list,
+                    raw_section: str) -> str:
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    lines = [
+        f"Prompt-Guide Claude Skills Changelog - {date_str}",
+        "",
+        f"Snapshot : Claude/skills/{date_str}/skills",
+        f"Source   : anthropics/claude-code (main)",
+        f"Catalog  : v{ver}",
+        f"Run at   : {now}",
+        f"Version  : {prev or 'none'} -> {ver}",
+        "",
+        "[추가된 스킬]",
+    ]
+    lines += [f"- {s}" for s in sorted(added)] if added else ["- none"]
+    lines += ["", "[수정된 스킬]"]
+    lines += [f"- {s}" for s in sorted(modified)] if modified else ["- none"]
+    lines += ["", "[삭제된 스킬]", "- none"]
+    lines += [
+        "",
+        "[최적화된 구조]",
+        f"- 날짜별 스냅샷 구조 유지: Claude/skills/YYYY-MM-DD/skills",
+        "- 각 스킬: trigger, procedure, output, token_policy, compatibility 필드로 경량화",
+        "- catalog.json으로 메타데이터 통합 (중복 헤더 제거)",
+        "- SKILLS_CATALOG.yaml은 전체 카탈로그 원본으로 유지",
+        "",
+        "[토큰 절감 관련 변경 사항]",
+        "- 긴 원문 복사 대신 공식 레포 링크만 저장",
+        "- procedure는 5개 이하 단계로 제한",
+        "- 공통 필드(compatibility, token_policy) 패턴 재사용",
+        "",
+        "[충돌 해결 내역]",
+        "- slug 기준 중복 통합 (hash 비교)",
+        "- 기존 날짜 스냅샷 덮어쓰기 없음",
+        "- SKILLS_CATALOG.yaml 버전 필드만 업데이트",
+        "",
+        "[요약]",
+        f"- skills: added={len(added)}, modified={len(modified)}, deleted={len(deleted)}, unchanged={len(unchanged)}",
+    ]
+    if raw_section:
+        lines += ["", "[원본 변경사항 (발췌)]", "", raw_section[:2000]]
+    return "\n".join(lines)
 
 
 def main() -> int:
@@ -114,22 +284,36 @@ def main() -> int:
         return 1
 
     prev = current_version()
-    print(f"Latest: {ver}  |  Local: {prev or 'none'}")
+    date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    print(f"Latest: {ver}  |  Local: {prev or 'none'}  |  Date: {date_str}")
 
-    if ver == prev:
-        print("Already up to date. No changes.")
+    # Load previous snapshot hashes for diff
+    prev_date_dirs = sorted(SKILLS_BASE_DIR.glob("????-??-??"), reverse=True)
+    prev_hashes: dict[str, str] = {}
+    for d in prev_date_dirs:
+        if d.name != date_str:
+            prev_hashes = load_existing_snapshot(d / "skills")
+            break
+
+    # Always generate snapshot (even if version unchanged — date may differ)
+    date_skill_dir = SKILLS_BASE_DIR / date_str / "skills"
+    if date_skill_dir.exists() and ver == prev:
+        print("Snapshot for today already exists and version unchanged. Skipping.")
         return 0
 
-    items = extract_new_items(section)
-    date_str = datetime.now(timezone.utc).strftime("%Y%m%d")
-    entry = build_changelog_entry(ver, prev, section, items)
+    added, modified, unchanged = generate_dated_snapshot(date_str, ver, prev_hashes)
+    deleted: list[str] = []
 
-    write_log(CHANGELOGS_DIR, entry, date_str)
-    write_log(DESKTOP_LOG_DIR, entry, date_str)
+    # Write changelog
+    CHANGELOGS_DIR.mkdir(parents=True, exist_ok=True)
+    log_content = build_changelog(date_str, ver, prev, added, modified, deleted, unchanged, section)
+    log_path = CHANGELOGS_DIR / f"{date_str}.txt"
+    log_path.write_text(log_content, encoding="utf-8")
+    print(f"Changelog written: {log_path}")
 
+    # Update catalog version
     VERSION_FILE.write_text(ver)
     update_catalog_version_field(ver)
-
     print(f"Updated: {prev or 'none'} -> {ver}")
     return 0
 

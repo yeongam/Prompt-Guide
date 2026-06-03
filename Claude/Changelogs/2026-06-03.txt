@@ -1,0 +1,57 @@
+Prompt-Guide Claude Skills Changelog - 2026-06-03
+
+Snapshot : Claude/skills/2026-06-03/skills
+Source   : anthropics/claude-code (main)
+Catalog  : v2.1.161
+Run at   : 2026-06-03 15:11 UTC
+Version  : 2.1.129 -> 2.1.161
+
+[추가된 스킬]
+- claude-api-coding
+- code-review
+- documentation
+- simplify
+
+[수정된 스킬]
+- none
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 유지: Claude/skills/YYYY-MM-DD/skills
+- 각 스킬: trigger, procedure, output, token_policy, compatibility 필드로 경량화
+- catalog.json으로 메타데이터 통합 (중복 헤더 제거)
+- SKILLS_CATALOG.yaml은 전체 카탈로그 원본으로 유지
+
+[토큰 절감 관련 변경 사항]
+- 긴 원문 복사 대신 공식 레포 링크만 저장
+- procedure는 5개 이하 단계로 제한
+- 공통 필드(compatibility, token_policy) 패턴 재사용
+
+[충돌 해결 내역]
+- slug 기준 중복 통합 (hash 비교)
+- 기존 날짜 스냅샷 덮어쓰기 없음
+- SKILLS_CATALOG.yaml 버전 필드만 업데이트
+
+[요약]
+- skills: added=4, modified=0, deleted=0, unchanged=0
+
+[원본 변경사항 (발췌)]
+
+## 2.1.161
+
+- `OTEL_RESOURCE_ATTRIBUTES` values are now included as labels on metric datapoints, so you can slice usage metrics by custom dimensions like team or repo
+- `claude agents` rows now show `done/total` before the detail when work is fanned out; peek shows the longest-running item
+- `/mcp` now collapses claude.ai connectors you've never signed in to behind a "Show unused connectors" row
+- Parallel tool calls: a failed Bash command no longer cancels other calls in the same batch — each tool returns its own result independently
+- Fullscreen mode: clipboard now uses `wl-copy`/`xclip`/`xsel` on Linux when available, copies to both the clipboard and PRIMARY selection for middle-click paste, and the "hold {key} for native selection" hint now shows the correct key per terminal
+- Fixed the `/effort` dialog, workflow animations, and prompt keyword shimmer not honoring the "Reduce motion" setting
+- Fixed `forceLoginOrgUUID`/`forceLoginMethod` managed-settings policies blocking third-party provider sessions (Bedrock, Vertex, Foundry, Mantle) alongside the org pin (regression in 2.1.146)
+- Fixed background subagent output corrupting `claude -p` stdout when using `--output-format text` or `json`
+- Fixed `/usage-credits` starting a re-login for Team and Enterprise admins instead of pointing to the organization's usage settings page
+- Fixed `/autofix-pr` reporting "cannot run on the default branch" when the session is inside a git worktree or another repository
+- Fixed `--resume` picker not showing sessions from the current directory when it isn't a git worktree (e.g., jj workspaces)
+- Fixed Windows hooks that invoke bash explicitly (e.g., `/usr/bin/bash script.sh`) failing with "command not found" or "cannot execute binary file"
+- Fixed OpenTelemetry log events (`user_prompt`, `api_request`, `tool_result`, `tool_decision`) being silently dropped when emitted before telemetry initialization completed
+- Fixed `claude mcp` list/get/add printing secrets to the terminal: `${V
