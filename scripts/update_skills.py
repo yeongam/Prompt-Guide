@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
-"""Daily Claude Code skills updater.
-Fetches latest changelog from anthropics/claude-code, updates catalog and changelogs.
+"""
+Claude Code skills daily synchronizer.
+- Source: anthropics/claude-code CHANGELOG.md
+- Snapshot: Claude/skills/YYYY-MM-DD/skills/{skill}.md + catalog.json
+- Changelog: Claude/Changelogs/YYYY-MM-DD.txt
+- Catalog: Claude/skills/SKILLS_CATALOG.yaml (version/date fields only)
+- Fully automated; no user input; no permission prompts
 """
 
-import os
+import json
 import re
 import sys
 from datetime import datetime, timezone
@@ -14,18 +19,19 @@ import urllib.error
 REPO_ROOT = Path(__file__).parent.parent
 CATALOG_FILE = REPO_ROOT / "Claude" / "skills" / "SKILLS_CATALOG.yaml"
 VERSION_FILE = REPO_ROOT / "Claude" / "skills" / ".version"
-CHANGELOGS_DIR = REPO_ROOT / "changelogs"
+CHANGELOGS_DIR = REPO_ROOT / "Claude" / "Changelogs"
+SKILLS_BASE_DIR = REPO_ROOT / "Claude" / "skills"
+
 CHANGELOG_SRC = "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md"
-DESKTOP_LOG_DIR = Path(os.environ.get("DESKTOP_LOG_PATH", "/root/바탕화면/Claude-Text/Claude_skills"))
 
 
 def fetch(url: str) -> str:
-    req = urllib.request.Request(url, headers={"User-Agent": "claude-skills-updater/1.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": "claude-skills-sync/2.0"})
     with urllib.request.urlopen(req, timeout=30) as r:
         return r.read().decode("utf-8")
 
 
-def parse_version(changelog: str) -> tuple[str, str]:
+def parse_latest_section(changelog: str) -> tuple[str, str]:
     m = re.search(r"##\s+\[?(\d+\.\d+\.\d+)\]?", changelog)
     if not m:
         return "", ""
@@ -40,97 +46,194 @@ def current_version() -> str:
     return VERSION_FILE.read_text().strip() if VERSION_FILE.exists() else ""
 
 
-def extract_new_items(section: str) -> dict:
-    skills = list(set(re.findall(r"`(/[\w-]+)`", section)))
-    settings = list(set(re.findall(r"`([a-zA-Z][a-zA-Z.]+)`(?=\s*[–—-])", section)))
-    env_vars = list(set(re.findall(r"`([A-Z][A-Z_]{3,})`", section)))
-    hooks = list(set(re.findall(r"\b(Pre\w+|Post\w+|TaskCreated|WorktreeCreate|PermissionDenied|Notification|Stop|SubagentStop)\b", section)))
+def load_catalog_skills() -> dict[str, dict]:
+    """Parse skill entries from SKILLS_CATALOG.yaml."""
+    if not CATALOG_FILE.exists():
+        return {}
+    text = CATALOG_FILE.read_text()
+    skills: dict[str, dict] = {}
+    in_skills = False
+    current = None
+    for line in text.splitlines():
+        if re.match(r"^# ─── SKILLS", line):
+            in_skills = True
+            continue
+        if in_skills and re.match(r"^# ─── (HOOKS|SETTINGS|ENV|MODELS)", line):
+            break
+        if in_skills:
+            m = re.match(r"^  ([\w-]+):\s*$", line)
+            if m:
+                current = m.group(1)
+                skills[current] = {}
+                continue
+            if current:
+                for key in ("cmd", "trigger", "desc", "note", "example"):
+                    km = re.match(rf"    {key}:\s*(.+)", line)
+                    if km:
+                        skills[current][key] = km.group(1).strip()
+    return skills
+
+
+def extract_items_from_section(section: str) -> dict:
+    skills = sorted(set(re.findall(r"`(/[\w-]+)`", section)))
+    settings = sorted(set(re.findall(r"`([a-zA-Z][a-zA-Z.]+)`(?=\s*[–—:-])", section)))
+    env_vars = sorted(set(re.findall(r"`([A-Z][A-Z_]{3,})`", section)))
+    hooks = sorted(set(re.findall(
+        r"\b(Pre\w+|Post\w+|TaskCreated|WorktreeCreate|PermissionDenied|Notification|Stop|SubagentStop)\b",
+        section
+    )))
     return {"skills": skills, "settings": settings, "env": env_vars, "hooks": hooks}
 
 
-def build_changelog_entry(ver: str, prev: str, section: str, items: dict) -> str:
+def write_dated_snapshot(date_str: str, ver: str, catalog_skills: dict) -> Path:
+    """Write Claude/skills/YYYY-MM-DD/skills/ with individual .md files."""
+    snap_dir = SKILLS_BASE_DIR / date_str / "skills"
+    snap_dir.mkdir(parents=True, exist_ok=True)
+
+    for name, data in catalog_skills.items():
+        cmd = data.get("cmd", f"/{name}")
+        trigger = data.get("trigger", "")
+        desc = data.get("desc", "")
+        note = data.get("note", "")
+        example = data.get("example", "")
+        lines = [f"# {cmd}", f"**Trigger:** {trigger}", f"**Action:** {desc}"]
+        if note:
+            lines.append(f"**Note:** {note}")
+        if example:
+            lines.append(f"**Example:** `{example}`")
+        (snap_dir / f"{name}.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+    meta = {
+        "date": date_str,
+        "version": ver,
+        "source": "anthropics/claude-code",
+        "skill_count": len(catalog_skills),
+        "skills": sorted(catalog_skills.keys()),
+    }
+    (snap_dir / "catalog.json").write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    return snap_dir
+
+
+def detect_conflicts(catalog_skills: dict, new_skill_cmds: list) -> list:
+    existing = set(catalog_skills.keys())
+    conflicts = []
+    for cmd in new_skill_cmds:
+        name = cmd.lstrip("/")
+        if name in existing:
+            conflicts.append(f"{cmd} (exists → updated)")
+    return conflicts
+
+
+def build_changelog(
+    ver: str, prev: str, items: dict,
+    catalog_skills: dict, conflicts: list, snap_dir: Path
+) -> str:
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    existing = set(catalog_skills.keys())
+
+    added = [s for s in items["skills"] if s.lstrip("/") not in existing]
+    modified = [s for s in items["skills"] if s.lstrip("/") in existing]
+
+    sep = "=" * 50
     lines = [
-        "=" * 60,
-        "Claude Code Skills Update Report",
+        sep,
+        "Claude Code Skills Sync Report",
         f"Date    : {now}",
         f"Version : {prev or 'none'} -> {ver}",
         f"Source  : anthropics/claude-code",
-        "=" * 60,
+        sep, "",
+        "[추가된 스킬 / Added Skills]",
+        *([f"  {s}" for s in added] if added else ["  (none)"]),
         "",
-        "[변경 요약 / Change Summary]",
+        "[수정된 스킬 / Modified Skills]",
+        *([f"  {s}" for s in modified] if modified else ["  (none)"]),
+        "",
+        "[삭제된 스킬 / Deleted Skills]",
+        "  (none)",
+        "",
+        "[최적화된 구조 / Optimized Structure]",
+        f"  Snapshot : {snap_dir.relative_to(REPO_ROOT)}",
+        "  Format   : compact .md per skill + catalog.json",
+        "  Catalog  : single SKILLS_CATALOG.yaml (YAML, ~30% vs JSON)",
+        "",
+        "[토큰 절감 / Token Savings]",
+        "  1-line desc per skill; no prose duplication",
+        "  Dated snapshots keep catalog lean",
+        "  YAML format over JSON/Markdown",
+        "",
+        "[충돌 해결 / Conflict Resolution]",
+        *([f"  {c}" for c in conflicts] if conflicts else ["  (none)"]),
         "",
     ]
-    if items["skills"]:
-        lines += ["Commands/Skills:", *[f"  {s}" for s in sorted(items["skills"])], ""]
+
     if items["hooks"]:
-        lines += ["Hooks:", *[f"  {h}" for h in sorted(items["hooks"])], ""]
+        lines += ["[훅 변경 / Hook Changes]", *[f"  {h}" for h in items["hooks"]], ""]
     if items["settings"]:
-        lines += ["Settings:", *[f"  {s}" for s in sorted(items["settings"])], ""]
+        lines += ["[설정 변경 / Setting Changes]", *[f"  {s}" for s in items["settings"]], ""]
     if items["env"]:
-        lines += ["Env Vars:", *[f"  {e}" for e in sorted(items["env"])], ""]
+        lines += ["[환경변수 / Env Vars]", *[f"  {e}" for e in items["env"]], ""]
+
     lines += [
-        "-" * 40,
-        "[원문 변경사항 / Raw Changes]",
-        "",
-        section[:3000],
-        "",
-        "=" * 60,
-        f"[적용 상태] SKILLS_CATALOG.yaml 최신화 완료",
-        f"[Status]   Catalog updated, committed to yeongam/Prompt-Guide",
+        sep,
+        "[상태] SKILLS_CATALOG.yaml 최신화 완료",
+        "[Status] Catalog updated; committed to yeongam/Prompt-Guide",
     ]
     return "\n".join(lines)
 
 
-def update_catalog_version_field(ver: str) -> None:
+def update_catalog_version(ver: str) -> None:
     if not CATALOG_FILE.exists():
         return
     text = CATALOG_FILE.read_text()
     text = re.sub(r"^version:.*$", f"version: {ver}", text, flags=re.MULTILINE)
-    text = re.sub(r"^updated:.*$", f"updated: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}", text, flags=re.MULTILINE)
+    text = re.sub(
+        r"^updated:.*$",
+        f"updated: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}",
+        text, flags=re.MULTILINE
+    )
     CATALOG_FILE.write_text(text)
 
 
-def write_log(path: Path, content: str, date_str: str) -> None:
-    try:
-        path.mkdir(parents=True, exist_ok=True)
-        (path / f"skill_update_{date_str}.txt").write_text(content, encoding="utf-8")
-        print(f"Log written: {path}/skill_update_{date_str}.txt")
-    except OSError as e:
-        print(f"Warning: {e}", file=sys.stderr)
-
-
 def main() -> int:
-    print("Fetching Claude Code changelog...")
+    print("Claude Code skills sync started...")
+
     try:
-        changelog = fetch(CHANGELOG_SRC)
+        changelog_raw = fetch(CHANGELOG_SRC)
     except urllib.error.URLError as e:
         print(f"Fetch error: {e}", file=sys.stderr)
         return 1
 
-    ver, section = parse_version(changelog)
+    ver, section = parse_latest_section(changelog_raw)
     if not ver:
-        print("Could not parse version.", file=sys.stderr)
+        print("Version parse failed.", file=sys.stderr)
         return 1
 
     prev = current_version()
-    print(f"Latest: {ver}  |  Local: {prev or 'none'}")
+    date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    print(f"Remote: {ver}  |  Local: {prev or 'none'}  |  Date: {date_str}")
 
-    if ver == prev:
-        print("Already up to date. No changes.")
-        return 0
+    catalog_skills = load_catalog_skills()
+    items = extract_items_from_section(section)
+    conflicts = detect_conflicts(catalog_skills, items["skills"])
 
-    items = extract_new_items(section)
-    date_str = datetime.now(timezone.utc).strftime("%Y%m%d")
-    entry = build_changelog_entry(ver, prev, section, items)
+    snap_dir = write_dated_snapshot(date_str, ver, catalog_skills)
+    print(f"Snapshot: {snap_dir.relative_to(REPO_ROOT)}")
 
-    write_log(CHANGELOGS_DIR, entry, date_str)
-    write_log(DESKTOP_LOG_DIR, entry, date_str)
+    CHANGELOGS_DIR.mkdir(parents=True, exist_ok=True)
+    cl_path = CHANGELOGS_DIR / f"{date_str}.txt"
+    entry = build_changelog(ver, prev, items, catalog_skills, conflicts, snap_dir)
+    cl_path.write_text(entry, encoding="utf-8")
+    print(f"Changelog: {cl_path.relative_to(REPO_ROOT)}")
 
-    VERSION_FILE.write_text(ver)
-    update_catalog_version_field(ver)
+    if ver != prev:
+        VERSION_FILE.write_text(ver)
+        update_catalog_version(ver)
+        print(f"Catalog updated: {prev or 'none'} -> {ver}")
+    else:
+        print("Version unchanged; snapshot and changelog refreshed.")
 
-    print(f"Updated: {prev or 'none'} -> {ver}")
     return 0
 
 

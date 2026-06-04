@@ -1,0 +1,29 @@
+{
+  "date": "2026-06-04",
+  "version": "2.1.162",
+  "source": "anthropics/claude-code",
+  "skill_count": 21,
+  "skills": [
+    "claude-api",
+    "color",
+    "effort",
+    "fewer-permission-prompts",
+    "focus",
+    "init",
+    "keybindings-help",
+    "loop",
+    "powerup",
+    "review",
+    "security-review",
+    "session-start-hook",
+    "simplify",
+    "team-onboarding",
+    "theme",
+    "tui",
+    "ultraplan",
+    "ultrareview",
+    "undo",
+    "update-config",
+    "usage"
+  ]
+}

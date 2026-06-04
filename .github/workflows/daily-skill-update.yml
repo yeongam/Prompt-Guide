@@ -2,7 +2,7 @@ name: Daily Claude Code Skills Update
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 15 * * *"  # 00:00 KST (UTC+9) = 15:00 UTC previous day
   workflow_dispatch:
 
 permissions:
@@ -14,14 +14,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: claude/zealous-sagan-FdaL5
+          ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Run skill update script
+      - name: Run skill sync script
         run: python scripts/update_skills.py
 
       - name: Commit and push if changed
@@ -32,7 +32,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes - already up to date"
           else
-            DATE=$(date -u +%Y-%m-%d)
-            git commit -m "chore: Claude Code skills update ${DATE}"
-            git push -u origin claude/zealous-sagan-FdaL5
+            DATE=$(TZ=Asia/Seoul date +%Y-%m-%d)
+            git commit -m "chore: Claude Code skills sync ${DATE}"
+            git push -u origin main
           fi

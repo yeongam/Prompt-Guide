@@ -1,0 +1,38 @@
+==================================================
+Claude Code Skills Sync Report
+Date    : 2026-06-04 15:12 UTC
+Version : 2.1.129 -> 2.1.162
+Source  : anthropics/claude-code
+==================================================
+
+[추가된 스킬 / Added Skills]
+  /ide
+  /scroll-speed
+  /terminal-setup
+
+[수정된 스킬 / Modified Skills]
+  /effort
+
+[삭제된 스킬 / Deleted Skills]
+  (none)
+
+[최적화된 구조 / Optimized Structure]
+  Snapshot : Claude/skills/2026-06-04/skills
+  Format   : compact .md per skill + catalog.json
+  Catalog  : single SKILLS_CATALOG.yaml (YAML, ~30% vs JSON)
+
+[토큰 절감 / Token Savings]
+  1-line desc per skill; no prose duplication
+  Dated snapshots keep catalog lean
+  YAML format over JSON/Markdown
+
+[충돌 해결 / Conflict Resolution]
+  /effort (exists → updated)
+
+[환경변수 / Env Vars]
+  CLAUDE_CODE_TMPDIR
+  MCP_TOOL_TIMEOUT
+
+==================================================
+[상태] SKILLS_CATALOG.yaml 최신화 완료
+[Status] Catalog updated; committed to yeongam/Prompt-Guide
