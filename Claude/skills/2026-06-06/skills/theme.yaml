@@ -1,0 +1,10 @@
+# Claude Code Skill: theme
+slug: theme
+cmd: /theme [name]
+trigger: "user wants to change or create visual theme"
+desc: "Create or switch custom color themes"
+source: anthropics/claude-code@2.1.165
+token_policy:
+  - Omit repeated background context
+  - Return only decision-critical code or instructions
+  - Link to docs instead of inlining long content

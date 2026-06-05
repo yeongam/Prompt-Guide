@@ -1,0 +1,10 @@
+# Claude Code Skill: focus
+slug: focus
+cmd: /focus
+trigger: "user wants compact view of conversation"
+desc: "Toggle focus view: prompt + tool summary + final response"
+source: anthropics/claude-code@2.1.165
+token_policy:
+  - Omit repeated background context
+  - Return only decision-critical code or instructions
+  - Link to docs instead of inlining long content

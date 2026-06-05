@@ -1,0 +1,10 @@
+# Claude Code Skill: team-onboarding
+slug: team-onboarding
+cmd: /team-onboarding
+trigger: "user wants teammate ramp-up guide"
+desc: "Generate onboarding guide from local Claude Code usage history"
+source: anthropics/claude-code@2.1.165
+token_policy:
+  - Omit repeated background context
+  - Return only decision-critical code or instructions
+  - Link to docs instead of inlining long content

@@ -1,15 +1,15 @@
-name: Daily Claude Code Skills Update
+name: Daily Claude Code Skills Sync
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 15 * * *"   # 00:00 KST (UTC+9) = 15:00 UTC previous day
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  update-skills:
+  sync-claude-skills:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Run skill sync script
+      - name: Sync Claude Code skills
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python scripts/sync_claude_skills.py
@@ -32,7 +32,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
           if git diff --cached --quiet; then
-            echo "No changes - already up to date"
+            echo "No changes — already up to date"
           else
             DATE=$(TZ=Asia/Seoul date +%Y-%m-%d)
             git commit -m "chore: Claude Code skills sync ${DATE}"

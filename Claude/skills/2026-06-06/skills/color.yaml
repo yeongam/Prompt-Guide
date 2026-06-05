@@ -1,0 +1,10 @@
+# Claude Code Skill: color
+slug: color
+cmd: /color
+trigger: "user wants a session color"
+desc: "Set random session color"
+source: anthropics/claude-code@2.1.165
+token_policy:
+  - Omit repeated background context
+  - Return only decision-critical code or instructions
+  - Link to docs instead of inlining long content

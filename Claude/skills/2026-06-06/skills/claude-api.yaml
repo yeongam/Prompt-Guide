@@ -1,0 +1,10 @@
+# Claude Code Skill: claude-api
+slug: claude-api
+cmd: /claude-api
+trigger: "code imports anthropic SDK; user asks about Claude API"
+desc: "Build/debug Claude API apps; prompt caching, tool use, model migration"
+source: anthropics/claude-code@2.1.165
+token_policy:
+  - Omit repeated background context
+  - Return only decision-critical code or instructions
+  - Link to docs instead of inlining long content

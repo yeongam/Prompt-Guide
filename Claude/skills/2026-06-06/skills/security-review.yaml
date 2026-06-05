@@ -1,0 +1,10 @@
+# Claude Code Skill: security-review
+slug: security-review
+cmd: /security-review
+trigger: "user asks security audit of current branch changes"
+desc: "OWASP-focused audit of pending diffs; outputs risk-ranked findings"
+source: anthropics/claude-code@2.1.165
+token_policy:
+  - Omit repeated background context
+  - Return only decision-critical code or instructions
+  - Link to docs instead of inlining long content

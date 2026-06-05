@@ -1,0 +1,10 @@
+# Claude Code Skill: ultraplan
+slug: ultraplan
+cmd: /ultraplan
+trigger: "user wants cloud environment for complex planning"
+desc: "Auto-create cloud worktrees/environments for multi-agent planning"
+source: anthropics/claude-code@2.1.165
+token_policy:
+  - Omit repeated background context
+  - Return only decision-critical code or instructions
+  - Link to docs instead of inlining long content

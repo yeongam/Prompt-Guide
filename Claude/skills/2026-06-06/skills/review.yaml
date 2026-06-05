@@ -1,0 +1,10 @@
+# Claude Code Skill: review
+slug: review
+cmd: /review
+trigger: "user asks to review PR or branch"
+desc: "Multi-pass PR review; checks logic, style, security, tests"
+source: anthropics/claude-code@2.1.165
+token_policy:
+  - Omit repeated background context
+  - Return only decision-critical code or instructions
+  - Link to docs instead of inlining long content

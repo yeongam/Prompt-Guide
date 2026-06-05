@@ -1,0 +1,10 @@
+# Claude Code Skill: fewer-permission-prompts
+slug: fewer-permission-prompts
+cmd: /fewer-permission-prompts
+trigger: "user wants fewer permission dialogs"
+desc: "Scan transcripts → add bash/MCP allowlist to .claude/settings.json"
+source: anthropics/claude-code@2.1.165
+token_policy:
+  - Omit repeated background context
+  - Return only decision-critical code or instructions
+  - Link to docs instead of inlining long content

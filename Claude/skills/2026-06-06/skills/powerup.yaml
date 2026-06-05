@@ -1,0 +1,10 @@
+# Claude Code Skill: powerup
+slug: powerup
+cmd: /powerup
+trigger: "user wants feature demos"
+desc: "Interactive animated feature demos with lessons"
+source: anthropics/claude-code@2.1.165
+token_policy:
+  - Omit repeated background context
+  - Return only decision-critical code or instructions
+  - Link to docs instead of inlining long content

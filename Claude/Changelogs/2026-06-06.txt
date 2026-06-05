@@ -1,0 +1,87 @@
+==============================================================
+Claude Code Skills Sync Report
+날짜 (Date)   : 2026-06-06 00:12 KST
+버전 (Version): 2.1.129 → 2.1.165
+출처 (Source) : anthropics/claude-code
+스킬 수 (Skills): 25개
+==============================================================
+
+[추가된 스킬 / Added Skills]
+  - claude-api
+  - code-review
+  - color
+  - deep-research
+  - effort
+  - fewer-permission-prompts
+  - focus
+  - init
+  - keybindings-help
+  - loop
+  - powerup
+  - review
+  - run
+  - security-review
+  - session-start-hook
+  - simplify
+  - team-onboarding
+  - theme
+  - tui
+  - ultraplan
+  - ultrareview
+  - undo
+  - update-config
+  - usage
+  - verify
+
+[수정된 스킬 / Modified Skills]
+    없음
+
+[삭제된 스킬 / Removed Skills]
+    없음
+
+[신규 Hook / New Hooks]
+    없음
+
+[최적화된 구조 / Optimized Structure]
+  - 스킬 파일: Claude/skills/YYYY-MM-DD/skills/{slug}.yaml
+  - 마스터 카탈로그: Claude/skills/SKILLS_CATALOG.yaml
+  - 변경 로그: Claude/Changelogs/YYYY-MM-DD.txt
+  - YAML 형식 유지 (JSON 대비 ~30% 토큰 절감)
+
+[토큰 절감 관련 변경 / Token Savings]
+  - 중복 설명 제거 — desc 1줄 제한 유지
+  - YAML 형식 사용 (JSON 대비 ~30% 절감)
+  - snapshot은 핵심 필드만 포함 (slug/cmd/desc)
+  - 배경 문맥 인라인 삽입 금지 — 링크 참조 방식 유지
+
+[충돌 해결 내역 / Conflict Resolution]
+  - 신규 슬러그 'claude-api' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'code-review' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'color' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'deep-research' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'effort' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'fewer-permission-prompts' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'focus' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'init' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'keybindings-help' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'loop' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'powerup' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'review' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'run' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'security-review' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'session-start-hook' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'simplify' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'team-onboarding' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'theme' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'tui' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'ultraplan' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'ultrareview' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'undo' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'update-config' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'usage' — 기존 구조와 충돌 없음, 통합 완료
+  - 신규 슬러그 'verify' — 기존 구조와 충돌 없음, 통합 완료
+
+==============================================================
+[적용 상태] SKILLS_CATALOG.yaml 및 날짜별 스냅샷 최신화 완료
+[Status]   Synced to yeongam/Prompt-Guide · branch claude/zealous-sagan-D0kvf
+==============================================================

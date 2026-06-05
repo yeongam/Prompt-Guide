@@ -1,0 +1,10 @@
+# Claude Code Skill: code-review
+slug: code-review
+cmd: /code-review
+trigger: "user asks for code review at given effort level"
+desc: "Review diff for correctness bugs; optionally post PR comments or fix"
+source: anthropics/claude-code@2.1.165
+token_policy:
+  - Omit repeated background context
+  - Return only decision-critical code or instructions
+  - Link to docs instead of inlining long content

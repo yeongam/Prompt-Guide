@@ -1,0 +1,10 @@
+# Claude Code Skill: run
+slug: run
+cmd: /run
+trigger: "user asks to run or start the app"
+desc: "Launch and drive project app; confirm change works in real runtime"
+source: anthropics/claude-code@2.1.165
+token_policy:
+  - Omit repeated background context
+  - Return only decision-critical code or instructions
+  - Link to docs instead of inlining long content

@@ -1,0 +1,10 @@
+# Claude Code Skill: undo
+slug: undo
+cmd: /undo
+trigger: "user wants to undo last action"
+desc: "Alias for /rewind; undoes last assistant action"
+source: anthropics/claude-code@2.1.165
+token_policy:
+  - Omit repeated background context
+  - Return only decision-critical code or instructions
+  - Link to docs instead of inlining long content

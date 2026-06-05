@@ -1,0 +1,10 @@
+# Claude Code Skill: session-start-hook
+slug: session-start-hook
+cmd: /session-start-hook
+trigger: "user wants test/lint runners on session start"
+desc: "Create SessionStart hook ensuring project can run tests and linters"
+source: anthropics/claude-code@2.1.165
+token_policy:
+  - Omit repeated background context
+  - Return only decision-critical code or instructions
+  - Link to docs instead of inlining long content

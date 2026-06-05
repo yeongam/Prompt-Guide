@@ -1,0 +1,136 @@
+{
+  "date": "2026-06-06",
+  "version": "2.1.165",
+  "source": "anthropics/claude-code",
+  "source_commit": "unknown",
+  "generated": "2026-06-06T00:12:51 KST",
+  "skill_count": 25,
+  "skills": [
+    {
+      "slug": "claude-api",
+      "cmd": "/claude-api",
+      "desc": "Build/debug Claude API apps; prompt caching, tool use, model migration"
+    },
+    {
+      "slug": "code-review",
+      "cmd": "/code-review",
+      "desc": "Review diff for correctness bugs; optionally post PR comments or fix"
+    },
+    {
+      "slug": "color",
+      "cmd": "/color",
+      "desc": "Set random session color"
+    },
+    {
+      "slug": "deep-research",
+      "cmd": "/deep-research",
+      "desc": "Fan-out web searches, fetch sources, synthesize cited report"
+    },
+    {
+      "slug": "effort",
+      "cmd": "/effort",
+      "desc": "Interactive slider for session effort level"
+    },
+    {
+      "slug": "fewer-permission-prompts",
+      "cmd": "/fewer-permission-prompts",
+      "desc": "Scan transcripts → add bash/MCP allowlist to .claude/settings.json"
+    },
+    {
+      "slug": "focus",
+      "cmd": "/focus",
+      "desc": "Toggle focus view: prompt + tool summary + final response"
+    },
+    {
+      "slug": "init",
+      "cmd": "/init",
+      "desc": "Generate CLAUDE.md with codebase architecture, conventions, commands"
+    },
+    {
+      "slug": "keybindings-help",
+      "cmd": "/keybindings-help",
+      "desc": "Customize ~/.claude/keybindings.json; supports chord bindings"
+    },
+    {
+      "slug": "loop",
+      "cmd": "/loop [interval] [/cmd]",
+      "desc": "Run prompt or slash command on recurring interval (default 10m)"
+    },
+    {
+      "slug": "powerup",
+      "cmd": "/powerup",
+      "desc": "Interactive animated feature demos with lessons"
+    },
+    {
+      "slug": "review",
+      "cmd": "/review",
+      "desc": "Multi-pass PR review; checks logic, style, security, tests"
+    },
+    {
+      "slug": "run",
+      "cmd": "/run",
+      "desc": "Launch and drive project app; confirm change works in real runtime"
+    },
+    {
+      "slug": "security-review",
+      "cmd": "/security-review",
+      "desc": "OWASP-focused audit of pending diffs; outputs risk-ranked findings"
+    },
+    {
+      "slug": "session-start-hook",
+      "cmd": "/session-start-hook",
+      "desc": "Create SessionStart hook ensuring project can run tests and linters"
+    },
+    {
+      "slug": "simplify",
+      "cmd": "/simplify",
+      "desc": "Review changed code for reuse/quality/efficiency, then fix issues"
+    },
+    {
+      "slug": "team-onboarding",
+      "cmd": "/team-onboarding",
+      "desc": "Generate onboarding guide from local Claude Code usage history"
+    },
+    {
+      "slug": "theme",
+      "cmd": "/theme [name]",
+      "desc": "Create or switch custom color themes"
+    },
+    {
+      "slug": "tui",
+      "cmd": "/tui",
+      "desc": "Switch to flicker-free alt-screen TUI rendering"
+    },
+    {
+      "slug": "ultraplan",
+      "cmd": "/ultraplan",
+      "desc": "Auto-create cloud worktrees/environments for multi-agent planning"
+    },
+    {
+      "slug": "ultrareview",
+      "cmd": "/ultrareview [PR#]",
+      "desc": "Parallel multi-agent cloud code review"
+    },
+    {
+      "slug": "undo",
+      "cmd": "/undo",
+      "desc": "Alias for /rewind; undoes last assistant action"
+    },
+    {
+      "slug": "update-config",
+      "cmd": "/update-config",
+      "desc": "Configure settings.json; handles hooks, permissions, env vars"
+    },
+    {
+      "slug": "usage",
+      "cmd": "/usage",
+      "desc": "Show token usage and cost stats (merged /cost + /stats)"
+    },
+    {
+      "slug": "verify",
+      "cmd": "/verify",
+      "desc": "Run app and observe behavior to confirm fix or feature"
+    }
+  ],
+  "hash": "cad79d5ba2724065"
+}

@@ -1,0 +1,10 @@
+# Claude Code Skill: effort
+slug: effort
+cmd: /effort
+trigger: "user wants to adjust effort/quality level"
+desc: "Interactive slider for session effort level"
+source: anthropics/claude-code@2.1.165
+token_policy:
+  - Omit repeated background context
+  - Return only decision-critical code or instructions
+  - Link to docs instead of inlining long content
