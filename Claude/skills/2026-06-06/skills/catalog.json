@@ -1,0 +1,154 @@
+{
+  "date": "2026-06-06",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-06-06T00:00:00Z",
+  "source": "https://github.com/anthropics/claude-code",
+  "version": "2.1.167",
+  "previous_version": "2.1.129",
+  "skills": [
+    {
+      "slug": "code-review",
+      "name": "Code Review",
+      "hash": "a1b2c3d4e5f67890",
+      "trigger": "Review current diff for bugs, style, or refactoring.",
+      "procedure": [
+        "Read the current diff/changes.",
+        "Identify correctness bugs first, then reuse/efficiency issues.",
+        "Apply effort level: low/medium=high-confidence only, high/max=broader coverage.",
+        "Use --comment to post inline PR review comments.",
+        "Use --fix to apply findings directly to working tree."
+      ],
+      "output": "Ranked findings list; inline comments or applied fixes.",
+      "token_policy": [
+        "Return only decision-critical findings.",
+        "Skip findings below confidence threshold for selected effort.",
+        "Link to source rather than quoting long context."
+      ],
+      "compatibility": [
+        "Replaces /simplify from v2.1.147.",
+        "Preserve existing /review skill for full PR review flow.",
+        "Do not overwrite existing dated skill snapshots."
+      ],
+      "added": "v2.1.147"
+    },
+    {
+      "slug": "goal",
+      "name": "Goal",
+      "hash": "b2c3d4e5f6789012",
+      "trigger": "User wants Claude to work autonomously until a condition is met.",
+      "procedure": [
+        "Define the completion condition clearly.",
+        "Execute steps iteratively until condition is satisfied.",
+        "Report concise status at each iteration.",
+        "Stop and report when goal is met or if blocked."
+      ],
+      "output": "Completion status and summary of actions taken.",
+      "token_policy": [
+        "Report progress in one line per step.",
+        "Avoid repeating context already established."
+      ],
+      "compatibility": [
+        "New in v2.1.139.",
+        "Works with background sessions and worktrees."
+      ],
+      "added": "v2.1.139"
+    },
+    {
+      "slug": "reload-skills",
+      "name": "Reload Skills",
+      "hash": "c3d4e5f678901234",
+      "trigger": "Skill files added or edited; reload without restart.",
+      "procedure": [
+        "Re-scan .claude/skills/ directories.",
+        "Load newly added or modified skills.",
+        "Report which skills were loaded or updated."
+      ],
+      "output": "List of reloaded skills.",
+      "token_policy": ["Return only the names of changed skills."],
+      "compatibility": [
+        "New in v2.1.152.",
+        "SessionStart hook can also set reloadSkills: true."
+      ],
+      "added": "v2.1.152"
+    },
+    {
+      "slug": "model",
+      "name": "Model",
+      "hash": "d4e5f67890123456",
+      "trigger": "User wants to change the model for the current session.",
+      "procedure": [
+        "Show available models.",
+        "Switch to selected model for current session only.",
+        "Press d to persist as default model."
+      ],
+      "output": "One-line confirmation of model change.",
+      "token_policy": ["One-line confirmation only."],
+      "compatibility": [
+        "New in v2.1.144.",
+        "Does not affect other concurrent sessions."
+      ],
+      "added": "v2.1.144"
+    },
+    {
+      "slug": "scroll-speed",
+      "name": "Scroll Speed",
+      "hash": "e5f6789012345678",
+      "trigger": "User wants to tune mouse wheel scroll speed.",
+      "procedure": [
+        "Open scroll speed adjustment with live preview.",
+        "Confirm setting."
+      ],
+      "output": "Scroll speed updated.",
+      "token_policy": ["Minimal confirmation only."],
+      "compatibility": ["New in v2.1.139."],
+      "added": "v2.1.139"
+    },
+    {
+      "slug": "workflows",
+      "name": "Workflows",
+      "hash": "f678901234567890",
+      "trigger": "User wants to view dynamic workflow runs.",
+      "procedure": [
+        "List active workflow runs.",
+        "Show status and progress of each workflow.",
+        "Allow navigation to individual workflow details."
+      ],
+      "output": "Workflow run list with status.",
+      "token_policy": ["Summarize status; link to details rather than inline."],
+      "compatibility": [
+        "New in v2.1.154.",
+        "Preview feature; requires dynamic workflows enabled."
+      ],
+      "added": "v2.1.154"
+    },
+    {
+      "slug": "voice",
+      "name": "Voice",
+      "hash": "a78901234567890b",
+      "trigger": "User wants voice input/output mode.",
+      "procedure": [
+        "Toggle voice interaction mode.",
+        "Use microphone for input when enabled.",
+        "Speak responses when enabled."
+      ],
+      "output": "Voice mode active/inactive confirmation.",
+      "token_policy": ["Minimal confirmation only."],
+      "compatibility": ["New in v2.1.166."],
+      "added": "v2.1.166"
+    },
+    {
+      "slug": "login",
+      "name": "Login",
+      "hash": "b89012345678901c",
+      "trigger": "User needs to authenticate or switch accounts.",
+      "procedure": [
+        "Trigger authentication flow.",
+        "Complete login via browser or token."
+      ],
+      "output": "Authentication status confirmation.",
+      "token_policy": ["Minimal confirmation only."],
+      "compatibility": ["New in v2.1.166."],
+      "added": "v2.1.166"
+    }
+  ]
+}

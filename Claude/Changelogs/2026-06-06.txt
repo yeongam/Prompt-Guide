@@ -1,0 +1,91 @@
+Prompt-Guide Claude Skills Changelog - 2026-06-06
+
+Snapshot : Claude/skills/2026-06-06/skills
+Source   : anthropics/claude-code (official)
+Version  : 2.1.129 -> 2.1.167
+Run date : 2026-06-06 00:00 UTC
+
+============================================================
+[추가된 스킬]
+- code-review  /code-review [effort] [--comment] [--fix]  (v2.1.147)
+- goal         /goal                                       (v2.1.139)
+- scroll-speed /scroll-speed                               (v2.1.139)
+- model        /model                                      (v2.1.144)
+- reload-skills /reload-skills                             (v2.1.152)
+- workflows    /workflows                                  (v2.1.154)
+- voice        /voice                                      (v2.1.166)
+- login        /login                                      (v2.1.166)
+
+[수정된 스킬]
+- simplify  : deprecated -> use /code-review (renamed v2.1.147)
+- effort    : 슬라이더 레이블 "Faster"/"Smarter" 변경; 세션 기본값으로 고정 (v2.1.162)
+- usage     : 카테고리별 세분화 (skills/subagents/plugins/MCP servers) (v2.1.149)
+- claude-api: models.opus claude-opus-4-7 -> claude-opus-4-8 (v2.1.154)
+
+[삭제된 스킬]
+- none
+
+============================================================
+[추가된 훅]
+- EnterWorktree   : 세션 중 워크트리 전환 시 발동 (v2.1.157)
+- MessageDisplay  : 어시스턴트 메시지 표시 전 변환/숨김 (v2.1.152)
+
+[수정된 훅]
+- Stop/SubagentStop : hookSpecificOutput.additionalContext 반환 지원 (v2.1.163)
+- 모든 훅            : args: string[] exec 폼 지원 (쉘 없이 실행) (v2.1.139)
+- hooks             : terminalSequence 필드 추가 (알림/타이틀/벨) (v2.1.141)
+
+============================================================
+[최적화된 구조]
+- 날짜별 스냅샷 규칙 유지: Claude/skills/YYYY-MM-DD/skills
+- SKILLS_CATALOG.yaml 단일 소스; YAML 형식 (~30% 토큰 절감)
+- 개별 .md 파일: frontmatter + 핵심 2줄 이내로 경량화
+- catalog.json: slug/hash/added 메타데이터 통합
+
+[토큰 절감 관련 변경 사항]
+- deprecated simplify 항목 최소화 (1줄 리디렉션)
+- 신규 설정/env 항목 1줄 서술로 제한
+- 중복 배경 설명 제거; 공식 소스 링크로 대체
+- 전체 스킬 38개 → YAML 1파일로 통합 관리
+
+[충돌 해결 내역]
+- simplify vs code-review: simplify deprecated 유지, code-review 신규 등록 (중복 없음)
+- usage 명령 중복 없음: 기존 항목 설명 업데이트 처리
+- 기존 2.1.129 스냅샷 보존; 신규 날짜(2026-06-06)에만 기록
+- models.opus 충돌 없음: 4-7 -> 4-8 단순 업데이트
+
+============================================================
+[신규 settings]
+- fallbackModel             : 대체 모델 최대 3개 지정 (v2.1.166)
+- requiredMinimumVersion    : 최소 버전 강제 (v2.1.163)
+- requiredMaximumVersion    : 최대 버전 강제 (v2.1.163)
+- worktree.bgIsolation      : "none" 시 백그라운드가 워킹카피 직접 편집 (v2.1.143)
+- worktree.baseRef          : "fresh"|"head" 기본값 fresh (v2.1.133)
+- sandbox.bwrapPath         : 커스텀 bwrap 경로 (v2.1.133)
+- sandbox.socatPath         : 커스텀 socat 경로 (v2.1.133)
+- parentSettingsBehavior    : "first-wins"|"merge" Admin SDK 전략 (v2.1.133)
+- autoMode.hard_deny        : 무조건 자동모드 차단 목록 (v2.1.136)
+- pluginSuggestionMarketplaces: 조직 허용 마켓플레이스 (v2.1.152)
+- allowAllClaudeAiMcps      : claude.ai MCP 커넥터 전체 로드 (v2.1.149)
+- skipLfs                   : Git 마켓플레이스 LFS 건너뜀 (v2.1.153)
+
+[신규 env vars]
+- MAX_THINKING_TOKENS                       : 0=사고 비활성; 정수=상한 (v2.1.166)
+- OTEL_RESOURCE_ATTRIBUTES                  : 메트릭 레이블 커스텀 (v2.1.161)
+- CLAUDE_CODE_ENABLE_AUTO_MODE              : Bedrock/Vertex/Foundry 자동모드 (v2.1.158)
+- OTEL_LOG_TOOL_DETAILS                     : tool_decision 파라미터 포함 (v2.1.157)
+- CLAUDE_CODE_SHELL_PREFIX                  : MCP stdio 서버 쉘 프리픽스 (v2.1.147)
+- CLAUDE_CODE_PLUGIN_PREFER_HTTPS           : 플러그인 HTTPS 우선 (v2.1.141)
+- ANTHROPIC_WORKSPACE_ID                    : 워크로드 아이덴티티 (v2.1.141)
+- CLAUDE_PROJECT_DIR                        : MCP stdio 서버 환경 주입 (v2.1.139)
+- CLAUDE_CODE_SESSION_ID                    : Bash 서브프로세스 세션 ID (v2.1.132)
+- CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN      : 전체화면 모드 비활성화 (v2.1.132)
+- CLAUDE_CODE_POWERSHELL_RESPECT_EXECUTION_POLICY: PS 실행 정책 준수 (v2.1.143)
+
+============================================================
+[요약]
+skills  : added=8, modified=4, deprecated=1, deleted=0
+hooks   : added=2, modified=3, deleted=0
+settings: added=12, unchanged=6
+env     : added=11, unchanged=7
+models  : opus 4-7 -> 4-8

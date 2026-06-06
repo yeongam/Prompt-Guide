@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.167
+updated: 2026-06-06
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -22,10 +22,18 @@ skills:
     trigger: user asks security audit of current branch changes
     desc: OWASP-focused audit of pending diffs; outputs risk-ranked findings
 
+  code-review:
+    cmd: /code-review [effort] [--comment] [--fix]
+    trigger: user asks to review current diff or clean up changed code
+    desc: Diff review for correctness/reuse/efficiency; --comment posts inline PR comments; --fix applies findings
+    added: v2.1.147
+    note: Replaces /simplify from v2.1.147
+
   simplify:
     cmd: /simplify
-    trigger: user asks to clean up or refactor changed code
-    desc: Review changed code for reuse/quality/efficiency, then fix issues
+    trigger: legacy alias; use /code-review instead
+    desc: Deprecated v2.1.147; redirects to /code-review
+    deprecated: true
 
   session-start-hook:
     cmd: /session-start-hook
@@ -58,7 +66,7 @@ skills:
     trigger: code imports anthropic SDK; user asks about Claude API features
     desc: Build/debug Claude API apps; prompt caching, tool use, model migration
     models:
-      opus: claude-opus-4-7
+      opus: claude-opus-4-8
       sonnet: claude-sonnet-4-6
       haiku: claude-haiku-4-5-20251001
 
@@ -81,7 +89,7 @@ skills:
   effort:
     cmd: /effort
     trigger: user wants to adjust effort/quality level
-    desc: Interactive slider for session effort level (also: CLAUDE_EFFORT env var)
+    desc: Interactive slider; labels "Faster"/"Smarter"; persists as session default
 
   powerup:
     cmd: /powerup
@@ -106,7 +114,8 @@ skills:
   usage:
     cmd: /usage
     trigger: user asks about token or cost statistics
-    desc: Show token usage and cost stats (merged /cost + /stats)
+    desc: Per-category token/cost breakdown (skills, subagents, plugins, MCP servers)
+    added: v2.1.149
 
   theme:
     cmd: /theme [name]
@@ -118,11 +127,54 @@ skills:
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
 
+  goal:
+    cmd: /goal
+    trigger: user wants Claude to keep working until a condition is met
+    desc: Set completion condition; Claude continues autonomously until met
+    added: v2.1.139
+
+  scroll-speed:
+    cmd: /scroll-speed
+    trigger: user wants to tune mouse wheel scroll speed
+    desc: Adjust mouse wheel speed with live preview
+    added: v2.1.139
+
+  model:
+    cmd: /model
+    trigger: user wants to change the model for the current session
+    desc: Change model for current session only; press d to set as default
+    added: v2.1.144
+
+  reload-skills:
+    cmd: /reload-skills
+    trigger: user added/edited skill files and wants them reloaded without restart
+    desc: Re-scan .claude/skills/ directories without restarting Claude Code
+    added: v2.1.152
+
+  workflows:
+    cmd: /workflows
+    trigger: user wants to view workflow runs or dynamic workflow status
+    desc: View dynamic workflow runs (preview feature)
+    added: v2.1.154
+
+  voice:
+    cmd: /voice
+    trigger: user wants voice input/output mode
+    desc: Toggle voice interaction mode
+    added: v2.1.166
+
+  login:
+    cmd: /login
+    trigger: user needs to authenticate or switch accounts
+    desc: Trigger authentication flow or account login
+    added: v2.1.166
+
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.
 # Block: exit 2 OR return JSON {decision:"block", reason:"..."}
 # Retry: return JSON {retry:true} (PermissionDenied only)
 # Conditional: add `if` field using permission rule syntax
+# exec form: use args: string[] to spawn without shell (v2.1.139)
 hooks:
   PreToolUse:
     fires: Before any tool execution
@@ -142,11 +194,13 @@ hooks:
   Stop:
     fires: After assistant turn completes
     can_block: false
-    use: Post-turn logging, notifications
+    output: hookSpecificOutput.additionalContext injects context for next turn (v2.1.163)
+    use: Post-turn logging, notifications, context injection
 
   SubagentStop:
     fires: After subagent turn completes
     can_block: false
+    output: hookSpecificOutput.additionalContext (v2.1.163)
     use: Subagent result aggregation
 
   PreCompact:
@@ -176,10 +230,28 @@ hooks:
     added: v2.1.95
     use: Custom permission escalation flows
 
+  EnterWorktree:
+    fires: When switching between Claude-managed worktrees mid-session
+    can_block: false
+    added: v2.1.157
+    use: Per-worktree context setup, environment switching
+
+  MessageDisplay:
+    fires: Before assistant message is displayed to user
+    can_block: false
+    added: v2.1.152
+    use: Transform or filter assistant messages before display
+
+  SessionStart:
+    fires: On session start
+    can_block: false
+    output: "reloadSkills: true, sessionTitle: string"
+    use: Set session title, trigger skill reload, run startup checks
+
   hook_invoke_types:
-    - type: shell          # shell command (default)
-    - type: mcp_tool       # invoke MCP tool directly (added v2.1.118)
-    - type: http           # HTTP endpoint (WorktreeCreate)
+    - type: shell
+    - type: mcp_tool
+    - type: http
 
 # ─── SETTINGS ──────────────────────────────────────────────────────────────────
 # Place in .claude/settings.json (project) or ~/.claude/settings.json (user)
@@ -207,13 +279,74 @@ settings:
 
   prUrlTemplate:
     type: string
-    desc: Custom URL template for PR footer badge (e.g. custom code-review tools)
+    desc: Custom URL template for PR footer badge
     added: v2.1.101
 
   sandbox.network.deniedDomains:
     type: "list[string]"
     desc: Block specific domains even when broader allowlists exist
     added: v2.1.85
+
+  fallbackModel:
+    type: string
+    desc: Fallback model(s) when primary unavailable; up to 3 backups supported
+    added: v2.1.166
+
+  requiredMinimumVersion:
+    type: string
+    desc: Enforce minimum Claude Code version for this project
+    added: v2.1.163
+
+  requiredMaximumVersion:
+    type: string
+    desc: Enforce maximum Claude Code version for this project
+    added: v2.1.163
+
+  worktree.bgIsolation:
+    type: '"none" | default'
+    desc: '"none" = background sessions edit working copy directly'
+    added: v2.1.143
+
+  worktree.baseRef:
+    type: '"fresh" | "head"'
+    default: fresh
+    desc: Base reference for new worktrees (default changed to fresh)
+    added: v2.1.133
+
+  sandbox.bwrapPath:
+    type: string
+    desc: Custom path for bwrap binary (Linux/WSL managed setting)
+    added: v2.1.133
+
+  sandbox.socatPath:
+    type: string
+    desc: Custom path for socat binary (Linux/WSL managed setting)
+    added: v2.1.133
+
+  parentSettingsBehavior:
+    type: '"first-wins" | "merge"'
+    desc: Admin SDK settings merging strategy
+    added: v2.1.133
+
+  autoMode.hard_deny:
+    type: "list[string]"
+    desc: Unconditional auto mode blocks (not overridable by allow rules)
+    added: v2.1.136
+
+  pluginSuggestionMarketplaces:
+    type: "list[string]"
+    desc: Org-allowlisted plugin marketplaces for /plugin Browse/Discover
+    added: v2.1.152
+
+  allowAllClaudeAiMcps:
+    type: bool
+    desc: Load all claude.ai MCP connectors (enterprise)
+    added: v2.1.149
+
+  skipLfs:
+    type: bool
+    desc: Skip LFS when fetching from GitHub/Git plugin marketplace sources
+    added: v2.1.153
 
 # ─── ENV VARS ──────────────────────────────────────────────────────────────────
 env:
@@ -224,17 +357,26 @@ env:
   OTEL_LOG_RAW_API_BODIES: "1 = emit full API request/response bodies as OTEL events"
   DISABLE_UPDATES: "1 = block all update paths including manual 'claude update'"
   CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1 = opt-in gateway /v1/models discovery"
+  MAX_THINKING_TOKENS: "0=disable thinking; integer=cap tokens; --thinking disabled flag also works (v2.1.166)"
+  OTEL_RESOURCE_ATTRIBUTES: "Custom resource attributes included as metric labels (v2.1.161)"
+  CLAUDE_CODE_ENABLE_AUTO_MODE: "1 = enable auto mode on Bedrock/Vertex/Foundry for Opus 4.7/4.8 (v2.1.158)"
+  OTEL_LOG_TOOL_DETAILS: "1 = emit tool_parameters in tool_decision OTEL events (v2.1.157)"
+  CLAUDE_CODE_SHELL_PREFIX: "Shell prefix for MCP stdio servers (v2.1.147)"
+  CLAUDE_CODE_PLUGIN_PREFER_HTTPS: "1 = prefer HTTPS for plugin sources (v2.1.141)"
+  ANTHROPIC_WORKSPACE_ID: "Workspace ID for workload identity (v2.1.141)"
+  CLAUDE_PROJECT_DIR: "Injected into MCP stdio server environment (v2.1.139)"
+  CLAUDE_CODE_SESSION_ID: "Session ID available in Bash subprocesses (v2.1.132)"
+  CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN: "1 = opt out of fullscreen alt-screen mode (v2.1.132)"
+  CLAUDE_CODE_POWERSHELL_RESPECT_EXECUTION_POLICY: "1 = respect PS execution policy; default is bypass (v2.1.143)"
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
   default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
+  opus: claude-opus-4-8        # Latest; high effort default; fast mode uses 4.7
   sonnet: claude-sonnet-4-6
   haiku: claude-haiku-4-5-20251001
 
 # ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────
-# This catalog is structured for minimal token overhead:
-# - One canonical source (this file); skills reference it rather than duplicate
-# - YAML over JSON/Markdown: ~30% fewer tokens for structured data
-# - Descriptions capped at one line; examples only where non-obvious
-# - "added:" version tags kept for audit; remove if tokens are critical
+# One canonical source (this file); YAML ~30% fewer tokens than JSON/Markdown
+# Descriptions capped at one line; examples only where non-obvious
+# version tags kept for audit trail
