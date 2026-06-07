@@ -1,0 +1,92 @@
+Claude Code Skills Sync - 2026-06-07
+=====================================
+Source: anthropics/claude-code (public)
+Version: 2.1.129 → 2.1.153
+Synced at: 2026-06-07 00:00 UTC (scheduled routine)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. 추가된 스킬 (NEW SKILLS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  /goal         (v2.1.130) - 멀티턴 완료 조건 설정
+  /scroll-speed (v2.1.130) - 스크롤 속도 실시간 조정
+  /reload-skills(v2.1.130) - 세션 재시작 없이 스킬 디렉터리 재스캔
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. 수정된 스킬 (MODIFIED SKILLS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  /simplify     (v2.1.136) - 수정 사항을 자동 적용하도록 동작 변경
+                             (이전: 검토만 → 현재: 검토 후 자동 수정)
+  /claude-api   모델 업데이트: claude-opus-4-7 → claude-opus-4-8
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. 삭제된 스킬 (REMOVED SKILLS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  없음 (None)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4. 신규 훅 이벤트 (NEW HOOKS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  MessageDisplay  (v2.1.140) - 어시스턴트 메시지 텍스트 표시 전 변환/숨김
+  SessionStart    (v2.1.140) - 세션 초기화 시 스킬 리로드 및 타이틀 설정 지원
+                               hookSpecificOutput: reloadSkills, sessionTitle
+
+  기존 훅 기능 확장:
+  - PostToolUse.continueOnBlock (v2.1.139): 거부 사유를 Claude에 피드백
+  - args: string[] 필드 (v2.1.139): exec 형식으로 직접 명령 실행
+  - terminalSequence 필드 (v2.1.141): 데스크탑 알림/윈도우 타이틀 출력
+  - 스킬 frontmatter disallowed-tools (v2.1.152): 활성 중 도구 제거
+  - 스킬 defaultEnabled: false (v2.1.132): /plugin으로 활성화
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5. 신규 설정 키 (NEW SETTINGS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  worktree.baseRef            (v2.1.131): fresh | head
+  sandbox.bwrapPath           (v2.1.131): bwrap 바이너리 경로 지정
+  sandbox.socatPath           (v2.1.131): socat 바이너리 경로 지정
+  parentSettingsBehavior      (v2.1.131): first-wins | merge
+  autoMode.hard_deny          (v2.1.132): 무조건적 자동 분류 차단
+  pluginSuggestionMarketplaces(v2.1.133): 마켓플레이스 허용 목록
+  worktree.bgIsolation        (v2.1.143): "none" = 백그라운드 세션이 워킹카피 직접 편집
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6. 신규 환경변수 (NEW ENV VARS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  CLAUDE_CODE_SESSION_ID                (v2.1.130)
+  CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN  (v2.1.131)
+  CLAUDE_CODE_FORCE_SYNC_OUTPUT         (v2.1.131)
+  CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE (v2.1.131)
+  CLAUDE_CODE_ENABLE_FEEDBACK_SURVEY_FOR_OTEL (v2.1.133)
+  OTEL_METRICS_INCLUDE_ENTRYPOINT       (v2.1.133)
+  CLAUDE_PROJECT_DIR                    (v2.1.139)
+  CLAUDE_CODE_SHELL_PREFIX              (v2.1.153)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+7. 최적화된 구조 (STRUCTURE OPTIMIZATION)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - ultrareview.note 불필요 설명 제거 (1줄 축약)
+  - focus 설명 불필요 반복 제거
+  - prUrlTemplate desc 중복 예시 제거
+  - TOKEN OPTIMIZATION 섹션명 단축 (NOTES → OPTIMIZATION)
+  - hook_features 섹션 서술형→키-값 압축
+  - 모델 주석 제거 (claude-opus-4-7 Fast mode 설명)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+8. 토큰 절감 관련 변경 (TOKEN SAVINGS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━────────
+  - 헤더 주석 1줄 제거 (# Format: cmd | trigger | desc)
+  - # Hooks execute shell... 3줄 주석 → 2줄 압축
+  - settings 설명 중복 단어 제거 (~15 token 절감)
+  - 모델 섹션 인라인 주석 제거 (~8 token 절감)
+  - 전체 파일 크기: 약 4% 감소
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9. 충돌 해결 내역 (CONFLICT RESOLUTION)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  충돌 없음. 기존 스킬 모두 유지, 신규 스킬은 기존 네임스페이스와 중복 없음.
+  claude-opus-4-7 → claude-opus-4-8 모델 마이그레이션은 하위 호환 유지.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+10. 신규 디렉터리 (NEW DIRECTORIES)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Claude/Changelogs/          (신규 생성)
+  Claude/skills/2026-06-07/skills/  (날짜별 스냅샷 디렉터리)
