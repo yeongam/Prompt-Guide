@@ -1,0 +1,48 @@
+{
+  "snapshot_date": "2026-06-09",
+  "version": "2.1.169",
+  "prev_version": "2.1.129",
+  "source": "anthropics/claude-code",
+  "added": [
+    "cd-command",
+    "reload-skills",
+    "goal-completion",
+    "scroll-speed",
+    "code-review",
+    "deep-research",
+    "run",
+    "verify"
+  ],
+  "modified": [
+    "claude-api",
+    "ultrareview"
+  ],
+  "deprecated": [
+    "CLAUDE_CODE_OPUS_4_6_FAST_MODE_OVERRIDE"
+  ],
+  "new_settings": [
+    "disableBundledSkills",
+    "worktree.baseRef",
+    "worktree.bgIsolation",
+    "pluginSuggestionMarketplaces",
+    "parentSettingsBehavior"
+  ],
+  "new_env_vars": [
+    "CLAUDE_CODE_SAFE_MODE",
+    "CLAUDE_CODE_DISABLE_BUNDLED_SKILLS",
+    "CLAUDE_CODE_EFFORT_LEVEL",
+    "CLAUDE_CODE_SESSION_ID",
+    "CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN",
+    "CLAUDE_CODE_FORCE_SYNC_OUTPUT"
+  ],
+  "skills": [
+    {"slug": "cd-command", "cmd": "/cd", "file": "cd-command.md"},
+    {"slug": "reload-skills", "cmd": "/reload-skills", "file": "reload-skills.md"},
+    {"slug": "goal-completion", "cmd": "/goal", "file": "goal-completion.md"},
+    {"slug": "scroll-speed", "cmd": "/scroll-speed", "file": "scroll-speed.md"},
+    {"slug": "code-review", "cmd": "/code-review", "file": "code-review.md"},
+    {"slug": "deep-research", "cmd": "/deep-research", "file": "deep-research.md"},
+    {"slug": "run", "cmd": "/run", "file": "run.md"},
+    {"slug": "verify", "cmd": "/verify", "file": "verify.md"}
+  ]
+}

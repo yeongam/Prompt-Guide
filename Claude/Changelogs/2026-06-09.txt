@@ -1,0 +1,76 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-06-09 00:00 UTC
+Version : 2.1.129 -> 2.1.169
+Source  : anthropics/claude-code
+============================================================
+
+[추가된 스킬 / Added Skills]
+
+  /cd               - 세션 컨텍스트 유지하며 작업 디렉토리 변경 (v2.1.169)
+  /reload-skills    - 재시작 없이 스킬 디렉토리 재스캔 (v2.1.169)
+  /goal             - 멀티턴 목표 설정 및 자동 완료 추적 (v2.1.169)
+  /scroll-speed     - TUI 마우스 스크롤 속도 조정 (v2.1.169)
+  /code-review      - 버그/정확성 중심 코드 리뷰; --comment/--fix 옵션 (v2.1.169)
+  /deep-research    - 다중 소스 팩트체크 리서치 리포트 생성 (기존 내장)
+  /run              - 실제 앱 실행 및 골든 패스 검증 (기존 내장)
+  /verify           - 특정 변경사항 타겟 검증 (기존 내장)
+
+[수정된 스킬 / Modified Skills]
+
+  /simplify         - 버그 탐색 제거; cleanup-only 역할로 분리 (/code-review와 분담)
+  /ultrareview      - 트리거 키워드 "workflow" -> "ultracode" 추가
+  /claude-api       - 모델 레퍼런스 opus 업데이트: claude-opus-4-7 -> claude-opus-4-8
+
+[삭제된 스킬 / Deleted Skills]
+
+  없음 (None)
+
+[최적화된 구조 / Optimized Structure]
+
+  - 날짜별 스냅샷 디렉토리 신규 생성: Claude/skills/2026-06-09/skills/
+  - Changelogs 디렉토리 신규 생성: Claude/Changelogs/
+  - 스킬 분리: /code-review (버그 탐색) vs /simplify (코드 정리) 역할 명확화
+  - catalog.json 스냅샷으로 버전 별 상태 추적 가능
+
+[토큰 절감 관련 변경 사항 / Token Optimization]
+
+  - 각 스킬 파일: Token Policy 섹션 포함, 불필요한 컨텍스트 반복 방지
+  - SKILLS_CATALOG.yaml: 1파일 YAML 구조 유지 (JSON/Markdown 대비 ~30% 절감)
+  - 스킬 설명 1줄 캡 유지, 예시는 명확히 필요한 경우만 포함
+  - catalog.json: 날짜 스냅샷 인덱스 역할 (전체 내용 중복 없이 참조)
+
+[충돌 해결 내역 / Conflict Resolution]
+
+  - /code-review vs /simplify: 기존 /simplify 삭제 없이 역할 분리로 병존
+    /simplify = cleanup-only (기존 동작 보존)
+    /code-review = bug-finding + correctness (신규 추가)
+  - 모델 ID 충돌: opus 4.7 -> 4.8 업데이트, 기존 코드와 하위 호환
+  - ultrareview 트리거: "ultracode" 추가, 기존 "ultrareview" 키워드 유지
+
+[신규 설정 / New Settings]
+
+  disableBundledSkills      - 내장 스킬/명령어 모델 노출 제어
+  worktree.baseRef          - 워크트리 브랜치 베이스 선택
+  worktree.bgIsolation      - 백그라운드 세션 직접 편집 허용
+  pluginSuggestionMarketplaces - 플러그인 마켓플레이스 허용 목록
+  parentSettingsBehavior    - SDK managed 설정 정책 병합 제어
+
+[신규 환경변수 / New Env Vars]
+
+  CLAUDE_CODE_SAFE_MODE               - 모든 커스터마이징 비활성화 시작
+  CLAUDE_CODE_DISABLE_BUNDLED_SKILLS  - 내장 스킬 모델 노출 차단
+  CLAUDE_CODE_EFFORT_LEVEL            - 시작 시 /effort 레벨 오버라이드
+  CLAUDE_CODE_SESSION_ID              - Bash 도구 및 훅에 세션 ID 전달
+  CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN - 전체화면 렌더러 옵트아웃
+  CLAUDE_CODE_FORCE_SYNC_OUTPUT       - 동기화 출력 강제 활성화
+
+[Deprecated]
+
+  CLAUDE_CODE_OPUS_4_6_FAST_MODE_OVERRIDE - 제거 예정 (06/01 기준)
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml 최신화 완료 (v2.1.129 -> v2.1.169)
+[Status]   Skills snapshot created at Claude/skills/2026-06-09/
+           Changelog saved at Claude/Changelogs/2026-06-09.txt
+============================================================

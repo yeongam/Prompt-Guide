@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.169
+updated: 2026-06-09
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -24,8 +24,15 @@ skills:
 
   simplify:
     cmd: /simplify
-    trigger: user asks to clean up or refactor changed code
+    trigger: user asks to clean up or simplify changed code (cleanup-only)
     desc: Review changed code for reuse/quality/efficiency, then fix issues
+    note: Use /code-review for bug-finding; /simplify for cleanup-only
+
+  code-review:
+    cmd: /code-review [--comment|--fix] [low|medium|high|max]
+    trigger: user asks to review diff for bugs or correctness issues
+    desc: Review current diff for correctness bugs and quality cleanups; --comment posts inline PR comments, --fix applies to working tree
+    added: v2.1.169
 
   session-start-hook:
     cmd: /session-start-hook
@@ -58,13 +65,13 @@ skills:
     trigger: code imports anthropic SDK; user asks about Claude API features
     desc: Build/debug Claude API apps; prompt caching, tool use, model migration
     models:
-      opus: claude-opus-4-7
+      opus: claude-opus-4-8
       sonnet: claude-sonnet-4-6
       haiku: claude-haiku-4-5-20251001
 
   ultrareview:
     cmd: /ultrareview [PR#]
-    trigger: user says "ultrareview" or wants multi-agent review
+    trigger: user says "ultrareview" or "ultracode" or wants multi-agent review
     desc: Parallel multi-agent cloud code review; no-arg=local branch, arg=GitHub PR
     note: Billed; requires git repo; no GitHub remote needed for local mode
 
@@ -117,6 +124,45 @@ skills:
     cmd: /color
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
+
+  cd:
+    cmd: /cd <path>
+    trigger: user wants to change working directory without losing session context
+    desc: Move session to new working directory; preserves prompt cache
+    added: v2.1.169
+
+  reload-skills:
+    cmd: /reload-skills
+    trigger: user added or edited skill files and wants them active without restart
+    desc: Re-scan skill directories without restarting the session
+    added: v2.1.169
+
+  goal:
+    cmd: /goal <description>
+    trigger: user wants Claude to work toward a completion condition across turns
+    desc: Set goal; Claude tracks and reports progress until condition is met
+    added: v2.1.169
+
+  scroll-speed:
+    cmd: /scroll-speed <value>
+    trigger: user wants to adjust TUI scroll speed
+    desc: Tune mouse wheel scroll speed with live preview; persisted in config
+    added: v2.1.169
+
+  deep-research:
+    cmd: /deep-research
+    trigger: user wants multi-source fact-checked research with citations
+    desc: Fan-out web searches, fetch/verify sources, synthesize cited report
+
+  run:
+    cmd: /run
+    trigger: user wants to launch app or confirm change works in real environment
+    desc: Start project app, test golden path and edge cases, report observations
+
+  verify:
+    cmd: /verify
+    trigger: user wants to confirm a specific fix or feature works before pushing
+    desc: Run targeted check on changed code; report pass/fail with evidence
 
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.
@@ -189,6 +235,31 @@ settings:
     desc: "off=hidden from model+slash, user-invocable-only=hidden from model, name-only=minimal exposure"
     added: v2.1.126
 
+  disableBundledSkills:
+    type: bool
+    desc: Hide bundled skills, workflows, and built-in slash commands from model
+    added: v2.1.169
+
+  worktree.baseRef:
+    type: string
+    desc: "Choose worktree branch base: origin/<default> or local HEAD"
+    added: v2.1.169
+
+  worktree.bgIsolation:
+    type: bool
+    desc: Allow background sessions to edit working copy directly
+    added: v2.1.169
+
+  pluginSuggestionMarketplaces:
+    type: "list[string]"
+    desc: Allowlist org marketplaces for plugin suggestions
+    added: v2.1.169
+
+  parentSettingsBehavior:
+    type: string
+    desc: Opt SDK managedSettings into policy merge
+    added: v2.1.169
+
   autoScrollEnabled:
     type: bool
     desc: Disable auto-scroll in fullscreen TUI mode
@@ -224,11 +295,17 @@ env:
   OTEL_LOG_RAW_API_BODIES: "1 = emit full API request/response bodies as OTEL events"
   DISABLE_UPDATES: "1 = block all update paths including manual 'claude update'"
   CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1 = opt-in gateway /v1/models discovery"
+  CLAUDE_CODE_SAFE_MODE: "Start with all customizations disabled for troubleshooting; added v2.1.169"
+  CLAUDE_CODE_DISABLE_BUNDLED_SKILLS: "Hide bundled skills from model; added v2.1.169"
+  CLAUDE_CODE_EFFORT_LEVEL: "Override /effort setting at startup; added v2.1.169"
+  CLAUDE_CODE_SESSION_ID: "Passed to Bash tool and hooks for session tracking; added v2.1.169"
+  CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN: "1 = opt out of fullscreen renderer; added v2.1.169"
+  CLAUDE_CODE_FORCE_SYNC_OUTPUT: "1 = force-enable synchronized output; added v2.1.169"
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
   default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
+  opus: claude-opus-4-8        # Fast mode available; Max subscribers only auto mode
   sonnet: claude-sonnet-4-6
   haiku: claude-haiku-4-5-20251001
 
