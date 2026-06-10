@@ -1,0 +1,88 @@
+{
+  "date": "2026-06-10",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-06-10T00:00:00Z",
+  "source_version": "2.1.170",
+  "prev_version": "2.1.129",
+  "source_policy": "official anthropics/claude-code repository only",
+  "skills": [
+    {
+      "slug": "claude-code-commands",
+      "name": "Claude Code Commands",
+      "trigger": "Use for Claude Code slash commands, CLI flags, and session management.",
+      "output": "Concise command reference with version tag and usage note.",
+      "procedure": [
+        "Confirm target command exists in current version.",
+        "Prefer built-in slash commands over workarounds.",
+        "Use minimal flags; avoid deprecated options.",
+        "Verify output matches expected behavior before committing.",
+        "Link official changelog for version-specific features."
+      ],
+      "token_policy": [
+        "Return command signature only; omit long examples.",
+        "Link to source repo instead of repeating docs.",
+        "Skip unchanged commands; highlight additions only."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "a1b2c3d4e5f6a7b8",
+      "source": "https://github.com/anthropics/claude-code",
+      "added_in": "2.1.170-sync"
+    },
+    {
+      "slug": "hooks-configuration",
+      "name": "Hooks Configuration",
+      "trigger": "Use for setting up lifecycle hooks, permission flows, and event-driven automation.",
+      "output": "Minimal hook definition with event, type, and command/tool.",
+      "procedure": [
+        "Identify lifecycle event.",
+        "Choose invoke type: shell | mcp_tool | http.",
+        "Block with exit 2 or JSON decision block.",
+        "Retry PermissionDenied with {retry:true}.",
+        "Test hook in isolation before enabling globally."
+      ],
+      "token_policy": [
+        "Return only the hook definition block; skip boilerplate.",
+        "Use shell invoke type by default.",
+        "Omit conditional if field unless filtering is needed."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "b2c3d4e5f6a7b8c9",
+      "source": "https://github.com/anthropics/claude-code",
+      "added_in": "2.1.170-sync"
+    },
+    {
+      "slug": "settings-env-reference",
+      "name": "Settings & Environment Reference",
+      "trigger": "Use for configuring settings.json keys or environment variables in Claude Code.",
+      "output": "Setting key with type, default, and added-version tag.",
+      "procedure": [
+        "Prefer project .claude/settings.json over global.",
+        "Apply minimal required keys; avoid speculative config.",
+        "Validate version compatibility before using new settings.",
+        "Use env vars for runtime overrides.",
+        "Test with --safe-mode if customizations cause issues."
+      ],
+      "token_policy": [
+        "List only keys relevant to the task.",
+        "Omit description if key name is self-explanatory.",
+        "Skip version tags when context is clearly current."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "c3d4e5f6a7b8c9d0",
+      "source": "https://github.com/anthropics/claude-code",
+      "added_in": "2.1.170-sync"
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.170
+updated: 2026-06-10
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -118,6 +118,42 @@ skills:
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
 
+  cd:
+    cmd: /cd [path]
+    trigger: user wants to change working directory mid-session
+    desc: Move session to new working directory without breaking prompt cache
+    added: v2.1.169
+
+  workflows:
+    cmd: /workflows
+    trigger: user wants to view or manage workflow runs
+    desc: View dynamic workflow runs and orchestration status
+    added: v2.1.154
+
+  code-review:
+    cmd: /code-review [--comment] [--fix] [effort]
+    trigger: user asks to review code for correctness bugs
+    desc: Report correctness bugs at chosen effort level; --comment posts inline PR comments, --fix applies fixes
+    added: v2.1.147
+
+  goal:
+    cmd: /goal [condition]
+    trigger: user wants Claude to work until a specific condition is met
+    desc: Set completion condition; Claude works autonomously until met
+    added: v2.1.139
+
+  scroll-speed:
+    cmd: /scroll-speed
+    trigger: user wants to adjust scroll speed in TUI
+    desc: Tune mouse wheel scroll speed with live preview
+    added: v2.1.139
+
+  plugin-list:
+    cmd: /plugin list [filter]
+    trigger: user wants to see installed plugins
+    desc: Display installed plugins with optional filtering
+    added: v2.1.163
+
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.
 # Block: exit 2 OR return JSON {decision:"block", reason:"..."}
@@ -176,6 +212,18 @@ hooks:
     added: v2.1.95
     use: Custom permission escalation flows
 
+  MessageDisplay:
+    fires: Before assistant message is shown to user
+    can_block: true
+    added: v2.1.152
+    use: Transform or hide assistant messages before display
+
+  post-session:
+    fires: After session ends, before workspace deletion (self-hosted runner)
+    can_block: false
+    added: v2.1.169
+    use: Snapshot uncommitted work or export logs after session
+
   hook_invoke_types:
     - type: shell          # shell command (default)
     - type: mcp_tool       # invoke MCP tool directly (added v2.1.118)
@@ -215,6 +263,61 @@ settings:
     desc: Block specific domains even when broader allowlists exist
     added: v2.1.85
 
+  disableBundledSkills:
+    type: bool
+    desc: Hide bundled skills, workflows, and built-in slash commands from model
+    added: v2.1.170
+
+  fallbackModel:
+    type: "list[string] (max 3)"
+    desc: Configure fallback models used when primary model fails
+    added: v2.1.166
+
+  requiredMinimumVersion:
+    type: string
+    desc: Enforce minimum Claude Code version for this project
+    added: v2.1.163
+
+  requiredMaximumVersion:
+    type: string
+    desc: Enforce maximum Claude Code version for this project
+    added: v2.1.163
+
+  parentSettingsBehavior:
+    type: "merge | first-wins"
+    desc: Policy inheritance strategy for nested settings
+    added: v2.1.154
+
+  allowAllClaudeAiMcps:
+    type: bool
+    desc: Load claude.ai MCP connectors alongside managed config
+    added: v2.1.154
+
+  worktree.baseRef:
+    type: "fresh | head"
+    desc: Choose branch source when creating worktrees
+    added: v2.1.154
+
+  pluginSuggestionMarketplaces:
+    type: "list[string]"
+    desc: Allowlist org marketplaces for plugin suggestions
+    added: v2.1.152
+
+  worktree.bgIsolation:
+    type: string
+    desc: "none = allow background edits in shared checkout"
+    added: v2.1.133
+
+  sandbox.bwrapPath:
+    type: string
+    desc: Custom bubblewrap binary path for sandbox
+    added: v2.1.133
+
+  sandbox.socatPath:
+    type: string
+    desc: Custom socat binary path for sandbox
+    added: v2.1.133
+
 # ─── ENV VARS ──────────────────────────────────────────────────────────────────
 env:
   CLAUDE_EFFORT: "Current effort level; usable in skill template strings as ${CLAUDE_EFFORT}"
@@ -224,11 +327,21 @@ env:
   OTEL_LOG_RAW_API_BODIES: "1 = emit full API request/response bodies as OTEL events"
   DISABLE_UPDATES: "1 = block all update paths including manual 'claude update'"
   CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1 = opt-in gateway /v1/models discovery"
+  CLAUDE_CODE_DISABLE_BUNDLED_SKILLS: "1 = disable bundled skills and built-in commands (added v2.1.170)"
+  API_FORCE_IDLE_TIMEOUT: "0 = disable idle timeout on Vertex/Foundry (added v2.1.169)"
+  CLAUDE_CODE_SAFE_MODE: "1 = start with all customizations disabled for troubleshooting (added v2.1.169)"
+  CLAUDE_CODE_SESSION_ID: "Session identifier exposed to subprocess environment (added v2.1.157)"
+  CLAUDE_CODE_EFFORT_LEVEL: "Override effort level; mirrors /effort command (added v2.1.154)"
+  CLAUDE_CODE_STOP_HOOK_BLOCK_CAP: "Integer; configure stop-hook block retry limit (added v2.1.147)"
+  ANTHROPIC_WORKSPACE_ID: "Scope minted token to specific workspace (added v2.1.141)"
+  CLAUDE_CODE_PLUGIN_PREFER_HTTPS: "1 = clone plugins via HTTPS instead of SSH (added v2.1.141)"
+  CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN: "1 = use native terminal scrollback instead of alt-screen (added v2.1.132)"
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
   default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
+  fable: claude-fable-5        # Mythos-class; added v2.1.170; highest capability
+  opus: claude-opus-4-8        # Fast mode available; Max subscribers only auto mode
   sonnet: claude-sonnet-4-6
   haiku: claude-haiku-4-5-20251001
 
