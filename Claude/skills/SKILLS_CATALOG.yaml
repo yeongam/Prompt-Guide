@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.173
+updated: 2026-06-11
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -118,6 +118,49 @@ skills:
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
 
+  cd:
+    cmd: /cd [path]
+    trigger: user wants to move session to different directory
+    desc: Change working directory without breaking prompt cache
+    added: v2.1.169
+
+  plugin-list:
+    cmd: /plugin list [--enabled|--disabled]
+    trigger: user wants to see installed or available plugins
+    desc: List marketplace plugins; filter by enabled/disabled state
+    added: v2.1.163
+
+  workflows:
+    cmd: /workflows
+    trigger: user wants to manage or view workflows
+    desc: Open workflows panel; available during in-progress turns
+    added: v2.1.169
+
+  voice:
+    cmd: /voice
+    trigger: user wants voice mode
+    desc: Toggle voice input/output mode
+
+  run:
+    cmd: /run
+    trigger: user wants to run or start the app
+    desc: Launch project app to verify changes in real environment
+
+  verify:
+    cmd: /verify
+    trigger: user wants to verify a change works in the real app
+    desc: Run app and observe behavior to confirm fix or feature
+
+  code-review:
+    cmd: /code-review [--comment|--fix]
+    trigger: user asks for code review at given effort level
+    desc: Review diff for bugs/cleanups; --comment posts inline PR comments, --fix applies findings
+
+  deep-research:
+    cmd: /deep-research
+    trigger: user wants multi-source fact-checked research
+    desc: Fan-out searches, fetch sources, adversarially verify, synthesize cited report
+
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.
 # Block: exit 2 OR return JSON {decision:"block", reason:"..."}
@@ -176,6 +219,12 @@ hooks:
     added: v2.1.95
     use: Custom permission escalation flows
 
+  post-session:
+    fires: After session ends (self-hosted runners only)
+    can_block: false
+    added: v2.1.169
+    use: Post-session cleanup, archiving, notifications on self-hosted
+
   hook_invoke_types:
     - type: shell          # shell command (default)
     - type: mcp_tool       # invoke MCP tool directly (added v2.1.118)
@@ -205,6 +254,26 @@ settings:
     desc: Disable inline shell execution within skill definitions
     added: v2.1.98
 
+  disableBundledSkills:
+    type: bool
+    desc: Disable all built-in bundled skills
+    added: v2.1.169
+
+  fallbackModel:
+    type: "string | list[string]"
+    desc: Up to 3 fallback models tried in order on unexpected non-retryable errors
+    added: v2.1.166
+
+  requiredMinimumVersion:
+    type: string
+    desc: "Managed: enforce minimum Claude Code version (e.g. \"2.1.163\")"
+    added: v2.1.163
+
+  requiredMaximumVersion:
+    type: string
+    desc: "Managed: enforce maximum Claude Code version"
+    added: v2.1.163
+
   prUrlTemplate:
     type: string
     desc: Custom URL template for PR footer badge (e.g. custom code-review tools)
@@ -231,6 +300,7 @@ models:
   opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
   sonnet: claude-sonnet-4-6
   haiku: claude-haiku-4-5-20251001
+  fable: claude-fable-5        # Mythos-class model; added v2.1.170
 
 # ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────
 # This catalog is structured for minimal token overhead:

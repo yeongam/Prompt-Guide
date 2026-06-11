@@ -1,0 +1,120 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-06-11 00:00 UTC
+Version : 2.1.129 -> 2.1.173
+Source  : anthropics/claude-code (main)
+============================================================
+
+[추가된 스킬 / Added Skills]
+
+  /cd [path]
+    - Move session to new directory without breaking prompt cache
+    - Added: v2.1.169
+
+  /plugin list [--enabled|--disabled]
+    - List marketplace plugins with enabled/disabled filter
+    - Added: v2.1.163
+
+  /workflows
+    - Open workflows panel (available during in-progress turns)
+    - Added: v2.1.169
+
+  /voice
+    - Toggle voice input/output mode (previously undocumented in catalog)
+
+  /run
+    - Launch project app to verify changes in real environment
+
+  /verify
+    - Run app and observe behavior to confirm fix or feature
+
+  /code-review [--comment|--fix]
+    - Diff review with inline comment posting or auto-fix option
+
+  /deep-research
+    - Fan-out web research with adversarial verification
+
+[수정된 스킬 / Modified Skills]
+
+  claude-api
+    - Updated model list: added claude-fable-5 (Fable 5, v2.1.170)
+    - Fable 5 is "Mythos-class model made safe for general use"
+
+  loop
+    - Promotion disabled in remote sessions (UI cleanup, v2.1.172)
+
+  ultrareview
+    - Added `ultra` option visible even when not signed in (v2.1.172)
+
+[삭제된 스킬 / Removed Skills]
+  없음 / None
+
+[신규 훅 / New Hooks]
+
+  post-session
+    - Fires after session ends on self-hosted runners
+    - Added: v2.1.169
+
+  Stop / SubagentStop (enhanced)
+    - Can now return hookSpecificOutput.additionalContext
+    - Added: v2.1.163
+
+[신규 설정 / New Settings]
+
+  disableBundledSkills (bool)
+    - Disable all built-in bundled skills
+    - Added: v2.1.169
+
+  fallbackModel (string | string[])
+    - Up to 3 fallback models tried in order on unexpected errors
+    - Added: v2.1.166
+
+  requiredMinimumVersion (string)
+  requiredMaximumVersion (string)
+    - Managed settings to enforce Claude Code version range
+    - Added: v2.1.163
+
+[최적화된 구조 / Optimized Structure]
+
+  - Claude/skills/ 아래 날짜별 디렉토리 도입 (YYYY-MM-DD/skills/)
+    이전: SKILLS_CATALOG.yaml 단일 파일만 존재
+    이후: 2026-06-11/skills/{catalog.json, commands.md, hooks.md, settings.md}
+
+  - 역할별 분리: commands.md / hooks.md / settings.md
+    목적: 스킬, 훅, 설정을 독립적으로 참조 가능하도록 경량화
+
+  - catalog.json 도입: 기계 판독 가능한 구조로 자동화 파이프라인 지원
+
+[토큰 절감 관련 변경 사항 / Token Optimization]
+
+  - YAML 카탈로그 설명을 1줄로 제한 (다중 행 제거)
+  - 예시는 non-obvious한 경우에만 유지
+  - commands.md: pipe-separated 컴팩트 표 형식 사용 (Markdown 테이블 대비 ~25% 절감)
+  - hooks.md / settings.md: 테이블 형식으로 반복 구조 압축
+  - version 태그는 신규 항목에만 표시, 기존 항목은 제거
+
+[충돌 해결 내역 / Conflict Resolution]
+
+  - Claude/skills/ 하위 기존 파일(SKILLS_CATALOG.yaml, .version) 유지
+  - 신규 날짜 디렉토리(2026-06-11/skills/)는 기존 파일과 독립된 경로
+  - changelogs 경로 충돌: scripts/update_skills.py가 참조하던
+    REPO_ROOT/changelogs/ 를 Claude/Changelogs/ 로 수정
+  - GitHub Actions 워크플로우 브랜치 오류 수정:
+    FdaL5 → v8cjok (claude/zealous-sagan-v8cjok)
+
+[워크플로우 수정 / Workflow Fix]
+
+  .github/workflows/daily-skill-update.yml
+    Before: ref: claude/zealous-sagan-FdaL5
+    After:  ref: claude/zealous-sagan-v8cjok
+    Before: push → origin claude/zealous-sagan-FdaL5
+    After:  push → origin claude/zealous-sagan-v8cjok
+
+  scripts/update_skills.py
+    Before: CHANGELOGS_DIR = REPO_ROOT / "changelogs"
+    After:  CHANGELOGS_DIR = REPO_ROOT / "Claude" / "Changelogs"
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml v2.1.173 최신화 완료
+[Status]   Catalog updated → yeongam/Prompt-Guide (claude/zealous-sagan-v8cjok)
+============================================================

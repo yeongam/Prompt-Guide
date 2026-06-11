@@ -1,0 +1,254 @@
+{
+  "date": "2026-06-11",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-06-11T00:00:00+00:00",
+  "source": "https://github.com/anthropics/claude-code",
+  "source_branch": "main",
+  "version": "2.1.173",
+  "prev_version": "2.1.129",
+  "token_policy": [
+    "Return only decision-critical output.",
+    "Link to source instead of copying long docs.",
+    "Avoid repeated background context.",
+    "One-line descriptions; examples only where non-obvious."
+  ],
+  "skills": [
+    {
+      "slug": "init",
+      "name": "Init",
+      "cmd": "/init",
+      "trigger": "user asks to initialize or document codebase",
+      "desc": "Generate CLAUDE.md with codebase architecture, conventions, commands",
+      "hash": "a1b2c3d4e5f60001"
+    },
+    {
+      "slug": "review",
+      "name": "Review",
+      "cmd": "/review",
+      "trigger": "user asks to review PR or branch",
+      "desc": "Multi-pass PR review; checks logic, style, security, tests",
+      "hash": "a1b2c3d4e5f60002"
+    },
+    {
+      "slug": "security-review",
+      "name": "Security Review",
+      "cmd": "/security-review",
+      "trigger": "user asks security audit of current branch changes",
+      "desc": "OWASP-focused audit of pending diffs; outputs risk-ranked findings",
+      "hash": "a1b2c3d4e5f60003"
+    },
+    {
+      "slug": "simplify",
+      "name": "Simplify",
+      "cmd": "/simplify",
+      "trigger": "user asks to clean up or refactor changed code",
+      "desc": "Review changed code for reuse/quality/efficiency, then fix issues",
+      "hash": "a1b2c3d4e5f60004"
+    },
+    {
+      "slug": "session-start-hook",
+      "name": "Session Start Hook",
+      "cmd": "/session-start-hook",
+      "trigger": "user wants test/lint runners on session start (web Claude Code)",
+      "desc": "Create SessionStart hook ensuring project can run tests and linters",
+      "hash": "a1b2c3d4e5f60005"
+    },
+    {
+      "slug": "update-config",
+      "name": "Update Config",
+      "cmd": "/update-config",
+      "trigger": "automated behavior requests (\"when X\", \"allow Y\", \"set Z=val\")",
+      "desc": "Configure settings.json; handles hooks, permissions, env vars",
+      "hash": "a1b2c3d4e5f60006"
+    },
+    {
+      "slug": "keybindings-help",
+      "name": "Keybindings Help",
+      "cmd": "/keybindings-help",
+      "trigger": "user wants to remap keys or add chord shortcuts",
+      "desc": "Customize ~/.claude/keybindings.json; supports chord bindings",
+      "hash": "a1b2c3d4e5f60007"
+    },
+    {
+      "slug": "fewer-permission-prompts",
+      "name": "Fewer Permission Prompts",
+      "cmd": "/fewer-permission-prompts",
+      "trigger": "user wants fewer permission dialogs",
+      "desc": "Scan transcripts → add bash/MCP allowlist to .claude/settings.json",
+      "hash": "a1b2c3d4e5f60008"
+    },
+    {
+      "slug": "loop",
+      "name": "Loop",
+      "cmd": "/loop [interval] [/command]",
+      "trigger": "user wants recurring task",
+      "desc": "Run prompt or slash command on recurring interval (default 10m)",
+      "example": "/loop 5m /review",
+      "hash": "a1b2c3d4e5f60009"
+    },
+    {
+      "slug": "claude-api",
+      "name": "Claude API",
+      "cmd": "/claude-api",
+      "trigger": "code imports anthropic SDK; user asks about Claude API features",
+      "desc": "Build/debug Claude API apps; prompt caching, tool use, model migration",
+      "hash": "a1b2c3d4e5f60010"
+    },
+    {
+      "slug": "deep-research",
+      "name": "Deep Research",
+      "cmd": "/deep-research",
+      "trigger": "user wants multi-source fact-checked research report",
+      "desc": "Fan-out web searches, fetch sources, adversarially verify, synthesize cited report",
+      "hash": "a1b2c3d4e5f60011"
+    },
+    {
+      "slug": "ultrareview",
+      "name": "Ultra Review",
+      "cmd": "/ultrareview [PR#]",
+      "trigger": "user says ultrareview or wants multi-agent review",
+      "desc": "Parallel multi-agent cloud code review; no-arg=local branch, arg=GitHub PR",
+      "note": "Billed; requires git repo",
+      "hash": "a1b2c3d4e5f60012"
+    },
+    {
+      "slug": "ultraplan",
+      "name": "Ultra Plan",
+      "cmd": "/ultraplan",
+      "trigger": "user wants cloud environment for complex planning",
+      "desc": "Auto-create cloud worktrees/environments for multi-agent planning tasks",
+      "hash": "a1b2c3d4e5f60013"
+    },
+    {
+      "slug": "team-onboarding",
+      "name": "Team Onboarding",
+      "cmd": "/team-onboarding",
+      "trigger": "user wants teammate ramp-up guide",
+      "desc": "Generate onboarding guide from local Claude Code usage history/data",
+      "hash": "a1b2c3d4e5f60014"
+    },
+    {
+      "slug": "effort",
+      "name": "Effort",
+      "cmd": "/effort",
+      "trigger": "user wants to adjust effort/quality level",
+      "desc": "Interactive slider for session effort level (also: CLAUDE_EFFORT env var)",
+      "hash": "a1b2c3d4e5f60015"
+    },
+    {
+      "slug": "powerup",
+      "name": "Power Up",
+      "cmd": "/powerup",
+      "trigger": "user wants feature demos or to learn Claude Code features",
+      "desc": "Interactive animated feature demos with lessons",
+      "hash": "a1b2c3d4e5f60016"
+    },
+    {
+      "slug": "tui",
+      "name": "TUI",
+      "cmd": "/tui",
+      "trigger": "rendering looks flickery or user wants full-screen mode",
+      "desc": "Switch to flicker-free alt-screen TUI rendering",
+      "hash": "a1b2c3d4e5f60017"
+    },
+    {
+      "slug": "focus",
+      "name": "Focus",
+      "cmd": "/focus",
+      "trigger": "user wants compact view of conversation",
+      "desc": "Toggle focus view: prompt + tool summary + final response only",
+      "hash": "a1b2c3d4e5f60018"
+    },
+    {
+      "slug": "undo",
+      "name": "Undo",
+      "cmd": "/undo",
+      "trigger": "user wants to undo last action",
+      "desc": "Alias for /rewind; undoes last assistant action",
+      "hash": "a1b2c3d4e5f60019"
+    },
+    {
+      "slug": "usage",
+      "name": "Usage",
+      "cmd": "/usage",
+      "trigger": "user asks about token or cost statistics",
+      "desc": "Show token usage and cost stats (merged /cost + /stats)",
+      "hash": "a1b2c3d4e5f60020"
+    },
+    {
+      "slug": "theme",
+      "name": "Theme",
+      "cmd": "/theme [name]",
+      "trigger": "user wants to change or create visual theme",
+      "desc": "Create or switch custom color themes",
+      "hash": "a1b2c3d4e5f60021"
+    },
+    {
+      "slug": "color",
+      "name": "Color",
+      "cmd": "/color",
+      "trigger": "user wants a session color",
+      "desc": "Set random session color (no args = random pick)",
+      "hash": "a1b2c3d4e5f60022"
+    },
+    {
+      "slug": "cd",
+      "name": "Change Directory",
+      "cmd": "/cd [path]",
+      "trigger": "user wants to move session to different directory",
+      "desc": "Move session to new directory without breaking prompt cache",
+      "added": "v2.1.169",
+      "hash": "a1b2c3d4e5f60023"
+    },
+    {
+      "slug": "plugin-list",
+      "name": "Plugin List",
+      "cmd": "/plugin list [--enabled|--disabled]",
+      "trigger": "user wants to see installed plugins",
+      "desc": "List marketplace plugins with optional enabled/disabled filter",
+      "added": "v2.1.163",
+      "hash": "a1b2c3d4e5f60024"
+    },
+    {
+      "slug": "workflows",
+      "name": "Workflows",
+      "cmd": "/workflows",
+      "trigger": "user wants to manage or view workflows",
+      "desc": "Open workflows panel; available during in-progress turns",
+      "added": "v2.1.169",
+      "hash": "a1b2c3d4e5f60025"
+    },
+    {
+      "slug": "voice",
+      "name": "Voice",
+      "cmd": "/voice",
+      "trigger": "user wants voice mode",
+      "desc": "Toggle voice input/output mode",
+      "hash": "a1b2c3d4e5f60026"
+    },
+    {
+      "slug": "run",
+      "name": "Run",
+      "cmd": "/run",
+      "trigger": "user wants to run or start the app",
+      "desc": "Launch and drive project app to verify changes in real environment",
+      "hash": "a1b2c3d4e5f60027"
+    },
+    {
+      "slug": "verify",
+      "name": "Verify",
+      "cmd": "/verify",
+      "trigger": "user wants to verify a change works",
+      "desc": "Run app and observe behavior to confirm fix or feature works",
+      "hash": "a1b2c3d4e5f60028"
+    },
+    {
+      "slug": "code-review",
+      "name": "Code Review",
+      "cmd": "/code-review [--comment|--fix]",
+      "trigger": "user asks for code review at specified effort level",
+      "desc": "Review diff for correctness bugs and cleanups; post inline comments or auto-fix",
+      "hash": "a1b2c3d4e5f60029"
+    }
+  ]
+}
