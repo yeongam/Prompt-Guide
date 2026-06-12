@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.175
+updated: 2026-06-12
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -25,7 +25,12 @@ skills:
   simplify:
     cmd: /simplify
     trigger: user asks to clean up or refactor changed code
-    desc: Review changed code for reuse/quality/efficiency, then fix issues
+    desc: Cleanup-only review of changed code; auto-applies fixes (v2.1.154)
+
+  code-review:
+    cmd: /code-review [--fix] [--comment] [PR#]
+    trigger: user asks for full code review with optional auto-fix or GitHub comments
+    desc: Full review with effort levels; --fix applies findings; --comment posts inline PR comments (v2.1.147)
 
   session-start-hook:
     cmd: /session-start-hook
@@ -58,7 +63,9 @@ skills:
     trigger: code imports anthropic SDK; user asks about Claude API features
     desc: Build/debug Claude API apps; prompt caching, tool use, model migration
     models:
-      opus: claude-opus-4-7
+      fable5: claude-fable-5
+      opus48: claude-opus-4-8
+      opus47: claude-opus-4-7
       sonnet: claude-sonnet-4-6
       haiku: claude-haiku-4-5-20251001
 
@@ -66,7 +73,6 @@ skills:
     cmd: /ultrareview [PR#]
     trigger: user says "ultrareview" or wants multi-agent review
     desc: Parallel multi-agent cloud code review; no-arg=local branch, arg=GitHub PR
-    note: Billed; requires git repo; no GitHub remote needed for local mode
 
   ultraplan:
     cmd: /ultraplan
@@ -79,9 +85,9 @@ skills:
     desc: Generate onboarding guide from local Claude Code usage history/data
 
   effort:
-    cmd: /effort
+    cmd: /effort [level]
     trigger: user wants to adjust effort/quality level
-    desc: Interactive slider for session effort level (also: CLAUDE_EFFORT env var)
+    desc: Interactive slider; labels are Faster/Smarter (changed v2.1.154); CLAUDE_EFFORT env var
 
   powerup:
     cmd: /powerup
@@ -91,7 +97,7 @@ skills:
   tui:
     cmd: /tui
     trigger: rendering looks flickery or user wants full-screen mode
-    desc: Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)
+    desc: Switch to flicker-free alt-screen TUI rendering (CLAUDE_CODE_NO_FLICKER)
 
   focus:
     cmd: /focus
@@ -106,7 +112,7 @@ skills:
   usage:
     cmd: /usage
     trigger: user asks about token or cost statistics
-    desc: Show token usage and cost stats (merged /cost + /stats)
+    desc: Show token/cost stats with per-category breakdown (skills, agents, plugins, MCP)
 
   theme:
     cmd: /theme [name]
@@ -118,11 +124,52 @@ skills:
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
 
+  reload-skills:
+    cmd: /reload-skills
+    trigger: user wants to reload skills without restarting session
+    desc: Re-scan skill directories mid-session (v2.1.152)
+
+  cd:
+    cmd: /cd [path]
+    trigger: user wants to move session to a different directory
+    desc: Move session to new directory without breaking cache (v2.1.163)
+
+  plugin:
+    cmd: /plugin list [--enabled|--disabled]
+    trigger: user wants to manage or list plugins
+    desc: List plugins with filter support; claude plugin init <name> scaffolds new plugins (v2.1.141/163)
+
+  goal:
+    cmd: /goal
+    trigger: user wants to set a completion condition for ongoing work
+    desc: Set completion condition with live overlay panel; persists across turns (v2.1.140)
+
+  scroll-speed:
+    cmd: /scroll-speed
+    trigger: user wants to adjust scroll speed
+    desc: Tune mouse wheel speed with live preview (v2.1.140)
+
+  resume:
+    cmd: /resume
+    trigger: user wants to resume a background session
+    desc: Resume background sessions marked bg (v2.1.144)
+
+  diff:
+    cmd: /diff
+    trigger: user wants to navigate diffs
+    desc: Detail view with keyboard navigation: arrows, vim keys, pagination (v2.1.150)
+
+  workflows:
+    cmd: /workflows
+    trigger: user wants to view agent workflow runs
+    desc: View dynamic workflow runs; supports 10-100+ agent orchestration (v2.1.154)
+
+  chrome:
+    cmd: /chrome
+    trigger: multiple browsers connected; user wants to select one
+    desc: Browser selection when multiple Chrome instances are connected (v2.1.154)
+
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
-# Hooks execute shell commands or MCP tools on lifecycle events.
-# Block: exit 2 OR return JSON {decision:"block", reason:"..."}
-# Retry: return JSON {retry:true} (PermissionDenied only)
-# Conditional: add `if` field using permission rule syntax
 hooks:
   PreToolUse:
     fires: Before any tool execution
@@ -137,16 +184,18 @@ hooks:
   Notification:
     fires: On push-notification events
     can_block: false
-    use: Forward alerts to mobile/Slack (requires Remote Control setup)
+    use: Forward alerts to mobile/Slack
 
   Stop:
     fires: After assistant turn completes
     can_block: false
-    use: Post-turn logging, notifications
+    returns: additionalContext (v2.1.163)
+    use: Post-turn logging, notifications, feedback injection
 
   SubagentStop:
     fires: After subagent turn completes
     can_block: false
+    returns: additionalContext (v2.1.163)
     use: Subagent result aggregation
 
   PreCompact:
@@ -154,87 +203,166 @@ hooks:
     can_block: true
     block_method: "exit 2 OR {decision:'block'}"
     added: v2.1.85
-    use: Prevent compaction during critical operations
 
   TaskCreated:
     fires: When task created via TaskCreate tool
     can_block: false
     added: v2.1.90
-    use: Log/track task creation events
 
   WorktreeCreate:
     fires: On worktree creation
     can_block: false
     added: v2.1.88
-    type_http: returns hookSpecificOutput.worktreePath
-    use: Custom worktree provisioning via HTTP endpoint
+    type: http
+    returns: hookSpecificOutput.worktreePath
 
   PermissionDenied:
     fires: After auto-mode classifier denial
     can_block: false
     retry: "return {retry:true} to re-run classifier"
     added: v2.1.95
-    use: Custom permission escalation flows
+
+  MessageDisplay:
+    fires: Transforms assistant message before display
+    can_block: false
+    added: v2.1.152
+    use: Custom message rendering/filtering
+
+  SessionStart:
+    fires: On session start
+    can_block: false
+    added: v2.1.152
+    returns: "reloadSkills: true, sessionTitle: string"
+    use: Session initialization; force skill reload
 
   hook_invoke_types:
-    - type: shell          # shell command (default)
-    - type: mcp_tool       # invoke MCP tool directly (added v2.1.118)
-    - type: http           # HTTP endpoint (WorktreeCreate)
+    - type: shell
+    - type: mcp_tool       # v2.1.118
+    - type: http           # WorktreeCreate only
 
 # ─── SETTINGS ──────────────────────────────────────────────────────────────────
-# Place in .claude/settings.json (project) or ~/.claude/settings.json (user)
 settings:
   skillOverrides:
     type: "off | user-invocable-only | name-only"
-    desc: "off=hidden from model+slash, user-invocable-only=hidden from model, name-only=minimal exposure"
     added: v2.1.126
+
+  disableBundledSkills:
+    type: bool
+    added: v2.1.163
+
+  fallbackModel:
+    type: "list (max 3)"
+    flag: --fallback-model
+    added: v2.1.166
+
+  enforceAvailableModels:
+    type: bool
+    desc: Constrain default model; prevent allowlist widening
+    added: v2.1.175
+
+  wheelScrollAccelerationEnabled:
+    type: bool
+    added: v2.1.174
 
   autoScrollEnabled:
     type: bool
-    desc: Disable auto-scroll in fullscreen TUI mode
     added: v2.1.100
 
   showThinkingSummaries:
     type: bool
     default: false
-    desc: Control thinking summary generation in responses
     added: v2.1.95
 
   disableSkillShellExecution:
     type: bool
-    desc: Disable inline shell execution within skill definitions
     added: v2.1.98
 
-  prUrlTemplate:
-    type: string
-    desc: Custom URL template for PR footer badge (e.g. custom code-review tools)
-    added: v2.1.101
+  acceptEdits:
+    type: bool
+    desc: Safer automated edit mode
+    added: v2.1.160
+
+  worktree.baseRef:
+    type: "fresh | head"
+    added: v2.1.133
+
+  worktree.bgIsolation:
+    type: "none"
+    desc: For repos where worktrees are impractical
+    added: v2.1.143
+
+  parentSettingsBehavior:
+    type: "first-wins | merge"
+    added: v2.1.133
 
   sandbox.network.deniedDomains:
     type: "list[string]"
-    desc: Block specific domains even when broader allowlists exist
     added: v2.1.85
+
+  requiredMinimumVersion:
+    type: string
+    added: v2.1.163
+
+  requiredMaximumVersion:
+    type: string
+    added: v2.1.163
+
+  pluginSuggestionMarketplaces:
+    type: "list[string]"
+    added: v2.1.152
+
+  allowAllClaudeAiMcps:
+    type: bool
+    desc: Enterprise managed MCP setting
+    added: v2.1.150
+
+  prUrlTemplate:
+    type: string
+    added: v2.1.101
+
+  sandbox.bwrapPath:
+    type: string
+    added: v2.1.133
+
+  sandbox.socatPath:
+    type: string
+    added: v2.1.133
 
 # ─── ENV VARS ──────────────────────────────────────────────────────────────────
 env:
-  CLAUDE_EFFORT: "Current effort level; usable in skill template strings as ${CLAUDE_EFFORT}"
-  CLAUDE_CODE_NO_FLICKER: "1 = enable alt-screen flicker-free rendering (same as /tui)"
-  CLAUDE_CODE_USE_POWERSHELL_TOOL: "1 = enable PowerShell tool (Windows opt-in preview)"
-  CLAUDE_STREAM_IDLE_TIMEOUT_MS: "Integer ms for streaming idle watchdog timeout"
-  OTEL_LOG_RAW_API_BODIES: "1 = emit full API request/response bodies as OTEL events"
-  DISABLE_UPDATES: "1 = block all update paths including manual 'claude update'"
+  ANTHROPIC_DEFAULT_SONNET_MODEL: "Override default Sonnet model (v2.1.174)"
+  CLAUDE_CODE_SUBAGENT_MODEL: "Sub-agent model override (v2.1.147)"
+  CLAUDE_CODE_SESSION_ID: "Session ID in stdio MCP + Bash subprocess env (v2.1.132/154)"
+  CLAUDE_PROJECT_DIR: "Project dir in MCP/hook environments (v2.1.140)"
+  CLAUDE_EFFORT: "Current effort level; usable in skill template strings"
+  CLAUDE_CODE_NO_FLICKER: "1 = alt-screen rendering (same as /tui)"
+  CLAUDE_CODE_USE_POWERSHELL_TOOL: "1 = PowerShell tool (Windows preview)"
+  CLAUDE_CODE_DISABLE_BUNDLED_SKILLS: "Disable built-in skills (v2.1.163)"
+  CLAUDE_CODE_STOP_HOOK_BLOCK_CAP: "Max stop-hook blocks; default 8 (v2.1.147)"
+  CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN: "1 = native scrollback mode (v2.1.132)"
+  CLAUDE_CODE_PLUGIN_PREFER_HTTPS: "SSH->HTTPS plugin cloning (v2.1.141)"
+  CLAUDE_CODE_ENABLE_FEEDBACK_SURVEY_FOR_OTEL: "Re-enable surveys for OTel (v2.1.139)"
+  CLAUDE_STREAM_IDLE_TIMEOUT_MS: "Streaming idle watchdog timeout (ms)"
+  OTEL_LOG_RAW_API_BODIES: "1 = full API request/response bodies as OTEL events"
+  OTEL_LOG_TOOL_DETAILS: "Tool parameter telemetry (v2.1.161)"
+  OTEL_RESOURCE_ATTRIBUTES: "Included as metric labels (v2.1.161)"
+  DISABLE_UPDATES: "1 = block all update paths including 'claude update'"
   CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1 = opt-in gateway /v1/models discovery"
+  ANTHROPIC_WORKSPACE_ID: "Workload identity federation (v2.1.141)"
+  CLAUDE_CODE_OPUS_4_6_FAST_MODE_OVERRIDE: "Override fast mode base model (v2.1.142)"
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
   default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
+  fable5: claude-fable-5          # Mythos-class; added v2.1.170
+  opus48: claude-opus-4-8         # High effort default; added v2.1.154
+  opus47: claude-opus-4-7         # Fast mode base
   sonnet: claude-sonnet-4-6
   haiku: claude-haiku-4-5-20251001
 
 # ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────
-# This catalog is structured for minimal token overhead:
-# - One canonical source (this file); skills reference it rather than duplicate
 # - YAML over JSON/Markdown: ~30% fewer tokens for structured data
 # - Descriptions capped at one line; examples only where non-obvious
-# - "added:" version tags kept for audit; remove if tokens are critical
+# - version tags kept for audit; drop if tokens critical
+# - Dated snapshots in skills/YYYY-MM-DD/ for diff tracking
+# - SKILLS_CATALOG.yaml is the canonical runtime source; dated dirs are archives

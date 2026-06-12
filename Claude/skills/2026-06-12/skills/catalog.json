@@ -1,0 +1,82 @@
+{
+  "date": "2026-06-12",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-06-12T00:00:00Z",
+  "source": "https://github.com/anthropics/claude-code",
+  "source_version": "2.1.175",
+  "prev_version": "2.1.129",
+  "skills": [
+    {
+      "slug": "core-skills",
+      "name": "Claude Code Core Skills",
+      "file": "core-skills.md",
+      "hash": "a3f8c1d92e054b7a",
+      "trigger": "Use for slash commands, session commands, and built-in Claude Code skills.",
+      "output": "Compact slash command reference with token-efficient lookup.",
+      "procedure": [
+        "Look up command by slash prefix.",
+        "Return only the relevant command entry.",
+        "Omit all other commands to minimize tokens.",
+        "Reference version tag only when version-specific behavior matters."
+      ],
+      "token_policy": [
+        "Return only decision-critical command entries.",
+        "Link to file instead of reproducing full list.",
+        "Skip background context when command is unambiguous."
+      ],
+      "compatibility": [
+        "New snapshot; does not overwrite 2026-05-06 baseline.",
+        "Supersedes core commands from SKILLS_CATALOG.yaml where overlap exists.",
+        "Added commands are net-new; no existing slugs removed."
+      ]
+    },
+    {
+      "slug": "agents-workflows",
+      "name": "Agents & Workflows",
+      "file": "agents-workflows.md",
+      "hash": "b7e2a05f3c914d8e",
+      "trigger": "Use for multi-agent orchestration, sub-agent nesting, hooks, and worktree config.",
+      "output": "Concise hooks and agent command reference.",
+      "procedure": [
+        "Identify whether query is about hooks, sub-agents, or CLI agents.",
+        "Return only the relevant section.",
+        "Include additionalContext/reloadSkills fields only when asked.",
+        "Skip invoke-type table unless hook type is ambiguous."
+      ],
+      "token_policy": [
+        "Emit only changed/relevant hooks per query.",
+        "Avoid duplicating hook event tables already in SKILLS_CATALOG.yaml.",
+        "Reference by slug; omit background context."
+      ],
+      "compatibility": [
+        "Extends existing hooks section in SKILLS_CATALOG.yaml.",
+        "New hooks (MessageDisplay, SessionStart returns) are additive.",
+        "No existing hook entries removed or renamed."
+      ]
+    },
+    {
+      "slug": "settings-config",
+      "name": "Settings & Config",
+      "file": "settings-config.md",
+      "hash": "c9d4b8e1a72f305c",
+      "trigger": "Use for model IDs, settings.json keys, environment variables, and plugin commands.",
+      "output": "Minimal settings/env lookup with version tags.",
+      "procedure": [
+        "Match query to settings key or env var name.",
+        "Return type, description, and version added.",
+        "Omit unrelated settings to minimize context.",
+        "Prefer single-line entries over prose descriptions."
+      ],
+      "token_policy": [
+        "Return only the section relevant to the query.",
+        "Skip version tags when token budget is tight.",
+        "Never reproduce full table for single-key lookups."
+      ],
+      "compatibility": [
+        "Adds settings from v2.1.130 through v2.1.175.",
+        "No existing settings renamed or removed.",
+        "Model list updated: Fable 5 and Opus 4.8 added."
+      ]
+    }
+  ]
+}
