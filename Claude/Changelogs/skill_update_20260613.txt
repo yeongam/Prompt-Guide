@@ -1,0 +1,65 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-06-13 00:37 UTC
+Version : 2.1.173 → 2.1.176
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-06-13/
+============================================================
+
+[ ★ 신규 감지 스킬 (4개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /bg  ← 수동 추가 필요
+  ? /cd  ← 수동 추가 필요
+  ? /copy  ← 수동 추가 필요
+  ? /fast  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /bg
+  ~ /cd
+  ~ /copy
+  ~ /fast
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-06-13/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  (없음)
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.176
+
+- Session titles are now generated in the language of your conversation (set the `language` setting to pin a specific language)
+- Added `footerLinksRegexes` setting for regex-matched link badges in the footer row, configurable via user or managed settings
+- Improved Bedrock credential caching: credentials from `awsCredentialExport` are now cached until their `Expiration` instead of a fixed 1 hour
+- Fixed `availableModels` enforcement: alias model picks can no longer be redirected to a blocked model via `ANTHROPIC_DEFAULT_*_MODEL` environment variables, and `/fast` now refuses to toggle when it would switch to a model outside the allowlist
+- Fixed auto mode failing on Fable 5 for organizations without Opus 4.8 enabled — the classifier now falls back to the best available Opus model
+- Fixed hook `if` conditions for Read/Edit/Write tool paths: documented patterns like `Edit(src/**)`, `Read(~/.ssh/**)`, and `Read(.env)` now match correctly
+- Fixed Linux sandbox failing to start when `.claude/settings.json` is a symlink with an absolute target
+- Fixed `/copy` and mouse-selection copy not reaching the system clipboard inside tmux over SSH, and tmux paste buffer not loading on versions older than 3.2
+- Fixed Remote Control connecting from web/mobile silently switching the session's model
+- Fixed Remote Control disconnect notifications showing a bare numeric code instead of a human-readable reason, and connection failures adding a duplicate line to the conversation transcript
+- Fixed Remote Control sessions not disconnecting when you sign in to a different account
+- Fixed `/cd` and worktree moves leaving the session reporting the previous directory's git branch
+- Fixed `claude agents`: pressing back in one window no longer detaches other windows attached to the same session
+- Fixed backgrounded sessions showing "Working" forever when `/bg` mid-turn had nothing left to continue
+- Fixed background agent search by PR URL: PRs opened during scheduled wakeups or whil
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
