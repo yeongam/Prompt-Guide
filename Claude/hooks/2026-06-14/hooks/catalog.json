@@ -1,0 +1,218 @@
+{
+  "date": "2026-06-14",
+  "directory_rule": "YYYY-MM-DD/hooks",
+  "generated_at": "2026-06-14T00:07:44+09:00",
+  "hooks": [
+    {
+      "actions": [
+        "Record source URL, branch, and commit in each generated card.",
+        "Use source summaries instead of copying long upstream content."
+      ],
+      "checks": [
+        "Resolve the latest official Anthropic source commit.",
+        "Reject unofficial source material for generated artifacts.",
+        "Confirm skill and hook slugs are unique before writing files."
+      ],
+      "compatibility": [
+        "Do not modify GPT or other provider directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "pre_sync",
+      "hash": "e657ad58a540ab55",
+      "name": "Pre Sync Source Alignment",
+      "slug": "pre-sync-source-alignment",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "bootstrap-2026-06-13",
+      "summary": "Claude Code CLI — official source for Claude Code features.",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run before generating Claude skills or hooks."
+    },
+    {
+      "actions": [
+        "Attach commit evidence to Python SDK skill output.",
+        "Flag incompatible examples in the changelog conflict section."
+      ],
+      "checks": [
+        "Verify the Python SDK source commit used by the routine.",
+        "Prefer current SDK request shapes over stale snippets.",
+        "Keep migration notes compact and version-aware."
+      ],
+      "compatibility": [
+        "Do not modify GPT or other provider directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "pre_apply",
+      "hash": "12994945481def25",
+      "name": "Python SDK Compatibility Check",
+      "slug": "python-sdk-compatibility-check",
+      "source": "https://github.com/anthropics/anthropic-sdk-python",
+      "source_branch": "main",
+      "source_commit": "bootstrap-2026-06-13",
+      "summary": "Official Python SDK for the Anthropic API.",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run before applying Python SDK guidance or examples."
+    },
+    {
+      "actions": [
+        "Attach commit evidence to TypeScript SDK skill output.",
+        "Flag cross-language conflicts in the changelog conflict section."
+      ],
+      "checks": [
+        "Verify the TypeScript SDK source commit used by the routine.",
+        "Keep generated guidance aligned with typed SDK usage.",
+        "Avoid duplicating Python-specific patterns in TypeScript output."
+      ],
+      "compatibility": [
+        "Do not modify GPT or other provider directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "pre_apply",
+      "hash": "118787b2d31e53bb",
+      "name": "TypeScript SDK Compatibility Check",
+      "slug": "typescript-sdk-compatibility-check",
+      "source": "https://github.com/anthropics/anthropic-sdk-javascript",
+      "source_branch": "main",
+      "source_commit": "bootstrap-2026-06-13",
+      "summary": "Official TypeScript/JavaScript SDK for the Anthropic API.",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run before applying TypeScript SDK guidance or examples."
+    },
+    {
+      "actions": [
+        "Record Actions integration conflicts in the changelog.",
+        "Keep Actions guidance short enough for fast reuse."
+      ],
+      "checks": [
+        "Confirm Actions integration stays separated from SDK guidance.",
+        "Prefer minimal working workflow patterns.",
+        "Preserve existing Claude skill behavior when adding Actions guidance."
+      ],
+      "compatibility": [
+        "Do not modify GPT or other provider directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "post_apply",
+      "hash": "c30bdc6e9c78301f",
+      "name": "Claude Action Guard",
+      "slug": "claude-action-guard",
+      "source": "https://github.com/anthropics/claude-code-action",
+      "source_branch": "main",
+      "source_commit": "bootstrap-2026-06-13",
+      "summary": "GitHub Actions integration for Claude Code.",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run after applying Claude Code GitHub Actions guidance."
+    },
+    {
+      "actions": [
+        "Attach spec commit to MCP skill output.",
+        "Flag schema conflicts in the changelog conflict section."
+      ],
+      "checks": [
+        "Verify MCP spec version alignment with the source commit.",
+        "Confirm tool definitions use correct schema structure.",
+        "Keep server-side and client-side guidance clearly separated."
+      ],
+      "compatibility": [
+        "Do not modify GPT or other provider directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "pre_apply",
+      "hash": "47c4b29d9a7494be",
+      "name": "MCP Compatibility Check",
+      "slug": "mcp-compatibility-check",
+      "source": "https://github.com/anthropics/model-context-protocol",
+      "source_branch": "main",
+      "source_commit": "bootstrap-2026-06-13",
+      "summary": "Model Context Protocol specification.",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run before applying MCP server or tool guidance."
+    },
+    {
+      "actions": [
+        "Write one concise changelog under Claude/Changelogs.",
+        "Avoid prompting the user during automated routine execution."
+      ],
+      "checks": [
+        "Compare generated catalogs with the previous dated snapshot.",
+        "List added, modified, and deleted skills and hooks separately.",
+        "Confirm token-saving and conflict-resolution notes are present."
+      ],
+      "compatibility": [
+        "Do not modify GPT or other provider directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "post_sync",
+      "hash": "b32b64ba9f9bc6af",
+      "name": "Post Sync Changelog Guard",
+      "slug": "post-sync-changelog-guard",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "bootstrap-2026-06-13",
+      "summary": "Claude Code CLI — hooks, settings, and lifecycle events.",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run after Claude skills and hooks are generated."
+    },
+    {
+      "actions": [
+        "Apply the latest Claude guidance in the active session when relevant.",
+        "Document any required local install step instead of silently editing runtime state."
+      ],
+      "checks": [
+        "Treat the latest Claude skills and hooks snapshots as repo-local guidance.",
+        "Do not assume GitHub Actions changed the live Claude Code runtime.",
+        "Keep local runtime installation separate from remote repo synchronization."
+      ],
+      "compatibility": [
+        "Do not modify GPT or other provider directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "session_reference",
+      "hash": "0452de5c82ae29a6",
+      "name": "Session Reference Guard",
+      "slug": "session-reference-guard",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "bootstrap-2026-06-13",
+      "summary": "Claude Code CLI — session reference and skills application.",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Use when Claude Code works from Prompt-Guide/Claude routine output."
+    }
+  ],
+  "source_policy": "official Anthropic GitHub repositories only"
+}

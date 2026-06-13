@@ -1,0 +1,204 @@
+{
+  "date": "2026-06-14",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-06-14T00:07:44+09:00",
+  "skills": [
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "a1a08238ee5a3cb0",
+      "name": "Claude Code CLI",
+      "output": "Compact Claude Code feature checklist with official-source alignment.",
+      "procedure": [
+        "Check official Anthropic source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "claude-code-cli",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "bootstrap-2026-06-13",
+      "summary": "Claude Code CLI — the official agentic coding assistant by Anthropic.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use when implementing or extending Claude Code slash commands, hooks, or CLI features."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "a30caac42dd283b5",
+      "name": "Anthropic Python SDK",
+      "output": "Minimal Python SDK guidance with verification steps.",
+      "procedure": [
+        "Check official Anthropic source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "anthropic-python-sdk",
+      "source": "https://github.com/anthropics/anthropic-sdk-python",
+      "source_branch": "main",
+      "source_commit": "bootstrap-2026-06-13",
+      "summary": "Official Python SDK for the Anthropic (Claude) API.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for Python-based Claude API integration, streaming, tool use, and migration checks."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "36ca17908c7cdde9",
+      "name": "Anthropic TypeScript SDK",
+      "output": "Compact TypeScript SDK implementation checklist.",
+      "procedure": [
+        "Check official Anthropic source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "anthropic-typescript-sdk",
+      "source": "https://github.com/anthropics/anthropic-sdk-javascript",
+      "source_branch": "main",
+      "source_commit": "bootstrap-2026-06-13",
+      "summary": "Official TypeScript/JavaScript SDK for the Anthropic (Claude) API.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for Node.js or TypeScript Claude API integration and typed SDK work."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "f3ecabf125aa4d11",
+      "name": "Claude Code GitHub Action",
+      "output": "Lean GitHub Actions integration checklist with PR/issue automation notes.",
+      "procedure": [
+        "Check official Anthropic source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "claude-code-action",
+      "source": "https://github.com/anthropics/claude-code-action",
+      "source_branch": "main",
+      "source_commit": "bootstrap-2026-06-13",
+      "summary": "GitHub Actions integration for Claude Code — automate PR review and issue triage.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use when wiring Claude Code into CI/CD pipelines or GitHub Actions workflows."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "05219cb23941b960",
+      "name": "MCP Server Integration",
+      "output": "Concise MCP server setup and tool-definition checklist.",
+      "procedure": [
+        "Check official Anthropic source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "mcp-integration",
+      "source": "https://github.com/anthropics/model-context-protocol",
+      "source_branch": "main",
+      "source_commit": "bootstrap-2026-06-13",
+      "summary": "Model Context Protocol — standard for tool/server integrations with Claude.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use when building or connecting MCP servers, tools, or resources to Claude."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "d6f0edd6a13dd713",
+      "name": "Claude API Coding",
+      "output": "Small code-oriented checklist with official cookbook alignment.",
+      "procedure": [
+        "Check official Anthropic source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "claude-api-coding",
+      "source": "https://github.com/anthropics/anthropic-cookbook",
+      "source_branch": "main",
+      "source_commit": "bootstrap-2026-06-13",
+      "summary": "Cookbook examples and guides for building with Claude API.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use when implementing Claude API patterns: prompt caching, vision, agents, RAG."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "c051a863c7a23e53",
+      "name": "Documentation Maintenance",
+      "output": "Concise documentation update checklist with source traceability.",
+      "procedure": [
+        "Check official Anthropic source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "documentation-maintenance",
+      "source": "https://github.com/anthropics/anthropic-cookbook",
+      "source_branch": "main",
+      "source_commit": "bootstrap-2026-06-13",
+      "summary": "Documentation and cookbook examples for Claude API workflows.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use when updating docs, examples, prompts, or developer guides for Claude projects."
+    }
+  ],
+  "source_policy": "official Anthropic GitHub repositories only"
+}
