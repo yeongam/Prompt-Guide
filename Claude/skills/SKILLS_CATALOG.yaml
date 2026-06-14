@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.177
+updated: 2026-06-15
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -58,7 +58,8 @@ skills:
     trigger: code imports anthropic SDK; user asks about Claude API features
     desc: Build/debug Claude API apps; prompt caching, tool use, model migration
     models:
-      opus: claude-opus-4-7
+      fable: claude-fable-5
+      opus: claude-opus-4-8
       sonnet: claude-sonnet-4-6
       haiku: claude-haiku-4-5-20251001
 
@@ -117,6 +118,26 @@ skills:
     cmd: /color
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
+
+  deep-research:
+    cmd: /deep-research
+    trigger: user wants multi-source fact-checked research report
+    desc: Fan-out web searches, fetch sources, adversarially verify, synthesize cited report
+
+  code-review:
+    cmd: /code-review
+    trigger: user wants code review with optional PR comment or auto-fix
+    desc: Review diff for bugs and cleanups; --comment posts inline PR review, --fix applies fixes
+
+  verify:
+    cmd: /verify
+    trigger: user wants to verify a change works in the real app
+    desc: Run app and observe behavior to confirm fix or feature works end-to-end
+
+  run:
+    cmd: /run
+    trigger: user wants to run or start the app
+    desc: Launch and drive project app; screenshots or confirms changes in real app
 
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.
@@ -228,7 +249,8 @@ env:
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
   default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
+  fable: claude-fable-5
+  opus: claude-opus-4-8        # Fast mode available; Max subscribers only auto mode
   sonnet: claude-sonnet-4-6
   haiku: claude-haiku-4-5-20251001
 
