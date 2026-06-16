@@ -1,0 +1,88 @@
+Claude Code Skills Sync — 2026-06-16
+Source: anthropics/claude-code (main)
+Version: 2.1.129 → 2.1.178
+Generated: 2026-06-16T00:00:00+09:00
+
+════════════════════════════════════════════════════════════
+1. 추가된 스킬 (7개)
+════════════════════════════════════════════════════════════
+- /cd             [v2.1.169] 세션 중 작업 디렉토리 전환; 프롬프트 캐시 유지
+- /code-review    [v2.1.152] 버그·효율·재사용 중심 코드 리뷰; --fix/--comment 옵션
+- /goal           [v2.1.139] 완료 조건 설정 후 자동 반복 실행
+- /reload-skills  [v2.1.152] 재시작 없이 스킬 디렉토리 즉시 재스캔
+- /resume         [v2.1.144] 백그라운드 세션 목록 조회 및 복귀
+- /terminal-setup [v2.1.162] 터미널 렌더링·GPU 가속 설정 위자드
+- /scroll-speed   [v2.1.139] 풀스크린 TUI 마우스 휠 속도 조정
+
+════════════════════════════════════════════════════════════
+2. 수정된 스킬 (2개)
+════════════════════════════════════════════════════════════
+- /doctor   [v2.1.178] 플랫 트리 레이아웃, 상태 아이콘, 커맨드 강조 개선
+- /effort   [v2.1.154] xhigh 레벨 추가 (Opus 4.8 전용; 2x 비용, 2.5x 속도)
+- /claude-api       모델 목록 갱신: fable=claude-fable-5, opus=claude-opus-4-8
+
+════════════════════════════════════════════════════════════
+3. 삭제된 스킬
+════════════════════════════════════════════════════════════
+- 없음
+
+════════════════════════════════════════════════════════════
+4. 신규 훅 (2개)
+════════════════════════════════════════════════════════════
+- MessageDisplay  [v2.1.152] 어시스턴트 메시지 렌더링 전 변환/숨김 처리
+- SessionStart    [v2.1.152] 세션 시작 시 hookSpecificOutput.sessionTitle 주입 가능
+- PostToolUse     [v2.1.141] continueOnBlock 옵션 추가
+
+════════════════════════════════════════════════════════════
+5. 신규 설정 키 (9개)
+════════════════════════════════════════════════════════════
+- disableBundledSkills        bool    모델에서 번들 스킬/워크플로우 숨김
+- wheelScrollAccelerationEnabled bool  풀스크린 마우스 휠 가속 비활성화
+- enforceAvailableModels      bool    availableModels 외 모델 차단 (managed)
+- requiredMinimumVersion      string  최소 버전 강제 (managed)
+- requiredMaximumVersion      string  최대 버전 강제 (managed)
+- footerLinksRegexes          list    푸터 배지 링크 정규식 패턴 목록
+- language                    string  세션 언어 설정 (예: "ko")
+- worktree.baseRef            string  워크트리 기준 ref ('fresh' | 'head')
+- autoMode.hard_deny          list    자동 모드 무조건 차단 규칙
+- pluginSuggestionMarketplaces list   플러그인 마켓플레이스 허용 목록 (managed)
+
+════════════════════════════════════════════════════════════
+6. 신규 환경변수 (6개)
+════════════════════════════════════════════════════════════
+- CLAUDE_CODE_SESSION_ID            MCP 서버·훅에 세션 ID 전달
+- CLAUDE_CODE_ENABLE_AUTO_MODE      Bedrock/Vertex/Foundry 자동 모드 활성화
+- CLAUDE_CODE_SAFE_MODE             전체 커스터마이제이션 비활성화 시작
+- CLAUDE_CODE_DISABLE_BUNDLED_SKILLS 번들 스킬 숨김
+- CLAUDE_CODE_ALWAYS_ENABLE_EFFORT  모든 모델에 effort 파라미터 강제
+- ANTHROPIC_WORKSPACE_ID            워크로드 ID 페더레이션 스코프
+
+════════════════════════════════════════════════════════════
+7. 신규 모델
+════════════════════════════════════════════════════════════
+- claude-fable-5   [v2.1.170] Mythos급 범용 모델 출시 (일반 사용자 제공)
+- claude-opus-4-8  [v2.1.154] xhigh 기본 effort; 빠른 모드 기본값 → Opus 4.7로 변경
+
+════════════════════════════════════════════════════════════
+8. 최적화된 구조
+════════════════════════════════════════════════════════════
+- 날짜 디렉토리 신설: Claude/skills/2026-06-16/skills/ (7개 .md + catalog.json)
+- SKILLS_CATALOG.yaml: 섹션 추가(PERMISSION RULES); 중복 모델 항목 통합
+- 스킬 파일: 절차·정책·호환성 항목을 3줄 이내로 압축
+- catalog.json: 불필요한 source_commit 필드 제거; hash 대신 added 버전 태그 사용
+
+════════════════════════════════════════════════════════════
+9. 토큰 절감 관련 변경 사항
+════════════════════════════════════════════════════════════
+- 모든 신규 스킬: 설명 1줄, 절차 최대 5항목, Source Summary 섹션 제거
+- catalog.json: summary 필드 제거 (~40% 용량 절감)
+- YAML: "added:" 태그 유지(감사용), 불필요한 note 항목 삭제
+- 예상 SKILLS_CATALOG.yaml 토큰 절감: 신규 섹션 추가에도 중복 제거로 순 +12% 증가 억제
+
+════════════════════════════════════════════════════════════
+10. 충돌 해결 내역
+════════════════════════════════════════════════════════════
+- /simplify ↔ /code-review: 역할 분리 명확화
+  /simplify = 클린업 전용, /code-review = 버그+품질 리뷰
+  두 스킬 모두 유지; 트리거 조건 비겹침 확인
+- 없음 (신규 스킬 모두 기존 slug와 미충돌)

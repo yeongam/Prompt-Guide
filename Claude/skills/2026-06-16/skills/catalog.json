@@ -1,0 +1,80 @@
+{
+  "date": "2026-06-16",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "source": "https://github.com/anthropics/claude-code",
+  "source_version": "2.1.178",
+  "generated_at": "2026-06-16T00:00:00+09:00",
+  "skills": [
+    {
+      "slug": "cd",
+      "name": "Change Working Directory",
+      "cmd": "/cd",
+      "added": "v2.1.169",
+      "trigger": "User wants to switch working directory mid-session without breaking prompt cache.",
+      "output": "Session directory updated; prompt cache preserved.",
+      "token_policy": ["One-line confirmation only.", "No repeated context."],
+      "compatibility": ["New skill; no conflict with existing entries."]
+    },
+    {
+      "slug": "code-review",
+      "name": "Code Review",
+      "cmd": "/code-review [--comment] [--fix] [effort]",
+      "added": "v2.1.152",
+      "trigger": "User asks for bug-finding or quality review of changed code.",
+      "output": "Risk-ranked findings by correctness, reuse, efficiency.",
+      "token_policy": ["Decision-critical findings only.", "One line per finding."],
+      "compatibility": ["Complements /simplify (cleanup-only); does not replace it."]
+    },
+    {
+      "slug": "goal",
+      "name": "Set Completion Condition",
+      "cmd": "/goal <condition>",
+      "added": "v2.1.139",
+      "trigger": "User wants autonomous iteration until condition is met.",
+      "output": "Final state: condition met or blocked with diagnosis.",
+      "token_policy": ["Suppress intermediate status.", "Single summary on completion."],
+      "compatibility": ["New skill; no conflict."]
+    },
+    {
+      "slug": "reload-skills",
+      "name": "Reload Skill Directories",
+      "cmd": "/reload-skills",
+      "added": "v2.1.152",
+      "trigger": "User added or edited skill files and wants them active without restart.",
+      "output": "List of loaded/changed skills; conflicts shown as <dir>:<name>.",
+      "token_policy": ["List only new/changed entries."],
+      "compatibility": ["New skill; no conflict."]
+    },
+    {
+      "slug": "resume",
+      "name": "Resume Background Session",
+      "cmd": "/resume [session-id]",
+      "added": "v2.1.144",
+      "trigger": "User wants to attach to a background session.",
+      "output": "Attached session with full context.",
+      "token_policy": ["Show session list compactly.", "No repeated context on resume."],
+      "compatibility": ["New skill; no conflict."]
+    },
+    {
+      "slug": "terminal-setup",
+      "name": "Terminal Configuration",
+      "cmd": "/terminal-setup",
+      "added": "v2.1.162",
+      "trigger": "User wants to configure terminal rendering or GPU acceleration.",
+      "output": "Terminal config updated; active settings confirmed.",
+      "token_policy": ["Output changed settings only."],
+      "compatibility": ["New skill; no conflict."]
+    },
+    {
+      "slug": "scroll-speed",
+      "name": "Mouse Scroll Speed",
+      "cmd": "/scroll-speed [value]",
+      "added": "v2.1.139",
+      "trigger": "User wants to adjust scroll speed in fullscreen TUI mode.",
+      "output": "Scroll speed updated with live preview.",
+      "token_policy": ["One-line confirmation."],
+      "compatibility": ["New skill; no conflict."]
+    }
+  ],
+  "source_policy": "official anthropics/claude-code GitHub repository only"
+}
