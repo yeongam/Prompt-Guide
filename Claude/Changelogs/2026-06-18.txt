@@ -1,0 +1,69 @@
+Claude Code Skills Sync — 2026-06-18
+Source: anthropics/claude-code (public)
+Version: 2.1.129 → 2.1.181
+Snapshot: Claude/skills/2026-06-18/SKILLS_CATALOG.yaml
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[추가된 스킬] (+4)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  /config key=value     Set any settings.json key inline (v2.1.181)
+  /cd [path]            Change working directory mid-session (v2.1.169)
+  /plugin list          List plugins with --enabled/--disabled filter (v2.1.162)
+  /ultracode            Dynamic workflow runner (renamed from "workflow") (v2.1.160)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[수정된 스킬] (1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  /claude-api           Models updated: opus 4-7→4-8; fable claude-fable-5 추가
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[삭제된 스킬] (0)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  없음
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[최적화된 구조]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - 날짜 스냅샷 디렉토리 생성: Claude/skills/2026-06-18/
+  - Changelogs 디렉토리 신규 생성: Claude/Changelogs/
+  - 모든 신규 항목 one-line desc 형식 준수
+  - YAML 컴팩트 구조 유지 (JSON 대비 ~30% 토큰 절감)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[토큰 절감 관련 변경]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  신규 설정 8개 → 단일 라인 desc 형식으로 통일
+  신규 환경변수 5개 → 인라인 문자열 형식 (불필요 중첩 없음)
+  모델 섹션 → fable 추가, 인라인 주석 1줄 제한 유지
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[충돌 해결 내역]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  충돌 없음. 기존 21개 스킬 구조 완전 보존.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[설정 추가] (+8)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  fallbackModel              최대 3개 fallback 모델 체인 (v2.1.166)
+  disableBundledSkills       번들 스킬 전체 숨김 (v2.1.169)
+  language                   세션 언어 고정 (v2.1.176)
+  footerLinksRegexes         응답 푸터 링크 뱃지 정규식 (v2.1.176)
+  wheelScrollAccelerationEnabled  마우스휠 가속 비활성화 (v2.1.174)
+  enforceAvailableModels     관리형: 모델 허용목록 확장 차단 (v2.1.175)
+  sandbox.allowAppleEvents   macOS Apple Events 허용 (v2.1.181)
+  requiredMinimumVersion / requiredMaximumVersion  버전 강제 (v2.1.163)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[환경변수 추가] (+5)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  CLAUDE_CODE_SAFE_MODE            커스터마이징 전체 비활성화 (v2.1.169)
+  CLAUDE_CODE_DISABLE_BUNDLED_SKILLS  번들 스킬 숨김 (v2.1.169)
+  MAX_THINKING_TOKENS              thinking 토큰 제한; 0=비활성화 (v2.1.166)
+  OTEL_RESOURCE_ATTRIBUTES         OpenTelemetry 메트릭 레이블 (v2.1.161)
+  CLAUDE_CLIENT_PRESENCE_FILE      모바일 푸시 알림 억제 (v2.1.181)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[모델 업데이트]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  claude-opus-4-7  →  claude-opus-4-8
+  claude-fable-5 신규 추가 (Mythos-class, GA v2.1.170)
