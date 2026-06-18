@@ -1,0 +1,69 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-06-18 00:38 UTC
+Version : 2.1.179 → 2.1.181
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-06-18/
+============================================================
+
+[ ★ 신규 감지 스킬 (4개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /copy  ← 수동 추가 필요
+  ? /recap  ← 수동 추가 필요
+  ? /remote-control  ← 수동 추가 필요
+  ? /stats  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /copy
+  ~ /model
+  ~ /recap
+  ~ /remote-control
+  ~ /stats
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-06-18/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed prompt caching not reading on custom `ANTHROPIC_BASE_URL` and on Foundry due to a per-request attestation token changing every turn
+  - Fixed `/stats` "Most active day" and daily token chart dates showing one day early in UTC-negative timezones
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Improved streaming of long paragraphs: text now appears line-by-line instead of waiting for the first line break
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.181
+
+- Added `/config key=value` syntax to set any setting from the prompt (e.g. `/config thinking=false`) — works in interactive, `-p`, and Remote Control
+- Added `sandbox.allowAppleEvents` opt-in setting that lets sandboxed commands send Apple Events on macOS
+- Added `CLAUDE_CLIENT_PRESENCE_FILE` environment variable: point it at a marker file to suppress mobile push notifications while you're at the machine
+- Upgraded the bundled Bun runtime to 1.4
+- Improved streaming of long paragraphs: text now appears line-by-line instead of waiting for the first line break
+- Improved auto-retry: API connection drops mid-thinking now automatically retry instead of showing "Connection closed while thinking"
+- Improved the subagent panel: idle subagents auto-hide after 30s, the list caps at 5 rows with scroll hints, and keyboard hints now show in the footer
+- Improved the MCP OAuth browser page to match Claude Code's visual style and auto-close on success
+- Changed fullscreen mode URL opening to require Cmd+click (macOS) / Ctrl+click, matching native terminal behavior
+- Changed the `Improved N memories` line to no longer list individual files outside verbose mode
+- Fixed prompt caching not reading on custom `ANTHROPIC_BASE_URL` and on Foundry due to a per-request attestation token changing every turn
+- Fixed Write/Edit producing 0-byte or truncated files on network drives and cloud-synced folders
+- Fixed `open`, `osascript`, and browser-based auth flows failing with error -600 on macOS by adding the Apple Events entitlement
+- Fixed a startup regression (~120ms per launch in fresh environments, introduced in 2.1.169): the first prompt no longer waits for the managed-settings fetch when no MCP servers are configured
+- Fixed startup blocking with a blank terminal for up to 15 seconds when the account settings fetch is slow on a degraded network
+- Fixed startup crash (`TypeError: Cannot read properties of null`) when `.claude.json` contains corrupted null project entries
+- F
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
