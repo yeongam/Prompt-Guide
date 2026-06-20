@@ -1,0 +1,136 @@
+{
+  "date": "2026-06-20",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-06-20T00:00:00+00:00",
+  "source_version": "2.1.183",
+  "source_policy": "official anthropics/claude-code GitHub repository",
+  "skills": [
+    {
+      "name": "Claude API Coding",
+      "slug": "claude-api-coding",
+      "trigger": "Use for implementing or debugging Claude API / Anthropic SDK calls.",
+      "output": "Minimal working implementation with model selection and token-efficient patterns.",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured tool-use APIs over ad hoc parsing.",
+        "Apply prompt caching where applicable.",
+        "Verify with the narrowest relevant command."
+      ],
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "models": {
+        "fable": "claude-fable-5",
+        "opus": "claude-opus-4-8",
+        "sonnet": "claude-sonnet-4-6",
+        "haiku": "claude-haiku-4-5-20251001"
+      },
+      "hash": "a1b2c3d4e5f60001"
+    },
+    {
+      "name": "Documentation Maintenance",
+      "slug": "documentation-maintenance",
+      "trigger": "Use for updating CLAUDE.md, READMEs, changelogs, and developer guides.",
+      "output": "Concise documentation update with source traceability.",
+      "procedure": [
+        "Run /init to generate baseline CLAUDE.md if missing.",
+        "Keep descriptions under one line per entry.",
+        "Link to source rather than copying long content.",
+        "Remove stale entries before adding new ones.",
+        "Verify final doc renders correctly."
+      ],
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical instructions.",
+        "Omit boilerplate; reference canonical source."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "a1b2c3d4e5f60002"
+    },
+    {
+      "name": "Code Review Programming",
+      "slug": "code-review-programming",
+      "trigger": "Use for PR review, logic audit, style checks, and test coverage review.",
+      "output": "Risk-ranked finding list with actionable remediation steps.",
+      "procedure": [
+        "Run /review for standard multi-pass PR review.",
+        "Run /security-review for OWASP-focused diff audit.",
+        "Run /simplify for post-review cleanup pass.",
+        "Flag logic errors before style issues.",
+        "Include test coverage gaps in findings."
+      ],
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only finding + fix pairs.",
+        "Skip informational items unless explicitly requested."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "a1b2c3d4e5f60003"
+    },
+    {
+      "name": "Security Review Programming",
+      "slug": "security-review-programming",
+      "trigger": "Use for OWASP-focused security audits of code changes or new features.",
+      "output": "Risk-ranked security findings with severity labels and remediation.",
+      "procedure": [
+        "Run /security-review on current branch diffs.",
+        "Check for injection, auth, and data exposure issues first.",
+        "Rank findings: Critical > High > Medium > Low.",
+        "Provide minimal code fix for each critical/high finding.",
+        "Verify fix does not introduce regression."
+      ],
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return finding + severity + one-line fix only.",
+        "Omit Low findings unless explicitly requested."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "a1b2c3d4e5f60004"
+    },
+    {
+      "name": "Config Management",
+      "slug": "config-management",
+      "trigger": "Use for inline configuration changes, settings.json edits, and env var setup.",
+      "output": "Minimal config change with validation confirmation.",
+      "procedure": [
+        "Use /config key=value for inline single-key changes.",
+        "Use /update-config for hooks, permissions, and env var blocks.",
+        "Verify change with /doctor after applying.",
+        "Prefer project settings.json over user-level for team repos.",
+        "Document non-obvious config in CLAUDE.md."
+      ],
+      "token_policy": [
+        "Return only the changed key-value pair.",
+        "Skip unchanged config blocks.",
+        "Link to settings reference instead of repeating docs."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "added": "v2.1.180",
+      "hash": "a1b2c3d4e5f60005"
+    }
+  ]
+}
