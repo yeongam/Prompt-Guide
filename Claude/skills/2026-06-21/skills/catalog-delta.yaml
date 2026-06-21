@@ -1,0 +1,220 @@
+# Claude Code Skills Delta — 2026-06-21
+# Base version: 2.1.129 (2026-05-06)
+# Current version: 2.1.185 (2026-06-20)
+# Source: code.claude.com/docs/en/changelog
+
+added_skills:
+  goal:
+    cmd: /goal
+    trigger: user wants Claude to keep working toward a condition
+    desc: Set completion condition; Claude works autonomously until met
+    added: v2.1.139
+
+  scroll-speed:
+    cmd: /scroll-speed
+    trigger: user wants to adjust mouse wheel scroll speed
+    desc: Tune scroll speed with live preview
+    added: v2.1.139
+
+  cd:
+    cmd: /cd <path>
+    trigger: user wants to change working directory mid-session
+    desc: Move session to new working directory without breaking prompt cache
+    added: v2.1.169
+
+  reload-skills:
+    cmd: /reload-skills
+    trigger: user adds or edits skill files during active session
+    desc: Re-scan skill directories without restarting Claude Code
+    added: v2.1.152
+
+  workflows:
+    cmd: /workflows
+    trigger: user wants to view dynamic workflow runs
+    desc: List and inspect dynamic multi-agent workflow runs
+    added: v2.1.154
+
+  run:
+    cmd: /run
+    trigger: user asks to run, start, or screenshot the app
+    desc: Launch and drive app to see changes working (infers launch from project type)
+    requires: v2.1.145
+    note: Bundled; /run-skill-generator records custom recipe
+
+  verify:
+    cmd: /verify
+    trigger: user asks to confirm a fix works or test a change in the real app
+    desc: Build and run app to confirm code change; does not fall back to unit tests
+    requires: v2.1.145
+
+  run-skill-generator:
+    cmd: /run-skill-generator
+    trigger: project needs custom build/launch recipe for /run and /verify
+    desc: Record build+launch recipe; saves to .claude/skills/run-<name>/SKILL.md
+    requires: v2.1.145
+
+  plugin:
+    cmd: /plugin list [--enabled|--disabled]
+    trigger: user wants to manage or inspect installed plugins
+    desc: List, browse, enable/disable plugins; details shows component inventory
+    added: v2.1.163
+
+  config:
+    cmd: /config [key=value] [--help]
+    trigger: user wants to change a setting from the prompt
+    desc: Set any setting inline (e.g. /config thinking=false); --help lists keys
+    added: v2.1.181
+
+modified_skills:
+  code-review:
+    was: /simplify — review changed code for quality/efficiency, then fix
+    now: /code-review [--effort low|medium|high|max] [--comment] [--fix]
+    desc: Multi-pass review; --comment posts inline GitHub comments; --fix applies findings
+    changed: v2.1.147 (renamed), v2.1.152 (--fix added)
+
+  simplify:
+    was: /simplify — full review + fix
+    now: /simplify — cleanup-only (reuse, simplification, efficiency, altitude)
+    desc: Quality-only cleanup; does not hunt for bugs
+    changed: v2.1.147
+
+  usage:
+    change: breakdown now shows per-category (skills, subagents, plugins, MCP servers)
+    changed: v2.1.149
+
+added_hooks:
+  post-session:
+    fires: After session ends, before workspace deleted
+    use: Post-session cleanup, archival, notifications
+    added: v2.1.169
+
+  MessageDisplay:
+    fires: When assistant message text is about to display
+    can_block: false
+    use: Transform or hide assistant message text
+    added: v2.1.152
+
+  SessionStart_updates:
+    new_return_fields:
+      reloadSkills: "true = re-scan skill dirs; makes hook-installed skills available same session"
+      hookSpecificOutput.sessionTitle: "Set initial session title from hook"
+    added: v2.1.152
+
+  PostToolUse_continueOnBlock:
+    field: continueOnBlock
+    use: Feed rejection reason to Claude instead of halting
+    added: v2.1.139
+
+  Stop_SubagentStop_fields:
+    new_fields: [background_tasks, session_crons]
+    added: v2.1.145
+
+  hook_exec_form:
+    field: "args: string[]"
+    desc: Spawn hook directly without shell (exec form)
+    added: v2.1.139
+
+  terminalSequence:
+    field: terminalSequence (hook output)
+    desc: Emit desktop notifications, window titles, bells without terminal control
+    added: v2.1.141
+
+added_settings:
+  disableBundledSkills:
+    type: bool
+    desc: Disable all bundled skills (also CLAUDE_CODE_DISABLE_BUNDLED_SKILLS)
+    added: v2.1.169
+
+  fallbackModel:
+    type: "string | list[string] (max 3)"
+    desc: Fallback model(s) tried in order when primary unavailable
+    added: v2.1.166
+
+  worktree.bgIsolation:
+    type: "none | default"
+    desc: "none = background sessions edit working copy directly"
+    added: v2.1.143
+
+  language:
+    type: string
+    desc: Pin language for session title generation
+    added: v2.1.176
+
+  footerLinksRegexes:
+    type: "list[string]"
+    desc: Regex-matched link badges shown in session footer
+    added: v2.1.176
+
+  attribution.sessionUrl:
+    type: bool
+    desc: Omit claude.ai session link from commits/PRs in web/Remote Control sessions
+    added: v2.1.183
+
+  sandbox.allowAppleEvents:
+    type: bool
+    desc: Opt-in to send Apple Events on macOS
+    added: v2.1.181
+
+  wheelScrollAccelerationEnabled:
+    type: bool
+    desc: Disable mouse-wheel scroll acceleration in fullscreen TUI
+    added: v2.1.174
+
+  managed_enforceAvailableModels:
+    type: "list[string]"
+    desc: Constrain Default model to allowlist; blocks user settings from widening
+    added: v2.1.175
+
+  managed_requiredMinimumVersion:
+    type: string
+    desc: Claude Code refuses to start if version is older than this
+    added: v2.1.163
+
+  managed_requiredMaximumVersion:
+    type: string
+    desc: Claude Code refuses to start if version is newer than this
+    added: v2.1.163
+
+  managed_allowAllClaudeAiMcps:
+    type: bool
+    desc: Load claude.ai cloud MCP connectors alongside managed-mcp.json
+    added: v2.1.149
+
+  managed_pluginSuggestionMarketplaces:
+    type: "list[string]"
+    desc: Allowlist orgs whose plugins may be suggested to users
+    added: v2.1.152
+
+added_env_vars:
+  CLAUDE_CODE_SAFE_MODE: "1 = disable all customizations (skills, hooks, plugins, MCP)"
+  CLAUDE_CODE_DISABLE_BUNDLED_SKILLS: "1 = disable all bundled skills"
+  CLAUDE_CODE_ALWAYS_ENABLE_EFFORT: "1 = enable effort slider on all models"
+  CLAUDE_CODE_ENABLE_AUTO_MODE: "1 = enable auto mode on Bedrock/Vertex/Foundry"
+  CLAUDE_CODE_SESSION_ID: "Session ID provided to stdio MCP servers on --resume"
+  CLAUDE_CODE_PLUGIN_PREFER_HTTPS: "1 = clone GitHub plugin sources over HTTPS"
+  CLAUDECODE: "1 = set in environment of stdio MCP servers"
+  OTEL_LOG_TOOL_DETAILS: "1 = include tool_parameters in OTEL telemetry events"
+  OTEL_METRICS_INCLUDE_ENTRYPOINT: "true = add app.entrypoint attribute to metrics"
+  ANTHROPIC_WORKSPACE_ID: "Workload identity federation workspace scoping"
+  CLAUDE_CLIENT_PRESENCE_FILE: "Path to file; suppresses mobile push while file exists"
+  CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD: "1 = load CLAUDE.md from --add-dir directories"
+  CLAUDE_CODE_POWERSHELL_RESPECT_EXECUTION_POLICY: "1 = opt out of -ExecutionPolicy Bypass"
+
+added_models:
+  claude-opus-4-8:
+    alias: opus
+    note: Defaults to high effort; available for fast mode
+    added: v2.1.154
+
+  claude-fable-5:
+    alias: fable
+    class: Mythos-class
+    note: General availability
+    added: v2.1.170
+
+deprecated:
+  CLAUDE_CODE_OPUS_4_6_FAST_MODE_OVERRIDE: "Deprecated 2026-06-01; use fast mode settings instead"
+
+sub_agent_update:
+  depth: "Sub-agents can now spawn sub-agents up to 5 levels deep"
+  added: v2.1.172
