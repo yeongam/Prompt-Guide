@@ -1,0 +1,176 @@
+{
+  "date": "2026-06-22",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-06-22T00:00:00+09:00",
+  "source": "https://github.com/anthropics/claude-code",
+  "source_version": "2.1.185",
+  "source_policy": "official Anthropic Claude Code repository",
+  "skills": [
+    {
+      "name": "Claude Code Init",
+      "slug": "claude-code-init",
+      "cmd": "/init",
+      "hash": "a1b2c3d4e5f60001",
+      "trigger": "User asks to initialize, document, or scaffold a codebase.",
+      "output": "CLAUDE.md with architecture, commands, and conventions.",
+      "procedure": [
+        "Scan repo structure and identify tech stack.",
+        "Extract key build/test/lint commands.",
+        "Document architecture and conventions concisely.",
+        "Write CLAUDE.md at repo root."
+      ],
+      "token_policy": ["Write to file; do not repeat full content in chat."],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ]
+    },
+    {
+      "name": "Claude Code Review",
+      "slug": "claude-code-review",
+      "cmd": "/review",
+      "hash": "a1b2c3d4e5f60002",
+      "trigger": "User asks to review a PR, branch diff, or code change.",
+      "output": "Ranked findings with file:line references.",
+      "procedure": [
+        "Read full diff.",
+        "Check logic, edge cases, security (OWASP top 10).",
+        "Identify dead code and simplification opportunities.",
+        "Verify test coverage for changed paths."
+      ],
+      "token_policy": ["Report findings only; skip boilerplate analysis."],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ]
+    },
+    {
+      "name": "Claude Code Security Review",
+      "slug": "claude-code-security-review",
+      "cmd": "/security-review",
+      "hash": "a1b2c3d4e5f60003",
+      "trigger": "User asks for security audit or OWASP check of pending changes.",
+      "output": "Risk-ranked findings with remediation steps.",
+      "procedure": [
+        "Identify changed files touching auth, input, DB, or network.",
+        "Check injection vectors and auth/authz logic.",
+        "Scan for secrets in code.",
+        "Report findings Critical > High > Medium > Low."
+      ],
+      "token_policy": ["Output findings only; omit clean-pass commentary."],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ]
+    },
+    {
+      "name": "Claude Code Simplify",
+      "slug": "claude-code-simplify",
+      "cmd": "/simplify",
+      "hash": "a1b2c3d4e5f60004",
+      "trigger": "User asks to clean up, refactor, or simplify changed code.",
+      "output": "Applied edits with one-line summary per file.",
+      "procedure": [
+        "Identify duplicate logic or abstraction candidates.",
+        "Remove dead code and unnecessary wrappers.",
+        "Prefer stdlib/framework idioms.",
+        "Apply fixes directly."
+      ],
+      "token_policy": ["Apply edits silently; summarize in one line per file."],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ]
+    },
+    {
+      "name": "Claude API Coding",
+      "slug": "claude-api-coding",
+      "cmd": "/claude-api",
+      "hash": "a1b2c3d4e5f60005",
+      "trigger": "User asks about Claude API, Anthropic SDK, model IDs, tool use, streaming, or caching.",
+      "output": "Compact API guidance with current model IDs.",
+      "procedure": [
+        "Always use latest model IDs (check deprecation warnings on stderr).",
+        "Apply prompt caching on large context blocks.",
+        "Handle tool_use stop reason for tool calls.",
+        "Use streaming for long responses.",
+        "Subagents can spawn subagents up to 5 levels deep (v2.1.172)."
+      ],
+      "models": {
+        "fable": "claude-fable-5",
+        "opus": "claude-opus-4-8",
+        "sonnet": "claude-sonnet-4-6",
+        "haiku": "claude-haiku-4-5-20251001"
+      },
+      "token_policy": ["Link to official docs; avoid copying long API reference text."],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ]
+    },
+    {
+      "name": "Claude Code Config",
+      "slug": "claude-code-config",
+      "cmd": "/update-config",
+      "hash": "a1b2c3d4e5f60006",
+      "trigger": "User wants automated behaviors, permissions, hooks, env vars, or settings.json changes.",
+      "output": "Updated settings.json block.",
+      "procedure": [
+        "Identify scope: project (.claude/) or user (~/.claude/).",
+        "Apply change with valid JSON structure.",
+        "Confirm with /config or /doctor."
+      ],
+      "token_policy": ["Show only the changed JSON block; not the full file."],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ]
+    },
+    {
+      "name": "Claude Code CD",
+      "slug": "claude-code-cd",
+      "cmd": "/cd",
+      "added": "v2.1.170",
+      "hash": "a1b2c3d4e5f60007",
+      "trigger": "User wants to move active session to a different working directory without losing prompt cache.",
+      "output": "Session working directory updated; one-line confirmation.",
+      "procedure": [
+        "Run /cd [path].",
+        "Verify new path is accessible.",
+        "Recalculates CLAUDE.md search from new root."
+      ],
+      "token_policy": ["Confirm new path in one line only."],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ]
+    },
+    {
+      "name": "Claude Code Documentation",
+      "slug": "claude-code-documentation",
+      "cmd": "/init, /team-onboarding",
+      "hash": "a1b2c3d4e5f60008",
+      "trigger": "User asks to generate, update, or maintain project documentation or onboarding guides.",
+      "output": "Documentation files written to repo.",
+      "procedure": [
+        "Read existing docs to avoid duplication.",
+        "Verify claims against code.",
+        "Keep docs colocated with code they describe.",
+        "Use imperative mood for instructions; present tense for descriptions."
+      ],
+      "token_policy": ["Write to file; confirm with one-line summary only."],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ]
+    }
+  ]
+}

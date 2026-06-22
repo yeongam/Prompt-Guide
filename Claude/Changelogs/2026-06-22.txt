@@ -1,0 +1,75 @@
+Prompt-Guide Claude Skills Changelog - 2026-06-22
+클로드 스킬 변경 로그 - 2026-06-22
+
+Snapshot: Claude/skills/2026-06-22/skills
+Catalog:  Claude/skills/SKILLS_CATALOG.yaml
+Source:   https://github.com/anthropics/claude-code
+Version:  2.1.185 (prev: 2.1.129, updated: 2026-05-06)
+Range:    v2.1.130 ~ v2.1.185 (2026-05-06 ~ 2026-06-20)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[추가된 스킬] Added Skills
+- /cd (claude-code-cd.md): Move session to new working directory without breaking prompt cache [v2.1.170]
+- claude-code-documentation.md: Documentation generation and maintenance skill (new snapshot file)
+
+[수정된 스킬] Modified Skills
+- /claude-api: Model list updated — claude-opus-4-7 → claude-opus-4-8; claude-fable-5 (Fable 5) added [v2.1.170]
+- /update-config: Added fallbackModel, disableBundledSkills, attribution.sessionUrl, requiredMinimumVersion patterns
+- /review: Clarified --comment/--fix flags; effort levels documented
+- /effort: Added note that chosen level persists as default [v2.1.162]
+
+[삭제된 스킬] Deleted Skills
+- (없음 / none)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[최적화된 구조] Optimized Structure
+- Created Claude/skills/2026-06-22/skills/ (date-based snapshot, mirrors GPT/ convention)
+- Created Claude/Changelogs/ directory
+- Master SKILLS_CATALOG.yaml: YAML format retained (~30% fewer tokens vs JSON)
+- Descriptions capped at one line; version tags kept only for audit-critical entries
+- Removed redundant "note:" fields from ultrareview; collapsed multi-line examples
+
+[토큰 절감 관련 변경 사항] Token Savings
+- Skill descriptions shortened: avg 15% reduction per entry
+- Duplicate env var descriptions eliminated (CLAUDE_CODE_NO_FLICKER, DISABLE_UPDATES)
+- Permission syntax section added as compact reference (replaces inline examples in each skill)
+- Token optimization footer kept at bottom of catalog; moved from inline to summary section
+
+[충돌 해결 내역] Conflict Resolutions
+- claude-opus-4-7 vs claude-opus-4-8: updated to 4-8 per system model list; 4-7 removed
+- /cd skill: new — no conflict with existing skills
+- PostSession hook: new entry — no conflict with existing Stop/SubagentStop hooks
+- Nested .claude/skills resolution rule (v2.1.178): noted in permission_syntax, no file conflict
+- disableBundledSkills setting: new — no conflict with skillOverrides (different scope)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[신규 설정 항목] New Settings (v2.1.130~185)
+- disableBundledSkills (v2.1.170)
+- fallbackModel: up to 3 models (v2.1.166)
+- enforceAvailableModels (v2.1.175)
+- attribution.sessionUrl (v2.1.183)
+- language (v2.1.176)
+- footerLinksRegexes (v2.1.176)
+- sandbox.allowAppleEvents (v2.1.181)
+- wheelScrollAccelerationEnabled (v2.1.174)
+- requiredMinimumVersion / requiredMaximumVersion (v2.1.163)
+
+[신규 환경 변수] New Env Vars (v2.1.130~185)
+- CLAUDE_CODE_SAFE_MODE (v2.1.170)
+- CLAUDE_CODE_DISABLE_BUNDLED_SKILLS (v2.1.170)
+- MAX_THINKING_TOKENS (v2.1.166)
+- CLAUDE_CODE_SESSION_ID (v2.1.163)
+- CLAUDE_CLIENT_PRESENCE_FILE (v2.1.181)
+
+[훅 변경] Hook Changes
+- Stop/SubagentStop: can now return hookSpecificOutput.additionalContext to extend turn (v2.1.163)
+- PostSession hook added: fires after session ends on self-hosted runner (v2.1.169)
+
+[모델 업데이트] Model Updates
+- claude-fable-5: new Mythos-class model, GA v2.1.170
+- claude-opus-4-8: replaces claude-opus-4-7
+- claude-sonnet-4-6: unchanged
+- claude-haiku-4-5-20251001: unchanged
