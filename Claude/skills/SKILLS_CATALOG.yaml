@@ -1,8 +1,9 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.186
+updated: 2026-06-23
+prev_version: 2.1.129
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -17,15 +18,30 @@ skills:
     trigger: user asks to review PR or branch
     desc: Multi-pass PR review; checks logic, style, security, tests
 
+  code-review:
+    cmd: /code-review [PR#] [--fix] [--comment]
+    trigger: user asks to review PR/diff with fix or comment output
+    desc: Review with effort levels; --fix applies findings; --comment posts inline PR comments
+    added: v2.1.147
+    note: Supersedes old /simplify rename; /simplify re-added in v2.1.154 as cleanup-only
+
+  simplify:
+    cmd: /simplify
+    trigger: user asks to clean up or refactor changed code (cleanup only)
+    desc: Cleanup-only review of changed code; applies reuse/quality/efficiency fixes
+    note: Re-added v2.1.154 after code-review split; scope is cleanup, not bug-finding
+
   security-review:
     cmd: /security-review
     trigger: user asks security audit of current branch changes
     desc: OWASP-focused audit of pending diffs; outputs risk-ranked findings
 
-  simplify:
-    cmd: /simplify
-    trigger: user asks to clean up or refactor changed code
-    desc: Review changed code for reuse/quality/efficiency, then fix issues
+  goal:
+    cmd: /goal <condition>
+    trigger: user wants Claude to keep working until a condition is met
+    desc: Sets completion condition; Claude runs autonomously until goal is satisfied
+    added: v2.1.139
+    example: "/goal all tests pass and coverage > 80%"
 
   session-start-hook:
     cmd: /session-start-hook
@@ -36,6 +52,12 @@ skills:
     cmd: /update-config
     trigger: automated behavior requests ("when X", "allow Y", "set Z=val")
     desc: Configure settings.json; handles hooks, permissions, env vars
+
+  config:
+    cmd: /config [key=value] [--help]
+    trigger: user wants to change a setting inline from the prompt
+    desc: Inline settings editor; --help lists shorthand keys; Enter/Esc to toggle/save
+    added: v2.1.181
 
   keybindings-help:
     cmd: /keybindings-help
@@ -53,12 +75,31 @@ skills:
     desc: Run prompt or slash command on recurring interval (default 10m)
     example: "/loop 5m /review"
 
+  plugin:
+    cmd: /plugin [list|browse|enable|disable|init] [--enabled|--disabled]
+    trigger: user wants to manage, install, or scaffold plugins
+    desc: Plugin lifecycle manager; marketplace browse; scaffold with `claude plugin init <name>`
+    added: v2.1.157
+
+  reload-skills:
+    cmd: /reload-skills
+    trigger: user edited skill files and wants them active without restart
+    desc: Re-scans skill directories and hot-reloads definitions in current session
+    added: v2.1.152
+
+  cd:
+    cmd: /cd <path>
+    trigger: user wants to move session to a different directory
+    desc: Moves session working directory without breaking prompt cache
+    added: v2.1.169
+
   claude-api:
     cmd: /claude-api
     trigger: code imports anthropic SDK; user asks about Claude API features
     desc: Build/debug Claude API apps; prompt caching, tool use, model migration
     models:
-      opus: claude-opus-4-7
+      fable: claude-fable-5
+      opus: claude-opus-4-8
       sonnet: claude-sonnet-4-6
       haiku: claude-haiku-4-5-20251001
 
@@ -66,7 +107,7 @@ skills:
     cmd: /ultrareview [PR#]
     trigger: user says "ultrareview" or wants multi-agent review
     desc: Parallel multi-agent cloud code review; no-arg=local branch, arg=GitHub PR
-    note: Billed; requires git repo; no GitHub remote needed for local mode
+    note: Billed; requires git repo
 
   ultraplan:
     cmd: /ultraplan
@@ -79,9 +120,10 @@ skills:
     desc: Generate onboarding guide from local Claude Code usage history/data
 
   effort:
-    cmd: /effort
+    cmd: /effort [level]
     trigger: user wants to adjust effort/quality level
-    desc: Interactive slider for session effort level (also: CLAUDE_EFFORT env var)
+    desc: Interactive slider for session effort (levels: low/medium/high/xhigh); xhigh for hardest tasks
+    note: /effort confirms persistent default for new sessions
 
   powerup:
     cmd: /powerup
@@ -106,7 +148,8 @@ skills:
   usage:
     cmd: /usage
     trigger: user asks about token or cost statistics
-    desc: Show token usage and cost stats (merged /cost + /stats)
+    desc: Show token/cost stats with per-category breakdown (skills, subagents, plugins, MCP)
+    note: Updated v2.1.149 to add category breakdown
 
   theme:
     cmd: /theme [name]
@@ -119,10 +162,8 @@ skills:
     desc: Set random session color (no args = random pick)
 
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
-# Hooks execute shell commands or MCP tools on lifecycle events.
 # Block: exit 2 OR return JSON {decision:"block", reason:"..."}
-# Retry: return JSON {retry:true} (PermissionDenied only)
-# Conditional: add `if` field using permission rule syntax
+# Retry: return {retry:true} (PermissionDenied only)
 hooks:
   PreToolUse:
     fires: Before any tool execution
@@ -137,16 +178,18 @@ hooks:
   Notification:
     fires: On push-notification events
     can_block: false
-    use: Forward alerts to mobile/Slack (requires Remote Control setup)
+    use: Forward alerts to mobile/Slack
 
   Stop:
     fires: After assistant turn completes
     can_block: false
-    use: Post-turn logging, notifications
+    output: hookSpecificOutput.additionalContext (v2.1.163)
+    use: Post-turn logging; inject additional context for next turn
 
   SubagentStop:
     fires: After subagent turn completes
     can_block: false
+    output: hookSpecificOutput.additionalContext (v2.1.163)
     use: Subagent result aggregation
 
   PreCompact:
@@ -176,23 +219,79 @@ hooks:
     added: v2.1.95
     use: Custom permission escalation flows
 
+  SessionStart:
+    fires: On session start
+    can_block: false
+    output: "reloadSkills: true, sessionTitle: string"
+    added: v2.1.152
+    use: Load skills/set title on session init
+
+  MessageDisplay:
+    fires: Before assistant message is shown
+    can_block: false
+    added: v2.1.152
+    use: Transform or hide assistant message text
+
+  post-session:
+    fires: After session ends, before workspace deletion
+    can_block: false
+    added: v2.1.169
+    use: Cleanup, archiving, post-session notifications
+
   hook_invoke_types:
     - type: shell          # shell command (default)
-    - type: mcp_tool       # invoke MCP tool directly (added v2.1.118)
+    - type: mcp_tool       # invoke MCP tool directly (v2.1.118)
     - type: http           # HTTP endpoint (WorktreeCreate)
+    hook_fields:
+      args: "string[] — exec form, spawns without shell (v2.1.139)"
+      terminalSequence: "desktop notifications, window titles, bells (v2.1.141)"
 
 # ─── SETTINGS ──────────────────────────────────────────────────────────────────
-# Place in .claude/settings.json (project) or ~/.claude/settings.json (user)
 settings:
   skillOverrides:
     type: "off | user-invocable-only | name-only"
-    desc: "off=hidden from model+slash, user-invocable-only=hidden from model, name-only=minimal exposure"
+    desc: Control skill visibility (off=hidden from model+slash, user-invocable-only=hidden from model)
     added: v2.1.126
+
+  disableBundledSkills:
+    type: bool
+    desc: Hide all bundled skills/workflows; also CLAUDE_CODE_DISABLE_BUNDLED_SKILLS env var
+    added: v2.1.169
+
+  fallbackModel:
+    type: "string | list[string] (up to 3)"
+    desc: Fallback model(s) when primary model unavailable; --fallback-model for interactive
+    added: v2.1.166
+
+  availableModels:
+    type: list[string]
+    desc: Restrict which models are accessible in this session
+    added: v2.1.176
+
+  enforceAvailableModels:
+    type: bool
+    desc: Prevent widening availableModels via user/project settings
+    added: v2.1.175
+
+  attribution.sessionUrl:
+    type: bool
+    desc: Omit claude.ai session links from commit/PR footers
+    added: v2.1.183
+
+  footerLinksRegexes:
+    type: list[string]
+    desc: Regex patterns for link badges shown in PR/commit footers
+    added: v2.1.176
 
   autoScrollEnabled:
     type: bool
     desc: Disable auto-scroll in fullscreen TUI mode
     added: v2.1.100
+
+  wheelScrollAccelerationEnabled:
+    type: bool
+    desc: Disable mouse-wheel acceleration in fullscreen TUI
+    added: v2.1.174
 
   showThinkingSummaries:
     type: bool
@@ -207,34 +306,69 @@ settings:
 
   prUrlTemplate:
     type: string
-    desc: Custom URL template for PR footer badge (e.g. custom code-review tools)
+    desc: Custom URL template for PR footer badge
     added: v2.1.101
 
+  pluginSuggestionMarketplaces:
+    type: list[string]
+    desc: Managed setting allowlisting org plugin marketplaces
+    added: v2.1.152
+
+  allowAllClaudeAiMcps:
+    type: bool
+    desc: Load claude.ai cloud MCP connectors alongside managed config
+    added: v2.1.149
+
+  teammateMode:
+    type: "iterm2 | ..."
+    desc: IDE/terminal integration mode; iterm2 enables auto-detection warning
+    added: v2.1.186
+
+  respondToBashCommands:
+    type: bool
+    default: true
+    desc: "false disables automatic Claude response to ! bash commands"
+    added: v2.1.186
+
   sandbox.network.deniedDomains:
-    type: "list[string]"
+    type: list[string]
     desc: Block specific domains even when broader allowlists exist
     added: v2.1.85
+
+  sandbox.allowAppleEvents:
+    type: bool
+    desc: Opt-in for sandboxed macOS Apple Events commands
+    added: v2.1.181
 
 # ─── ENV VARS ──────────────────────────────────────────────────────────────────
 env:
   CLAUDE_EFFORT: "Current effort level; usable in skill template strings as ${CLAUDE_EFFORT}"
   CLAUDE_CODE_NO_FLICKER: "1 = enable alt-screen flicker-free rendering (same as /tui)"
-  CLAUDE_CODE_USE_POWERSHELL_TOOL: "1 = enable PowerShell tool (Windows opt-in preview)"
+  CLAUDE_CODE_USE_POWERSHELL_TOOL: "1 = enable PowerShell tool (Windows opt-in)"
   CLAUDE_STREAM_IDLE_TIMEOUT_MS: "Integer ms for streaming idle watchdog timeout"
   OTEL_LOG_RAW_API_BODIES: "1 = emit full API request/response bodies as OTEL events"
+  OTEL_LOG_TOOL_DETAILS: "1 = include tool_parameters in tool_decision OTEL events"
   DISABLE_UPDATES: "1 = block all update paths including manual 'claude update'"
   CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1 = opt-in gateway /v1/models discovery"
+  CLAUDE_CODE_ENABLE_AUTO_MODE: "1 = enable auto mode on Bedrock/Vertex/Foundry (Opus 4.7+)"
+  CLAUDE_CODE_DISABLE_BUNDLED_SKILLS: "1 = hide all bundled skills/workflows"
+  CLAUDE_CODE_PLUGIN_PREFER_HTTPS: "1 = clone plugins over HTTPS instead of SSH"
+  CLAUDE_CODE_CLIENT_PRESENCE_FILE: "Path to file suppressing mobile notifications while at machine"
+  CLAUDE_CODE_MAX_RETRIES: "Max retry count (capped at 15)"
+  CLAUDE_CODE_RETRY_WATCHDOG: "Retry watchdog config for unattended sessions"
+  ANTHROPIC_WORKSPACE_ID: "Workspace ID for workload identity federation"
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
   default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
+  fable: claude-fable-5            # Mythos-class; added v2.1.170
+  opus: claude-opus-4-8            # Fast mode 2.5x faster; xhigh effort; updated v2.1.154
   sonnet: claude-sonnet-4-6
   haiku: claude-haiku-4-5-20251001
+  fast_mode_default: claude-opus-4-8  # Fast mode upgraded from 4.7 in v2.1.142
 
 # ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────
-# This catalog is structured for minimal token overhead:
-# - One canonical source (this file); skills reference it rather than duplicate
 # - YAML over JSON/Markdown: ~30% fewer tokens for structured data
+# - One canonical source; skills reference catalog rather than duplicate
 # - Descriptions capped at one line; examples only where non-obvious
-# - "added:" version tags kept for audit; remove if tokens are critical
+# - Redundant "added:" tags kept for audit traceability only

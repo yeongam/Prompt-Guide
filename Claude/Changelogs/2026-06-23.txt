@@ -1,0 +1,64 @@
+================================================================================
+Claude Code Skills Sync — 2026-06-23
+Source: anthropics/claude-code (public)
+Version: 2.1.129 → 2.1.186
+================================================================================
+
+[ 추가된 스킬 ]
++ code-review  (/code-review [PR#] [--fix] [--comment])
+  v2.1.147에서 /simplify가 /code-review로 분리됨.
+  effort level 지정 가능 (low/medium/high/max), --fix로 자동 적용, --comment로 PR 인라인 코멘트 게시.
+
++ goal  (/goal <condition>)
+  v2.1.139 신규. 완료 조건을 설정하면 Claude가 조건 충족 시까지 자율 실행.
+
++ cd  (/cd <path>)
+  v2.1.169 신규. 프롬프트 캐시 유지하면서 세션 작업 디렉토리 변경.
+
++ plugin  (/plugin [list|browse|enable|disable|init])
+  v2.1.157 신규. 플러그인 라이프사이클 관리; 마켓플레이스 탐색; scaffold 지원.
+
++ reload-skills  (/reload-skills)
+  v2.1.152 신규. 재시작 없이 스킬 디렉토리 핫-리로드.
+
++ config  (/config [key=value] [--help])
+  v2.1.181 신규. 프롬프트에서 직접 설정 변경; /config --help로 단축키 목록 확인.
+
+[ 수정된 스킬 ]
+~ simplify
+  v2.1.154에서 code-review와 분리 후 재추가. cleanup-only 범위로 명확화
+  (버그 탐지 아님, 코드 품질/정리 전용).
+
+~ usage
+  v2.1.149: 카테고리별 상세 breakdown 추가 (skills/subagents/plugins/MCP).
+
+~ effort
+  v2.1.154: xhigh 레벨 추가 (최고난도 작업용); 세션 기본값 영구 설정 지원.
+
+~ claude-api
+  모델 업데이트:
+    opus: claude-opus-4-7 → claude-opus-4-8
+    fable: claude-fable-5 (신규 Mythos-class 모델, v2.1.170)
+
+[ 삭제된 스킬 ]
+  없음. 기존 스킬 모두 유지됨.
+
+[ 최적화된 구조 ]
+- 날짜별 스킬 디렉토리 신규 생성: Claude/skills/2026-06-23/skills/
+- 신규 스킬 6개 개별 .md 파일로 분리 저장 (code-review, goal, cd, plugin, reload-skills, config)
+- SKILLS_CATALOG.yaml: YAML 단일 파일 구조 유지, 중복 설명 제거
+- 후크 섹션: args/terminalSequence 필드 통합 표현으로 압축
+
+[ 토큰 절감 관련 변경 사항 ]
+- 각 스킬 .md 파일: 프론트매터 + 핵심 설명만 유지 (평균 5~8줄)
+- 카탈로그: desc 한 줄 제한 유지, 중복 배경 설명 미포함
+- 신규 환경변수/설정 항목: 설명 한 줄로 제한
+- 모델 섹션: 불필요한 주석 축약 (기존 대비 약 15% 감소 추정)
+
+[ 충돌 해결 내역 ]
+- simplify vs code-review: v2.1.147에서 rename, v2.1.154에서 재분리.
+  두 스킬 모두 카탈로그에 유지하되 역할 명확화 (code-review=리뷰+수정, simplify=정리만).
+- hooks 섹션 Stop/SubagentStop: additionalContext 출력 필드 추가, 기존 use 설명 유지.
+- 기존 .version(2.1.129) → 2.1.186 갱신; SKILLS_CATALOG.yaml prev_version 필드로 이전 버전 추적.
+
+================================================================================
