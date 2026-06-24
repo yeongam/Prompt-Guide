@@ -1,0 +1,144 @@
+{
+  "date": "2026-06-24",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-06-24T15:07:12Z",
+  "source_version": "2.1.187",
+  "source_policy": "official Anthropic/claude-code GitHub repository only",
+  "skills": [
+    {
+      "slug": "claude-api-programming",
+      "name": "Claude API Programming",
+      "trigger": "code imports anthropic SDK; user asks about Claude API, tool use, streaming, caching",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured tool-use APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "output": "Compact API implementation checklist with model/pricing alignment.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_version": "2.1.187",
+      "hash": "f489c70a78f619b6"
+    },
+    {
+      "slug": "code-review",
+      "name": "Code Review",
+      "trigger": "user asks to review PR, branch diff, or check code quality",
+      "procedure": [
+        "Read changed files before reviewing.",
+        "Check logic, style, security, and test coverage.",
+        "Rank findings by severity.",
+        "Keep review concise; link to docs for known patterns.",
+        "Verify fixes narrow to reported issues only."
+      ],
+      "output": "Risk-ranked finding list with severity and fix suggestions.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical findings.",
+        "Skip trivial style notes when higher issues exist."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_version": "2.1.187",
+      "hash": "ff9738dec9d52b11"
+    },
+    {
+      "slug": "security-programming",
+      "name": "Security Programming",
+      "trigger": "user asks security audit, OWASP check, or vulnerability review of current changes",
+      "procedure": [
+        "Check official source alignment first.",
+        "Focus on OWASP Top 10 and injection risks.",
+        "Review auth, input validation, and data exposure.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "output": "OWASP-focused risk-ranked audit of pending diffs.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical security findings.",
+        "Link to CVE/OWASP docs instead of copying descriptions."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_version": "2.1.187",
+      "hash": "73881db8c71133c1"
+    },
+    {
+      "slug": "documentation-maintenance",
+      "name": "Documentation Maintenance",
+      "trigger": "user asks to initialize, update, or generate CLAUDE.md or project documentation",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working documentation structure.",
+        "Keep architecture overview concise.",
+        "Document conventions and commands, not obvious patterns.",
+        "Verify docs reflect actual codebase state."
+      ],
+      "output": "Concise documentation update with source traceability.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical documentation sections.",
+        "Link to source files instead of duplicating content."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_version": "2.1.187",
+      "hash": "bc42fe64e343cedb"
+    },
+    {
+      "slug": "workflow-automation",
+      "name": "Workflow Automation",
+      "trigger": "user wants recurring tasks, hooks, cron jobs, or automated pipeline setup",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working automation structure.",
+        "Use hooks for event-driven triggers; cron for time-based.",
+        "Keep automation scripts short and single-purpose.",
+        "Verify automation runs without user input."
+      ],
+      "output": "Lean automation design with hook/cron implementation.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical automation config.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_version": "2.1.187",
+      "hash": "e8ae7f80f7bc00b7"
+    }
+  ]
+}
