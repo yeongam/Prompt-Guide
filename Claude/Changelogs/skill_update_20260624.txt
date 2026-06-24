@@ -1,0 +1,68 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-06-24 00:28 UTC
+Version : 2.1.186 → 2.1.187
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-06-24/
+============================================================
+
+[ ★ 신규 감지 스킬 (6개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /bg  ← 수동 추가 필요
+  ? /btw  ← 수동 추가 필요
+  ? /config  ← 수동 추가 필요
+  ? /install-github-app  ← 수동 추가 필요
+  ? /share  ← 수동 추가 필요
+  ? /update  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /btw
+  ~ /install-github-app
+  ~ /plugin
+  ~ /share
+  ~ /update
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-06-24/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  (없음)
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.187
+
+- Added `sandbox.credentials` setting to block sandboxed commands from reading credential files and secret environment variables
+- Added org-configured model restrictions to the model picker, `--model`, `/model`, and `ANTHROPIC_MODEL`, with a "restricted by your organization's settings" message when a restricted model is selected
+- Added mouse click support to select menus (permission prompts, `/model`, `/config`, etc.) in fullscreen mode
+- Fixed `--resume` failing with "No conversation found" when the original `-p` run produced no model turns
+- Fixed `--json-schema` and workflow `agent({schema})` structured output: the model can no longer re-call `StructuredOutput` indefinitely after a successful call, and follow-up turns now reliably return structured output
+- Fixed remote MCP tool calls that hang with no response for 5 minutes — they now abort with an error instead of blocking indefinitely (override with `CLAUDE_CODE_MCP_TOOL_IDLE_TIMEOUT`)
+- Fixed Claude Code Remote sessions taking ~2.7s longer to start after the agent proxy CA system-trust install was added
+- Fixed pasted Korean/CJK text turning into mojibake in terminals that deliver paste as per-byte extended-key events
+- Fixed `/update` over Remote Control hanging when a startup trust dialog would have shown
+- Fixed background jobs in the agents view getting stuck in "working" indefinitely when the agent ended a turn without producing structured output
+- Fixed channel connections dropping after navigating to the agents view and back, and after `/bg`, `/tui`, or `/update`
+- Fixed agent stop notifications not correctly attributing who stopped the agent, and improved wording ("finished"/"stopped" instead of "came to rest")
+- Fixed subagent depth tracking: resumed subagents now restore their original spawn depth, and forked subagents now count toward the depth cap
+- Fixed leaked agent worktree registrations: locked `.git/worktrees/` entries from killed agents are now cleaned up automatically
+- Fixed 
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
