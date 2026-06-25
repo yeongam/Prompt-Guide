@@ -1,0 +1,389 @@
+{
+  "date": "2026-06-25",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-06-25T15:08:18.494216+00:00",
+  "version": "2.1.191",
+  "source": "https://github.com/anthropics/claude-code",
+  "source_branch": "main",
+  "skills": [
+    {
+      "slug": "claude-api",
+      "name": "Claude Api",
+      "cmd": "/claude-api",
+      "trigger": "code imports anthropic SDK; user asks about Claude API features",
+      "desc": "Build/debug Claude API apps; prompt caching, tool use, model migration",
+      "hash": "a30b73c598e29a0a",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "color",
+      "name": "Color",
+      "cmd": "/color",
+      "trigger": "user wants a session color",
+      "desc": "Set random session color (no args = random pick)",
+      "hash": "b8fb649fd3207d7c",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "effort",
+      "name": "Effort",
+      "cmd": "/effort",
+      "trigger": "user wants to adjust effort/quality level",
+      "desc": "Interactive slider for session effort level (also: CLAUDE_EFFORT env var)",
+      "hash": "67606ff62ae2a039",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "fewer-permission-prompts",
+      "name": "Fewer Permission Prompts",
+      "cmd": "/fewer-permission-prompts",
+      "trigger": "user wants fewer permission dialogs",
+      "desc": "Scan transcripts → add bash/MCP allowlist to .claude/settings.json",
+      "hash": "45fff0159a502586",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "focus",
+      "name": "Focus",
+      "cmd": "/focus",
+      "trigger": "user wants compact view of conversation",
+      "desc": "Toggle focus view showing only: prompt + tool summary + final response",
+      "hash": "9a217373f48bef84",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "init",
+      "name": "Init",
+      "cmd": "/init",
+      "trigger": "user asks to initialize or document codebase",
+      "desc": "Generate CLAUDE.md with codebase architecture, conventions, commands",
+      "hash": "390376b17202485f",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "keybindings-help",
+      "name": "Keybindings Help",
+      "cmd": "/keybindings-help",
+      "trigger": "user wants to remap keys or add chord shortcuts",
+      "desc": "Customize ~/.claude/keybindings.json; supports chord bindings",
+      "hash": "5c3209f911983f1e",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "loop",
+      "name": "Loop",
+      "cmd": "/loop [interval] [/command]",
+      "trigger": "user wants recurring task (e.g. \"check every 5m\", \"keep running X\")",
+      "desc": "Run prompt or slash command on recurring interval (default 10m)",
+      "hash": "e74923a82b91d9d7",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "powerup",
+      "name": "Powerup",
+      "cmd": "/powerup",
+      "trigger": "user wants feature demos or to learn Claude Code features",
+      "desc": "Interactive animated feature demos with lessons",
+      "hash": "1434cff4bb326bb8",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "review",
+      "name": "Review",
+      "cmd": "/review",
+      "trigger": "user asks to review PR or branch",
+      "desc": "Multi-pass PR review; checks logic, style, security, tests",
+      "hash": "38f8f105173a43f3",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "security-review",
+      "name": "Security Review",
+      "cmd": "/security-review",
+      "trigger": "user asks security audit of current branch changes",
+      "desc": "OWASP-focused audit of pending diffs; outputs risk-ranked findings",
+      "hash": "d2d0b267db4755a2",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "session-start-hook",
+      "name": "Session Start Hook",
+      "cmd": "/session-start-hook",
+      "trigger": "user wants test/lint runners on session start (web Claude Code)",
+      "desc": "Create SessionStart hook ensuring project can run tests and linters",
+      "hash": "4cef6e68307e1332",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "simplify",
+      "name": "Simplify",
+      "cmd": "/simplify",
+      "trigger": "user asks to clean up or refactor changed code",
+      "desc": "Review changed code for reuse/quality/efficiency, then fix issues",
+      "hash": "4b4f0935e3ab5b56",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "team-onboarding",
+      "name": "Team Onboarding",
+      "cmd": "/team-onboarding",
+      "trigger": "user wants teammate ramp-up guide",
+      "desc": "Generate onboarding guide from local Claude Code usage history/data",
+      "hash": "f191db598ef60ab9",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "theme",
+      "name": "Theme",
+      "cmd": "/theme [name]",
+      "trigger": "user wants to change or create visual theme",
+      "desc": "Create or switch custom color themes",
+      "hash": "53e846f24c916f1a",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "tui",
+      "name": "Tui",
+      "cmd": "/tui",
+      "trigger": "rendering looks flickery or user wants full-screen mode",
+      "desc": "Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)",
+      "hash": "1086f5355020d529",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "ultraplan",
+      "name": "Ultraplan",
+      "cmd": "/ultraplan",
+      "trigger": "user wants cloud environment for complex planning",
+      "desc": "Auto-create cloud worktrees/environments for multi-agent planning tasks",
+      "hash": "1703f13fe8758c73",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "ultrareview",
+      "name": "Ultrareview",
+      "cmd": "/ultrareview [PR#]",
+      "trigger": "user says \"ultrareview\" or wants multi-agent review",
+      "desc": "Parallel multi-agent cloud code review; no-arg=local branch, arg=GitHub PR",
+      "hash": "cfeb88a31607de9e",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "undo",
+      "name": "Undo",
+      "cmd": "/undo",
+      "trigger": "user wants to undo last action",
+      "desc": "Alias for /rewind; undoes last assistant action",
+      "hash": "3d0cb907078a49f5",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "update-config",
+      "name": "Update Config",
+      "cmd": "/update-config",
+      "trigger": "automated behavior requests (\"when X\", \"allow Y\", \"set Z=val\")",
+      "desc": "Configure settings.json; handles hooks, permissions, env vars",
+      "hash": "0170a03f2c10e1d2",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    },
+    {
+      "slug": "usage",
+      "name": "Usage",
+      "cmd": "/usage",
+      "trigger": "user asks about token or cost statistics",
+      "desc": "Show token usage and cost stats (merged /cost + /stats)",
+      "hash": "49102470a3c33f43",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "token_policy": [
+        "Return only decision-critical output.",
+        "Link to source instead of copying docs.",
+        "Avoid repeated background context."
+      ]
+    }
+  ],
+  "source_policy": "official Anthropic GitHub repositories only"
+}
