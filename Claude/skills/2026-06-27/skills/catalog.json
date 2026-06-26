@@ -1,0 +1,489 @@
+{
+  "date": "2026-06-27",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-06-27T00:08:40+09:00",
+  "skills": [
+    {
+      "category": "core",
+      "cmd": "/init",
+      "desc": "Generate CLAUDE.md with architecture, conventions, commands",
+      "hash": "3f6fb65418f30960",
+      "slug": "init",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user asks to initialize or document codebase",
+      "version": "2.1.193"
+    },
+    {
+      "category": "core",
+      "cmd": "/review",
+      "desc": "Multi-pass PR review: logic, style, security, tests",
+      "hash": "1afeb5e081b600b3",
+      "slug": "review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user asks to review PR or branch",
+      "version": "2.1.193"
+    },
+    {
+      "category": "core",
+      "cmd": "/security-review",
+      "desc": "OWASP-focused audit of pending diffs; risk-ranked findings",
+      "hash": "fe5a8949762d8692",
+      "slug": "security-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user asks security audit of current branch",
+      "version": "2.1.193"
+    },
+    {
+      "category": "core",
+      "cmd": "/simplify",
+      "desc": "Review changed code for reuse/quality/efficiency then fix",
+      "hash": "af3a5c18c6b9377a",
+      "slug": "simplify",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user asks to clean up or refactor changed code",
+      "version": "2.1.193"
+    },
+    {
+      "category": "config",
+      "cmd": "/session-start-hook",
+      "desc": "Create SessionStart hook for test/lint runners (web Claude Code)",
+      "hash": "04cefc2fe7666acb",
+      "slug": "session-start-hook",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user wants test/lint runners on session start",
+      "version": "2.1.193"
+    },
+    {
+      "category": "config",
+      "cmd": "/update-config",
+      "desc": "Configure settings.json: hooks, permissions, env vars",
+      "hash": "6cbe5b93e54f627f",
+      "slug": "update-config",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "automated behavior requests (\"when X\", \"allow Y\", \"set Z=val\")",
+      "version": "2.1.193"
+    },
+    {
+      "category": "config",
+      "cmd": "/keybindings-help",
+      "desc": "Customize ~/.claude/keybindings.json; supports chord bindings",
+      "hash": "8452f8c21d8037a8",
+      "slug": "keybindings-help",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user wants to remap keys or add chord shortcuts",
+      "version": "2.1.193"
+    },
+    {
+      "category": "config",
+      "cmd": "/fewer-permission-prompts",
+      "desc": "Scan transcripts → add bash/MCP allowlist to .claude/settings.json",
+      "hash": "bef9a7cd355ceb76",
+      "slug": "fewer-permission-prompts",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user wants fewer permission dialogs",
+      "version": "2.1.193"
+    },
+    {
+      "category": "automation",
+      "cmd": "/loop [interval] [cmd]",
+      "desc": "Run prompt/slash command on recurring interval (default 10m)",
+      "hash": "f98453979e8a6454",
+      "slug": "loop",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user wants recurring task (\"check every 5m\", \"keep running X\")",
+      "version": "2.1.193"
+    },
+    {
+      "category": "dev",
+      "cmd": "/claude-api",
+      "desc": "Build/debug Claude API apps; caching, tool use, model migration",
+      "hash": "ac036369cd418ef2",
+      "slug": "claude-api",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "code imports anthropic SDK or user asks about Claude API",
+      "version": "2.1.193"
+    },
+    {
+      "category": "advanced",
+      "cmd": "/ultrareview [PR#]",
+      "desc": "Parallel multi-agent cloud code review (local branch or GitHub PR)",
+      "hash": "6955f8a93de91438",
+      "slug": "ultrareview",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user says \"ultrareview\" or wants multi-agent review",
+      "version": "2.1.193"
+    },
+    {
+      "category": "advanced",
+      "cmd": "/ultraplan",
+      "desc": "Auto-create cloud worktrees for multi-agent planning tasks",
+      "hash": "1a989e329d44c467",
+      "slug": "ultraplan",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user wants cloud environment for complex planning",
+      "version": "2.1.193"
+    },
+    {
+      "category": "docs",
+      "cmd": "/team-onboarding",
+      "desc": "Generate onboarding guide from local Claude Code usage history",
+      "hash": "38995a6e1e180e11",
+      "slug": "team-onboarding",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user wants teammate ramp-up guide",
+      "version": "2.1.193"
+    },
+    {
+      "category": "config",
+      "cmd": "/effort",
+      "desc": "Interactive slider for session effort level (also: CLAUDE_EFFORT env var)",
+      "hash": "406d87952517185a",
+      "slug": "effort",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user wants to adjust effort/quality level",
+      "version": "2.1.193"
+    },
+    {
+      "category": "ux",
+      "cmd": "/powerup",
+      "desc": "Interactive animated feature demos with lessons",
+      "hash": "c180ea1a65090f9e",
+      "slug": "powerup",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user wants feature demos or to learn Claude Code features",
+      "version": "2.1.193"
+    },
+    {
+      "category": "ux",
+      "cmd": "/tui",
+      "desc": "Switch to flicker-free alt-screen TUI rendering",
+      "hash": "637051e61c3fd76e",
+      "slug": "tui",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "rendering looks flickery or user wants full-screen mode",
+      "version": "2.1.193"
+    },
+    {
+      "category": "ux",
+      "cmd": "/focus",
+      "desc": "Toggle focus view: prompt + tool summary + final response only",
+      "hash": "ea72b7631b636956",
+      "slug": "focus",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user wants compact view of conversation",
+      "version": "2.1.193"
+    },
+    {
+      "category": "ux",
+      "cmd": "/undo",
+      "desc": "Alias for /rewind; undoes last assistant action",
+      "hash": "5bc2aacd2dc0e67a",
+      "slug": "undo",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user wants to undo last action",
+      "version": "2.1.193"
+    },
+    {
+      "category": "ux",
+      "cmd": "/usage",
+      "desc": "Show token usage and cost stats (merged /cost + /stats)",
+      "hash": "f414b346a5c26c0d",
+      "slug": "usage",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user asks about token or cost statistics",
+      "version": "2.1.193"
+    },
+    {
+      "category": "ux",
+      "cmd": "/theme [name]",
+      "desc": "Create or switch custom color themes",
+      "hash": "51773bd779793805",
+      "slug": "theme",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user wants to change or create visual theme",
+      "version": "2.1.193"
+    },
+    {
+      "category": "ux",
+      "cmd": "/color",
+      "desc": "Set random session color",
+      "hash": "1deb9773a4ae5cb4",
+      "slug": "color",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user wants a session color",
+      "version": "2.1.193"
+    },
+    {
+      "category": "research",
+      "cmd": "/deep-research",
+      "desc": "Fan-out web searches, fetch sources, adversarial verify, cited report",
+      "hash": "100ce50a1d3f08ce",
+      "slug": "deep-research",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user wants multi-source fact-checked research report",
+      "version": "2.1.193"
+    },
+    {
+      "category": "core",
+      "cmd": "/code-review",
+      "desc": "Review diff for correctness, reuse, efficiency; optional PR comments/fix",
+      "hash": "87c810af20ae4c6e",
+      "slug": "code-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user asks for code review on current diff",
+      "version": "2.1.193"
+    },
+    {
+      "category": "dev",
+      "cmd": "/run",
+      "desc": "Launch and drive the project app to observe a change working",
+      "hash": "d874276acb94c13e",
+      "slug": "run",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user asks to run, start, or screenshot the app",
+      "version": "2.1.193"
+    },
+    {
+      "category": "dev",
+      "cmd": "/verify",
+      "desc": "Run app and observe behavior to confirm change is correct",
+      "hash": "f785d36b5cc98933",
+      "slug": "verify",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user asks to verify a PR or confirm a fix works",
+      "version": "2.1.193"
+    },
+    {
+      "category": "utility",
+      "cmd": "/add-dir",
+      "desc": "Add directory to Claude Code session search scope",
+      "hash": "e3ca6602c27a5b25",
+      "slug": "add-dir",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user wants to add a directory to the session context",
+      "version": "2.1.193"
+    },
+    {
+      "category": "utility",
+      "cmd": "/login",
+      "desc": "Authenticate with Claude API / switch active account",
+      "hash": "b1c415daf1de80b3",
+      "slug": "login",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user needs to log in or switch Claude accounts",
+      "version": "2.1.193"
+    },
+    {
+      "category": "config",
+      "cmd": "/mcp",
+      "desc": "List, enable, disable, and configure MCP servers in session",
+      "hash": "da949ab350aced48",
+      "slug": "mcp",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user wants to manage or inspect MCP servers",
+      "version": "2.1.193"
+    },
+    {
+      "category": "config",
+      "cmd": "/model",
+      "desc": "Select or display the current Claude model (opus/sonnet/haiku)",
+      "hash": "f3d71d66fb29aa22",
+      "slug": "model",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user wants to switch the active model",
+      "version": "2.1.193"
+    },
+    {
+      "category": "config",
+      "cmd": "/permissions",
+      "desc": "List, add, or remove allowed/denied tool permissions",
+      "hash": "e0104826e7d81f49",
+      "slug": "permissions",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "f0919a1a7277",
+      "token_policy": [
+        "Use cmd directly; avoid restating background context.",
+        "Return only decision-critical output.",
+        "Link to source over inline documentation."
+      ],
+      "trigger": "user wants to view or manage tool permissions",
+      "version": "2.1.193"
+    }
+  ],
+  "source": "https://github.com/anthropics/claude-code",
+  "version": "2.1.193"
+}

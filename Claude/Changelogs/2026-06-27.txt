@@ -1,0 +1,82 @@
+================================================================
+Claude Code Skills Update Report
+날짜 (Date)  : 2026-06-27
+버전 (Version): 2.1.193 → 2.1.193
+소스 커밋    : f0919a1a7277
+소스 레포    : https://github.com/anthropics/claude-code
+스냅샷 경로  : Claude/skills/2026-06-27/skills/
+================================================================
+
+[추가된 스킬]
+  - add-dir
+  - claude-api
+  - code-review
+  - color
+  - deep-research
+  - effort
+  - fewer-permission-prompts
+  - focus
+  - init
+  - keybindings-help
+  - login
+  - loop
+  - mcp
+  - model
+  - permissions
+  - powerup
+  - review
+  - run
+  - security-review
+  - session-start-hook
+  - simplify
+  - team-onboarding
+  - theme
+  - tui
+  - ultraplan
+  - ultrareview
+  - undo
+  - update-config
+  - usage
+  - verify
+
+[수정된 스킬]
+  - 없음 (none)
+
+[삭제된 스킬]
+  - 없음 (none)
+
+[최적화된 구조]
+  - 날짜별 스냅샷 유지: Claude/skills/YYYY-MM-DD/skills/
+  - 카탈로그 메타데이터: catalog.json (slug, hash, version, source_commit)
+  - 스킬 카드: cmd/trigger/desc/token_policy 최소 구성
+  - 총 스킬 수: 30
+
+[토큰 절감 관련 변경 사항]
+  - 원문 문서 복사 없이 GitHub 링크 + 커밋 해시만 저장
+  - 스킬 카드 1파일당 최대 20줄 (경량 마크다운)
+  - 중복 스킬 제거 (slug 기준 중복 통합)
+  - 불변 스킬 (hash 동일): 0개 → 재기록 없음
+
+[충돌 해결 내역]
+  - slug 중복: 첫 번째 정의 우선 채택
+  - 기존 날짜 스냅샷 덮어쓰기 방지 (새 날짜에만 생성)
+  - 해시 비교로 실제 변경 스킬만 수정 분류
+
+[CHANGELOG에서 감지된 신규 항목]
+  명령/스킬:
+    - /add-dir
+    - /login
+    - /mcp
+    - /model
+    - /permissions
+  훅:
+    - 없음 (none)
+  설정:
+    - 없음 (none)
+  환경변수:
+    - OTEL_LOG_USER_PROMPTS
+
+[요약]
+  추가=30, 수정=0, 삭제=0, 변경없음=0
+
+================================================================
