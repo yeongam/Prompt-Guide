@@ -1,0 +1,50 @@
+# Skills snapshot 2026-06-28
+# Claude Code version: 2.1.129
+# Source: anthropics/claude-code (SKILLS_CATALOG.yaml)
+
+commands:
+  - /init
+  - /review
+  - /security-review
+  - /simplify
+  - /session-start-hook
+  - /update-config
+  - /keybindings-help
+  - /fewer-permission-prompts
+  - /loop
+  - /claude-api
+  - /ultrareview
+  - /ultraplan
+  - /team-onboarding
+  - /effort
+  - /powerup
+  - /tui
+  - /focus
+  - /undo
+  - /usage
+  - /theme
+  - /color
+hooks:
+  - PreToolUse
+  - PostToolUse
+  - Notification
+  - Stop
+  - SubagentStop
+  - PreCompact
+  - TaskCreated
+  - WorktreeCreate
+  - PermissionDenied
+settings:
+  - skillOverrides
+  - autoScrollEnabled
+  - showThinkingSummaries
+  - disableSkillShellExecution
+  - prUrlTemplate
+env:
+  - CLAUDE_EFFORT
+  - CLAUDE_CODE_NO_FLICKER
+  - CLAUDE_CODE_USE_POWERSHELL_TOOL
+  - CLAUDE_STREAM_IDLE_TIMEOUT_MS
+  - OTEL_LOG_RAW_API_BODIES
+  - DISABLE_UPDATES
+  - CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY

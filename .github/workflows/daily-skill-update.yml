@@ -8,13 +8,18 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: daily-skill-update
+  cancel-in-progress: false
+
 jobs:
   update-skills:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: claude/zealous-sagan-FdaL5
+          ref: claude/zealous-sagan-rueph2
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-python@v5
@@ -32,7 +37,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes - already up to date"
           else
-            DATE=$(date -u +%Y-%m-%d)
+            DATE=$(TZ=Asia/Seoul date +%Y-%m-%d)
             git commit -m "chore: Claude Code skills update ${DATE}"
-            git push -u origin claude/zealous-sagan-FdaL5
+            git push -u origin claude/zealous-sagan-rueph2
           fi

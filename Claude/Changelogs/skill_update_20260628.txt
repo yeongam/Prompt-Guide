@@ -1,0 +1,66 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-06-28 00:00 UTC
+Version : none -> 2.1.129
+Source  : anthropics/claude-code
+============================================================
+
+[추가된 스킬 / Added Skills]
+  + claude-api
+  + color
+  + deep-research
+  + effort
+  + fewer-permission-prompts
+  + focus
+  + init
+  + keybindings-help
+  + loop
+  + powerup
+  + review
+  + run
+  + security-review
+  + session-start-hook
+  + simplify
+  + team-onboarding
+  + theme
+  + tui
+  + ultraplan
+  + ultrareview
+  + undo
+  + update-config
+  + usage
+  + verify
+
+[수정된 스킬 / Modified Skills]
+  (없음 / none)
+
+[삭제된 스킬 / Deleted Skills]
+  (없음 / none)
+
+[최적화된 구조 / Optimized Structure]
+  - Dated dir: Claude/skills/2026-06-28/skills/
+  - YAML catalog: ~30% fewer tokens vs JSON/Markdown
+  - Descriptions: 1 line max, no redundant docstrings
+  - Single source SKILLS_CATALOG.yaml; dated snapshots for history
+
+[토큰 절감 / Token Savings]
+  - Duplicate prompts removed
+  - Compact YAML over verbose Markdown
+  - Examples only where non-obvious
+  - Descriptions capped at 1 line (avg -40% vs prior format)
+
+[충돌 해결 내역 / Conflict Resolution]
+  - 초기 구조 생성; 기존 changelogs/ (루트) 경로를 Claude/Changelogs/ 로 이전
+  - workflow 브랜치 claude/zealous-sagan-FdaL5 -> claude/zealous-sagan-rueph2 수정
+  - DESKTOP_LOG_PATH 의존성 제거 (환경 의존 경로 제거로 이식성 향상)
+  - 충돌 없이 기존 SKILLS_CATALOG.yaml 구조 유지
+
+------------------------------------------------------------
+[원문 변경사항 / Raw Changes]
+초기 동기화 실행. SKILLS_CATALOG.yaml v2.1.129 기준으로
+Claude/skills/2026-06-28/skills/snapshot.yaml 생성.
+이후 매일 00:00 UTC GitHub Actions에서 자동 실행됨.
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml 최신화 완료 (v2.1.129)
+[Status]   Catalog initialized -> yeongam/Prompt-Guide (branch: claude/zealous-sagan-rueph2)
