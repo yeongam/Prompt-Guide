@@ -1,0 +1,52 @@
+Claude Code Skills Update Log
+========================================================
+Date    : 2026-06-29 15:06 UTC
+Version : 2.1.129 -> 2.1.195
+Source  : anthropics/claude-code (CHANGELOG.md)
+========================================================
+
+[ 추가된 스킬 / Added Skills ]
+  Commands:
+    - /plugin
+
+[ 수정된 스킬 / Modified Skills ]
+  Commands: (없음 / none)
+
+[ 삭제된 스킬 / Deleted Skills ]
+  Commands: (없음 / none)
+
+[ 최적화된 구조 / Optimized Structure ]
+  - SKILLS_CATALOG.yaml 버전: 2.1.129 → 2.1.195
+  - 날짜 스냅샷 생성: Claude/skills/2026-06-29/
+  - Claude/Changelogs/20260629.txt 생성
+
+[ 토큰 절감 관련 변경 사항 / Token Savings ]
+  - 컴팩트 3-field YAML 구조 유지 (cmd/trigger/desc)
+  - 불필요한 설명·중복 프롬프트 제거 기준 적용
+  - 검토 항목 수: 1개
+  - 경량화 포맷(경량 desc, 단축 trigger) 유지 중
+
+[ 충돌 해결 내역 / Conflict Resolutions ]
+  (없음 / none)
+
+  Env Vars : CLAUDE_CODE_DISABLE_MOUSE_CLICKS
+----------------------------------------
+[ 원문 발췌 / Raw Excerpt (max 2 000 chars) ]
+
+## 2.1.195
+
+- Added `CLAUDE_CODE_DISABLE_MOUSE_CLICKS` to disable mouse click/drag/hover in fullscreen mode while keeping wheel scroll
+- Fixed hook matchers with hyphenated identifiers (e.g. `code-reviewer`, `mcp__brave-search`) accidentally substring-matching — they now exact-match. Use `mcp__brave-search__.*` to match all tools from a hyphenated MCP server.
+- Fixed voice dictation on macOS capturing silence in long-running sessions after the default input device changes
+- Fixed voice dictation auto-submit never firing for languages written without spaces (Japanese, Chinese, Thai)
+- Fixed external plugins enabled only by project `.claude/settings.json` not requiring explicit install consent on every loader path
+- Fixed `/plugin` Enable/Disable not working when a plugin's `plugin.json` `name` differs from its marketplace entry name
+- Fixed background jobs disappearing from `claude agents` or losing data when written by a newer Claude Code version
+- Fixed reopening a crashed background task showing a blank screen for up to 5 seconds instead of its restart
+- Fixed background agent daemons running unreachable when the control socket fails to start, blocking restarts
+- Improved voice mode on Linux: now distinguishes "no microphone" from "SoX not installed" when SoX is present but no audio capture device exists
+- Improved `claude agents` completed list to fill available vertical space; on short terminals the header compacts so live sessions stay visible
+- Improved Remote session startup with a provisioning checklist while the container starts
+
+========================================================
+[상태] SKILLS_CATALOG.yaml 최신화 완료 | yeongam/Prompt-Guide
