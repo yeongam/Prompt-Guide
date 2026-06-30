@@ -1,0 +1,262 @@
+{
+  "date": "2026-07-01",
+  "directory_rule": "YYYY-MM-DD/hooks",
+  "generated_at": "2026-07-01T00:07:16+09:00",
+  "hooks": [
+    {
+      "can_block": true,
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "PreToolUse",
+      "fires": "Before any tool execution",
+      "hash": "ac1e3a7664e616fa",
+      "invoke_types": [
+        "shell",
+        "mcp_tool",
+        "http"
+      ],
+      "name": "Pre Tool Use",
+      "slug": "PreToolUse",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "c80896ca84bd",
+      "source_version": "2.1.196",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "use": "Validate/log before bash/file ops; inject context; block with exit 2"
+    },
+    {
+      "can_block": false,
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "PostToolUse",
+      "fires": "After tool completes",
+      "hash": "a5d7fb39a3f86d2c",
+      "invoke_types": [
+        "shell",
+        "mcp_tool",
+        "http"
+      ],
+      "name": "Post Tool Use",
+      "slug": "PostToolUse",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "c80896ca84bd",
+      "source_version": "2.1.196",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "use": "Log results, trigger follow-up actions after tool runs"
+    },
+    {
+      "can_block": false,
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "Notification",
+      "fires": "On push-notification events",
+      "hash": "8c1cb56668143144",
+      "invoke_types": [
+        "shell",
+        "mcp_tool",
+        "http"
+      ],
+      "name": "Notification",
+      "slug": "Notification",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "c80896ca84bd",
+      "source_version": "2.1.196",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "use": "Forward alerts to mobile/Slack (requires Remote Control setup)"
+    },
+    {
+      "can_block": false,
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "Stop",
+      "fires": "After assistant turn completes",
+      "hash": "0f97b706ad1cdedf",
+      "invoke_types": [
+        "shell",
+        "mcp_tool",
+        "http"
+      ],
+      "name": "Stop",
+      "slug": "Stop",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "c80896ca84bd",
+      "source_version": "2.1.196",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "use": "Post-turn logging, notifications, cleanup tasks"
+    },
+    {
+      "can_block": false,
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "SubagentStop",
+      "fires": "After subagent turn completes",
+      "hash": "0139ac4fe5b36dff",
+      "invoke_types": [
+        "shell",
+        "mcp_tool",
+        "http"
+      ],
+      "name": "Subagent Stop",
+      "slug": "SubagentStop",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "c80896ca84bd",
+      "source_version": "2.1.196",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "use": "Subagent result aggregation and logging"
+    },
+    {
+      "can_block": true,
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "PreCompact",
+      "fires": "Before conversation compaction",
+      "hash": "0d2c99c4b4cedf33",
+      "invoke_types": [
+        "shell",
+        "mcp_tool",
+        "http"
+      ],
+      "name": "Pre Compact",
+      "slug": "PreCompact",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "c80896ca84bd",
+      "source_version": "2.1.196",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "use": "Prevent compaction during critical operations (exit 2 to block)"
+    },
+    {
+      "can_block": false,
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "TaskCreated",
+      "fires": "When task created via TaskCreate tool",
+      "hash": "106b0dfb7ba49fe9",
+      "invoke_types": [
+        "shell",
+        "mcp_tool",
+        "http"
+      ],
+      "name": "Task Created",
+      "slug": "TaskCreated",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "c80896ca84bd",
+      "source_version": "2.1.196",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "use": "Log/track task creation events; added v2.1.90"
+    },
+    {
+      "can_block": false,
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "WorktreeCreate",
+      "fires": "On worktree creation",
+      "hash": "a43437cdb5bf0a9b",
+      "invoke_types": [
+        "shell",
+        "mcp_tool",
+        "http"
+      ],
+      "name": "Worktree Create",
+      "slug": "WorktreeCreate",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "c80896ca84bd",
+      "source_version": "2.1.196",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "use": "Custom worktree provisioning via HTTP endpoint; returns worktreePath"
+    },
+    {
+      "can_block": false,
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "PermissionDenied",
+      "fires": "After auto-mode classifier denial",
+      "hash": "655b5847a23b9f0b",
+      "invoke_types": [
+        "shell",
+        "mcp_tool",
+        "http"
+      ],
+      "name": "Permission Denied",
+      "slug": "PermissionDenied",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "c80896ca84bd",
+      "source_version": "2.1.196",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "use": "Custom permission escalation; return {retry:true} to re-run classifier"
+    }
+  ],
+  "source": "https://github.com/anthropics/claude-code",
+  "source_policy": "official anthropics/claude-code repository only",
+  "version": "2.1.196"
+}
