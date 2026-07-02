@@ -1,0 +1,37 @@
+Prompt-Guide Claude Skills Changelog - 2026-07-03
+
+Snapshot: Claude/skills/2026-07-03/skills
+Source: official Anthropic GitHub repositories
+Existing catalog preserved: Claude/skills/SKILLS_CATALOG.yaml (unchanged)
+
+[추가된 스킬]
+- agents-workflow-programming
+- claude-code-cli-programming
+- documentation-maintenance
+- python-sdk-programming
+- typescript-sdk-programming
+
+[수정된 스킬]
+- none
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 유지: skills/2026-07-03/skills
+- 각 스킬은 trigger, procedure, output, token_policy, compatibility로 경량화
+- 카드당 소스 원문은 요약(<=420자)만 보관, 나머지는 링크로 대체
+
+[토큰 절감 관련 변경 사항]
+- 긴 원문 문서 복사를 피하고 공식 레포 링크와 콘텐츠 지문(fingerprint)만 저장
+- 스킬 절차는 5단계 이하 짧은 실행 단위로 제한
+- 중복 설명 대신 공통 catalog.json으로 메타데이터 통합
+
+[충돌 해결 내역]
+- slug 기준으로 중복 스킬 통합 (ensure_unique 검증)
+- 기존 Claude/skills/SKILLS_CATALOG.yaml, .version은 별도 루틴 소관이므로 수정하지 않음
+- 날짜별 스냅샷은 기존 날짜를 덮어쓰지 않고 신규 날짜에만 기록
+- 변경 감지는 카드 hash 비교로 수행
+
+[요약]
+- skills: added=5, modified=0, deleted=0, unchanged=0
