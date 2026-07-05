@@ -1,0 +1,211 @@
+{
+  "date": "2026-07-06",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-07-06T00:13:38+09:00",
+  "skills": [
+    {
+      "category": "documentation",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Merge into SKILLS_CATALOG.yaml only when the slug is new or content changed.",
+        "Preserve GPT and Gemini directories untouched."
+      ],
+      "hash": "337373747f32b242",
+      "name": "Init",
+      "output": "CLAUDE.md with architecture, conventions, commands.",
+      "procedure": [
+        "Confirm the current SKILLS_CATALOG.yaml entry before acting.",
+        "Prefer the smallest working change for the request.",
+        "Reuse repo conventions instead of introducing new patterns.",
+        "Keep prompts and tool calls short.",
+        "Verify with the narrowest relevant check (test, lint, or diff review)."
+      ],
+      "slug": "init",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "unknown",
+      "summary": "CLAUDE.md with architecture, conventions, commands.",
+      "token_policy": [
+        "Reference SKILLS_CATALOG.yaml instead of restating its content.",
+        "Return only decision-critical output.",
+        "Avoid duplicating upstream documentation text."
+      ],
+      "trigger": "user asks to initialize or document codebase"
+    },
+    {
+      "category": "coding",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Merge into SKILLS_CATALOG.yaml only when the slug is new or content changed.",
+        "Preserve GPT and Gemini directories untouched."
+      ],
+      "hash": "abfe49ea4ea0c4b0",
+      "name": "Review",
+      "output": "Multi-pass review covering logic, style, security, tests.",
+      "procedure": [
+        "Confirm the current SKILLS_CATALOG.yaml entry before acting.",
+        "Prefer the smallest working change for the request.",
+        "Reuse repo conventions instead of introducing new patterns.",
+        "Keep prompts and tool calls short.",
+        "Verify with the narrowest relevant check (test, lint, or diff review)."
+      ],
+      "slug": "review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "unknown",
+      "summary": "Multi-pass review covering logic, style, security, tests.",
+      "token_policy": [
+        "Reference SKILLS_CATALOG.yaml instead of restating its content.",
+        "Return only decision-critical output.",
+        "Avoid duplicating upstream documentation text."
+      ],
+      "trigger": "user asks to review a PR or branch"
+    },
+    {
+      "category": "coding",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Merge into SKILLS_CATALOG.yaml only when the slug is new or content changed.",
+        "Preserve GPT and Gemini directories untouched."
+      ],
+      "hash": "f7215251079cf8a0",
+      "name": "Security Review",
+      "output": "OWASP-focused, risk-ranked findings on the current diff.",
+      "procedure": [
+        "Confirm the current SKILLS_CATALOG.yaml entry before acting.",
+        "Prefer the smallest working change for the request.",
+        "Reuse repo conventions instead of introducing new patterns.",
+        "Keep prompts and tool calls short.",
+        "Verify with the narrowest relevant check (test, lint, or diff review)."
+      ],
+      "slug": "security-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "unknown",
+      "summary": "OWASP-focused, risk-ranked findings on the current diff.",
+      "token_policy": [
+        "Reference SKILLS_CATALOG.yaml instead of restating its content.",
+        "Return only decision-critical output.",
+        "Avoid duplicating upstream documentation text."
+      ],
+      "trigger": "user asks for a security audit of pending changes"
+    },
+    {
+      "category": "coding",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Merge into SKILLS_CATALOG.yaml only when the slug is new or content changed.",
+        "Preserve GPT and Gemini directories untouched."
+      ],
+      "hash": "d3eb39ef559a5497",
+      "name": "Simplify",
+      "output": "Reuse/quality/efficiency pass on changed code, then fixes.",
+      "procedure": [
+        "Confirm the current SKILLS_CATALOG.yaml entry before acting.",
+        "Prefer the smallest working change for the request.",
+        "Reuse repo conventions instead of introducing new patterns.",
+        "Keep prompts and tool calls short.",
+        "Verify with the narrowest relevant check (test, lint, or diff review)."
+      ],
+      "slug": "simplify",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "unknown",
+      "summary": "Reuse/quality/efficiency pass on changed code, then fixes.",
+      "token_policy": [
+        "Reference SKILLS_CATALOG.yaml instead of restating its content.",
+        "Return only decision-critical output.",
+        "Avoid duplicating upstream documentation text."
+      ],
+      "trigger": "user asks to clean up or refactor changed code"
+    },
+    {
+      "category": "programming",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Merge into SKILLS_CATALOG.yaml only when the slug is new or content changed.",
+        "Preserve GPT and Gemini directories untouched."
+      ],
+      "hash": "13b0680f927cdc59",
+      "name": "Session Start Hook",
+      "output": "SessionStart hook wiring for tests and linters.",
+      "procedure": [
+        "Confirm the current SKILLS_CATALOG.yaml entry before acting.",
+        "Prefer the smallest working change for the request.",
+        "Reuse repo conventions instead of introducing new patterns.",
+        "Keep prompts and tool calls short.",
+        "Verify with the narrowest relevant check (test, lint, or diff review)."
+      ],
+      "slug": "session-start-hook",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "unknown",
+      "summary": "SessionStart hook wiring for tests and linters.",
+      "token_policy": [
+        "Reference SKILLS_CATALOG.yaml instead of restating its content.",
+        "Return only decision-critical output.",
+        "Avoid duplicating upstream documentation text."
+      ],
+      "trigger": "user wants test/lint runners on web session start"
+    },
+    {
+      "category": "programming",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Merge into SKILLS_CATALOG.yaml only when the slug is new or content changed.",
+        "Preserve GPT and Gemini directories untouched."
+      ],
+      "hash": "7b1ebb520abfc654",
+      "name": "Update Config",
+      "output": "settings.json changes for hooks, permissions, env vars.",
+      "procedure": [
+        "Confirm the current SKILLS_CATALOG.yaml entry before acting.",
+        "Prefer the smallest working change for the request.",
+        "Reuse repo conventions instead of introducing new patterns.",
+        "Keep prompts and tool calls short.",
+        "Verify with the narrowest relevant check (test, lint, or diff review)."
+      ],
+      "slug": "update-config",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "unknown",
+      "summary": "settings.json changes for hooks, permissions, env vars.",
+      "token_policy": [
+        "Reference SKILLS_CATALOG.yaml instead of restating its content.",
+        "Return only decision-critical output.",
+        "Avoid duplicating upstream documentation text."
+      ],
+      "trigger": "automated behavior requests (hooks, permissions, env)"
+    },
+    {
+      "category": "programming",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Merge into SKILLS_CATALOG.yaml only when the slug is new or content changed.",
+        "Preserve GPT and Gemini directories untouched."
+      ],
+      "hash": "87f638fa6ec2294c",
+      "name": "Claude API",
+      "output": "Build/debug Claude API usage: caching, tool use, model choice.",
+      "procedure": [
+        "Confirm the current SKILLS_CATALOG.yaml entry before acting.",
+        "Prefer the smallest working change for the request.",
+        "Reuse repo conventions instead of introducing new patterns.",
+        "Keep prompts and tool calls short.",
+        "Verify with the narrowest relevant check (test, lint, or diff review)."
+      ],
+      "slug": "claude-api",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "unknown",
+      "summary": "Build/debug Claude API usage: caching, tool use, model choice.",
+      "token_policy": [
+        "Reference SKILLS_CATALOG.yaml instead of restating its content.",
+        "Return only decision-critical output.",
+        "Avoid duplicating upstream documentation text."
+      ],
+      "trigger": "code imports the Claude/Anthropic SDK"
+    }
+  ],
+  "source_policy": "official anthropics/claude-code repository only"
+}
