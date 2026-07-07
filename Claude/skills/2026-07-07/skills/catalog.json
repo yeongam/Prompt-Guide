@@ -1,0 +1,207 @@
+{
+  "date": "2026-07-07",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-07-07T15:12:57+00:00",
+  "skills": [
+    {
+      "cmd": "/init",
+      "desc": "Generate CLAUDE.md with codebase architecture, conventions, commands",
+      "hash": "e2884849e0088fa6",
+      "slug": "init",
+      "trigger": "user asks to initialize or document codebase"
+    },
+    {
+      "cmd": "/review",
+      "desc": "Multi-pass PR review; checks logic, style, security, tests",
+      "hash": "1111bfab517dca75",
+      "slug": "review",
+      "trigger": "user asks to review PR or branch"
+    },
+    {
+      "cmd": "/security-review",
+      "desc": "OWASP-focused audit of pending diffs; outputs risk-ranked findings",
+      "hash": "5dcad08f7f5cf62c",
+      "slug": "security-review",
+      "trigger": "user asks security audit of current branch changes"
+    },
+    {
+      "cmd": "/simplify",
+      "desc": "Review changed code for reuse/quality/efficiency, then fix issues",
+      "hash": "3202807a132a358a",
+      "slug": "simplify",
+      "trigger": "user asks to clean up or refactor changed code"
+    },
+    {
+      "cmd": "/session-start-hook",
+      "desc": "Create SessionStart hook ensuring project can run tests and linters",
+      "hash": "318373f3386cd0f4",
+      "slug": "session-start-hook",
+      "trigger": "user wants test/lint runners on session start (web Claude Code)"
+    },
+    {
+      "cmd": "/update-config",
+      "desc": "Configure settings.json; handles hooks, permissions, env vars",
+      "hash": "07a0dbb1053c6600",
+      "slug": "update-config",
+      "trigger": "automated behavior requests (\"when X\", \"allow Y\", \"set Z=val\")"
+    },
+    {
+      "cmd": "/keybindings-help",
+      "desc": "Customize ~/.claude/keybindings.json; supports chord bindings",
+      "hash": "8044aacb8c35bf9b",
+      "slug": "keybindings-help",
+      "trigger": "user wants to remap keys or add chord shortcuts"
+    },
+    {
+      "cmd": "/fewer-permission-prompts",
+      "desc": "Scan transcripts → add bash/MCP allowlist to .claude/settings.json",
+      "hash": "214521f0ad5b835b",
+      "slug": "fewer-permission-prompts",
+      "trigger": "user wants fewer permission dialogs"
+    },
+    {
+      "cmd": "/loop [interval] [/command]",
+      "desc": "Run prompt or slash command on recurring interval (default 10m)",
+      "example": "\"/loop 5m /review\"",
+      "hash": "f4c1fcf29979651e",
+      "slug": "loop",
+      "trigger": "user wants recurring task (e.g. \"check every 5m\", \"keep running X\")"
+    },
+    {
+      "cmd": "/claude-api",
+      "desc": "Build/debug Claude API apps; prompt caching, tool use, model migration",
+      "hash": "8237da5fb11b867c",
+      "models": "opus: claude-opus-4-7",
+      "slug": "claude-api",
+      "trigger": "code imports anthropic SDK; user asks about Claude API features"
+    },
+    {
+      "cmd": "/ultrareview [PR#]",
+      "desc": "Parallel multi-agent cloud code review; no-arg=local branch, arg=GitHub PR",
+      "hash": "e2d76470dac7e759",
+      "note": "Billed; requires git repo; no GitHub remote needed for local mode",
+      "slug": "ultrareview",
+      "trigger": "user says \"ultrareview\" or wants multi-agent review"
+    },
+    {
+      "cmd": "/ultraplan",
+      "desc": "Auto-create cloud worktrees/environments for multi-agent planning tasks",
+      "hash": "a414e720b941736b",
+      "slug": "ultraplan",
+      "trigger": "user wants cloud environment for complex planning"
+    },
+    {
+      "cmd": "/team-onboarding",
+      "desc": "Generate onboarding guide from local Claude Code usage history/data",
+      "hash": "e42be90430a5549c",
+      "slug": "team-onboarding",
+      "trigger": "user wants teammate ramp-up guide"
+    },
+    {
+      "cmd": "/effort",
+      "desc": "Interactive slider for session effort level (also: CLAUDE_EFFORT env var)",
+      "hash": "1032f7237f9821ad",
+      "slug": "effort",
+      "trigger": "user wants to adjust effort/quality level"
+    },
+    {
+      "cmd": "/powerup",
+      "desc": "Interactive animated feature demos with lessons",
+      "hash": "1fb2f14a41f73c1e",
+      "slug": "powerup",
+      "trigger": "user wants feature demos or to learn Claude Code features"
+    },
+    {
+      "cmd": "/tui",
+      "desc": "Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)",
+      "hash": "dec8ef1a10bfa195",
+      "slug": "tui",
+      "trigger": "rendering looks flickery or user wants full-screen mode"
+    },
+    {
+      "cmd": "/focus",
+      "desc": "Toggle focus view showing only: prompt + tool summary + final response",
+      "hash": "e7fb4002a30c802d",
+      "slug": "focus",
+      "trigger": "user wants compact view of conversation"
+    },
+    {
+      "cmd": "/undo",
+      "desc": "Alias for /rewind; undoes last assistant action",
+      "hash": "d6345eba9620d8d5",
+      "slug": "undo",
+      "trigger": "user wants to undo last action"
+    },
+    {
+      "cmd": "/usage",
+      "desc": "Show token usage and cost stats (merged /cost + /stats)",
+      "hash": "eeecda5f8e7d6e56",
+      "slug": "usage",
+      "trigger": "user asks about token or cost statistics"
+    },
+    {
+      "cmd": "/theme [name]",
+      "desc": "Create or switch custom color themes",
+      "hash": "6d293abb3627636b",
+      "slug": "theme",
+      "trigger": "user wants to change or create visual theme"
+    },
+    {
+      "cmd": "/color",
+      "desc": "Set random session color (no args = random pick)",
+      "hash": "1d9f2f22f4c9476f",
+      "slug": "color",
+      "trigger": "user wants a session color"
+    },
+    {
+      "cmd": "/autofix-pr",
+      "desc": "Diagnoses and pushes fixes for failing CI checks on a PR",
+      "hash": "f91fab712eb75d07",
+      "slug": "autofix-pr",
+      "trigger": "user wants failing PR checks diagnosed and fixed automatically"
+    },
+    {
+      "cmd": "/code-review <level> <pr#>",
+      "desc": "Multi-agent review engine; /review stays a fast single-pass check; ultra level available",
+      "hash": "b43b67ee218dba83",
+      "slug": "code-review",
+      "trigger": "user wants multi-agent PR review at a chosen effort level"
+    },
+    {
+      "cmd": "/dataviz",
+      "desc": "Chart/dashboard design guidance with a runnable color-palette validator",
+      "hash": "9bb2451e78601823",
+      "slug": "dataviz",
+      "trigger": "user is building any chart, graph, dashboard, or plot"
+    },
+    {
+      "cmd": "/deep-research",
+      "desc": "Fans out web search, fetches sources, adversarially verifies claims, synthesizes a cited report",
+      "hash": "62171bddd1bab8b4",
+      "slug": "deep-research",
+      "trigger": "user wants a deep, multi-source, fact-checked research report"
+    },
+    {
+      "cmd": "/goal",
+      "desc": "Set a completion condition; live elapsed/turns/tokens overlay; works interactive, -p, Remote Control",
+      "hash": "1804da763ceb0fd7",
+      "slug": "goal",
+      "trigger": "user wants Claude to keep working across turns until a condition is met"
+    },
+    {
+      "cmd": "/reload-skills",
+      "desc": "Re-scan skill directories without restarting the session",
+      "hash": "e6f5e8bee286071e",
+      "slug": "reload-skills",
+      "trigger": "skill files changed on disk mid-session"
+    },
+    {
+      "cmd": "/workflows",
+      "desc": "Dynamic workflows: Claude orchestrates tens-hundreds of agents in the background; view/manage runs here",
+      "hash": "afa24adfc7de3e15",
+      "slug": "workflows",
+      "trigger": "task needs orchestration across many agents (migrations, audits, broad sweeps)"
+    }
+  ],
+  "source_policy": "official anthropics/claude-code GitHub repository only"
+}

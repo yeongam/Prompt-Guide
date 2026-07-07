@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.202
+updated: 2026-07-07
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -118,6 +118,41 @@ skills:
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
 
+  autofix-pr:
+    cmd: /autofix-pr
+    trigger: user wants failing PR checks diagnosed and fixed automatically
+    desc: Diagnoses and pushes fixes for failing CI checks on a PR
+
+  code-review:
+    cmd: /code-review <level> <pr#>
+    trigger: user wants multi-agent PR review at a chosen effort level
+    desc: Multi-agent review engine; /review stays a fast single-pass check; ultra level available
+
+  dataviz:
+    cmd: /dataviz
+    trigger: user is building any chart, graph, dashboard, or plot
+    desc: Chart/dashboard design guidance with a runnable color-palette validator
+
+  deep-research:
+    cmd: /deep-research
+    trigger: user wants a deep, multi-source, fact-checked research report
+    desc: Fans out web search, fetches sources, adversarially verifies claims, synthesizes a cited report
+
+  goal:
+    cmd: /goal
+    trigger: user wants Claude to keep working across turns until a condition is met
+    desc: Set a completion condition; live elapsed/turns/tokens overlay; works interactive, -p, Remote Control
+
+  reload-skills:
+    cmd: /reload-skills
+    trigger: skill files changed on disk mid-session
+    desc: Re-scan skill directories without restarting the session
+
+  workflows:
+    cmd: /workflows
+    trigger: task needs orchestration across many agents (migrations, audits, broad sweeps)
+    desc: Dynamic workflows: Claude orchestrates tens-hundreds of agents in the background; view/manage runs here
+
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.
 # Block: exit 2 OR return JSON {decision:"block", reason:"..."}
@@ -227,10 +262,11 @@ env:
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
-  default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
-  sonnet: claude-sonnet-4-6
+  default: claude-sonnet-5
+  opus: claude-opus-4-8        # /effort xhigh available; fast mode 2x rate for 2.5x speed
+  sonnet: claude-sonnet-5      # native 1M-token context
   haiku: claude-haiku-4-5-20251001
+  fable: claude-fable-5        # Mythos-class; gated by org Opus 4.8 enablement for auto-mode fallback
 
 # ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────
 # This catalog is structured for minimal token overhead:
