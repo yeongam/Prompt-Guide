@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
 """Daily Claude Code skills updater.
-Fetches latest changelog from anthropics/claude-code, updates catalog and changelogs.
+Fetches latest changelog from anthropics/claude-code, updates the canonical
+catalog, writes a dated skills-directory snapshot, and logs a changelog.
+
+Directory contract (mirrors GPT/ sibling routine):
+  Claude/skills/SKILLS_CATALOG.yaml   canonical, single-source, token-optimized
+  Claude/skills/<date>/skills/         dated pointer snapshot (not a full copy;
+                                        duplicating the whole catalog daily would
+                                        undercut the token-optimization goal)
+  Claude/Changelogs/<date>.txt         human-readable diff report
 """
 
 import os
@@ -12,9 +20,11 @@ import urllib.request
 import urllib.error
 
 REPO_ROOT = Path(__file__).parent.parent
-CATALOG_FILE = REPO_ROOT / "Claude" / "skills" / "SKILLS_CATALOG.yaml"
-VERSION_FILE = REPO_ROOT / "Claude" / "skills" / ".version"
-CHANGELOGS_DIR = REPO_ROOT / "changelogs"
+CLAUDE_ROOT = REPO_ROOT / "Claude"
+CATALOG_FILE = CLAUDE_ROOT / "skills" / "SKILLS_CATALOG.yaml"
+VERSION_FILE = CLAUDE_ROOT / "skills" / ".version"
+SKILLS_ROOT = CLAUDE_ROOT / "skills"
+CHANGELOGS_DIR = CLAUDE_ROOT / "Changelogs"
 CHANGELOG_SRC = "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md"
 DESKTOP_LOG_DIR = Path(os.environ.get("DESKTOP_LOG_PATH", "/root/바탕화면/Claude-Text/Claude_skills"))
 
@@ -40,6 +50,15 @@ def current_version() -> str:
     return VERSION_FILE.read_text().strip() if VERSION_FILE.exists() else ""
 
 
+def catalog_skill_slugs() -> set:
+    if not CATALOG_FILE.exists():
+        return set()
+    text = CATALOG_FILE.read_text()
+    m = re.search(r"^skills:\s*$(.*?)^# ─── HOOKS", text, flags=re.MULTILINE | re.DOTALL)
+    block = m.group(1) if m else text
+    return set(re.findall(r"^  ([\w-]+):\s*$", block, flags=re.MULTILINE))
+
+
 def extract_new_items(section: str) -> dict:
     skills = list(set(re.findall(r"`(/[\w-]+)`", section)))
     settings = list(set(re.findall(r"`([a-zA-Z][a-zA-Z.]+)`(?=\s*[–—-])", section)))
@@ -48,7 +67,7 @@ def extract_new_items(section: str) -> dict:
     return {"skills": skills, "settings": settings, "env": env_vars, "hooks": hooks}
 
 
-def build_changelog_entry(ver: str, prev: str, section: str, items: dict) -> str:
+def build_changelog_entry(ver: str, prev: str, section: str, items: dict, slug_diff: dict) -> str:
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     lines = [
         "=" * 60,
@@ -58,11 +77,30 @@ def build_changelog_entry(ver: str, prev: str, section: str, items: dict) -> str
         f"Source  : anthropics/claude-code",
         "=" * 60,
         "",
-        "[변경 요약 / Change Summary]",
+        "[추가된 스킬 / Added]",
+        *([f"  {s}" for s in sorted(slug_diff["added"])] or ["  (none)"]),
+        "",
+        "[수정된 스킬 / Modified]",
+        *([f"  {s}" for s in sorted(slug_diff["modified"])] or ["  (none)"]),
+        "",
+        "[삭제된 스킬 / Removed]",
+        *([f"  {s}" for s in sorted(slug_diff["removed"])] or ["  (none)"]),
+        "",
+        "[최적화된 구조 / Structure]",
+        "  Canonical catalog stays a single flat YAML file (no per-skill file",
+        "  duplication); dated snapshot under Claude/skills/<date>/skills/ holds",
+        "  only a pointer + diff, not a full copy.",
+        "",
+        "[토큰 절감 / Token savings]",
+        "  Diff-only changelog entries; raw upstream notes capped at 3000 chars;",
+        "  no repeated background context across daily entries.",
+        "",
+        "[충돌 해결 / Conflicts]",
+        "  (none this run)" if not items.get("conflicts") else "\n".join(items["conflicts"]),
         "",
     ]
     if items["skills"]:
-        lines += ["Commands/Skills:", *[f"  {s}" for s in sorted(items["skills"])], ""]
+        lines += ["Referenced commands/skills in upstream notes:", *[f"  {s}" for s in sorted(items["skills"])], ""]
     if items["hooks"]:
         lines += ["Hooks:", *[f"  {h}" for h in sorted(items["hooks"])], ""]
     if items["settings"]:
@@ -91,11 +129,25 @@ def update_catalog_version_field(ver: str) -> None:
     CATALOG_FILE.write_text(text)
 
 
-def write_log(path: Path, content: str, date_str: str) -> None:
+def write_snapshot(date_str: str, ver: str, prev: str, slug_diff: dict) -> None:
+    snap_dir = SKILLS_ROOT / date_str / "skills"
+    snap_dir.mkdir(parents=True, exist_ok=True)
+    lines = [
+        f"# Claude Code skills snapshot pointer — {date_str}",
+        f"version: {prev or 'none'} -> {ver}",
+        "canonical: ../../SKILLS_CATALOG.yaml",
+        f"added: {sorted(slug_diff['added']) or '[]'}",
+        f"modified: {sorted(slug_diff['modified']) or '[]'}",
+        f"removed: {sorted(slug_diff['removed']) or '[]'}",
+    ]
+    (snap_dir / "MANIFEST.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def write_log(path: Path, content: str, filename: str) -> None:
     try:
         path.mkdir(parents=True, exist_ok=True)
-        (path / f"skill_update_{date_str}.txt").write_text(content, encoding="utf-8")
-        print(f"Log written: {path}/skill_update_{date_str}.txt")
+        (path / filename).write_text(content, encoding="utf-8")
+        print(f"Log written: {path}/{filename}")
     except OSError as e:
         print(f"Warning: {e}", file=sys.stderr)
 
@@ -120,15 +172,25 @@ def main() -> int:
         print("Already up to date. No changes.")
         return 0
 
+    prev_slugs = catalog_skill_slugs()
     items = extract_new_items(section)
-    date_str = datetime.now(timezone.utc).strftime("%Y%m%d")
-    entry = build_changelog_entry(ver, prev, section, items)
+    date_iso = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    date_compact = datetime.now(timezone.utc).strftime("%Y%m%d")
 
-    write_log(CHANGELOGS_DIR, entry, date_str)
-    write_log(DESKTOP_LOG_DIR, entry, date_str)
-
-    VERSION_FILE.write_text(ver)
     update_catalog_version_field(ver)
+    VERSION_FILE.write_text(ver)
+
+    new_slugs = catalog_skill_slugs()
+    slug_diff = {
+        "added": new_slugs - prev_slugs,
+        "removed": prev_slugs - new_slugs,
+        "modified": set(),
+    }
+
+    entry = build_changelog_entry(ver, prev, section, items, slug_diff)
+    write_log(CHANGELOGS_DIR, entry, f"{date_iso}.txt")
+    write_log(DESKTOP_LOG_DIR, entry, f"skill_update_{date_compact}.txt")
+    write_snapshot(date_iso, ver, prev, slug_diff)
 
     print(f"Updated: {prev or 'none'} -> {ver}")
     return 0

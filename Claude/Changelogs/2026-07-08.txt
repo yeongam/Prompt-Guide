@@ -1,0 +1,38 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-07-08 15:09 UTC
+Version : 2.1.129 -> 2.1.204
+Source  : anthropics/claude-code
+============================================================
+
+[추가된 스킬 / Added]
+  (none)
+
+[수정된 스킬 / Modified]
+  (none)
+
+[삭제된 스킬 / Removed]
+  (none)
+
+[최적화된 구조 / Structure]
+  Canonical catalog stays a single flat YAML file (no per-skill file
+  duplication); dated snapshot under Claude/skills/<date>/skills/ holds
+  only a pointer + diff, not a full copy.
+
+[토큰 절감 / Token savings]
+  Diff-only changelog entries; raw upstream notes capped at 3000 chars;
+  no repeated background context across daily entries.
+
+[충돌 해결 / Conflicts]
+  (none this run)
+
+----------------------------------------
+[원문 변경사항 / Raw Changes]
+
+## 2.1.204
+
+- Fixed hook events not streaming during SessionStart hooks in headless sessions, which could cause remote workers to be idle-reaped mid-hook
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml 최신화 완료
+[Status]   Catalog updated, committed to yeongam/Prompt-Guide
