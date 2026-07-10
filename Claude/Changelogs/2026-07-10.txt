@@ -1,0 +1,41 @@
+Prompt-Guide Claude Code Skills Changelog - 2026-07-10
+
+Catalog: Claude/skills/SKILLS_CATALOG.yaml
+Source: https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md
+Version: 2.1.129 -> 2.1.206
+
+[추가된 스킬]
+- code-review (/code-review)
+- commit-push-pr (/commit-push-pr)
+
+[수정된 스킬]
+- none (existing entries left untouched for stability)
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 단일 SKILLS_CATALOG.yaml 유지: 카탈로그 자체에 명시된 "one canonical
+  source, no duplication" 원칙에 따라 GPT/skills의 날짜별 스냅샷 디렉토리
+  구조를 이식하지 않음 (아래 충돌 해결 내역 참고)
+- version/updated 필드를 공식 CHANGELOG.md 파싱 결과로 갱신
+
+[토큰 절감 관련 변경 사항]
+- 신규 항목도 기존 cmd/trigger/desc 3줄 포맷 유지 (원문 changelog 문단 대신
+  1줄 요약만 저장)
+- 원문 changelog 전체는 이 파일에만 보관하고 catalog.yaml에는 복제하지 않음
+
+[충돌 해결 내역]
+- 요청된 "date/skills 디렉토리 규칙"은 GPT 동기화 스크립트(파일당 훅/스킬
+  다중 필드)에 맞춰진 구조이며, Claude/skills/SKILLS_CATALOG.yaml은 처음부터
+  "One canonical source; skills reference it rather than duplicate"로
+  설계되어 있어 날짜별 디렉토리를 새로 만들면 오히려 중복이 발생함.
+  기존 설계 원칙을 우선하여 단일 파일 구조를 유지하고, 날짜별 변경 이력은
+  이 Changelogs/ 파일로만 기록함.
+- CHANGELOG.md에서 발견된 /doctor, /status, /model, /login, /cd, /add-dir
+  등은 코딩/프로그래밍/문서 작업 스킬 범주에 해당하지 않아 카탈로그에
+  추가하지 않음 (범위 밖 항목 skip)
+
+[요약]
+- skills: added=2, modified=0, deleted=0
+- catalog version: 2.1.129 -> 2.1.206

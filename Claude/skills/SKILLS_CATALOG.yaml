@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.206
+updated: 2026-07-10
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -26,6 +26,19 @@ skills:
     cmd: /simplify
     trigger: user asks to clean up or refactor changed code
     desc: Review changed code for reuse/quality/efficiency, then fix issues
+
+  code-review:
+    cmd: /code-review
+    trigger: user asks to review the current diff for bugs/cleanups
+    desc: Review pending diff for correctness bugs and reuse/simplification issues
+    added: v2.1.206
+
+  commit-push-pr:
+    cmd: /commit-push-pr
+    trigger: user asks to commit, push, and open a PR in one step
+    desc: Commit staged changes, push, and create a pull request
+    note: auto-allows push to remote.pushDefault (or sole remote) in addition to origin
+    added: v2.1.206
 
   session-start-hook:
     cmd: /session-start-hook
