@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.210
+updated: 2026-07-16
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -118,6 +118,30 @@ skills:
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
 
+  cd:
+    cmd: /cd [path]
+    trigger: user wants to change session working directory
+    desc: Move session to new directory without breaking prompt cache
+    added: v2.1.130+
+
+  dataviz:
+    cmd: /dataviz
+    trigger: user is about to build any chart, graph, or dashboard
+    desc: Chart/dashboard design guidance with color-palette validator
+    added: v2.1.130+
+
+  config:
+    cmd: /config key=value
+    trigger: user wants to set a config option directly from the prompt
+    desc: Set any settings.json option without editing the file by hand
+    added: v2.1.130+
+
+  plugin:
+    cmd: /plugin list | /plugin init
+    trigger: user wants to list or scaffold a plugin
+    desc: List installed plugins (enabled/disabled filter) or scaffold new one in .claude/skills
+    added: v2.1.130+
+
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.
 # Block: exit 2 OR return JSON {decision:"block", reason:"..."}
@@ -181,6 +205,29 @@ hooks:
     - type: mcp_tool       # invoke MCP tool directly (added v2.1.118)
     - type: http           # HTTP endpoint (WorktreeCreate)
 
+  agent_needs_input:
+    fires: Background agent requires user input
+    can_block: false
+    added: v2.1.130+
+    use: Notify/route when a background agent session stalls on a question
+
+  agent_completed:
+    fires: Background agent finishes execution
+    can_block: false
+    added: v2.1.130+
+    use: Trigger follow-up (notify, merge, cleanup) after background agent ends
+
+  post-session:
+    fires: After session ends, before workspace deletion
+    can_block: false
+    added: v2.1.130+
+    use: Archive logs/artifacts before ephemeral workspace is reclaimed
+
+  additionalContext:
+    fires: "Stop / SubagentStop hook return value (not a new event)"
+    added: v2.1.130+
+    use: Hook returns hookSpecificOutput.additionalContext to feed the next turn
+
 # ─── SETTINGS ──────────────────────────────────────────────────────────────────
 # Place in .claude/settings.json (project) or ~/.claude/settings.json (user)
 settings:
@@ -215,6 +262,41 @@ settings:
     desc: Block specific domains even when broader allowlists exist
     added: v2.1.85
 
+  fallbackModel:
+    type: "list[string], max 3"
+    desc: Configure up to three fallback models tried in order on failure
+    added: v2.1.130+
+
+  enforceAvailableModels:
+    type: bool
+    desc: Constrain default model to allowlist; blocks ad hoc widening
+    added: v2.1.130+
+
+  disableBundledSkills:
+    type: bool
+    desc: Hide bundled skills, workflows, and slash commands
+    added: v2.1.130+
+
+  disabledMcpServers / enabledMcpServers:
+    type: "list[string]"
+    desc: Explicitly disable or enable specific MCP servers by default
+    added: v2.1.130+
+
+  defaultMode:
+    type: string
+    desc: Default permission mode applied to new sessions
+    added: v2.1.130+
+
+  vimInsertModeRemaps:
+    type: "map[string,string]"
+    desc: "Map two-key sequences (e.g. jj) to Escape in vim keybinding mode"
+    added: v2.1.208
+
+  axScreenReader:
+    type: bool
+    desc: Enable plain-text rendering for screen reader users (also --ax-screen-reader)
+    added: v2.1.208
+
 # ─── ENV VARS ──────────────────────────────────────────────────────────────────
 env:
   CLAUDE_EFFORT: "Current effort level; usable in skill template strings as ${CLAUDE_EFFORT}"
@@ -224,6 +306,10 @@ env:
   OTEL_LOG_RAW_API_BODIES: "1 = emit full API request/response bodies as OTEL events"
   DISABLE_UPDATES: "1 = block all update paths including manual 'claude update'"
   CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1 = opt-in gateway /v1/models discovery"
+  CLAUDE_AX_SCREEN_READER: "1 = enable screen reader plain-text rendering (same as axScreenReader)"
+  CLAUDE_CODE_SAFE_MODE: "1 = start session with customizations (hooks/settings) disabled"
+  CLAUDE_ENABLE_STREAM_WATCHDOG: "1 = enable 5-minute stream stall detection/abort"
+  CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: "1 = enable experimental implicit agent-teams feature"
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
