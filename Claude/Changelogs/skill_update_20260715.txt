@@ -1,0 +1,59 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-07-15 01:27 UTC
+Version : 2.1.208 → 2.1.210
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-07-15/
+============================================================
+
+[ ★ 신규 감지 스킬 (1개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /doctor  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /doctor
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-07-15/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  (없음)
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.210
+
+- Added a live elapsed-time counter to the collapsed tool summary line so long-running tool calls visibly tick instead of looking stuck
+- Added a startup warning for `Write(path)`, `NotebookEdit(path)`, and `Glob(path)` permission rules — use `Edit(path)` or `Read(path)` instead
+- Fixed `isolation: 'worktree'` subagents being able to run git-mutating commands against the main repo checkout instead of their own isolated worktree
+- Fixed the `ultracode` keyword opt-in firing on non-human-originated input such as webhook payloads and relayed PR comments
+- Fixed a rendered text fragment leaking into crash telemetry when a UI component returned content outside a styled text element
+- Fixed paste markers leaking into external editors opened from Claude Code, which could appear as stray È/É characters around pasted text
+- Fixed `claude attach` sometimes failing with "job not found" or "agent is still starting" errors during session transitions — attach now waits for the daemon to settle, and terminal resizes during a slow attach are applied once it completes
+- Fixed a session crash when a tool's result renderer returned a numeric bigint value or plain text instead of a UI element
+- Fixed a hook callback timeout being misreported to the model as a user rejection, which made unattended sessions stop and wait
+- Fixed Claude assuming a `cd` took effect after its command was moved to the background; the tool result now states the working directory is unchanged
+- Fixed plugin-provided MCP servers being torn down when MCP servers are re-synced mid-session
+- Fixed plan approvals without edits being labeled "(edited by user)" and overwriting the plan file with a stale snapshot
+- Fixed `/doctor` skipping its auto-mode-default proposal on Bedrock, Vertex, and Foundry, where auto mode no longer needs an opt-in
+- Fixed Grep content mode claiming "No matches found" when paginating past the end of results
+- Fixed unmatched `$1`/`$2` positional placeholders in skills and comma
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
