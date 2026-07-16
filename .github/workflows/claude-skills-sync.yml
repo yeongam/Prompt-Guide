@@ -1,0 +1,60 @@
+name: Claude Anthropic Skills and Hooks Sync
+
+on:
+  schedule:
+    # 00:00 KST = 15:00 UTC on the previous day.
+    - cron: "0 15 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: claude-anthropic-skills-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Sync Claude skills and hooks from official Anthropic repositories
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python Claude/scripts/sync_claude_skills.py
+
+      - name: Block unexpected non-Claude changes
+        run: |
+          unexpected="$(git status --porcelain | awk '{print $2}' | grep -Ev '^Claude/' || true)"
+          if [ -n "$unexpected" ]; then
+            echo "Unexpected changes outside Claude/:"
+            echo "$unexpected"
+            exit 1
+          fi
+
+      - name: Commit and push to main if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add Claude
+
+          if git diff --cached --quiet; then
+            echo "No Claude skill or hook changes."
+            exit 0
+          fi
+
+          DATE="$(TZ=Asia/Seoul date +%Y-%m-%d)"
+          git commit -m "chore: sync Claude Anthropic skills and hooks ${DATE}"
+          git pull --rebase origin main
+          git push origin HEAD:main
