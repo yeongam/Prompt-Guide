@@ -1,0 +1,27 @@
+{
+  "date": "2026-07-17",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "source_policy": "official anthropics/claude-code repository only (CHANGELOG.md)",
+  "canonical_catalog": "Claude/skills/SKILLS_CATALOG.yaml",
+  "version": {
+    "previous": "2.1.129",
+    "current": "2.1.212"
+  },
+  "changes": {
+    "added": [
+      "code-review",
+      "commit-push-pr",
+      "autofix-pr",
+      "release-notes",
+      "dataviz",
+      "reload-skills"
+    ],
+    "modified": [
+      "review",
+      "claude-api.models",
+      "models"
+    ],
+    "deleted": []
+  },
+  "note": "Per-skill .md cards written only for added/modified skills this run; unchanged skills stay in SKILLS_CATALOG.yaml only (token optimization, avoids duplicate content)."
+}

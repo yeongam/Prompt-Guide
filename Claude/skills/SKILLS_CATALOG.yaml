@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.212
+updated: 2026-07-17
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -14,8 +14,14 @@ skills:
 
   review:
     cmd: /review
-    trigger: user asks to review PR or branch
-    desc: Multi-pass PR review; checks logic, style, security, tests
+    trigger: user asks to review a GitHub PR or branch
+    desc: Fast single-pass PR review; for a working diff use /code-review instead
+
+  code-review:
+    cmd: /code-review [effort] [pr#]
+    trigger: user asks to review current diff/branch for correctness bugs, or "ultrareview" a PR
+    desc: Multi-pass correctness+cleanup review at chosen effort; --comment posts inline PR comments, --fix applies fixes
+    note: no-arg PR = local branch diff; historically named /simplify pre-2.1.147, later split back out
 
   security-review:
     cmd: /security-review
@@ -26,6 +32,31 @@ skills:
     cmd: /simplify
     trigger: user asks to clean up or refactor changed code
     desc: Review changed code for reuse/quality/efficiency, then fix issues
+
+  commit-push-pr:
+    cmd: /commit-push-pr
+    trigger: user wants to commit, push, and open a PR in one step
+    desc: Auto-allows git push to remote.pushDefault (or sole remote) in addition to origin
+
+  autofix-pr:
+    cmd: /autofix-pr
+    trigger: user wants an existing PR's failures (e.g. CI) diagnosed and fixed
+    desc: Autofixes an open PR; works from git worktrees or other repos, not just default branch
+
+  release-notes:
+    cmd: /release-notes
+    trigger: user asks what's new in Claude Code
+    desc: Shows changelog inline without injecting the full history into model context
+
+  dataviz:
+    cmd: (auto-triggered skill)
+    trigger: creating any chart, graph, plot, or dashboard
+    desc: Chart/dashboard design guidance with a runnable color-palette validator
+
+  reload-skills:
+    cmd: /reload-skills
+    trigger: user edits/adds skill files and wants them picked up without restarting
+    desc: Re-scans skill directories in place, no session restart needed
 
   session-start-hook:
     cmd: /session-start-hook
@@ -58,8 +89,8 @@ skills:
     trigger: code imports anthropic SDK; user asks about Claude API features
     desc: Build/debug Claude API apps; prompt caching, tool use, model migration
     models:
-      opus: claude-opus-4-7
-      sonnet: claude-sonnet-4-6
+      opus: claude-opus-4-8
+      sonnet: claude-sonnet-5
       haiku: claude-haiku-4-5-20251001
 
   ultrareview:
@@ -227,9 +258,9 @@ env:
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
-  default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
-  sonnet: claude-sonnet-4-6
+  default: claude-sonnet-5    # native 1M-token context; promo pricing $2/$10 per Mtok thru Aug 31
+  opus: claude-opus-4-8       # Fast mode available; Max subscribers only auto mode
+  sonnet: claude-sonnet-5
   haiku: claude-haiku-4-5-20251001
 
 # ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────

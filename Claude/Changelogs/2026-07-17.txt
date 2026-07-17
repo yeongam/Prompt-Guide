@@ -1,0 +1,49 @@
+Prompt-Guide Claude Code Skills Changelog - 2026-07-17
+
+Snapshot : Claude/skills/2026-07-17/skills
+Catalog  : Claude/skills/SKILLS_CATALOG.yaml
+Source   : official anthropics/claude-code repository (CHANGELOG.md)
+Version  : 2.1.129 -> 2.1.212
+
+[추가된 스킬]
+- code-review        (/code-review [effort] [pr#] - multi-pass correctness+cleanup review)
+- commit-push-pr     (/commit-push-pr - commit -> push -> PR in one step)
+- autofix-pr         (/autofix-pr - diagnose and fix failures on an open PR)
+- release-notes      (/release-notes - view changelog without flooding context)
+- dataviz            (auto-triggered - chart/dashboard design + palette validator)
+- reload-skills      (/reload-skills - rescan skill dirs without session restart)
+
+[수정된 스킬]
+- review             - description corrected: fast single-pass PR review (was
+                       incorrectly describing code-review's multi-pass behavior)
+- claude-api.models  - opus claude-opus-4-7 -> claude-opus-4-8, sonnet
+                       claude-sonnet-4-6 -> claude-sonnet-5
+- models (top-level) - default/sonnet -> claude-sonnet-5 (native 1M-token
+                       context, promo pricing thru Aug 31), opus -> claude-opus-4-8
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- Claude/skills/<date>/skills/ 스냅샷 구조 도입 (GPT/skills 규칙과 동일하게 정렬)
+- 이번 실행에서 변경된 스킬만 개별 .md 카드로 기록; 변경 없는 항목은
+  SKILLS_CATALOG.yaml에만 유지해 중복 생성을 피함
+- catalog.json은 SKILLS_CATALOG.yaml을 canonical 소스로 참조만 하고 설명을 복제하지 않음
+
+[토큰 절감 관련 변경 사항]
+- 원본 CHANGELOG.md(68개 버전, 약 1,600줄) 전체를 복사하지 않고 관련 항목만 1~3줄 요약
+- 카탈로그는 YAML 한 줄 형식 유지 (설명 1줄 캡, 예시는 비자명한 경우만)
+- 스킬 카드는 변경분만 생성해 스냅샷 크기를 최소화
+
+[충돌 해결 내역]
+- review vs code-review 설명 충돌 확인: 카탈로그가 review 항목에 code-review의
+  현재 동작(다중 패스 리뷰)을 잘못 기재하고 있었음 -> review는 단일 패스,
+  code-review는 다중 패스+effort 조절로 분리 정정
+- /simplify는 2.1.147에서 일시적으로 /code-review로 통합되었다가 이후 다시
+  분리됨(cleanup-only는 simplify, bug-finding은 code-review) -> 기존 simplify
+  카탈로그 항목은 현재 동작과 일치하여 변경 없음, 이력만 code-review.md에 기록
+- 모델 ID 충돌(claude-opus-4-7/claude-sonnet-4-6 등 구버전 표기) -> 현재
+  기본 모델(Sonnet 5, Opus 4.8, Haiku 4.5) 기준으로 정정
+
+[요약]
+- skills: added=6, modified=3, deleted=0
