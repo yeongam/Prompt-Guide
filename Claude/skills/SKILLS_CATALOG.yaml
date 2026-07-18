@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.214
+updated: 2026-07-18
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -81,7 +81,7 @@ skills:
   effort:
     cmd: /effort
     trigger: user wants to adjust effort/quality level
-    desc: Interactive slider for session effort level (also: CLAUDE_EFFORT env var)
+    desc: "Interactive slider for session effort level (also: CLAUDE_EFFORT env var)"
 
   powerup:
     cmd: /powerup
@@ -91,12 +91,12 @@ skills:
   tui:
     cmd: /tui
     trigger: rendering looks flickery or user wants full-screen mode
-    desc: Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)
+    desc: "Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)"
 
   focus:
     cmd: /focus
     trigger: user wants compact view of conversation
-    desc: Toggle focus view showing only: prompt + tool summary + final response
+    desc: "Toggle focus view showing only: prompt + tool summary + final response"
 
   undo:
     cmd: /undo
@@ -117,6 +117,36 @@ skills:
     cmd: /color
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
+
+  cd:
+    cmd: /cd
+    trigger: user wants to change the session's working directory mid-session
+    desc: Move a session to a new working directory without breaking the prompt cache
+    added: v2.1.169
+
+  dataviz:
+    cmd: /dataviz
+    trigger: user is about to build a chart, graph, plot, or dashboard
+    desc: Chart/dashboard design guidance with a runnable color-palette validator
+    added: v2.1.198
+
+  goal:
+    cmd: /goal
+    trigger: user wants Claude to keep working across turns until a condition is met
+    desc: Set a completion condition; shows live elapsed/turns/tokens overlay
+    added: v2.1.139
+
+  reload-skills:
+    cmd: /reload-skills
+    trigger: user edited a skill file and wants it picked up without restarting
+    desc: Re-scan skill directories without restarting the session
+    added: v2.1.152
+
+  scroll-speed:
+    cmd: /scroll-speed
+    trigger: user wants to tune mouse wheel scroll speed
+    desc: Tune mouse wheel scroll speed with a live preview
+    added: v2.1.139
 
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.
@@ -176,6 +206,12 @@ hooks:
     added: v2.1.95
     use: Custom permission escalation flows
 
+  MessageDisplay:
+    fires: As assistant message text is displayed
+    can_block: false
+    added: v2.1.152
+    use: Transform or hide assistant message text before it renders
+
   hook_invoke_types:
     - type: shell          # shell command (default)
     - type: mcp_tool       # invoke MCP tool directly (added v2.1.118)
@@ -215,6 +251,26 @@ settings:
     desc: Block specific domains even when broader allowlists exist
     added: v2.1.85
 
+  fallbackModel:
+    type: "string | string[]"
+    desc: Up to 3 fallback models tried when the primary is overloaded/unavailable
+    added: v2.1.166
+
+  disableBundledSkills:
+    type: bool
+    desc: Hide bundled skills/workflows/built-in slash commands from the model
+    added: v2.1.169
+
+  worktree.baseRef:
+    type: "fresh | head"
+    desc: Branch new worktrees from origin/<default> (fresh) or local HEAD (head)
+    added: v2.1.133
+
+  sandbox.credentials:
+    type: bool
+    desc: Block sandboxed commands from reading credential files/secret env vars
+    added: v2.1.187
+
 # ─── ENV VARS ──────────────────────────────────────────────────────────────────
 env:
   CLAUDE_EFFORT: "Current effort level; usable in skill template strings as ${CLAUDE_EFFORT}"
@@ -224,13 +280,17 @@ env:
   OTEL_LOG_RAW_API_BODIES: "1 = emit full API request/response bodies as OTEL events"
   DISABLE_UPDATES: "1 = block all update paths including manual 'claude update'"
   CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1 = opt-in gateway /v1/models discovery"
+  CLAUDE_CODE_SAFE_MODE: "1 = start with CLAUDE.md/plugins/skills/hooks/MCP all disabled (added v2.1.169)"
+  CLAUDE_CODE_DISABLE_BUNDLED_SKILLS: "1 = hide bundled skills/workflows/built-in commands (added v2.1.169)"
+  CLAUDE_CODE_SESSION_ID: "Session id exposed to the Bash tool subprocess env (added v2.1.132)"
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
-  default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
-  sonnet: claude-sonnet-4-6
+  default: claude-sonnet-5
+  opus: claude-opus-4-8
+  sonnet: claude-sonnet-5
   haiku: claude-haiku-4-5-20251001
+  fable: claude-fable-5
 
 # ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────
 # This catalog is structured for minimal token overhead:

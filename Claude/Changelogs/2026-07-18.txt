@@ -1,0 +1,53 @@
+Prompt-Guide Claude Skills Changelog - 2026-07-18
+
+Snapshot: Claude/skills/2026-07-18/skills
+Source: official anthropics/claude-code changelog (raw.githubusercontent.com)
+Version: 2.1.129 -> 2.1.214
+
+[추가된 스킬]
+- cd
+- dataviz
+- goal
+- reload-skills
+- scroll-speed
+
+[수정된 스킬]
+- none
+
+[삭제된 스킬]
+- none
+
+[신규 훅 (참고)]
+- MessageDisplay: lets hooks transform or hide assistant message text as it is displayed
+
+[신규 설정 (참고)]
+- fallbackModel: configure up to three fallback models tried when the primary is overloaded
+- disableBundledSkills: hide bundled skills/workflows/built-in commands from the model
+- worktree.baseRef: "fresh"|"head" — branch new worktrees from origin/<default> or local HEAD
+- sandbox.credentials: block sandboxed commands from reading credential files/secret env vars
+
+[신규 환경변수 (참고)]
+- CLAUDE_CODE_SAFE_MODE: start with all customizations (CLAUDE.md/plugins/skills/hooks/MCP) disabled
+- CLAUDE_CODE_DISABLE_BUNDLED_SKILLS: hide bundled skills/workflows/built-in slash commands
+- CLAUDE_CODE_SESSION_ID: session id exposed to the Bash tool subprocess environment
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 유지: skills/2026-07-18/skills
+- 각 스킬은 slug/cmd/trigger/desc/token_policy/compatibility로 경량화
+- SKILLS_CATALOG.yaml은 마스터 참조로 유지, 날짜 스냅샷은 이력/diff 전용
+
+[토큰 절감 관련 변경 사항]
+- 원문 changelog 문장 전체 복사 대신 한 줄 source_summary만 저장
+- 설정/환경변수는 코딩·프로그래밍·문서 작업과 직접 관련된 항목만 선별 기록
+- 공통 catalog.json으로 메타데이터 통합, 스킬 카드는 최소 필드만 포함
+
+[충돌 해결 내역]
+- slug 기준으로 기존 SKILLS_CATALOG.yaml 항목과 중복 여부 확인 후 신규 항목만 추가
+- 기존 스킬 동작/설명은 변경하지 않음 (안정성 우선)
+- 기존 날짜 스냅샷은 덮어쓰지 않고 신규 날짜에 기록
+- SKILLS_CATALOG.yaml 내 인용되지 않은 콜론(:)으로 인한 YAML 파싱 오류 3건 수정
+  (effort/tui/focus의 desc 값을 큰따옴표로 인용 처리)
+- models 섹션을 현재 모델 라인업(Sonnet 5 / Opus 4.8 / Haiku 4.5 / Fable 5)으로 갱신
+
+[요약]
+- skills: added=5, modified=0, deleted=0, unchanged=21
