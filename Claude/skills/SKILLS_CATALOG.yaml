@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.216
+updated: 2026-07-21
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -25,7 +25,7 @@ skills:
   simplify:
     cmd: /simplify
     trigger: user asks to clean up or refactor changed code
-    desc: Review changed code for reuse/quality/efficiency, then fix issues
+    desc: Cleanup-only review (reuse/simplification/efficiency/altitude); use /code-review for correctness bugs
 
   session-start-hook:
     cmd: /session-start-hook
@@ -81,7 +81,7 @@ skills:
   effort:
     cmd: /effort
     trigger: user wants to adjust effort/quality level
-    desc: Interactive slider for session effort level (also: CLAUDE_EFFORT env var)
+    desc: "Interactive slider for session effort level (also: CLAUDE_EFFORT env var)"
 
   powerup:
     cmd: /powerup
@@ -91,12 +91,12 @@ skills:
   tui:
     cmd: /tui
     trigger: rendering looks flickery or user wants full-screen mode
-    desc: Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)
+    desc: "Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)"
 
   focus:
     cmd: /focus
     trigger: user wants compact view of conversation
-    desc: Toggle focus view showing only: prompt + tool summary + final response
+    desc: "Toggle focus view showing only: prompt + tool summary + final response"
 
   undo:
     cmd: /undo
@@ -117,6 +117,46 @@ skills:
     cmd: /color
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
+
+  code-review:
+    cmd: /code-review
+    trigger: user wants a correctness/bug pass over pending changes, at a chosen effort level
+    desc: Severity-ranked correctness findings for the current diff.
+
+  verify:
+    cmd: /verify
+    trigger: user wants a specific claim, fix, or finding independently checked
+    desc: A confirm/refute verdict with supporting evidence.
+
+  debug:
+    cmd: /debug
+    trigger: user asks Claude to help troubleshoot the current session
+    desc: Debug logging enabled plus a session-issue diagnosis.
+
+  dataviz:
+    cmd: /dataviz
+    trigger: user is about to create any chart, graph, plot, or dashboard
+    desc: Chart/dashboard code following the bundled color and layout guidance.
+
+  workflows:
+    cmd: /workflows
+    trigger: user explicitly asks for multi-agent orchestration of a task
+    desc: A background multi-agent run orchestrating tens to hundreds of agents.
+
+  commit-push-pr:
+    cmd: /commit-push-pr
+    trigger: user wants to commit, push, and open a PR in one step
+    desc: A pushed commit and an opened pull request.
+
+  autofix-pr:
+    cmd: /autofix-pr
+    trigger: user wants CI failures or review comments on an open PR fixed automatically
+    desc: A fix pushed to the PR branch, or a diagnosis if out of scope.
+
+  pr-comments:
+    cmd: /pr-comments
+    trigger: user wants outstanding review comments on a PR triaged or answered
+    desc: Replies or fixes for outstanding PR review comments.
 
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.

@@ -1,0 +1,57 @@
+{
+  "date": "2026-07-21",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-07-21T15:11:54+00:00",
+  "skills": [
+    {
+      "cmd": "/code-review",
+      "hash": "a7af83d8d73d84d5",
+      "name": "Code Review",
+      "slug": "code-review"
+    },
+    {
+      "cmd": "/verify",
+      "hash": "57b651134fe476f9",
+      "name": "Verify",
+      "slug": "verify"
+    },
+    {
+      "cmd": "/debug",
+      "hash": "48f1f0267f9d6cea",
+      "name": "Debug",
+      "slug": "debug"
+    },
+    {
+      "cmd": "/dataviz",
+      "hash": "137546044e7a3cb7",
+      "name": "Dataviz",
+      "slug": "dataviz"
+    },
+    {
+      "cmd": "/workflows",
+      "hash": "16bbe2b0354f6013",
+      "name": "Workflows",
+      "slug": "workflows"
+    },
+    {
+      "cmd": "/commit-push-pr",
+      "hash": "a5d1ee3ebc535ce6",
+      "name": "Commit Push PR",
+      "slug": "commit-push-pr"
+    },
+    {
+      "cmd": "/autofix-pr",
+      "hash": "7de5a0ddd0e7b7f6",
+      "name": "Autofix PR",
+      "slug": "autofix-pr"
+    },
+    {
+      "cmd": "/pr-comments",
+      "hash": "0f7fb89a42743aca",
+      "name": "PR Comments",
+      "slug": "pr-comments"
+    }
+  ],
+  "source_policy": "official anthropics/claude-code repository only",
+  "source_version": "2.1.216"
+}
