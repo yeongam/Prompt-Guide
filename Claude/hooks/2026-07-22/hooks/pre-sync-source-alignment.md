@@ -1,0 +1,34 @@
+# Pre Sync Source Alignment
+
+- Slug: `pre-sync-source-alignment`
+- Event: `pre_sync`
+- Source: https://github.com/anthropics/claude-code
+- Source ref (content fingerprint): `aa0d8b80ac08`
+- Trigger: Run before generating Claude skills or hooks.
+
+## Checks
+
+1. Resolve the latest official Anthropic source reference.
+2. Reject unofficial source material for generated artifacts.
+3. Confirm skill and hook slugs are unique before writing files.
+
+## Actions
+
+- Record source URL, branch, and content fingerprint in each generated card.
+- Use source summaries instead of copying long upstream content.
+
+## Token Policy
+
+- Do not copy upstream documents into hook output.
+- Keep hook cards short enough for quick pre/post-run loading.
+- Prefer catalog metadata over repeated inline context.
+
+## Compatibility
+
+- Do not modify GPT or Gemini directories.
+- Do not overwrite existing dated hook snapshots.
+- Record hook conflicts in the same dated changelog as skills.
+
+## Source Summary
+
+Official CLI for Claude Code
