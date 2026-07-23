@@ -1,0 +1,59 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-05-13 00:29 UTC
+Version : 2.1.139 → 2.1.140
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-05-13/
+============================================================
+
+[ ★ 신규 감지 스킬 (2개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /doctor  ← 수동 추가 필요
+  ? /goal  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /goal
+  ~ /loop
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-05-13/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed remote managed settings not retrying on 401 — now retries once with a force-refreshed token
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.140
+
+- Improved Agent tool `subagent_type` matching to accept case- and separator-insensitive values (e.g. `"Code Reviewer"` resolves to `code-reviewer`)
+- Updated agent color palette
+- Fixed `/goal` silently hanging when `disableAllHooks` or `allowManagedHooksOnly` is set — now shows a clear message instead of an indicator that never resolves
+- Fixed a regression in settings hot-reload where symlinked settings files caused misattributed change events and spurious `ConfigChange` hooks
+- Fixed `claude --bg` failing with "connection dropped mid-request" when the background service was about to idle-exit
+- Fixed background service startup failing on machines with enterprise endpoint security by allowing more time
+- Fixed remote managed settings not retrying on 401 — now retries once with a force-refreshed token
+- Fixed managed `extraKnownMarketplaces` auto-update policy not being persisted to `known_marketplaces.json`
+- Fixed `/loop` scheduling redundant wakeups to poll for background tasks that already notify on completion
+- Fixed a recurring event-loop stall on Windows when a missing executable (e.g. `gh`) triggered synchronous `where.exe` re-spawns on every check
+- Fixed `Read` tool calls failing validation when `offset` is passed as a whitespace-padded or `+`-prefixed string
+- Fixed native terminal cursor not staying at the input caret when the terminal loses focus
+- Plugins now warn when a default component folder (e.g. `commands/`) is silently ignored because `plugin.json` sets the matching key. Shown in `/doctor`, `claude plugin list`, and `/plugin`.
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide

@@ -1,7 +1,7 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code + community (everything-claude-code) | auto-updated daily 00:00 UTC
-version: 2.1.218
-updated: 2026-07-23
+version: 2.1.176
+updated: 2026-06-13
 
 # ─── SKILLS ──────────────────────────────────────────────────────────────────
 skills:
@@ -186,21 +186,6 @@ skills:
     cmd: /bug
     trigger: user wants to file a bug or investigate unexpected behavior
     desc: Structured bug report with steps to reproduce, expected vs actual, environment
-
-  code-review:
-    cmd: /code-review [ultra]
-    trigger: user asks for a code review; distinct from /review (multi-pass PR review)
-    desc: Background-subagent code review off the critical path; `ultra` arg runs cloud review
-
-  context:
-    cmd: /context
-    trigger: user asks how much context window or token budget is used this session
-    desc: Show current context window breakdown by category (system, tools, messages)
-
-  deep-research:
-    cmd: /deep-research
-    trigger: user explicitly asks for deep/multi-step research
-    desc: Multi-step research agent; starts only on manual invoke, never auto-launched
 
   # ── Community — Architecture & Infrastructure ─────────────────────────────
   api-design:

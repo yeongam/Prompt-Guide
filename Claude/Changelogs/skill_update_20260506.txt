@@ -1,0 +1,85 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-05-06 00:00 UTC
+Version : none → 2.1.129
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-05-06/
+============================================================
+
+[ 추가된 스킬 / Added Skills ]
+  + /claude-api
+  + /effort
+  + /fewer-permission-prompts
+  + /focus
+  + /init
+  + /keybindings-help
+  + /loop
+  + /powerup
+  + /review
+  + /security-review
+  + /session-start-hook
+  + /simplify
+  + /theme
+  + /tui
+  + /ultraplan
+  + /ultrareview
+  + /undo
+  + /update-config
+  + /usage
+
+[ 수정된 스킬 / Modified Skills ]
+  (없음)
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷 생성: Claude/skills/2026-05-06/
+  YAML 구조 유지 (JSON 대비 ~30% 토큰 절감)
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  YAML 형식 채택으로 JSON/Markdown 대비 ~30% 토큰 절감
+  설명 1줄 제한; 예시는 비명백한 경우에만 포함
+  중복 스킬 설명 제거; 단일 카탈로그 소스 유지
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+  branch claude/kind-feynman-XQCh2 → claude/zealous-sagan-FdaL5 마이그레이션
+  changelogs/ → Claude/Changelogs/ 경로 통일
+
+[ Hooks ]
+  PreToolUse, PostToolUse, Notification, Stop, SubagentStop
+  PreCompact (v2.1.85), TaskCreated (v2.1.90)
+  WorktreeCreate (v2.1.88), PermissionDenied (v2.1.95)
+
+[ Settings ]
+  skillOverrides (v2.1.126)
+  autoScrollEnabled (v2.1.100)
+  showThinkingSummaries (v2.1.95)
+  disableSkillShellExecution (v2.1.98)
+  prUrlTemplate (v2.1.101)
+  sandbox.network.deniedDomains (v2.1.85)
+
+------------------------------------------------------------
+[ 구조 변경 요약 / Structure Summary ]
+
+  Before:
+    Claude/skills/
+      SKILLS_CATALOG.yaml
+      .version
+
+  After:
+    Claude/skills/
+      SKILLS_CATALOG.yaml      ← master catalog
+      .version
+      2026-05-06/              ← date snapshot
+        SKILLS_CATALOG.yaml
+        .version
+
+    Claude/Changelogs/
+      skill_update_20260506.txt
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml 최신화 완료
+[Status]   Catalog updated → yeongam/Prompt-Guide (claude/zealous-sagan-FdaL5)

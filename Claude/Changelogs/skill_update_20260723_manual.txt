@@ -1,0 +1,44 @@
+============================================================
+Claude Code Skills Update Report (Manual Catalog Pass)
+Date    : 2026-07-23 (scheduled skill-sync routine)
+Version : 2.1.218 (no upstream version change; catalog completion only)
+Source  : anthropics/claude-code (CHANGELOG.md, verified live fetch)
+Snapshot: Claude/skills/2026-07-23/
+============================================================
+
+[추가된 스킬]
+- code-review  (/code-review [ultra]) — background-subagent code review, distinct from existing /review
+- context      (/context) — context window / token budget breakdown for current session
+- deep-research (/deep-research) — multi-step research agent, manual invoke only
+
+[수정된 스킬]
+- none
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- Root catalog (Claude/skills/SKILLS_CATALOG.yaml) and today's dated snapshot
+  (Claude/skills/2026-07-23/SKILLS_CATALOG.yaml) kept byte-identical
+- New entries placed at the end of the "Official (new additions)" section,
+  keeping one skill = 3 compact lines (cmd/trigger/desc), no added prose
+
+[토큰 절감 관련 변경 사항]
+- Descriptions capped at one line each, consistent with existing catalog style
+- No upstream CHANGELOG text copied verbatim; summarized to cmd/trigger/desc only
+
+[충돌 해결 내역]
+- Verified `code-review`, `context`, `deep-research` slugs were unused in the
+  existing catalog before adding (no collisions)
+- `context` kept separate from the existing `usage` entry (/usage = cost/token
+  stats; /context = live context-window breakdown) — no merge needed
+
+[비고 / Note]
+- The daily automated sync (skill_update_20260723.txt) has been flagging new
+  upstream commands as "manual addition required" for a while without anyone
+  applying them; the backlog across all prior changelogs currently includes
+  ~60+ unapplied command names (many are general CLI/account commands rather
+  than coding/programming/documentation skills, e.g. /logout, /voice, /mobile).
+  This pass applied only the 3 flagged today that are clearly coding-relevant.
+  Recommend a dedicated follow-up pass to triage the remaining backlog.
+============================================================

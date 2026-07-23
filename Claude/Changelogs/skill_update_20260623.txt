@@ -1,0 +1,63 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-06-23 00:33 UTC
+Version : 2.1.185 → 2.1.186
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-06-23/
+============================================================
+
+[ ★ 신규 감지 스킬 (1개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /workflows  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /plugin
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-06-23/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Improved memory: the agent is now reminded to compact its `MEMORY.md` index when nearing the size limit
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.186
+
+- Added `claude mcp login <name>` and `claude mcp logout <name>` to authenticate MCP servers from the CLI without opening the interactive `/mcp` menu, with `--no-browser` stdin redirect support for completing over SSH
+- Added status filtering (press `f`) to the `/workflows` agent detail view
+- Added a "Skills" section to the `/plugin` Installed tab
+- Added `teammateMode: "iterm2"` setting with a warning when auto mode cannot find the `it2` CLI
+- Added "Claude Platform on AWS - refresh credentials" option to `/login` when `awsAuthRefresh` is configured
+- `!` bash commands now trigger Claude to respond to the output automatically; set `"respondToBashCommands": false` in settings.json to keep the previous context-only behavior
+- Fixed streaming requests failing with "Content block not found" or JSON parse errors after the machine wakes from sleep
+- Fixed subagent transcript scroll position bleeding into the main transcript on exit
+- Fixed background task previews flashing raw tool names before the agent's plan loaded
+- Fixed Chrome tab-group isolation not applying when the in-product permissions gate is off for concurrent CLI sessions
+- Fixed background session recaps being duplicated; the agent's own end-of-turn summary now shows as the recap line
+- Fixed opening a background session from `claude agents` leaving the previous screen painted behind it
+- Fixed `Agent(type)` deny rules and `Agent(x,y)` allowed-types restrictions not being enforced for named subagent spawns
+- Fixed Esc and Ctrl+C not responding while background agents are still running after the main turn ends
+- Fixed misaligned option numbers in permission prompts when the option text overflows
+- Fixed pressing `x` on a finished subagent in the agent panel not dismissing it
+- Fixed a misleading "MCP server disconnected" notice for intentionally retired tools when resuming older sessions
+- Fixed `/plugin` Installed showing a "more above" indicator when already scrolled to the top
+- Fixed `~~str
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide

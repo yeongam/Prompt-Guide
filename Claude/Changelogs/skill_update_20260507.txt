@@ -1,0 +1,84 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-05-07 00:00 KST
+Version : 2.1.132 → 2.1.133
+Source  : anthropics/claude-code + everything-claude-code (community)
+Snapshot: Claude/skills/2026-05-07/
+============================================================
+
+[ 추가된 스킬 / Added Skills ]
+  + /commit        official  — conventional commit from staged diff
+  + /debug         official  — systematic debug loop: reproduce → trace → fix → verify
+  + /batch         official  — batch edit/search across files matching pattern
+  + /model         official  — display or switch active model
+  + /skills        official  — list all skills and current version
+  + /plugin        official  — install, list, remove Claude Code plugins
+  + /bug           official  — structured bug report
+  + /api-design    community — REST/GraphQL spec with validation, auth, consistent errors
+  + /db-migrations community — safe reversible migration with rollback
+  + /docker-patterns community — multi-stage Dockerfile with security hardening
+  + /deploy-patterns community — CI/CD scaffold: rollback, health checks, blue-green
+  + /postgres-patterns community — idiomatic Postgres: CTEs, indexing, explain plans
+  + /ts-review     community — TypeScript type-safety review
+  + /py-review     community — Pythonic code review with type hints
+  + /go-patterns   community — idiomatic Go: error wrapping, goroutines, interfaces
+  + /search-first  community — search before creating; prevent duplication
+  + /iterative-search community — multi-pass narrowing search
+  + /cost-aware    community — minimal-token paths for efficiency
+  + /auto-loops    community — structured task loop: plan → execute → validate → repeat
+  + /mcp-patterns  community — MCP server scaffold with tools, resources, prompts
+  + /kotlin-patterns       language — idiomatic Kotlin
+  + /kotlin-testing        language — MockK, Kotest, coroutine test utilities
+  + /kotlin-coroutines-flows language — structured concurrency, Flow operators
+  + /kotlin-exposed-patterns language — Exposed DSL/DAO patterns
+  + /kotlin-ktor-patterns  language — Ktor routing, plugins, auth
+  + /rust-patterns         language — ownership, lifetimes, traits, Result
+  + /rust-testing          language — unit, integration, mocking, property tests
+  + /csharp-testing        language — xUnit/NUnit, Moq, FluentAssertions
+  + /dotnet-patterns       language — DI, async/await, LINQ, minimal API
+  + /jpa-patterns          language — JPA entities, N+1 prevention, transactions
+  + /swift-actor-persistence language — actors + CoreData/SwiftData
+  + /swift-protocol-di-testing language — protocol-oriented DI, injectable mocks
+  + /swift-concurrency-6-2 language — Swift 6.2 actors, task groups, Sendable
+  + /swiftui-patterns      language — ObservableObject, @State, MVVM
+  + /pytorch-patterns      language — modules, dataloaders, training loop
+  + /foundation-models-on-device language — local LLM on Apple silicon
+  + /dart-flutter-patterns language — widgets, BLoC, Navigator 2.0
+  + /flutter-dart-code-review language — widget rebuilds, platform channels
+  + /android-clean-architecture language — MVVM, Hilt, Coroutines+Flow
+  + /compose-multiplatform-patterns language — KMP expect/actual, shared UI
+  + /nextjs-turbopack      language — RSC, server actions, Turbopack config
+  + /nuxt4-patterns        language — auto-imports, composables, Nitro config
+  + /nestjs-patterns       language — modules, guards, TypeORM/Prisma
+  + /laravel-plugin-discovery language — service providers, facades, Artisan
+  + /clickhouse-io         language — MergeTree, materialized views, query optimization
+
+[ 수정된 스킬 / Modified Skills ]
+  (없음)
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 2.1.132 → 2.1.133 갱신
+  날짜별 스냅샷: Claude/skills/2026-05-07/
+  CLAUDE.md 컨텍스트 주입 파일 갱신 (21 → 66 스킬)
+  ~/.claude/CLAUDE.md 전역 컨텍스트 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  66 스킬 인라인 포맷 — 예상 ~2,444 토큰 / 세션 로드 시
+  upstream 2.1.132 대비 +45 스킬 추가, 단일소스(SKILLS_CATALOG.yaml) 유지
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 전부 SKILLS_CATALOG.yaml에 통합; 기존 21개 항목 유지
+  버전 태그: 2.1.133 (upstream 2.1.132 + community additions)
+
+[ 출처 / Sources ]
+  Official  : anthropics/claude-code (7 skills)
+  Community : everything-claude-code (13 skills)
+  Language  : everything-claude-code language-specific (25 skills)
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide

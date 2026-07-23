@@ -1,0 +1,64 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-07-18 01:41 UTC
+Version : 2.1.212 → 2.1.214
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-07-18/
+============================================================
+
+[ ★ 신규 감지 스킬 (2개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /background  ← 수동 추가 필요
+  ? /install-github-app  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /background
+  ~ /mcp
+  ~ /status
+  ~ /ultrareview
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-07-18/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed feature flags going stale in long-running sessions after the OAuth token rotates
+  - Fixed session cost and token telemetry double-counting on streams that emit multiple cumulative `message_delta` frames
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Added the EndConversation tool: Claude can end sessions with highly abusive users or jailbreak attempts, as on claude.ai since 2025 — see https://www.anthropic.com/research/end-subset-conversations
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.214
+
+- Fixed single-segment `dir/**` allow rules like `Edit(src/**)` auto-approving writes to nested `dir/` directories anywhere in the tree instead of only `<cwd>/dir`
+- Fixed a permission-check bypass affecting commands run in Windows PowerShell 5.1 sessions
+- Fixed Bash permission checks to fail closed on file-descriptor redirect forms that bash parses differently than the permission analyzer
+- Fixed Bash permission checks misjudging very long commands — commands over 10,000 characters now always prompt instead of running automatically
+- Fixed Bash permission checks treating zsh variable subscripts and modifiers in `[[ ]]` comparisons as inert text — these commands now prompt for approval
+- Fixed Bash permission checks to no longer auto-approve certain `help` and `man` commands that could run unsafe options, command substitutions, or backslash paths
+- Fixed permission prompts on remote sessions that could proceed before the local confirmation dialog
+- Added the EndConversation tool: Claude can end sessions with highly abusive users or jailbreak attempts, as on claude.ai since 2025 — see https://www.anthropic.com/research/end-subset-conversations
+- Added a periodic progress heartbeat for long-running tool calls that previously went silent
+- Added an ISO `modified` timestamp to memory file frontmatter
+- Added `message.uuid`, `client_request_id`, and `tool_source` attributes to OpenTelemetry log events for message-level correlation and tool provenance
+- Added `CLAUDE_CODE_OTEL_CONTENT_MAX_LENGTH` to configure the 60 KB truncation limit on OpenTelemetry content attributes
+- Added reasoning effort to the `subagentStatusLine` payload, so custom agent rows can render model and effort
+- Added permission prompts for `docker` commands (including the Podman `docker` shim) carrying daemon-redirect flags (`--url`, `--connection`, `--identity`, and Podman's remote mode) that previously ran without one
+- Fixed a crash when a GrowthBook feature evaluates to null, and a bu
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide

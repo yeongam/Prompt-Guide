@@ -1,7 +1,7 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code + community (everything-claude-code) | auto-updated daily 00:00 UTC
-version: 2.1.218
-updated: 2026-07-23
+version: 2.1.133
+updated: 2026-05-07
 
 # ─── SKILLS ──────────────────────────────────────────────────────────────────
 skills:
@@ -112,46 +112,6 @@ skills:
     desc: Set random session color
 
   # ── Official (new additions) ──────────────────────────────────────────────
-  login:
-    cmd: /login
-    trigger: user needs to authenticate or switch Anthropic account
-    desc: Authenticate Claude Code with Anthropic account credentials
-
-  status:
-    cmd: /status
-    trigger: user wants to check Claude Code connection or account status
-    desc: Show current account, model, and connection status
-
-  upgrade:
-    cmd: /upgrade
-    trigger: user wants to update Claude Code to the latest version
-    desc: Upgrade Claude Code CLI to the latest release
-
-  mcp:
-    cmd: /mcp
-    trigger: user wants to list, add, or inspect MCP servers
-    desc: Manage MCP server connections: list, add, remove, inspect
-
-  terminal-setup:
-    cmd: /terminal-setup
-    trigger: user wants to configure terminal for optimal Claude Code experience
-    desc: Configure terminal settings, shell integration, and display options
-
-  extra-usage:
-    cmd: /extra-usage
-    trigger: user wants detailed token or cost breakdown beyond /usage
-    desc: Show extended token usage stats with per-model and per-session breakdown
-
-  compact:
-    cmd: /compact [instructions]
-    trigger: user wants to compress conversation context or reduce token usage mid-session
-    desc: Compress conversation history in-place to reduce token consumption; optional focus instructions
-
-  clear:
-    cmd: /clear
-    trigger: user wants to reset conversation context or start fresh
-    desc: Clear entire conversation history to free context window for a new task
-
   commit:
     cmd: /commit
     trigger: user asks to generate or improve a commit message
@@ -186,21 +146,6 @@ skills:
     cmd: /bug
     trigger: user wants to file a bug or investigate unexpected behavior
     desc: Structured bug report with steps to reproduce, expected vs actual, environment
-
-  code-review:
-    cmd: /code-review [ultra]
-    trigger: user asks for a code review; distinct from /review (multi-pass PR review)
-    desc: Background-subagent code review off the critical path; `ultra` arg runs cloud review
-
-  context:
-    cmd: /context
-    trigger: user asks how much context window or token budget is used this session
-    desc: Show current context window breakdown by category (system, tools, messages)
-
-  deep-research:
-    cmd: /deep-research
-    trigger: user explicitly asks for deep/multi-step research
-    desc: Multi-step research agent; starts only on manual invoke, never auto-launched
 
   # ── Community — Architecture & Infrastructure ─────────────────────────────
   api-design:

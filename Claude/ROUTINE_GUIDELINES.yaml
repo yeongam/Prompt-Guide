@@ -1,0 +1,69 @@
+# Claude Code Routine Guidelines
+# Applied by: scripts/update_skills.py (daily 00:00 UTC)
+# Source: yeongam/Prompt-Guide | branch: claude/zealous-sagan-FdaL5
+guideline_version: 1.0
+
+# ─── CATALOG RULES ───────────────────────────────────────────────────────────
+catalog:
+  format: yaml                  # YAML over JSON/Markdown (~30% fewer tokens)
+  desc_max: one-line            # No multi-line descriptions
+  no_duplicate_fields: true     # Fields covered by another section → remove
+  no_version_tags: true         # added:/version tags belong in changelog, not catalog
+  no_default_values: true       # e.g. can_block: false is default → omit
+  no_meta_docs: true            # Self-referential doc sections removed
+
+# ─── SKILLS RULES ────────────────────────────────────────────────────────────
+skills:
+  trim_env_overlap: true        # Remove "(also: ENV_VAR)" if var exists in env section
+  trim_cmd_overlap: true        # Remove notes that repeat the cmd field
+  merge_notes_into_desc: true   # Extra note/example fields → fold into desc
+
+# ─── HOOKS RULES ─────────────────────────────────────────────────────────────
+hooks:
+  meta_as_comment: true         # invoke_types, retry info → top-level comment only
+  skip_can_block_false: true    # Omit can_block: false (default)
+
+# ─── CLAUDE.md RULES ─────────────────────────────────────────────────────────
+claude_md:
+  format: inline                # One line per skill: `cmd` | trigger → desc
+  write_global: true            # Always write to ~/.claude/CLAUDE.md
+  use_markers: true             # Use <!-- SKILLS-SYNC:START/END --> for existing files
+  max_lines: 30                 # Skills block target ceiling
+
+# ─── CHANGELOG RULES ─────────────────────────────────────────────────────────
+changelogs:
+  path: Claude/Changelogs/
+  format: txt
+  filename: "skill_update_{YYYYMMDD}.txt"
+  required_sections:
+    - added-skills
+    - modified-skills
+    - removed-skills
+    - structure-changes
+    - token-optimization
+    - conflict-resolution
+
+# ─── SNAPSHOT RULES ──────────────────────────────────────────────────────────
+snapshots:
+  path: "Claude/skills/{YYYY-MM-DD}/"
+  files:
+    - SKILLS_CATALOG.yaml
+    - .version
+  on_version_change_only: true  # Create snapshot only when upstream version changes
+
+# ─── RESPONSE RULES ──────────────────────────────────────────────────────────
+response:
+  code_first: true               # 코드 작업 시 결과물 먼저, 설명은 필요 시에만
+  skip_preamble: true            # 인사말·마무리·"알겠습니다" 류 생략
+  skip_explanation: true         # 코드 변경 시 변경 이유 설명 생략 (요청 시 제공)
+  concise_updates: true          # 진행 상황은 한 줄 요약만
+
+# ─── COMMANDS RULES ──────────────────────────────────────────────────────────
+commands:
+  path: .claude/commands/
+  always_refresh: true          # Rewrite on every run (version-unchanged included)
+  required:
+    - skill-status.md
+    - skill-log.md
+    - skill-diff.md
+    - skill-inject.md
