@@ -1,0 +1,159 @@
+{
+  "cli_version": "2.1.220",
+  "date": "2026-07-26",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-07-26T00:10:20+09:00",
+  "skills": [
+    {
+      "cli_version_context": "2.1.220",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Do not modify GPT or Gemini directories.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "c0393f2af744cb55",
+      "name": "Claude Code CLI Programming",
+      "output": "Compact CLI/config checklist aligned to the current CHANGELOG version.",
+      "procedure": [
+        "Check the official source file for current behavior before answering.",
+        "Prefer the smallest working implementation.",
+        "Use structured APIs/config keys over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command or test."
+      ],
+      "slug": "claude-code-cli-programming",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_ref": "README.md",
+      "summary": "# Claude Code ![](https://img.shields.io/badge/Node.js-18%2B-brightgreen?style=flat-square) [![npm]](https://www.npmjs.com/package/@anthropic-ai/claude-code) [npm]: https://img.shields.io/npm/v/@anthropic-ai/claude-code.svg?style=flat-square Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and.",
+      "token_policy": [
+        "Avoid repeated background context across turns.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs."
+      ],
+      "trigger": "Use for CLI usage, slash commands, hooks, settings.json, and session config work."
+    },
+    {
+      "cli_version_context": "2.1.220",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Do not modify GPT or Gemini directories.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "c88d8934da9a4fab",
+      "name": "Python Agent SDK Programming",
+      "output": "Minimal Python Agent SDK integration checklist.",
+      "procedure": [
+        "Check the official source file for current behavior before answering.",
+        "Prefer the smallest working implementation.",
+        "Use structured APIs/config keys over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command or test."
+      ],
+      "slug": "python-agent-sdk-programming",
+      "source": "https://github.com/anthropics/claude-agent-sdk-python",
+      "source_branch": "main",
+      "source_ref": "README.md",
+      "summary": "# Claude Agent SDK for Python Python SDK for Claude Agent. See the [Claude Agent SDK documentation](https://platform.claude.com/docs/en/agent-sdk/python) for more information. ## Installation **Prerequisites:** - Python 3.10+ **Note:** The Claude Code CLI is automatically bundled with the package - no separate installation required! The SDK will use the bundled CLI by default. If you prefer to use a system-wide inst.",
+      "token_policy": [
+        "Avoid repeated background context across turns.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs."
+      ],
+      "trigger": "Use for building custom agents, tools, and hooks with the Python Agent SDK."
+    },
+    {
+      "cli_version_context": "2.1.220",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Do not modify GPT or Gemini directories.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "abdf2c93e063dfa6",
+      "name": "TypeScript Agent SDK Programming",
+      "output": "Minimal TypeScript Agent SDK integration checklist.",
+      "procedure": [
+        "Check the official source file for current behavior before answering.",
+        "Prefer the smallest working implementation.",
+        "Use structured APIs/config keys over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command or test."
+      ],
+      "slug": "typescript-agent-sdk-programming",
+      "source": "https://github.com/anthropics/claude-agent-sdk-typescript",
+      "source_branch": "main",
+      "source_ref": "README.md",
+      "summary": "# Claude Agent SDK ![](https://img.shields.io/badge/Node.js-18%2B-brightgreen?style=flat-square) [![npm]](https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk) [npm]: https://img.shields.io/npm/v/@anthropic-ai/claude-agent-sdk.svg?style=flat-square The Claude Agent SDK enables you to programmatically build AI agents with Claude Code's capabilities. Create autonomous agents that can understand codebases, edit.",
+      "token_policy": [
+        "Avoid repeated background context across turns.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs."
+      ],
+      "trigger": "Use for building custom agents, tools, and hooks with the TypeScript Agent SDK."
+    },
+    {
+      "cli_version_context": "2.1.220",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Do not modify GPT or Gemini directories.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "675f1219fb860529",
+      "name": "Anthropic Python SDK Programming",
+      "output": "Lean Messages API implementation checklist.",
+      "procedure": [
+        "Check the official source file for current behavior before answering.",
+        "Prefer the smallest working implementation.",
+        "Use structured APIs/config keys over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command or test."
+      ],
+      "slug": "anthropic-python-sdk-programming",
+      "source": "https://github.com/anthropics/anthropic-sdk-python",
+      "source_branch": "main",
+      "source_ref": "README.md",
+      "summary": "# Claude SDK for Python [![PyPI version](https://img.shields.io/pypi/v/anthropic.svg)](https://pypi.org/project/anthropic/) The Claude SDK for Python provides access to the [Claude API](https://docs.anthropic.com/en/api/) from Python applications. ## Documentation Full documentation is available at **[platform.claude.com/docs/en/api/sdks/python](https://platform.claude.com/docs/en/api/sdks/python)**. ## Installation.",
+      "token_policy": [
+        "Avoid repeated background context across turns.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs."
+      ],
+      "trigger": "Use for direct Messages API calls, streaming, and tool-use loops in Python."
+    },
+    {
+      "cli_version_context": "2.1.220",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Do not modify GPT or Gemini directories.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "3c012ed815457117",
+      "name": "Documentation Maintenance",
+      "output": "Concise doc-update checklist with version traceability.",
+      "procedure": [
+        "Check the official source file for current behavior before answering.",
+        "Prefer the smallest working implementation.",
+        "Use structured APIs/config keys over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command or test."
+      ],
+      "slug": "documentation-maintenance",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_ref": "CHANGELOG.md",
+      "summary": "# Changelog ## 2.1.220 - Bug fixes and reliability improvements ## 2.1.219 - Added Claude Opus 5 (`claude-opus-5`), now the default Opus model — 1M context, fast mode at $10/$50 per Mtok - Added `sandbox.network.strictAllowlist` setting to deny non-allowlisted hosts for sandboxed commands without prompting - Added `DirectoryAdded` hook that fires after `/add-dir` or the SDK `register_repo_root` control request regis.",
+      "token_policy": [
+        "Avoid repeated background context across turns.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs."
+      ],
+      "trigger": "Use for updating docs, changelogs, and skill catalogs after a Claude Code release."
+    }
+  ],
+  "source_policy": "official Anthropic/Claude Code GitHub repositories only"
+}
