@@ -1,0 +1,188 @@
+{
+  "date": "2026-07-28",
+  "directory_rule": "YYYY-MM-DD/hooks",
+  "generated_at": "2026-07-28T00:13:32+09:00",
+  "hooks": [
+    {
+      "actions": [
+        "Record source URL, branch, and commit in each generated card.",
+        "Use source summaries instead of copying long upstream content."
+      ],
+      "checks": [
+        "Resolve the latest official Anthropic source commit.",
+        "Reject unofficial source material for generated artifacts.",
+        "Confirm skill and hook slugs are unique before writing files."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "pre_sync",
+      "hash": "bc1ec5057da9acfb",
+      "name": "Pre Sync Source Alignment",
+      "slug": "pre-sync-source-alignment",
+      "source": "https://github.com/anthropics/anthropic-cookbook",
+      "source_branch": "main",
+      "source_commit": "85016cacf5b7",
+      "summary": "Examples and guides for using the Claude API",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run before generating Claude skills or hooks."
+    },
+    {
+      "actions": [
+        "Attach commit evidence to Python SDK skill output.",
+        "Flag incompatible examples in the changelog conflict section."
+      ],
+      "checks": [
+        "Verify the Python SDK source commit used by the routine.",
+        "Prefer current SDK request shapes over stale snippets.",
+        "Keep migration notes compact and version-aware."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "pre_apply",
+      "hash": "cc138a296c990838",
+      "name": "Python SDK Compatibility Check",
+      "slug": "python-sdk-compatibility-check",
+      "source": "https://github.com/anthropics/anthropic-sdk-python",
+      "source_branch": "main",
+      "source_commit": "60c64fba5c2b",
+      "summary": "Official Python library for the Claude API",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run before applying Python SDK guidance or examples."
+    },
+    {
+      "actions": [
+        "Attach commit evidence to TypeScript SDK skill output.",
+        "Flag cross-language conflicts in the changelog conflict section."
+      ],
+      "checks": [
+        "Verify the TypeScript SDK source commit used by the routine.",
+        "Keep generated guidance aligned with typed SDK usage.",
+        "Avoid duplicating Python-specific patterns in TypeScript output."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "pre_apply",
+      "hash": "6c544d6eb3d2193b",
+      "name": "TypeScript SDK Compatibility Check",
+      "slug": "typescript-sdk-compatibility-check",
+      "source": "https://github.com/anthropics/anthropic-sdk-typescript",
+      "source_branch": "main",
+      "source_commit": "3b45cd3b69c9",
+      "summary": "Official JavaScript / TypeScript library for the Claude API",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run before applying TypeScript SDK guidance or examples."
+    },
+    {
+      "actions": [
+        "Record agent workflow conflicts in the changelog.",
+        "Keep agent guidance short enough for fast reuse."
+      ],
+      "checks": [
+        "Confirm tools, permissions, and orchestration guidance stay separated.",
+        "Prefer minimal runnable workflow patterns.",
+        "Preserve existing Claude skill behavior when adding agent guidance."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "post_apply",
+      "hash": "dea3084b75702b5e",
+      "name": "Agent Workflow Guard",
+      "slug": "agent-workflow-guard",
+      "source": "https://github.com/anthropics/claude-agent-sdk-python",
+      "source_branch": "main",
+      "source_commit": "f8b9ec923982",
+      "summary": "Framework for building custom Claude agents",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run after applying agent workflow guidance."
+    },
+    {
+      "actions": [
+        "Write one concise changelog under Claude/Changelogs.",
+        "Avoid prompting the user during automated routine execution."
+      ],
+      "checks": [
+        "Compare generated catalogs with the previous dated snapshot.",
+        "List added, modified, and deleted skills and hooks separately.",
+        "Confirm token-saving and conflict-resolution notes are present."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "post_sync",
+      "hash": "68758ab1b7262a86",
+      "name": "Post Sync Changelog Guard",
+      "slug": "post-sync-changelog-guard",
+      "source": "https://github.com/anthropics/anthropic-cookbook",
+      "source_branch": "main",
+      "source_commit": "85016cacf5b7",
+      "summary": "Documentation and cookbook examples for Claude API workflows",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run after Claude skills and hooks are generated."
+    },
+    {
+      "actions": [
+        "Apply the latest Claude guidance in the active session when relevant.",
+        "Document any required local install step instead of silently editing runtime state."
+      ],
+      "checks": [
+        "Treat the latest Claude skills and hooks snapshots as repo-local guidance.",
+        "Do not assume GitHub Actions changed the live Claude Code runtime.",
+        "Keep local runtime installation separate from remote repo synchronization."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "session_reference",
+      "hash": "8b4df48a066ad0eb",
+      "name": "Claude Code Reference Application Guard",
+      "slug": "claude-code-reference-application-guard",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "7ef6eec9d9ba",
+      "summary": "Anthropic's official CLI for Claude Code",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Use when a Claude Code session works from Prompt-Guide/Claude routine output."
+    }
+  ],
+  "source_policy": "official Anthropic GitHub repositories only"
+}

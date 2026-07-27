@@ -1,0 +1,148 @@
+{
+  "date": "2026-07-28",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-07-28T00:13:32+09:00",
+  "skills": [
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "dc955f6a3a33dd8a",
+      "name": "Claude API Coding",
+      "output": "Small code-oriented checklist with official-example alignment.",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "claude-api-coding",
+      "source": "https://github.com/anthropics/anthropic-cookbook",
+      "source_branch": "main",
+      "source_commit": "85016cacf5b7",
+      "summary": "# Claude Cookbooks The Claude Cookbooks provide code and guides designed to help developers build with Claude, offering copy-able code snippets that you can easily integrate into your own projects. ## Prerequisites To make the most of the examples in this cookbook, you'll need a Claude API key (sign up for free [here](https://www.anthropic.com)). While the code examples are primarily written in Python, the concepts.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for implementing or debugging Claude API calls and examples."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "7e0f108ee0a63456",
+      "name": "Python SDK Programming",
+      "output": "Minimal Python SDK guidance with verification steps.",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "python-sdk-programming",
+      "source": "https://github.com/anthropics/anthropic-sdk-python",
+      "source_branch": "main",
+      "source_commit": "60c64fba5c2b",
+      "summary": "# Claude SDK for Python [![PyPI version](https://img.shields.io/pypi/v/anthropic.svg)](https://pypi.org/project/anthropic/) The Claude SDK for Python provides access to the [Claude API](https://docs.anthropic.com/en/api/) from Python applications. ## Documentation Full documentation is available at **[platform.claude.com/docs/en/api/sdks/python](https://platform.claude.com/docs/en/api/sdks/python)**. ## Installation.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for Python SDK integration, request structure, and migration checks."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "0c1a0ce34071c37f",
+      "name": "TypeScript SDK Programming",
+      "output": "Compact TypeScript SDK implementation checklist.",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "typescript-sdk-programming",
+      "source": "https://github.com/anthropics/anthropic-sdk-typescript",
+      "source_branch": "main",
+      "source_commit": "3b45cd3b69c9",
+      "summary": "# Claude SDK for TypeScript [![NPM version](https://img.shields.io/npm/v/@anthropic-ai/sdk.svg)](https://npmjs.org/package/@anthropic-ai/sdk) The Claude SDK for TypeScript provides access to the [Claude API](https://docs.anthropic.com/en/api/) from server-side TypeScript or JavaScript applications. ## Documentation Full documentation is available at **[platform.claude.com/docs/en/api/sdks/typescript](https://platfor.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for Node.js or TypeScript SDK integration and typed API work."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "92bd55809ed63f2e",
+      "name": "Agents Workflow Programming",
+      "output": "Lean agent workflow design and implementation checks.",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "agents-workflow-programming",
+      "source": "https://github.com/anthropics/claude-agent-sdk-python",
+      "source_branch": "main",
+      "source_commit": "f8b9ec923982",
+      "summary": "# Claude Agent SDK for Python Python SDK for Claude Agent. See the [Claude Agent SDK documentation](https://platform.claude.com/docs/en/agent-sdk/python) for more information. ## Installation **Prerequisites:** - Python 3.10+ **Note:** The Claude Code CLI is automatically bundled with the package - no separate installation required! The SDK will use the bundled CLI by default. If you prefer to use a system-wide inst.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for agent workflows, tool use, and orchestration code."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "370f74080f509a02",
+      "name": "Documentation Maintenance",
+      "output": "Concise documentation update checklist with source traceability.",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured APIs over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "documentation-maintenance",
+      "source": "https://github.com/anthropics/anthropic-cookbook",
+      "source_branch": "main",
+      "source_commit": "85016cacf5b7",
+      "summary": "# Claude Cookbooks The Claude Cookbooks provide code and guides designed to help developers build with Claude, offering copy-able code snippets that you can easily integrate into your own projects. ## Prerequisites To make the most of the examples in this cookbook, you'll need a Claude API key (sign up for free [here](https://www.anthropic.com)). While the code examples are primarily written in Python, the concepts.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for updating docs, examples, prompts, and developer guides."
+    }
+  ],
+  "source_policy": "official Anthropic GitHub repositories only"
+}

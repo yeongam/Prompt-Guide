@@ -8,31 +8,52 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: claude-skills-update
+  cancel-in-progress: false
+
 jobs:
   update-skills:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout latest main
+        uses: actions/checkout@v4
         with:
-          ref: claude/zealous-sagan-FdaL5
-          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Run skill update script
+      - name: Run CLI changelog update script
         run: python scripts/update_skills.py
 
-      - name: Commit and push if changed
+      - name: Sync dated Claude skill/hook snapshots from official Anthropic repos
+        run: python Claude/scripts/sync_claude_skills.py
+
+      - name: Block unexpected non-Claude changes
+        run: |
+          unexpected="$(git status --porcelain | awk '{print $2}' | grep -Ev '^Claude/' || true)"
+          if [ -n "$unexpected" ]; then
+            echo "Unexpected changes outside Claude/:"
+            echo "$unexpected"
+            exit 1
+          fi
+
+      - name: Commit and push to main if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
+
+          git add Claude
+
           if git diff --cached --quiet; then
-            echo "No changes - already up to date"
-          else
-            DATE=$(date -u +%Y-%m-%d)
-            git commit -m "chore: Claude Code skills update ${DATE}"
-            git push -u origin claude/zealous-sagan-FdaL5
+            echo "No Claude skill or hook changes."
+            exit 0
           fi
+
+          DATE=$(date -u +%Y-%m-%d)
+          git commit -m "chore: Claude Code skills update ${DATE}"
+          git pull --rebase origin main
+          git push origin HEAD:main
