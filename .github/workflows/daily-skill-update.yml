@@ -14,7 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: claude/zealous-sagan-FdaL5
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-python@v5
@@ -34,5 +33,5 @@ jobs:
           else
             DATE=$(date -u +%Y-%m-%d)
             git commit -m "chore: Claude Code skills update ${DATE}"
-            git push -u origin claude/zealous-sagan-FdaL5
+            git push origin HEAD:${GITHUB_REF_NAME}
           fi
