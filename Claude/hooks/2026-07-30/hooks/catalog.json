@@ -1,0 +1,146 @@
+{
+  "date": "2026-07-30",
+  "directory_rule": "YYYY-MM-DD/hooks",
+  "generated_at": "2026-07-30T00:12:23+09:00",
+  "hooks": [
+    {
+      "actions": [
+        "Block with exit 2 or {decision:\"block\"}; inject context if needed."
+      ],
+      "checks": [
+        "Validate or log the pending bash/file operation."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots."
+      ],
+      "event": "PreToolUse",
+      "hash": "5d3fac4b9b484243",
+      "name": "Pre Tool Use Guard",
+      "slug": "pre-tool-use-guard",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.220",
+      "token_policy": [
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Fires before any tool execution."
+    },
+    {
+      "actions": [
+        "Log results; trigger follow-up actions."
+      ],
+      "checks": [
+        "Confirm the tool result matches expected shape."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots."
+      ],
+      "event": "PostToolUse",
+      "hash": "becd226acecec039",
+      "name": "Post Tool Use Logger",
+      "slug": "post-tool-use-logger",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.220",
+      "token_policy": [
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Fires after a tool call completes."
+    },
+    {
+      "actions": [
+        "Block compaction via exit 2 or {decision:\"block\"} until safe."
+      ],
+      "checks": [
+        "Check whether a critical operation is mid-flight."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots."
+      ],
+      "event": "PreCompact",
+      "hash": "96bc07ec9dee6e26",
+      "name": "Pre Compact Guard",
+      "slug": "pre-compact-guard",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.220",
+      "token_policy": [
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Fires before conversation compaction (added v2.1.85)."
+    },
+    {
+      "actions": [
+        "Log/track task creation events."
+      ],
+      "checks": [
+        "Confirm task metadata is complete before logging."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots."
+      ],
+      "event": "TaskCreated",
+      "hash": "ca9a78756745166d",
+      "name": "Task Created Tracker",
+      "slug": "task-created-tracker",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.220",
+      "token_policy": [
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Fires when a task is created via TaskCreate (added v2.1.90)."
+    },
+    {
+      "actions": [
+        "Provision the worktree via the configured HTTP endpoint."
+      ],
+      "checks": [
+        "Verify the HTTP endpoint returns a valid worktreePath."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots."
+      ],
+      "event": "WorktreeCreate",
+      "hash": "aea93511136cd40b",
+      "name": "Worktree Create Provisioner",
+      "slug": "worktree-create-provisioner",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.220",
+      "token_policy": [
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Fires on worktree creation (added v2.1.88)."
+    },
+    {
+      "actions": [
+        "Return {\"retry\": true} to re-run the classifier when appropriate."
+      ],
+      "checks": [
+        "Confirm escalation criteria before requesting a retry."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots."
+      ],
+      "event": "PermissionDenied",
+      "hash": "8b32056d665b2752",
+      "name": "Permission Denied Escalation",
+      "slug": "permission-denied-escalation",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.220",
+      "token_policy": [
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Fires after an auto-mode classifier denial (added v2.1.95)."
+    }
+  ],
+  "source_policy": "official Anthropic claude-code GitHub repository only"
+}

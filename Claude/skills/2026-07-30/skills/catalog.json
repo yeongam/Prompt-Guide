@@ -1,0 +1,203 @@
+{
+  "date": "2026-07-30",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-07-30T00:12:23+09:00",
+  "scope": "coding, programming, documentation skills only",
+  "skills": [
+    {
+      "cmd": "/init",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve SKILLS_CATALOG.yaml as the flat canonical reference."
+      ],
+      "hash": "96f934b4aaa84f6d",
+      "name": "Codebase Init Documentation",
+      "output": "CLAUDE.md covering architecture, conventions, and commands.",
+      "procedure": [
+        "Scan repo structure, build system, and conventions.",
+        "Generate CLAUDE.md with architecture and commands.",
+        "Keep entries factual; avoid speculative guidance."
+      ],
+      "slug": "claude-code-init-documentation",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.220",
+      "token_policy": [
+        "Avoid repeated background context; use the catalog entry instead.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs."
+      ],
+      "trigger": "User asks to initialize or document a codebase."
+    },
+    {
+      "cmd": "/review",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve SKILLS_CATALOG.yaml as the flat canonical reference."
+      ],
+      "hash": "39e2dd026df7d289",
+      "name": "PR & Branch Review",
+      "output": "Ranked review findings for the diff under review.",
+      "procedure": [
+        "Multi-pass check: logic, style, security, tests.",
+        "Rank findings by severity before reporting."
+      ],
+      "slug": "pr-review-programming",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.220",
+      "token_policy": [
+        "Avoid repeated background context; use the catalog entry instead.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs."
+      ],
+      "trigger": "User asks to review a PR or branch."
+    },
+    {
+      "cmd": "/security-review",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve SKILLS_CATALOG.yaml as the flat canonical reference."
+      ],
+      "hash": "7741516e5c2c696b",
+      "name": "Security Review",
+      "output": "Risk-ranked security findings for pending diffs.",
+      "procedure": [
+        "OWASP-focused audit of the current branch diff.",
+        "Rank risk by exploitability and blast radius."
+      ],
+      "slug": "security-review-programming",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.220",
+      "token_policy": [
+        "Avoid repeated background context; use the catalog entry instead.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs."
+      ],
+      "trigger": "User asks for a security audit of pending changes."
+    },
+    {
+      "cmd": "/simplify",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve SKILLS_CATALOG.yaml as the flat canonical reference."
+      ],
+      "hash": "b095aa1b05341a59",
+      "name": "Code Simplify & Refactor",
+      "output": "Simplified diff with reuse/efficiency issues fixed.",
+      "procedure": [
+        "Review changed code for reuse, quality, efficiency.",
+        "Apply fixes directly; skip bug-hunting (use /review)."
+      ],
+      "slug": "code-simplify-refactor",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.220",
+      "token_policy": [
+        "Avoid repeated background context; use the catalog entry instead.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs."
+      ],
+      "trigger": "User asks to clean up or refactor changed code."
+    },
+    {
+      "cmd": "/claude-api",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve SKILLS_CATALOG.yaml as the flat canonical reference."
+      ],
+      "hash": "c443ac5a63b41a6e",
+      "name": "Claude API SDK Programming",
+      "output": "Working Claude API integration or migration fix.",
+      "procedure": [
+        "Check model IDs and current SDK request shapes.",
+        "Apply prompt caching and tool-use patterns correctly.",
+        "Flag deprecated model IDs during migration."
+      ],
+      "slug": "claude-api-sdk-programming",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.220",
+      "token_policy": [
+        "Avoid repeated background context; use the catalog entry instead.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs."
+      ],
+      "trigger": "Code imports the Anthropic SDK or user asks about Claude API features."
+    },
+    {
+      "cmd": "/session-start-hook",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve SKILLS_CATALOG.yaml as the flat canonical reference."
+      ],
+      "hash": "69119b4763f9b10e",
+      "name": "Session Hooks Programming",
+      "output": "SessionStart hook wired to project test/lint commands.",
+      "procedure": [
+        "Create a SessionStart hook in .claude/settings.json.",
+        "Verify the hook runs project test/lint commands."
+      ],
+      "slug": "session-hooks-programming",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.220",
+      "token_policy": [
+        "Avoid repeated background context; use the catalog entry instead.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs."
+      ],
+      "trigger": "User wants test/lint runners on session start (web Claude Code)."
+    },
+    {
+      "cmd": "/update-config",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve SKILLS_CATALOG.yaml as the flat canonical reference."
+      ],
+      "hash": "ba348236b3bc8223",
+      "name": "Settings & Hooks Configuration",
+      "output": "settings.json updated with the requested hook/permission/env change.",
+      "procedure": [
+        "Edit settings.json for hooks, permissions, or env vars.",
+        "Prefer narrow permission scopes over broad allowlists."
+      ],
+      "slug": "settings-hooks-config",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.220",
+      "token_policy": [
+        "Avoid repeated background context; use the catalog entry instead.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs."
+      ],
+      "trigger": "Automated-behavior requests (\"when X\", \"allow Y\", \"set Z=val\")."
+    },
+    {
+      "cmd": "/team-onboarding",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve SKILLS_CATALOG.yaml as the flat canonical reference."
+      ],
+      "hash": "eb6a998109a898db",
+      "name": "Team Onboarding Documentation",
+      "output": "Onboarding guide generated from local usage history.",
+      "procedure": [
+        "Read local Claude Code usage history and data.",
+        "Generate an onboarding guide from observed patterns."
+      ],
+      "slug": "team-onboarding-documentation",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.220",
+      "token_policy": [
+        "Avoid repeated background context; use the catalog entry instead.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs."
+      ],
+      "trigger": "User wants a teammate ramp-up guide."
+    }
+  ],
+  "source_policy": "official Anthropic claude-code GitHub repository only"
+}

@@ -1,0 +1,19 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-07-29 15:11 UTC
+Version : 2.1.129 -> 2.1.220
+Source  : anthropics/claude-code
+============================================================
+
+[변경 요약 / Change Summary]
+
+----------------------------------------
+[원문 변경사항 / Raw Changes]
+
+## 2.1.220
+
+- Bug fixes and reliability improvements
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml 최신화 완료
+[Status]   Catalog updated, committed to yeongam/Prompt-Guide
