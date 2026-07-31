@@ -12,9 +12,10 @@ import urllib.request
 import urllib.error
 
 REPO_ROOT = Path(__file__).parent.parent
-CATALOG_FILE = REPO_ROOT / "Claude" / "skills" / "SKILLS_CATALOG.yaml"
-VERSION_FILE = REPO_ROOT / "Claude" / "skills" / ".version"
-CHANGELOGS_DIR = REPO_ROOT / "changelogs"
+SKILLS_ROOT = REPO_ROOT / "Claude" / "skills"
+CATALOG_FILE = SKILLS_ROOT / "SKILLS_CATALOG.yaml"
+VERSION_FILE = SKILLS_ROOT / ".version"
+CHANGELOGS_DIR = REPO_ROOT / "Claude" / "Changelogs"
 CHANGELOG_SRC = "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md"
 DESKTOP_LOG_DIR = Path(os.environ.get("DESKTOP_LOG_PATH", "/root/바탕화면/Claude-Text/Claude_skills"))
 
@@ -25,15 +26,19 @@ def fetch(url: str) -> str:
         return r.read().decode("utf-8")
 
 
-def parse_version(changelog: str) -> tuple[str, str]:
-    m = re.search(r"##\s+\[?(\d+\.\d+\.\d+)\]?", changelog)
-    if not m:
+def parse_range(changelog: str, prev_version: str) -> tuple[str, str]:
+    """Return (latest_version, combined_body) for every version newer than prev_version."""
+    parts = re.split(r"^##\s+\[?(\d+\.\d+\.\d+)\]?\s*$", changelog, flags=re.MULTILINE)
+    sections = list(zip(parts[1::2], parts[2::2]))
+    if not sections:
         return "", ""
-    ver = m.group(1)
-    start = m.start()
-    nxt = re.search(r"##\s+\[?\d+\.\d+\.\d+", changelog[start + 1:])
-    end = start + 1 + nxt.start() if nxt else len(changelog)
-    return ver, changelog[start:end].strip()
+    latest = sections[0][0]
+    body_parts = []
+    for ver, body in sections:
+        if ver == prev_version:
+            break
+        body_parts.append(body)
+    return latest, "\n".join(body_parts).strip()
 
 
 def current_version() -> str:
@@ -91,13 +96,21 @@ def update_catalog_version_field(ver: str) -> None:
     CATALOG_FILE.write_text(text)
 
 
-def write_log(path: Path, content: str, date_str: str) -> None:
+def write_log(path: Path, content: str, filename: str) -> None:
     try:
         path.mkdir(parents=True, exist_ok=True)
-        (path / f"skill_update_{date_str}.txt").write_text(content, encoding="utf-8")
-        print(f"Log written: {path}/skill_update_{date_str}.txt")
+        (path / filename).write_text(content, encoding="utf-8")
+        print(f"Log written: {path}/{filename}")
     except OSError as e:
         print(f"Warning: {e}", file=sys.stderr)
+
+
+def write_dated_snapshot(date_str: str) -> None:
+    """Date/skills convention: only snapshot on an actual version change, not every run."""
+    snapshot_dir = SKILLS_ROOT / date_str / "skills"
+    snapshot_dir.mkdir(parents=True, exist_ok=True)
+    (snapshot_dir / CATALOG_FILE.name).write_text(CATALOG_FILE.read_text(encoding="utf-8"), encoding="utf-8")
+    print(f"Snapshot written: {snapshot_dir}/{CATALOG_FILE.name}")
 
 
 def main() -> int:
@@ -108,12 +121,12 @@ def main() -> int:
         print(f"Fetch error: {e}", file=sys.stderr)
         return 1
 
-    ver, section = parse_version(changelog)
+    prev = current_version()
+    ver, section = parse_range(changelog, prev)
     if not ver:
         print("Could not parse version.", file=sys.stderr)
         return 1
 
-    prev = current_version()
     print(f"Latest: {ver}  |  Local: {prev or 'none'}")
 
     if ver == prev:
@@ -121,14 +134,15 @@ def main() -> int:
         return 0
 
     items = extract_new_items(section)
-    date_str = datetime.now(timezone.utc).strftime("%Y%m%d")
+    date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     entry = build_changelog_entry(ver, prev, section, items)
 
-    write_log(CHANGELOGS_DIR, entry, date_str)
-    write_log(DESKTOP_LOG_DIR, entry, date_str)
+    write_log(CHANGELOGS_DIR, entry, f"{date_str}.txt")
+    write_log(DESKTOP_LOG_DIR, entry, f"skill_update_{date_str}.txt")
 
     VERSION_FILE.write_text(ver)
     update_catalog_version_field(ver)
+    write_dated_snapshot(date_str)
 
     print(f"Updated: {prev or 'none'} -> {ver}")
     return 0

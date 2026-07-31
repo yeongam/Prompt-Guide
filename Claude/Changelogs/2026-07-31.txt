@@ -1,0 +1,80 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-07-31 (routine: daily 00:00 sync)
+Version : 2.1.129 -> 2.1.220 (74 upstream releases)
+Source  : anthropics/claude-code (CHANGELOG.md, main branch)
+============================================================
+
+[추가된 스킬 / Added Skills]
+  code-review     /code-review    - background-subagent review of working diff (v2.1.218)
+  deep-research   /deep-research  - manual-only multi-source research pass (v2.1.218)
+
+[격차 보완 / Gap-filled — pre-existing, missing from catalog]
+  commit-push-pr  /commit-push-pr - commit+push+PR chain, now auto-allows pushDefault remote,
+                                     posts PR URL to Slack via MCP if configured
+  autofix-pr      /autofix-pr     - auto-fixes failing PR checks; worktree-path bug fixed v2.1.161
+
+[수정된 스킬 / Modified]
+  claude-api      models block refreshed: opus->claude-opus-5 (was 4-7, now default Opus,
+                   1M ctx, fast mode $10/$50 per Mtok), sonnet->claude-sonnet-5,
+                   added fable->claude-fable-5, opus_prior->claude-opus-4-8 kept for reference
+
+[신규 훅/설정/환경변수 / New hooks, settings, env vars]
+  Hook     DirectoryAdded              - fires after /add-dir / register_repo_root (v2.1.219)
+  Setting  sandbox.network.strictAllowlist - deny non-allowlisted hosts w/o prompting (v2.1.219)
+  Setting  disableBundledSkills        - hide bundled skills/commands from model (v2.1.169)
+  Setting  workflowSizeGuideline       - cap Workflow-tool agent count, default medium (v2.1.219)
+  Env      CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH, CLAUDE_CODE_SUBAGENT_MODEL,
+           CLAUDE_CODE_SAFE_MODE, CLAUDE_PROJECT_DIR,
+           ANTHROPIC_DEFAULT_OPUS_MODEL, ANTHROPIC_DEFAULT_SONNET_MODEL
+
+  Not imported: ~60 other new env vars / CLI-only commands (/clear, /login, /model, /mcp,
+  /settings, /branch, /voice, etc.) surfaced in the 74-release window — these are core CLI
+  navigation/config commands, not coding/programming/doc-authoring skills, so they were left
+  out of SKILLS_CATALOG.yaml per the catalog's existing scope (skills with trigger+desc, not
+  the full CLI surface). Full upstream text is in CHANGELOG.md if a future sync needs them.
+
+[삭제된 스킬 / Removed Skills]
+  None. No skill in the existing catalog was deprecated or removed upstream in this range.
+
+[구조 최적화 / Structure]
+  - Introduced Claude/skills/YYYY-MM-DD/skills/ date-indexed snapshots (matches the
+    Claude/Changelogs <-> GPT/Changelogs and Claude/skills <-> GPT/skills convention).
+  - Snapshot policy differs from GPT/skills intentionally: a new dated directory is written
+    ONLY when the upstream version actually advances (checked via Claude/skills/.version),
+    not unconditionally every day. GPT/skills/* currently writes a full dated snapshot daily
+    regardless of change; Claude/skills avoids that to cut duplicate token/storage cost.
+  - Canonical state stays a single file, SKILLS_CATALOG.yaml; dated folders hold a read-only
+    copy of that file at sync time, not a re-expanded per-skill file set.
+
+[토큰 절감 / Token savings]
+  - Kept the single-YAML-catalog model instead of GPT's one-markdown-card-per-skill format:
+    ~74 releases of changes were collapsed into 6 new/updated catalog entries instead of
+    dozens of individual skill/hook cards.
+  - Raw changelog excerpt in this report capped at ~3000 chars (see scripts/update_skills.py);
+    full upstream text is never duplicated into the catalog itself.
+  - Descriptions kept to one line; "note:"/"added:" fields only where they carry real signal
+    (version provenance for audit), dropped otherwise.
+
+[충돌 해결 / Conflict resolution]
+  - CHANGELOGS_DIR moved from repo-root `changelogs/` (referenced by the old script but never
+    actually created) to `Claude/Changelogs/`, mirroring `GPT/Changelogs/` and this routine's
+    directory convention. No pre-existing files were at the old path, so no data was lost.
+  - scripts/update_skills.py's version parser previously only captured the single newest
+    "## x.y.z" section, silently dropping any intermediate releases when a sync was missed
+    (as happened here: 73 releases were skipped between the last recorded 2.1.129 and today).
+    Replaced with a range parser (parse_range) that walks every section back to the last
+    recorded version, so future gaps are captured in full rather than losing history.
+  - No naming collisions between new catalog keys and existing ones; all four new entries
+    (code-review, deep-research, commit-push-pr, autofix-pr) were previously absent.
+  - Fixed 3 pre-existing YAML syntax errors in SKILLS_CATALOG.yaml (unquoted colons inside
+    parenthetical asides on the effort/tui/focus entries) that made the file fail
+    yaml.safe_load; harmless in practice since the file was only ever regex-patched by
+    scripts/update_skills.py, but corrected for hygiene since a routine that claims to
+    "sync and validate" should leave the catalog machine-parseable.
+
+[적용 상태] SKILLS_CATALOG.yaml, .version, and dated snapshot updated; committed to
+           yeongam/Prompt-Guide on branch claude/zealous-sagan-511w9t.
+[Note]     Automated routine execution — no interactive confirmation requested for the
+           in-repo file edits, consistent with this repo's existing GPT sync convention
+           (see GPT/scripts/sync_openai_skills.py post-sync-changelog-guard hook).
