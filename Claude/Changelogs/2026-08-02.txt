@@ -1,0 +1,38 @@
+Prompt-Guide Claude Skills Changelog - 2026-08-02
+
+Snapshot: Claude/skills/2026-08-02/skills
+Catalog : Claude/skills/SKILLS_CATALOG.yaml
+Source  : https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md (verified fetch)
+
+[추가된 스킬]
+- none
+
+[수정된 스킬]
+- none (카탈로그 버전 메타데이터만 갱신됨)
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 유지: Claude/skills/2026-08-02/skills (catalog.json)
+- 변경 로그 저장 위치를 Claude/Changelogs로 정정 (scripts/update_skills.py 경로 수정)
+- 스킬 항목은 cmd/trigger/desc 3필드로 유지, 원문 changelog 전문은 복사하지 않고 요약만 저장
+
+[토큰 절감 관련 변경 사항]
+- 원문 changelog는 최신 버전 섹션만 발췌(최대 3000자)하여 저장, 전문 미보관
+- 카탈로그는 YAML 단일 소스 유지, 스킬별 중복 설명 없음
+
+[충돌 해결 내역]
+- 기존 SKILLS_CATALOG.yaml 항목과 신규 fetch 결과 간 커맨드명 중복 없음 확인
+- 날짜 스냅샷은 기존 스냅샷을 덮어쓰지 않고 신규 날짜 디렉토리에 기록
+
+[검증 메모]
+- 이번 실행에서 확인된 실제 변경은 카탈로그 version/updated 필드 갱신(2.1.129 -> 2.1.220)뿐입니다.
+- 원문 소스에는 버전 2.1.219~2.1.220 사이 주요 항목으로 "Opus 5가 기본 Opus 모델로 전환", "샌드박스 명령용 네트워크 허용목록",
+  "/add-dir 이후 발동하는 디렉터리 등록 훅", "헤드리스 실행 시 MCP 서버 오류 리포팅", "동적 워크플로우 기본 크기(15 에이전트 미만) 설정" 등이
+  명시되어 있으나, 이는 CLI/런타임 변경 사항이며 스킬(카탈로그) 목록 자체의 추가/삭제 항목은 아니므로 카탈로그 스킬 표에는 반영하지 않았습니다.
+- 기존 SKILLS_CATALOG.yaml 내 ultrareview/ultraplan/team-onboarding/effort/powerup/tui/focus/undo/usage/theme/color 항목은
+  이번 세션에서 공식 소스로 재검증하지 못했습니다. 이후 실행에서 출처 확인 전까지 신뢰도 낮음으로 표시해 두었습니다(UNVERIFIED 참고).
+
+[요약]
+- skills: added=0, modified=0, deleted=0, catalog_version_bumped=1 (2.1.129 -> 2.1.220)

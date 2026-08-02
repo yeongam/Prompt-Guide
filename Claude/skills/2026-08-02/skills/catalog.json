@@ -1,0 +1,104 @@
+{
+  "date": "2026-08-02",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "source_policy": "active Claude Code session skill registry (verified) + anthropics/claude-code CHANGELOG.md (verified fetch, version metadata only)",
+  "catalog_version": "2.1.220",
+  "skills": [
+    {
+      "slug": "init",
+      "cmd": "/init",
+      "category": "documentation",
+      "trigger": "user asks to initialize or document codebase",
+      "desc": "Generate CLAUDE.md with codebase architecture, conventions, commands"
+    },
+    {
+      "slug": "review",
+      "cmd": "/review",
+      "category": "coding",
+      "trigger": "user asks to review a GitHub pull request",
+      "desc": "Review a GitHub pull request"
+    },
+    {
+      "slug": "security-review",
+      "cmd": "/security-review",
+      "category": "coding",
+      "trigger": "user asks for a security audit of pending changes",
+      "desc": "Complete a security review of the pending changes on the current branch"
+    },
+    {
+      "slug": "simplify",
+      "cmd": "/simplify",
+      "category": "coding",
+      "trigger": "user asks to clean up or refactor changed code",
+      "desc": "Review changed code for reuse, simplification, efficiency, then apply fixes"
+    },
+    {
+      "slug": "claude-api",
+      "cmd": "/claude-api",
+      "category": "coding",
+      "trigger": "code imports the Anthropic SDK; user asks about Claude API features",
+      "desc": "Reference for Claude API / Anthropic SDK: model ids, pricing, tool use, caching, migration"
+    },
+    {
+      "slug": "mcp-builder",
+      "cmd": "/mcp-builder",
+      "category": "coding",
+      "trigger": "user is building an MCP server",
+      "desc": "Guide for creating high-quality MCP servers in Python (FastMCP) or Node/TypeScript"
+    },
+    {
+      "slug": "skill-creator",
+      "cmd": "/skill-creator",
+      "category": "coding",
+      "trigger": "user wants to create, edit, or optimize a skill",
+      "desc": "Create new skills, modify existing ones, run evals and benchmarks"
+    },
+    {
+      "slug": "session-start-hook",
+      "cmd": "/session-start-hook",
+      "category": "coding",
+      "trigger": "user wants test/lint runners on session start for web Claude Code",
+      "desc": "Create a SessionStart hook ensuring the project can run tests and linters"
+    },
+    {
+      "slug": "update-config",
+      "cmd": "/update-config",
+      "category": "coding",
+      "trigger": "automated behavior or permission/env-var requests",
+      "desc": "Configure the Claude Code harness via settings.json: hooks, permissions, env vars"
+    },
+    {
+      "slug": "fewer-permission-prompts",
+      "cmd": "/fewer-permission-prompts",
+      "category": "coding",
+      "trigger": "user wants fewer permission dialogs",
+      "desc": "Scan transcripts and add a prioritized Bash/MCP allowlist to project settings.json"
+    },
+    {
+      "slug": "docx",
+      "cmd": null,
+      "category": "documentation",
+      "trigger": "creating, reading, or editing Word (.docx/.dotx) documents",
+      "desc": "Create/edit Word documents: formatting, tables of contents, headers, tracked changes"
+    },
+    {
+      "slug": "pptx",
+      "cmd": null,
+      "category": "documentation",
+      "trigger": "creating, reading, or editing PowerPoint (.pptx/.potx) files",
+      "desc": "Create/edit slide decks, templates, layouts, speaker notes"
+    },
+    {
+      "slug": "xlsx",
+      "cmd": null,
+      "category": "documentation",
+      "trigger": "creating, reading, or editing spreadsheet files",
+      "desc": "Create/edit/clean .xlsx/.csv/.tsv spreadsheets, formulas, charts"
+    }
+  ],
+  "notes": [
+    "This snapshot lists skills verified as actually active in a live Claude Code session on 2026-08-02.",
+    "Unlike the OpenAI-side snapshots, Claude Code skills are not each backed by an individual public GitHub repo/commit, so no per-skill source_commit is fabricated here.",
+    "Entries present in Claude/skills/SKILLS_CATALOG.yaml but not re-verified this run (ultrareview, ultraplan, team-onboarding, effort, powerup, tui, focus, undo, usage, theme, color) are intentionally omitted from this snapshot pending source verification."
+  ]
+}

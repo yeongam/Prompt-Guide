@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.220
+updated: 2026-08-02
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -62,6 +62,9 @@ skills:
       sonnet: claude-sonnet-4-6
       haiku: claude-haiku-4-5-20251001
 
+  # NOTE (2026-08-02 sync): entries below this line (ultrareview .. color) could not be
+  # re-verified against an official Anthropic source this run. Treat as UNVERIFIED until
+  # confirmed; see Claude/Changelogs/2026-08-02.txt.
   ultrareview:
     cmd: /ultrareview [PR#]
     trigger: user says "ultrareview" or wants multi-agent review
