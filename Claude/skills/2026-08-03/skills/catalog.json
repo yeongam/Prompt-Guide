@@ -1,0 +1,27 @@
+{
+  "date": "2026-08-03",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "source_policy": "Claude Code built-in skill listing (session-scoped) + anthropics/claude-code public CHANGELOG.md for CLI version context",
+  "cli_version_reference": {
+    "source": "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md",
+    "latest_version": "2.1.220",
+    "previous_tracked_version": "2.1.129"
+  },
+  "skills": [
+    { "slug": "mcp-builder", "name": "MCP Server Builder", "hash": "27afc814c5a19150", "category": "programming" },
+    { "slug": "docx", "name": "Word Document Authoring", "hash": "e9470b3ae3f353e7", "category": "documentation" },
+    { "slug": "pdf", "name": "PDF Manipulation", "hash": "ad1372ab868e8ec7", "category": "documentation" },
+    { "slug": "pptx", "name": "PowerPoint Deck Authoring", "hash": "462e09b2c8195da3", "category": "documentation" },
+    { "slug": "xlsx", "name": "Spreadsheet Authoring", "hash": "d0df435fcfe79d4d", "category": "documentation" },
+    { "slug": "web-artifacts-builder", "name": "Web Artifacts Builder", "hash": "5ee124fd6016739f", "category": "programming" },
+    { "slug": "skill-creator", "name": "Skill Creator", "hash": "d00663d465297964", "category": "programming" },
+    { "slug": "run", "name": "App Launch and Verification", "hash": "ba61293d44f36be9", "category": "programming" },
+    { "slug": "dataviz", "name": "Data Visualization", "hash": "76432db579536ec8", "category": "programming" },
+    { "slug": "artifact-design", "name": "Artifact Design Fundamentals", "hash": "f744b901a7651194", "category": "programming" },
+    { "slug": "artifact-capabilities", "name": "Artifact Runtime Capabilities", "hash": "b65614711629a632", "category": "programming" }
+  ],
+  "excluded_non_coding_skills": [
+    "morning", "internal-comms", "brand-guidelines", "theme-factory"
+  ],
+  "excluded_reason": "Outside coding/programming/documentation scope per sync rule; not added to this snapshot"
+}

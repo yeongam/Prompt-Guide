@@ -1,0 +1,59 @@
+Prompt-Guide Claude Skills Changelog - 2026-08-03
+
+Snapshot: Claude/skills/2026-08-03/skills
+Catalog : Claude/skills/SKILLS_CATALOG.yaml
+Source  : anthropics/claude-code CHANGELOG.md (public, CLI version context)
+          + Claude Code built-in skill listing (session-scoped, coding/programming/docs subset)
+
+[추가된 스킬]
+- mcp-builder (programming)
+- docx (documentation)
+- pdf (documentation)
+- pptx (documentation)
+- xlsx (documentation)
+- web-artifacts-builder (programming)
+- skill-creator (programming)
+- run (programming)
+- dataviz (programming)
+- artifact-design (programming)
+- artifact-capabilities (programming)
+
+[수정된 스킬]
+- (catalog metadata only) version: 2.1.129 -> 2.1.220, updated: 2026-05-06 -> 2026-08-03
+- models.opus: claude-opus-4-7 -> claude-opus-5 (v2.1.219: 1M context, default Opus, /fast now covers Opus 5 + Opus 4.8)
+- 기존 스킬 항목(init/review/security-review/simplify/session-start-hook/update-config/
+  keybindings-help/fewer-permission-prompts/loop/claude-api 등)은 변경 없이 유지
+
+[삭제된 스킬]
+- none (기존 카탈로그 항목 전부 유지 - 안정성 우선 원칙)
+
+[검토 후 미포함 (범위 외)]
+- morning, internal-comms, brand-guidelines, theme-factory
+  -> 코딩/프로그래밍/문서 작업 범주에 해당하지 않아 이번 동기화에서 제외
+
+[추가된 훅/설정]
+- DirectoryAdded hook (v2.1.219): /add-dir 또는 SDK register_repo_root 시 발생
+- sandbox.network.strictAllowlist 설정 (v2.1.219): 비허용 호스트 자동 차단
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 도입: Claude/skills/2026-08-03/skills (GPT/skills/<date>/skills 규칙과 동일)
+- 각 스킬 카드: trigger, procedure, output, token_policy, compatibility로 경량화 (GPT 카드 포맷과 통일)
+- catalog.json에 슬러그/해시/카테고리만 저장, 원문 비저장으로 스냅샷 경량화
+- 기존 단일 SKILLS_CATALOG.yaml은 마스터 카탈로그로 유지 (하위 호환; scripts/update_skills.py 및
+  daily-skill-update.yml 워크플로우에 영향 없음)
+
+[토큰 절감 관련 변경 사항]
+- 스킬 카드 설명은 한 줄 요약 + 5단계 이하 절차로 제한
+- 원문 문서 대신 실제 세션 스킬 설명을 압축 인용 (긴 원문 복사 없음)
+- catalog.json은 메타데이터(슬러그/해시/카테고리)만 포함, 본문 중복 저장 없음
+
+[충돌 해결 내역]
+- 신규 슬러그 11개 모두 기존 카탈로그(SKILLS_CATALOG.yaml) 슬러그와 충돌 없음 확인
+- 기존 날짜 스냅샷 없음 (Claude 최초 날짜/skills 스냅샷) - 덮어쓰기 대상 없음
+- 마스터 카탈로그와 날짜 스냅샷 간 슬러그 정합성 확인 (11개 전부 양쪽에 존재)
+
+[요약]
+- skills: added=11, modified=0(content)/1(metadata version bump), deleted=0
+- hooks: added=1, modified=0, deleted=0
+- settings: added=1, modified=0, deleted=0
+- models: modified=1 (opus 4.7 -> 5)

@@ -1,8 +1,9 @@
 # Claude Code Skills Catalog
-# Source: anthropics/claude-code (public)
+# Source: anthropics/claude-code (public) + built-in skill listing (session-scoped)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+# Dated skill snapshots: Claude/skills/YYYY-MM-DD/skills/ (see 2026-08-03 for latest)
+version: 2.1.220
+updated: 2026-08-03
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -81,7 +82,7 @@ skills:
   effort:
     cmd: /effort
     trigger: user wants to adjust effort/quality level
-    desc: Interactive slider for session effort level (also: CLAUDE_EFFORT env var)
+    desc: "Interactive slider for session effort level (also: CLAUDE_EFFORT env var)"
 
   powerup:
     cmd: /powerup
@@ -91,12 +92,12 @@ skills:
   tui:
     cmd: /tui
     trigger: rendering looks flickery or user wants full-screen mode
-    desc: Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)
+    desc: "Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)"
 
   focus:
     cmd: /focus
     trigger: user wants compact view of conversation
-    desc: Toggle focus view showing only: prompt + tool summary + final response
+    desc: "Toggle focus view showing only: prompt + tool summary + final response"
 
   undo:
     cmd: /undo
@@ -117,6 +118,72 @@ skills:
     cmd: /color
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
+
+  mcp-builder:
+    cmd: /mcp-builder
+    trigger: user is building an MCP server (Python FastMCP / Node TS SDK)
+    desc: Guide for high-quality MCP servers exposing external APIs as LLM tools
+    added: 2026-08-03
+
+  docx:
+    cmd: /docx
+    trigger: user works with .docx/.dotx files
+    desc: Create, read, or edit Word documents/templates; TOC, tracked changes
+    added: 2026-08-03
+
+  pdf:
+    cmd: /pdf
+    trigger: user works with .pdf files
+    desc: Extract, merge/split, rotate, watermark, form-fill, encrypt, OCR PDFs
+    added: 2026-08-03
+
+  pptx:
+    cmd: /pptx
+    trigger: user works with .pptx/.potx files
+    desc: Create, read, or edit slide decks, templates, notes, comments
+    added: 2026-08-03
+
+  xlsx:
+    cmd: /xlsx
+    trigger: user works with .xlsx/.xlsm/.csv/.tsv files
+    desc: Open, edit, or create spreadsheets; formulas, formatting, charts
+    added: 2026-08-03
+
+  web-artifacts-builder:
+    cmd: /web-artifacts-builder
+    trigger: user needs a complex claude.ai artifact (state/routing/shadcn)
+    desc: Build multi-component HTML artifacts beyond a single-file scope
+    added: 2026-08-03
+
+  skill-creator:
+    cmd: /skill-creator
+    trigger: user wants to create, edit, or benchmark a skill
+    desc: Create/optimize skills; run triggering-accuracy evals
+    added: 2026-08-03
+
+  run:
+    cmd: /run
+    trigger: user wants to run/start/screenshot the app or verify a change live
+    desc: Launch app per project type; verify golden path and edge cases
+    added: 2026-08-03
+
+  dataviz:
+    cmd: /dataviz
+    trigger: before writing any chart/graph/plot/dashboard code
+    desc: Consistent, accessible chart design system; validated color palette
+    added: 2026-08-03
+
+  artifact-design:
+    cmd: /artifact-design
+    trigger: before writing any Artifact HTML/Markdown
+    desc: Calibrate design investment; theme-aware, responsive layout rules
+    added: 2026-08-03
+
+  artifact-capabilities:
+    cmd: /artifact-capabilities
+    trigger: artifact needs live data, shared state, or self-update behavior
+    desc: Declare/use supported runtime capabilities for published artifacts
+    added: 2026-08-03
 
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.
@@ -176,6 +243,12 @@ hooks:
     added: v2.1.95
     use: Custom permission escalation flows
 
+  DirectoryAdded:
+    fires: After /add-dir or SDK register_repo_root registers a new working dir mid-session
+    can_block: false
+    added: v2.1.219
+    use: Track/react to new directories added to the session
+
   hook_invoke_types:
     - type: shell          # shell command (default)
     - type: mcp_tool       # invoke MCP tool directly (added v2.1.118)
@@ -215,6 +288,11 @@ settings:
     desc: Block specific domains even when broader allowlists exist
     added: v2.1.85
 
+  sandbox.network.strictAllowlist:
+    type: bool
+    desc: Deny non-allowlisted hosts for sandboxed commands without prompting
+    added: v2.1.219
+
 # ─── ENV VARS ──────────────────────────────────────────────────────────────────
 env:
   CLAUDE_EFFORT: "Current effort level; usable in skill template strings as ${CLAUDE_EFFORT}"
@@ -228,7 +306,7 @@ env:
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
   default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
+  opus: claude-opus-5           # v2.1.219: now-default Opus; 1M context, fast mode $10/$50 per Mtok; replaces opus-4-7 in /fast
   sonnet: claude-sonnet-4-6
   haiku: claude-haiku-4-5-20251001
 
