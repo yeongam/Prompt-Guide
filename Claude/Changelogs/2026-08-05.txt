@@ -1,0 +1,57 @@
+Prompt-Guide Claude Skills Changelog - 2026-08-05
+
+Snapshot: Claude/skills/2026-08-05/skills
+Source: anthropics/claude-code (branch main), repo version 2.1.221
+
+[추가된 스킬]
+- agent-sdk-dev
+- claude-opus-4-5-migration
+- code-review
+- commit-commands
+- feature-dev
+- frontend-design
+- hookify
+- plugin-dev
+- pr-review-toolkit
+- ralph-wiggum
+- security-guidance
+
+[수정된 스킬]
+- none
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조로 이전: skills/2026-08-05/skills
+- 평면 SKILLS_CATALOG.yaml / .version 파일을 폐기하고 GPT 디렉토리와 동일한 YYYY-MM-DD/skills 규칙 적용
+- 각 스킬은 trigger, procedure, output, token_policy, compatibility로 경량화
+
+[토큰 절감 관련 변경 사항]
+- 긴 원문 설명 복사를 피하고 공식 레포 링크와 카테고리만 저장
+- 절차 항목은 4단계 이하로 제한, 요약은 320자 이하로 축약
+- 중복 설명 대신 공통 catalog.json으로 메타데이터 통합
+
+[충돌 해결 내역]
+- slug(plugin name) 기준으로 중복 스킬 통합
+- 기존 날짜 스냅샷은 덮어쓰지 않고 신규 날짜에 기록
+- 변경 감지는 hash 비교로 수행
+- 최초 마이그레이션: 이전 평면 카탈로그(Claude/skills/SKILLS_CATALOG.yaml, CLI 슬래시 명령 기준)와 이번 스냅샷(공식 marketplace.json 플러그인 기준)은 출처 범위가 다르므로 add/modify/delete 비교 대상에서 제외함
+
+[요약]
+- skills: added=11, modified=0, deleted=0, unchanged=0
+
+[검토 필요 사항 - 자동 적용하지 않음]
+- 이번 루틴은 요청받은 범위(Claude/skills, Claude/Changelogs)만 변경했으며,
+  .claude/settings.json, crontab, git hooks는 수정하지 않았습니다.
+- 리포지토리에는 이미 별도의 자동화 경로가 존재합니다:
+  scripts/update_skills.py, .github/workflows/daily-skill-update.yml
+  (브랜치 claude/zealous-sagan-FdaL5 대상), scripts/setup_local_cron.sh,
+  scripts/sync_changelogs.sh (브랜치 claude/kind-feynman-XQCh2 대상).
+- .claude/settings.json에는 Bash(crontab:*), Bash(curl:*) 등 광범위한 허용 목록과,
+  세션 종료(Stop) 시마다 changelogs/*.txt를 리포지토리 밖 로컬 경로
+  (/root/바탕화면/Claude-Text/Claude_skills)로 복사하는 훅이 이미 포함되어 있습니다.
+- setup_local_cron.sh를 실행하면 시스템 crontab에 매일 자정 동기화 작업이 등록됩니다.
+- 이 항목들은 권한 범위가 넓고(시스템 crontab 변경, 임의 curl 호출) 저장소 밖으로
+  파일을 복사하므로, 사용자 검토 없이 확장하거나 추가로 자동화하지 않았습니다.
+  현재 세션(claude/zealous-sagan-cehha2)에서는 그대로 두었습니다.

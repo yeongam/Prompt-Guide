@@ -1,0 +1,328 @@
+{
+  "date": "2026-08-05",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-08-05T00:15:45+09:00",
+  "skills": [
+    {
+      "category": "development",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "b2a286bd99c13610",
+      "name": "agent-sdk-dev",
+      "output": "Development kit for working with the Claude Agent SDK",
+      "procedure": [
+        "Confirm the task matches this plugin's stated purpose before invoking it.",
+        "Prefer the plugin's built-in agents/commands over ad hoc reimplementation.",
+        "Keep generated output scoped to the task at hand.",
+        "Verify results with the narrowest relevant check."
+      ],
+      "slug": "agent-sdk-dev",
+      "source": "https://github.com/anthropics/claude-code/tree/main/plugins/agent-sdk-dev",
+      "source_branch": "main",
+      "source_repo": "anthropics/claude-code",
+      "source_repo_version": "2.1.221",
+      "summary": "Development kit for working with the Claude Agent SDK",
+      "token_policy": [
+        "Do not copy upstream plugin documentation verbatim.",
+        "Return only decision-critical guidance.",
+        "Link to source instead of repeating long descriptions."
+      ],
+      "trigger": "Use for development work matching: Development kit for working with the Claude Agent SDK"
+    },
+    {
+      "category": "development",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "6b4a8947c5b3adfe",
+      "name": "claude-opus-4-5-migration",
+      "output": "Migrate your code and prompts from Sonnet 4.x and Opus 4.1 to Opus 4.5.",
+      "procedure": [
+        "Confirm the task matches this plugin's stated purpose before invoking it.",
+        "Prefer the plugin's built-in agents/commands over ad hoc reimplementation.",
+        "Keep generated output scoped to the task at hand.",
+        "Verify results with the narrowest relevant check."
+      ],
+      "slug": "claude-opus-4-5-migration",
+      "source": "https://github.com/anthropics/claude-code/tree/main/plugins/claude-opus-4-5-migration",
+      "source_branch": "main",
+      "source_repo": "anthropics/claude-code",
+      "source_repo_version": "2.1.221",
+      "summary": "Migrate your code and prompts from Sonnet 4.x and Opus 4.1 to Opus 4.5.",
+      "token_policy": [
+        "Do not copy upstream plugin documentation verbatim.",
+        "Return only decision-critical guidance.",
+        "Link to source instead of repeating long descriptions."
+      ],
+      "trigger": "Use for development work matching: Migrate your code and prompts from Sonnet 4.x and Opus 4.1 to Opus 4.5."
+    },
+    {
+      "category": "productivity",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "64a76b04bcef51f3",
+      "name": "code-review",
+      "output": "Automated code review for pull requests using multiple specialized agents with confidence-based scoring to filter false positives",
+      "procedure": [
+        "Confirm the task matches this plugin's stated purpose before invoking it.",
+        "Prefer the plugin's built-in agents/commands over ad hoc reimplementation.",
+        "Keep generated output scoped to the task at hand.",
+        "Verify results with the narrowest relevant check."
+      ],
+      "slug": "code-review",
+      "source": "https://github.com/anthropics/claude-code/tree/main/plugins/code-review",
+      "source_branch": "main",
+      "source_repo": "anthropics/claude-code",
+      "source_repo_version": "2.1.221",
+      "summary": "Automated code review for pull requests using multiple specialized agents with confidence-based scoring to filter false positives",
+      "token_policy": [
+        "Do not copy upstream plugin documentation verbatim.",
+        "Return only decision-critical guidance.",
+        "Link to source instead of repeating long descriptions."
+      ],
+      "trigger": "Use for productivity work matching: Automated code review for pull requests using multiple specialized agents with confidence-based scoring to filter false positives"
+    },
+    {
+      "category": "productivity",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "4d56d0a7bef878d9",
+      "name": "commit-commands",
+      "output": "Commands for git commit workflows including commit, push, and PR creation",
+      "procedure": [
+        "Confirm the task matches this plugin's stated purpose before invoking it.",
+        "Prefer the plugin's built-in agents/commands over ad hoc reimplementation.",
+        "Keep generated output scoped to the task at hand.",
+        "Verify results with the narrowest relevant check."
+      ],
+      "slug": "commit-commands",
+      "source": "https://github.com/anthropics/claude-code/tree/main/plugins/commit-commands",
+      "source_branch": "main",
+      "source_repo": "anthropics/claude-code",
+      "source_repo_version": "2.1.221",
+      "summary": "Commands for git commit workflows including commit, push, and PR creation",
+      "token_policy": [
+        "Do not copy upstream plugin documentation verbatim.",
+        "Return only decision-critical guidance.",
+        "Link to source instead of repeating long descriptions."
+      ],
+      "trigger": "Use for productivity work matching: Commands for git commit workflows including commit, push, and PR creation"
+    },
+    {
+      "category": "development",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "17293c2e69145784",
+      "name": "feature-dev",
+      "output": "Comprehensive feature development workflow with specialized agents for codebase exploration, architecture design, and quality review",
+      "procedure": [
+        "Confirm the task matches this plugin's stated purpose before invoking it.",
+        "Prefer the plugin's built-in agents/commands over ad hoc reimplementation.",
+        "Keep generated output scoped to the task at hand.",
+        "Verify results with the narrowest relevant check."
+      ],
+      "slug": "feature-dev",
+      "source": "https://github.com/anthropics/claude-code/tree/main/plugins/feature-dev",
+      "source_branch": "main",
+      "source_repo": "anthropics/claude-code",
+      "source_repo_version": "2.1.221",
+      "summary": "Comprehensive feature development workflow with specialized agents for codebase exploration, architecture design, and quality review",
+      "token_policy": [
+        "Do not copy upstream plugin documentation verbatim.",
+        "Return only decision-critical guidance.",
+        "Link to source instead of repeating long descriptions."
+      ],
+      "trigger": "Use for development work matching: Comprehensive feature development workflow with specialized agents for codebase exploration, architecture design, and quality review"
+    },
+    {
+      "category": "development",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "d3fc240d392453b3",
+      "name": "frontend-design",
+      "output": "Create distinctive, production-grade frontend interfaces with high design quality. Generates creative, polished code that avoids generic AI aesthetics.",
+      "procedure": [
+        "Confirm the task matches this plugin's stated purpose before invoking it.",
+        "Prefer the plugin's built-in agents/commands over ad hoc reimplementation.",
+        "Keep generated output scoped to the task at hand.",
+        "Verify results with the narrowest relevant check."
+      ],
+      "slug": "frontend-design",
+      "source": "https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design",
+      "source_branch": "main",
+      "source_repo": "anthropics/claude-code",
+      "source_repo_version": "2.1.221",
+      "summary": "Create distinctive, production-grade frontend interfaces with high design quality. Generates creative, polished code that avoids generic AI aesthetics.",
+      "token_policy": [
+        "Do not copy upstream plugin documentation verbatim.",
+        "Return only decision-critical guidance.",
+        "Link to source instead of repeating long descriptions."
+      ],
+      "trigger": "Use for development work matching: Create distinctive, production-grade frontend interfaces with high design quality. Generates creative, polished code that avoids generic AI."
+    },
+    {
+      "category": "productivity",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "49d18ba6d6175b24",
+      "name": "hookify",
+      "output": "Easily create custom hooks to prevent unwanted behaviors by analyzing conversation patterns or from explicit instructions. Define rules via simple markdown files.",
+      "procedure": [
+        "Confirm the task matches this plugin's stated purpose before invoking it.",
+        "Prefer the plugin's built-in agents/commands over ad hoc reimplementation.",
+        "Keep generated output scoped to the task at hand.",
+        "Verify results with the narrowest relevant check."
+      ],
+      "slug": "hookify",
+      "source": "https://github.com/anthropics/claude-code/tree/main/plugins/hookify",
+      "source_branch": "main",
+      "source_repo": "anthropics/claude-code",
+      "source_repo_version": "2.1.221",
+      "summary": "Easily create custom hooks to prevent unwanted behaviors by analyzing conversation patterns or from explicit instructions. Define rules via simple markdown files.",
+      "token_policy": [
+        "Do not copy upstream plugin documentation verbatim.",
+        "Return only decision-critical guidance.",
+        "Link to source instead of repeating long descriptions."
+      ],
+      "trigger": "Use for productivity work matching: Easily create custom hooks to prevent unwanted behaviors by analyzing conversation patterns or from explicit instructions. Define rules via."
+    },
+    {
+      "category": "development",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "fb8d35e72e1a7c2d",
+      "name": "plugin-dev",
+      "output": "Comprehensive toolkit for developing Claude Code plugins. Includes 7 expert skills covering hooks, MCP integration, commands, agents, and best practices. AI-assisted plugin creation and validation.",
+      "procedure": [
+        "Confirm the task matches this plugin's stated purpose before invoking it.",
+        "Prefer the plugin's built-in agents/commands over ad hoc reimplementation.",
+        "Keep generated output scoped to the task at hand.",
+        "Verify results with the narrowest relevant check."
+      ],
+      "slug": "plugin-dev",
+      "source": "https://github.com/anthropics/claude-code/tree/main/plugins/plugin-dev",
+      "source_branch": "main",
+      "source_repo": "anthropics/claude-code",
+      "source_repo_version": "2.1.221",
+      "summary": "Comprehensive toolkit for developing Claude Code plugins. Includes 7 expert skills covering hooks, MCP integration, commands, agents, and best practices. AI-assisted plugin creation and validation.",
+      "token_policy": [
+        "Do not copy upstream plugin documentation verbatim.",
+        "Return only decision-critical guidance.",
+        "Link to source instead of repeating long descriptions."
+      ],
+      "trigger": "Use for development work matching: Comprehensive toolkit for developing Claude Code plugins. Includes 7 expert skills covering hooks, MCP integration, commands, agents, and b."
+    },
+    {
+      "category": "productivity",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "df12e50b7d8311fa",
+      "name": "pr-review-toolkit",
+      "output": "Comprehensive PR review agents specializing in comments, tests, error handling, type design, code quality, and code simplification",
+      "procedure": [
+        "Confirm the task matches this plugin's stated purpose before invoking it.",
+        "Prefer the plugin's built-in agents/commands over ad hoc reimplementation.",
+        "Keep generated output scoped to the task at hand.",
+        "Verify results with the narrowest relevant check."
+      ],
+      "slug": "pr-review-toolkit",
+      "source": "https://github.com/anthropics/claude-code/tree/main/plugins/pr-review-toolkit",
+      "source_branch": "main",
+      "source_repo": "anthropics/claude-code",
+      "source_repo_version": "2.1.221",
+      "summary": "Comprehensive PR review agents specializing in comments, tests, error handling, type design, code quality, and code simplification",
+      "token_policy": [
+        "Do not copy upstream plugin documentation verbatim.",
+        "Return only decision-critical guidance.",
+        "Link to source instead of repeating long descriptions."
+      ],
+      "trigger": "Use for productivity work matching: Comprehensive PR review agents specializing in comments, tests, error handling, type design, code quality, and code simplification"
+    },
+    {
+      "category": "development",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "8f11a877b275a488",
+      "name": "ralph-wiggum",
+      "output": "Interactive self-referential AI loops for iterative development. Claude works on the same task repeatedly, seeing its previous work, until completion.",
+      "procedure": [
+        "Confirm the task matches this plugin's stated purpose before invoking it.",
+        "Prefer the plugin's built-in agents/commands over ad hoc reimplementation.",
+        "Keep generated output scoped to the task at hand.",
+        "Verify results with the narrowest relevant check."
+      ],
+      "slug": "ralph-wiggum",
+      "source": "https://github.com/anthropics/claude-code/tree/main/plugins/ralph-wiggum",
+      "source_branch": "main",
+      "source_repo": "anthropics/claude-code",
+      "source_repo_version": "2.1.221",
+      "summary": "Interactive self-referential AI loops for iterative development. Claude works on the same task repeatedly, seeing its previous work, until completion.",
+      "token_policy": [
+        "Do not copy upstream plugin documentation verbatim.",
+        "Return only decision-critical guidance.",
+        "Link to source instead of repeating long descriptions."
+      ],
+      "trigger": "Use for development work matching: Interactive self-referential AI loops for iterative development. Claude works on the same task repeatedly, seeing its previous work, until."
+    },
+    {
+      "category": "security",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "818531a1512da2d8",
+      "name": "security-guidance",
+      "output": "Security reminder hook that warns about potential security issues when editing files, including command injection, XSS, and unsafe code patterns",
+      "procedure": [
+        "Confirm the task matches this plugin's stated purpose before invoking it.",
+        "Prefer the plugin's built-in agents/commands over ad hoc reimplementation.",
+        "Keep generated output scoped to the task at hand.",
+        "Verify results with the narrowest relevant check."
+      ],
+      "slug": "security-guidance",
+      "source": "https://github.com/anthropics/claude-code/tree/main/plugins/security-guidance",
+      "source_branch": "main",
+      "source_repo": "anthropics/claude-code",
+      "source_repo_version": "2.1.221",
+      "summary": "Security reminder hook that warns about potential security issues when editing files, including command injection, XSS, and unsafe code patterns",
+      "token_policy": [
+        "Do not copy upstream plugin documentation verbatim.",
+        "Return only decision-critical guidance.",
+        "Link to source instead of repeating long descriptions."
+      ],
+      "trigger": "Use for security work matching: Security reminder hook that warns about potential security issues when editing files, including command injection, XSS, and unsafe code pat."
+    }
+  ],
+  "source_policy": "official anthropics/claude-code GitHub repository only",
+  "source_repo_version": "2.1.221"
+}
