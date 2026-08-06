@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.223
+updated: 2026-08-06
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -12,10 +12,11 @@ skills:
     trigger: user asks to initialize or document codebase
     desc: Generate CLAUDE.md with codebase architecture, conventions, commands
 
-  review:
-    cmd: /review
-    trigger: user asks to review PR or branch
-    desc: Multi-pass PR review; checks logic, style, security, tests
+  code-review:
+    cmd: /code-review [level] [pr#]
+    trigger: user asks to review PR, branch, or current diff
+    desc: Multi-pass review; checks logic, style, security, tests
+    note: "/review is now an alias; reuses last-typed effort level; 'ultra' runs a deep cloud review"
 
   security-review:
     cmd: /security-review

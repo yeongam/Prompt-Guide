@@ -1,0 +1,137 @@
+{
+  "date": "2026-08-06",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-08-06T15:30:21+00:00",
+  "skills": [
+    {
+      "category": "programming",
+      "cmd": "/code-review [level] [pr#]",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Do not modify GPT or Gemini directories."
+      ],
+      "hash": "ce3959a1aad3d4a6",
+      "name": "Code Review",
+      "notes": [
+        "Renamed from /review; reuses last-typed effort level; `ultra` runs a deep cloud review."
+      ],
+      "output": "Multi-pass review: logic, style, security, tests. `/review` is now an alias.",
+      "slug": "code-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.223",
+      "token_policy": [
+        "One-line trigger and output; no upstream docs copied.",
+        "Reference CHANGELOG version instead of restating history."
+      ],
+      "trigger": "user asks to review the current diff or a PR"
+    },
+    {
+      "category": "documentation",
+      "cmd": "/init",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Do not modify GPT or Gemini directories."
+      ],
+      "hash": "e0ca1e8e4b05e7fe",
+      "name": "Init",
+      "notes": [],
+      "output": "Generates CLAUDE.md with architecture, conventions, and commands.",
+      "slug": "init",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.223",
+      "token_policy": [
+        "One-line trigger and output; no upstream docs copied.",
+        "Reference CHANGELOG version instead of restating history."
+      ],
+      "trigger": "user asks to initialize or document a codebase"
+    },
+    {
+      "category": "programming",
+      "cmd": "/security-review",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Do not modify GPT or Gemini directories."
+      ],
+      "hash": "0c57f29ee21c3cb7",
+      "name": "Security Review",
+      "notes": [],
+      "output": "OWASP-focused audit of pending diffs; risk-ranked findings.",
+      "slug": "security-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.223",
+      "token_policy": [
+        "One-line trigger and output; no upstream docs copied.",
+        "Reference CHANGELOG version instead of restating history."
+      ],
+      "trigger": "user asks for a security audit of pending changes"
+    },
+    {
+      "category": "programming",
+      "cmd": "/simplify",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Do not modify GPT or Gemini directories."
+      ],
+      "hash": "a8c66089b219239d",
+      "name": "Simplify",
+      "notes": [],
+      "output": "Reviews changed code for reuse/quality/efficiency, then fixes issues.",
+      "slug": "simplify",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.223",
+      "token_policy": [
+        "One-line trigger and output; no upstream docs copied.",
+        "Reference CHANGELOG version instead of restating history."
+      ],
+      "trigger": "user asks to clean up or refactor changed code"
+    },
+    {
+      "category": "programming",
+      "cmd": "/claude-api",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Do not modify GPT or Gemini directories."
+      ],
+      "hash": "da41cab389f5b7ec",
+      "name": "Claude API",
+      "notes": [],
+      "output": "Build/debug Claude API apps; prompt caching, tool use, model migration.",
+      "slug": "claude-api",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.223",
+      "token_policy": [
+        "One-line trigger and output; no upstream docs copied.",
+        "Reference CHANGELOG version instead of restating history."
+      ],
+      "trigger": "code imports the Anthropic SDK; user asks about Claude API features"
+    },
+    {
+      "category": "documentation",
+      "cmd": "/session-start-hook",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Do not modify GPT or Gemini directories."
+      ],
+      "hash": "35945411c2e4240b",
+      "name": "Session Start Hook",
+      "notes": [],
+      "output": "Creates a SessionStart hook ensuring the project can run tests and linters.",
+      "slug": "session-start-hook",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.223",
+      "token_policy": [
+        "One-line trigger and output; no upstream docs copied.",
+        "Reference CHANGELOG version instead of restating history."
+      ],
+      "trigger": "user wants test/lint runners on session start (web Claude Code)"
+    }
+  ],
+  "source_policy": "official anthropics/claude-code GitHub repository only",
+  "source_version": "2.1.223"
+}

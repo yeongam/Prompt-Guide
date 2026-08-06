@@ -1,0 +1,41 @@
+Prompt-Guide Claude Skills Changelog - 2026-08-06
+
+Snapshot: Claude/skills/2026-08-06/skills
+Source: official anthropics/claude-code repository (version 2.1.223)
+
+[추가된 스킬]
+- claude-api
+- code-review
+- init
+- security-review
+- session-start-hook
+- simplify
+
+[수정된 스킬]
+- none
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 유지: skills/2026-08-06/skills
+- 각 스킬은 slug, cmd, trigger, output, token_policy, compatibility로 경량화
+- 공통 catalog.json으로 메타데이터 통합, 카드 본문은 1~2문장 유지
+
+[토큰 절감 관련 변경 사항]
+- 원문 CHANGELOG 전체 복사 대신 관련 절만 축약 인용
+- 카드마다 반복 설명 대신 공식 레포 링크와 버전만 기록
+- 코딩/프로그래밍/문서 작업과 무관한 항목은 카탈로그에서 제외
+
+[충돌 해결 내역]
+- slug 기준으로 중복 스킬 통합, 유일하지 않으면 실패 처리
+- 기존 날짜 스냅샷은 덮어쓰지 않고 신규 날짜 폴더에 기록
+- 변경 감지는 카드 hash 비교로 수행
+- 기존 Claude/skills/SKILLS_CATALOG.yaml, .version 파일과 공존 (하위 호환 유지)
+
+[관련 원문 변경사항 요약]
+
+## 2.1.223 - Added owner wildcard entries (`"owner/*"`) to the `strictKnownMarketplaces` and `blockedMarketplaces` managed settings for allowing or blocking all marketplace repos under a GitHub org - Added a warning when workflow agents, forked skills, slash commands, or resumed background agents' requested subagent model is restricted and the parent model runs instead - Added a `/teleport` hint in cloud sessions showing how to continue locally with `claude --teleport <session id>` - Fixed a Bash permission bypass where a crafted command could hide parts of itself from permission checks - Fixed permission prompts so commands padded with tabs or invisible Unicode can no longer hide part of the command from the approval dialog - Fixed workflow scripts being able to use dynamic `import()` to run code outside the workflow sandbox - Fixed a permission gap where an agent definition's `bypassPermissions` mode ignored the org bypass-permissions disable policy - Fixed resuming a session after a mid-session `/cd` coming back empty - Fixed gateway model discovery hiding Claude models registered under provider-prefixed IDs such as `vertex_ai/claude-*` or `bedrock/anthropic.claude-*` - Fixed `.
+
+[요약]
+- skills: added=6, modified=0, deleted=0, unchanged=0
