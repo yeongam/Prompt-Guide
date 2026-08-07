@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.224
+updated: 2026-08-07
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -15,7 +15,20 @@ skills:
   review:
     cmd: /review
     trigger: user asks to review PR or branch
-    desc: Multi-pass PR review; checks logic, style, security, tests
+    desc: Alias of /code-review; fast single-pass review of diff or PR
+    added: v2.1.223
+
+  code-review:
+    cmd: /code-review [level] [pr#]
+    trigger: user asks for a correctness/bug review of a diff or PR
+    desc: Effort-leveled review (ultra=cloud multi-agent); --fix applies findings, --comment posts inline PR comments
+    added: v2.1.147
+
+  dataviz:
+    cmd: /dataviz
+    trigger: before creating any chart, graph, dashboard, or data viz
+    desc: Chart/dashboard design guidance with runnable OKLab color-palette validator
+    added: v2.1.198
 
   security-review:
     cmd: /security-review
@@ -57,9 +70,10 @@ skills:
     cmd: /claude-api
     trigger: code imports anthropic SDK; user asks about Claude API features
     desc: Build/debug Claude API apps; prompt caching, tool use, model migration
+    subcommands: [prompt-audit]
     models:
-      opus: claude-opus-4-7
-      sonnet: claude-sonnet-4-6
+      opus: claude-opus-5
+      sonnet: claude-sonnet-5
       haiku: claude-haiku-4-5-20251001
 
   ultrareview:
@@ -81,7 +95,7 @@ skills:
   effort:
     cmd: /effort
     trigger: user wants to adjust effort/quality level
-    desc: Interactive slider for session effort level (also: CLAUDE_EFFORT env var)
+    desc: "Interactive slider for session effort level (also: CLAUDE_EFFORT env var)"
 
   powerup:
     cmd: /powerup
@@ -91,12 +105,12 @@ skills:
   tui:
     cmd: /tui
     trigger: rendering looks flickery or user wants full-screen mode
-    desc: Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)
+    desc: "Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)"
 
   focus:
     cmd: /focus
     trigger: user wants compact view of conversation
-    desc: Toggle focus view showing only: prompt + tool summary + final response
+    desc: "Toggle focus view showing only: prompt + tool summary + final response"
 
   undo:
     cmd: /undo
@@ -176,6 +190,18 @@ hooks:
     added: v2.1.95
     use: Custom permission escalation flows
 
+  DirectoryAdded:
+    fires: After /add-dir or SDK register_repo_root adds a dir mid-session
+    can_block: false
+    added: v2.1.221
+    use: React to new working-directory roots
+
+  MessageDisplay:
+    fires: As assistant message text is displayed
+    can_block: false
+    added: v2.1.219
+    use: Transform or hide assistant message text on display
+
   hook_invoke_types:
     - type: shell          # shell command (default)
     - type: mcp_tool       # invoke MCP tool directly (added v2.1.118)
@@ -227,9 +253,9 @@ env:
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
-  default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
-  sonnet: claude-sonnet-4-6
+  default: claude-sonnet-5
+  opus: claude-opus-5          # Fast mode available; Max subscribers only auto mode
+  sonnet: claude-sonnet-5
   haiku: claude-haiku-4-5-20251001
 
 # ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────
@@ -238,3 +264,6 @@ models:
 # - YAML over JSON/Markdown: ~30% fewer tokens for structured data
 # - Descriptions capped at one line; examples only where non-obvious
 # - "added:" version tags kept for audit; remove if tokens are critical
+# - 2.1.129→2.1.224 gap: ~15 new settings / ~20 new env vars omitted here as
+#   non-skill noise (see Claude/Changelogs/2026-08-07.txt); only skill and
+#   hook additions were merged into this catalog

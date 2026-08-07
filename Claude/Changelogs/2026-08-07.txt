@@ -1,0 +1,87 @@
+Prompt-Guide Claude Skills Changelog - 2026-08-07
+
+Snapshot   : Claude/skills/2026-08-07/skills
+Catalog    : Claude/skills/SKILLS_CATALOG.yaml
+Source     : https://github.com/anthropics/claude-code (CHANGELOG.md, main)
+Version    : 2.1.129 -> 2.1.224 (last sync was 2026-05-06; ~93 releases behind)
+
+[추가된 스킬]
+- code-review  (/code-review [level] [pr#], v2.1.147) - effort-leveled correctness
+  review of a diff/PR; ultra=cloud multi-agent, --fix applies findings, --comment
+  posts inline PR comments
+- dataviz      (/dataviz, v2.1.198) - chart/dashboard design guidance with a
+  runnable OKLab color-palette validator
+
+[수정된 스킬]
+- review       - now documented as an alias of /code-review (v2.1.223) instead
+  of its own multi-pass engine; description updated to match
+- claude-api   - added `prompt-audit` subcommand (v2.1.221); model refs bumped
+  opus 4-7 -> opus 5, sonnet 4-6 -> sonnet 5 (confirmed current model IDs)
+
+[삭제된 스킬]
+- none (기존 스킬 24종 모두 유지 - 안정성 우선 원칙에 따라 삭제 없음)
+
+[추가/수정된 훅]
+- DirectoryAdded (v2.1.221) - fires after /add-dir or SDK register_repo_root
+- MessageDisplay (v2.1.219) - transforms/hides assistant message text on display
+
+[최적화된 구조]
+- Claude/skills/ 에 GPT/skills/ 와 동일한 YYYY-MM-DD/skills 디렉토리 규칙 도입
+  (이번이 첫 dated snapshot; 이전에는 SKILLS_CATALOG.yaml 단일 파일만 존재)
+- Claude/skills/SKILLS_CATALOG.yaml 을 canonical 소스로 유지, 날짜별 스냅샷은
+  diff/이력 추적용으로 병행 관리 (scripts/sync_claude_skills.py)
+- Claude/Changelogs/ 디렉토리 신설 (기존 미존재 확인 후 생성, 중복 생성 없음)
+
+[토큰 절감 관련 변경 사항]
+- 스킬 카드는 slug/cmd/trigger/desc(1줄)/source/hash 만 유지, 원문 changelog
+  본문(90여개 버전, ~5,300줄)은 복사하지 않고 요약만 반영
+- 2.1.129→2.1.224 구간에서 발견된 신규 setting ~15개, env var ~20개는 스킬이
+  아니므로 catalog에 미반영 (생략 사실은 SKILLS_CATALOG.yaml 하단 주석에 명시,
+  원문은 위 소스 링크에서 확인 가능 - 무음 삭제 없음)
+- catalog.json 은 카드별 sha256 해시를 포함해 향후 실행에서 변경분만 diff
+
+[충돌 해결 내역]
+- code-review 신설과 review 수정이 동일 커맨드 계열을 가리켜 slug 충돌 위험이
+  있었음 -> review 는 alias 로, code-review 는 실제 엔진으로 분리해 유지 (기존
+  /review 사용처 호환 유지)
+- 기존 GPT/, Gemini/ 디렉토리는 이번 동기화에서 건드리지 않음 (GPT sync 스크립트의
+  compatibility 규칙과 동일하게 Claude/ 범위로 한정)
+
+[요약]
+- skills: added=2, modified=2, deleted=0, unchanged=22
+- hooks:  added=2, modified=0, deleted=0
+
+[스냅샷 diff / dated snapshot diff - bootstrap]
+Snapshot: Claude/skills/2026-08-07/skills
+참고: 오늘이 최초의 date/skills 스냅샷이라 이전 스냅샷이 없음 -> 아래 목록은
+전체 23종 스킬이 전부 "added"로 표시됨(스냅샷 이력 기준일 뿐, 실제 카탈로그
+변경분은 위쪽 [추가된 스킬]/[수정된 스킬] 섹션 참고: added=2, modified=2).
+내일부터는 이 스냅샷이 baseline이 되어 실제 diff가 정상 동작함.
+[추가된 스킬 (snapshot)]
+- claude-api
+- code-review
+- color
+- dataviz
+- effort
+- fewer-permission-prompts
+- focus
+- init
+- keybindings-help
+- loop
+- powerup
+- review
+- security-review
+- session-start-hook
+- simplify
+- team-onboarding
+- theme
+- tui
+- ultraplan
+- ultrareview
+- undo
+- update-config
+- usage
+[수정된 스킬 (snapshot)]
+- none
+[삭제된 스킬 (snapshot)]
+- none

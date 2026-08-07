@@ -1,0 +1,238 @@
+{
+  "date": "2026-08-07",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-08-07T15:20:41+00:00",
+  "skills": [
+    {
+      "added": "",
+      "cmd": "/claude-api",
+      "desc": "Build/debug Claude API apps; prompt caching, tool use, model migration",
+      "hash": "4bd2bdaceb02e66e",
+      "slug": "claude-api",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "code imports anthropic SDK; user asks about Claude API features"
+    },
+    {
+      "added": "v2.1.147",
+      "cmd": "/code-review [level] [pr#]",
+      "desc": "Effort-leveled review (ultra=cloud multi-agent); --fix applies findings, --comment posts inline PR comments",
+      "hash": "d5b52f99239d1ba6",
+      "slug": "code-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user asks for a correctness/bug review of a diff or PR"
+    },
+    {
+      "added": "",
+      "cmd": "/color",
+      "desc": "Set random session color (no args = random pick)",
+      "hash": "5d658bd61d6db4e3",
+      "slug": "color",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user wants a session color"
+    },
+    {
+      "added": "v2.1.198",
+      "cmd": "/dataviz",
+      "desc": "Chart/dashboard design guidance with runnable OKLab color-palette validator",
+      "hash": "7b8531838cc8f5b4",
+      "slug": "dataviz",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "before creating any chart, graph, dashboard, or data viz"
+    },
+    {
+      "added": "",
+      "cmd": "/effort",
+      "desc": "Interactive slider for session effort level (also: CLAUDE_EFFORT env var)",
+      "hash": "225dfff2cdccc44b",
+      "slug": "effort",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user wants to adjust effort/quality level"
+    },
+    {
+      "added": "",
+      "cmd": "/fewer-permission-prompts",
+      "desc": "Scan transcripts → add bash/MCP allowlist to .claude/settings.json",
+      "hash": "324c5ee3ccdbf985",
+      "slug": "fewer-permission-prompts",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user wants fewer permission dialogs"
+    },
+    {
+      "added": "",
+      "cmd": "/focus",
+      "desc": "Toggle focus view showing only: prompt + tool summary + final response",
+      "hash": "f4834a70f6d8027f",
+      "slug": "focus",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user wants compact view of conversation"
+    },
+    {
+      "added": "",
+      "cmd": "/init",
+      "desc": "Generate CLAUDE.md with codebase architecture, conventions, commands",
+      "hash": "13a3b77291ef7234",
+      "slug": "init",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user asks to initialize or document codebase"
+    },
+    {
+      "added": "",
+      "cmd": "/keybindings-help",
+      "desc": "Customize ~/.claude/keybindings.json; supports chord bindings",
+      "hash": "812ca3bb163f1aee",
+      "slug": "keybindings-help",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user wants to remap keys or add chord shortcuts"
+    },
+    {
+      "added": "",
+      "cmd": "/loop [interval] [/command]",
+      "desc": "Run prompt or slash command on recurring interval (default 10m)",
+      "hash": "55e280a02897c7bd",
+      "slug": "loop",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user wants recurring task (e.g. \"check every 5m\", \"keep running X\")"
+    },
+    {
+      "added": "",
+      "cmd": "/powerup",
+      "desc": "Interactive animated feature demos with lessons",
+      "hash": "b16078fea359c9fd",
+      "slug": "powerup",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user wants feature demos or to learn Claude Code features"
+    },
+    {
+      "added": "v2.1.223",
+      "cmd": "/review",
+      "desc": "Alias of /code-review; fast single-pass review of diff or PR",
+      "hash": "6b5c3e65990b9a24",
+      "slug": "review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user asks to review PR or branch"
+    },
+    {
+      "added": "",
+      "cmd": "/security-review",
+      "desc": "OWASP-focused audit of pending diffs; outputs risk-ranked findings",
+      "hash": "1d897206b536add8",
+      "slug": "security-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user asks security audit of current branch changes"
+    },
+    {
+      "added": "",
+      "cmd": "/session-start-hook",
+      "desc": "Create SessionStart hook ensuring project can run tests and linters",
+      "hash": "d4e806a475559bf8",
+      "slug": "session-start-hook",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user wants test/lint runners on session start (web Claude Code)"
+    },
+    {
+      "added": "",
+      "cmd": "/simplify",
+      "desc": "Review changed code for reuse/quality/efficiency, then fix issues",
+      "hash": "b3d32ba3fc03a086",
+      "slug": "simplify",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user asks to clean up or refactor changed code"
+    },
+    {
+      "added": "",
+      "cmd": "/team-onboarding",
+      "desc": "Generate onboarding guide from local Claude Code usage history/data",
+      "hash": "5eaf235f12ff76a7",
+      "slug": "team-onboarding",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user wants teammate ramp-up guide"
+    },
+    {
+      "added": "",
+      "cmd": "/theme [name]",
+      "desc": "Create or switch custom color themes",
+      "hash": "f9a2db2cccb88a88",
+      "slug": "theme",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user wants to change or create visual theme"
+    },
+    {
+      "added": "",
+      "cmd": "/tui",
+      "desc": "Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)",
+      "hash": "2e2a243734451383",
+      "slug": "tui",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "rendering looks flickery or user wants full-screen mode"
+    },
+    {
+      "added": "",
+      "cmd": "/ultraplan",
+      "desc": "Auto-create cloud worktrees/environments for multi-agent planning tasks",
+      "hash": "e10de26fd7ccf562",
+      "slug": "ultraplan",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user wants cloud environment for complex planning"
+    },
+    {
+      "added": "",
+      "cmd": "/ultrareview [PR#]",
+      "desc": "Parallel multi-agent cloud code review; no-arg=local branch, arg=GitHub PR",
+      "hash": "35369670a04da46c",
+      "slug": "ultrareview",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user says \"ultrareview\" or wants multi-agent review"
+    },
+    {
+      "added": "",
+      "cmd": "/undo",
+      "desc": "Alias for /rewind; undoes last assistant action",
+      "hash": "a5b3cf1be319fc52",
+      "slug": "undo",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user wants to undo last action"
+    },
+    {
+      "added": "",
+      "cmd": "/update-config",
+      "desc": "Configure settings.json; handles hooks, permissions, env vars",
+      "hash": "a1bc16503698f6e6",
+      "slug": "update-config",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "automated behavior requests (\"when X\", \"allow Y\", \"set Z=val\")"
+    },
+    {
+      "added": "",
+      "cmd": "/usage",
+      "desc": "Show token usage and cost stats (merged /cost + /stats)",
+      "hash": "286794d0374894ef",
+      "slug": "usage",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.224",
+      "trigger": "user asks about token or cost statistics"
+    }
+  ],
+  "source_policy": "official anthropics/claude-code GitHub repository only"
+}

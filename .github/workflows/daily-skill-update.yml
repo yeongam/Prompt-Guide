@@ -21,8 +21,14 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Install dependencies
+        run: pip install pyyaml
+
       - name: Run skill update script
         run: python scripts/update_skills.py
+
+      - name: Sync dated Claude skill snapshot
+        run: python scripts/sync_claude_skills.py
 
       - name: Commit and push if changed
         run: |
