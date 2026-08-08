@@ -1,0 +1,61 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-08-08 00:56 UTC
+Version : 2.1.223 → 2.1.224
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-08-08/
+============================================================
+
+[ ★ 신규 감지 스킬 (1개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /resume  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /clear
+  ~ /resume
+
+[ 삭제된 스킬 / Removed Skills ]
+  - /resume
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-08-08/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed Remote Control auto-start intermittently failing with "Remote credentials fetch failed" on a cold start with a stale login token
+  - Improved fullscreen mode to keep the full pre-compaction history in scrollback across repeated compactions, instead of only the most recent interval
+  - Improved Remote Control: attached web and mobile clients now see compaction progress and the post-compaction boundary instead of a silent pause; `/clear` resets now propagate to attached clients
+  - Changed Remote Control to archive the stale server session instead of leaving a dead one listed when a fresh session is minted after compaction or `/resume`
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.224
+
+- Added self-hosted environments: `claude self-hosted-runner` turns your own machines or containers into a place Claude Code web, mobile, and desktop sessions can run, on Team and Enterprise plans
+- Added `archive` plugin source: install plugins from a zip over HTTPS without git or npm, with optional SHA-256 pinning
+- Added a cancel-and-confirm step when removing an unavailable paste changes a command's text
+- Added `ANTHROPIC_BEDROCK_REGION_PREFIX` env var for Bedrock to prefer a specific cross-region inference profile over the `AWS_REGION`-derived one
+- Added `crossSessionInbound` and `dialogExpiry` settings: cross-session messages sent to a session running with bypassed permissions are held for your approval, and messages to other sessions auto-deliver
+- Added sandbox credential-masking options: `extract` and `onExtractNoMatch` for structured env values, `decode: "jwt"` with `maskClaims` for JWT-aware masking, and `awsPairs`/`sigv4` for AWS SigV4 re-signing; these need `network.tlsTerminate` and are honored only from user, managed, or `--settings` settings
+- Added cross-session `SendMessage`: Claude Code sessions can now message each other, on any of your machines, with `ListAgents` to discover them (macOS and Linux)
+- Fixed long (>200 char) project paths resolving to another project's session directory under a shared sanitized prefix; session list, rename, fork, delete and `/resume` no longer cross projects
+- Fixed `SendMessage` reporting "Message sent" when the write to a teammate's inbox had actually failed; failed deliveries are now reported as errors
+- Fixed sandbox filesystem deny entries written with a trailing slash (e.g. `denyRead: "~/.aws/"`) being silently bypassable on Linux and macOS
+- Fixed sandbox violation details never appearing in Bash tool results; Claude now sees which file or network access was denied and why
+- Fixed MCP tools that connect mid-turn being deferred for tool search without their names announced to the model
+- Fixed p
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
