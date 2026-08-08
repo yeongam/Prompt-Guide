@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.226
+updated: 2026-08-08
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -12,10 +12,11 @@ skills:
     trigger: user asks to initialize or document codebase
     desc: Generate CLAUDE.md with codebase architecture, conventions, commands
 
-  review:
-    cmd: /review
-    trigger: user asks to review PR or branch
-    desc: Multi-pass PR review; checks logic, style, security, tests
+  code-review:
+    cmd: /code-review [level] [pr#]
+    trigger: user asks to review diff, PR, or branch ("/review" is now an alias)
+    desc: Reviews current diff or PR; no-level arg reuses last-typed level; runs as background subagent (v2.1.226)
+    example: "/code-review high 123"
 
   security-review:
     cmd: /security-review
@@ -51,21 +52,58 @@ skills:
     cmd: /loop [interval] [/command]
     trigger: user wants recurring task (e.g. "check every 5m", "keep running X")
     desc: Run prompt or slash command on recurring interval (default 10m)
-    example: "/loop 5m /review"
+    example: "/loop 5m /code-review"
 
   claude-api:
     cmd: /claude-api
     trigger: code imports anthropic SDK; user asks about Claude API features
-    desc: Build/debug Claude API apps; prompt caching, tool use, model migration
+    desc: Build/debug Claude API apps; prompt caching, tool use, model migration; default now Opus 5 (v2.1.226)
+    subcommand: "prompt-audit — audits prompts/tool descriptions for older-model patterns"
     models:
-      opus: claude-opus-4-7
-      sonnet: claude-sonnet-4-6
+      opus: claude-opus-5
+      sonnet: claude-sonnet-5
       haiku: claude-haiku-4-5-20251001
+      fable: claude-fable-5
+
+  mcp-builder:
+    cmd: /mcp-builder
+    trigger: user wants to build an MCP server (Python FastMCP or Node/TS SDK)
+    desc: Guide for high-quality MCP servers wrapping external APIs as LLM tools
+
+  skill-creator:
+    cmd: /skill-creator
+    trigger: user wants to create, edit, or benchmark a Claude Code skill
+    desc: Scaffolds new skills, tunes triggering description, runs evals
+
+  dataviz:
+    cmd: /dataviz
+    trigger: before writing any chart/graph/plot/dashboard code (any medium)
+    desc: Design-system-agnostic chart/color/layout guidance with palette validator (added v2.1.x pre-226)
+
+  docx:
+    cmd: (auto-trigger)
+    trigger: .docx/.dotx file is input or output
+    desc: Create/read/edit Word documents; TOC, headings, tracked changes, templates
+
+  pptx:
+    cmd: (auto-trigger)
+    trigger: .pptx/.potx file is input or output
+    desc: Create/read/edit slide decks; layouts, speaker notes, templates
+
+  xlsx:
+    cmd: (auto-trigger)
+    trigger: spreadsheet file (.xlsx/.xlsm/.csv/.tsv) is input or output
+    desc: Create/edit/clean spreadsheets; formulas, formatting, charts
+
+  pdf:
+    cmd: (auto-trigger)
+    trigger: any task involving .pdf files
+    desc: Extract text/tables, merge/split/rotate, forms, OCR, watermarks
 
   ultrareview:
-    cmd: /ultrareview [PR#]
+    cmd: /ultrareview [PR# | note]
     trigger: user says "ultrareview" or wants multi-agent review
-    desc: Parallel multi-agent cloud code review; no-arg=local branch, arg=GitHub PR
+    desc: Parallel multi-agent cloud code review; no-arg=local branch, arg=GitHub PR; descriptive text runs local branch review with text as a note (v2.1.226)
     note: Billed; requires git repo; no GitHub remote needed for local mode
 
   ultraplan:
@@ -227,10 +265,11 @@ env:
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
-  default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
-  sonnet: claude-sonnet-4-6
+  default: claude-sonnet-5
+  opus: claude-opus-5
+  sonnet: claude-sonnet-5
   haiku: claude-haiku-4-5-20251001
+  fable: claude-fable-5
 
 # ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────
 # This catalog is structured for minimal token overhead:
@@ -238,3 +277,9 @@ models:
 # - YAML over JSON/Markdown: ~30% fewer tokens for structured data
 # - Descriptions capped at one line; examples only where non-obvious
 # - "added:" version tags kept for audit; remove if tokens are critical
+#
+# Provenance: `skills:` and `models:` entries below were cross-checked against
+# CHANGELOG.md (anthropics/claude-code, 2.1.129 -> 2.1.226) and the skill set
+# available in the syncing session on 2026-08-08. `hooks:`/`settings:`/`env:`
+# below predate this sync and were not re-verified this run — treat as
+# unconfirmed until checked against a source that can be fetched.
