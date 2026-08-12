@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.228
+updated: 2026-08-12
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -16,6 +16,18 @@ skills:
     cmd: /review
     trigger: user asks to review PR or branch
     desc: Multi-pass PR review; checks logic, style, security, tests
+
+  code-review:
+    cmd: /code-review
+    trigger: user asks to review the current diff, a PR#, branch, or path for bugs/cleanup
+    desc: Correctness + reuse/simplify/efficiency review at chosen effort; supports --comment/--fix
+    added: 2026-08 catalog sync
+
+  dataviz:
+    cmd: (skill, no dedicated slash command)
+    trigger: before building any chart/graph/plot/dashboard in an artifact or script
+    desc: Design-system-agnostic chart/color/layout guidance for consistent visualizations
+    added: 2026-08 catalog sync
 
   security-review:
     cmd: /security-review

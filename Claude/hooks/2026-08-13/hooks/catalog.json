@@ -1,0 +1,188 @@
+{
+  "date": "2026-08-13",
+  "directory_rule": "YYYY-MM-DD/hooks",
+  "generated_at": "2026-08-13T00:21:00+09:00",
+  "hooks": [
+    {
+      "actions": [
+        "Record source URL, branch, and commit in each generated card.",
+        "Use source summaries instead of copying long upstream content."
+      ],
+      "checks": [
+        "Resolve the latest official Anthropic source commit.",
+        "Reject unofficial source material for generated artifacts.",
+        "Confirm skill and hook slugs are unique before writing files."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "pre_sync",
+      "hash": "5126a9ab4cec96b0",
+      "name": "Pre Sync Source Alignment",
+      "slug": "pre-sync-source-alignment",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "681a8be245e7",
+      "summary": "Agentic coding tool that lives in the terminal and understands your codebase",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run before generating Claude skills or hooks."
+    },
+    {
+      "actions": [
+        "Attach commit evidence to Python SDK skill output.",
+        "Flag incompatible examples in the changelog conflict section."
+      ],
+      "checks": [
+        "Verify the Python Agent SDK source commit used by the routine.",
+        "Prefer current SDK request shapes over stale snippets.",
+        "Keep migration notes compact and version-aware."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "pre_apply",
+      "hash": "69cbc2730a97fd88",
+      "name": "Python SDK Compatibility Check",
+      "slug": "python-sdk-compatibility-check",
+      "source": "https://github.com/anthropics/claude-agent-sdk-python",
+      "source_branch": "main",
+      "source_commit": "be2d0dfbd9ee",
+      "summary": "Python SDK for building agents on top of Claude Code",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run before applying Python Agent SDK guidance or examples."
+    },
+    {
+      "actions": [
+        "Attach commit evidence to TypeScript SDK skill output.",
+        "Flag cross-language conflicts in the changelog conflict section."
+      ],
+      "checks": [
+        "Verify the TypeScript Agent SDK source commit used by the routine.",
+        "Keep generated guidance aligned with typed SDK usage.",
+        "Avoid duplicating Python-specific patterns in TypeScript output."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "pre_apply",
+      "hash": "fec4505b5fdaa8e5",
+      "name": "TypeScript SDK Compatibility Check",
+      "slug": "typescript-sdk-compatibility-check",
+      "source": "https://github.com/anthropics/claude-agent-sdk-typescript",
+      "source_branch": "main",
+      "source_commit": "0a2639d6b561",
+      "summary": "TypeScript/Node SDK for building agents on top of Claude Code",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run before applying TypeScript Agent SDK guidance or examples."
+    },
+    {
+      "actions": [
+        "Record API guidance conflicts in the changelog.",
+        "Keep API guidance short enough for fast reuse."
+      ],
+      "checks": [
+        "Confirm request/response shapes match the current SDK release.",
+        "Prefer minimal runnable examples over speculative usage.",
+        "Preserve existing Claude skill behavior when adding API guidance."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "post_apply",
+      "hash": "ec0d15bc89a3a861",
+      "name": "API Coding Guard",
+      "slug": "api-coding-guard",
+      "source": "https://github.com/anthropics/anthropic-sdk-python",
+      "source_branch": "main",
+      "source_commit": "009b035305e0",
+      "summary": "Official Python client for the Claude (Messages) API",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run after applying direct Claude API guidance."
+    },
+    {
+      "actions": [
+        "Write one concise changelog under Claude/Changelogs.",
+        "Avoid prompting the user during automated routine execution."
+      ],
+      "checks": [
+        "Compare generated catalogs with the previous dated snapshot.",
+        "List added, modified, and deleted skills and hooks separately.",
+        "Confirm token-saving and conflict-resolution notes are present."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "post_sync",
+      "hash": "16e40b81846d4f61",
+      "name": "Post Sync Changelog Guard",
+      "slug": "post-sync-changelog-guard",
+      "source": "https://github.com/anthropics/claude-cookbooks",
+      "source_branch": "main",
+      "source_commit": "f65eb122a51e",
+      "summary": "Guides and copy-able code examples for building with Claude",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Run after Claude skills and hooks are generated."
+    },
+    {
+      "actions": [
+        "Apply the latest Claude guidance in the active session when relevant.",
+        "Document any required local install step instead of silently editing runtime state."
+      ],
+      "checks": [
+        "Treat the latest Claude skills and hooks snapshots as repo-local guidance.",
+        "Do not assume GitHub Actions changed the live local Claude Code runtime.",
+        "Keep local runtime installation separate from remote repo synchronization."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "session_reference",
+      "hash": "7d43970d62864753",
+      "name": "Claude Code Runtime Guard",
+      "slug": "claude-code-runtime-guard",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "681a8be245e7",
+      "summary": "Agentic coding tool that lives in the terminal and understands your codebase",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Use when a Claude Code session works from Prompt-Guide/Claude routine output."
+    }
+  ],
+  "source_policy": "official Anthropic GitHub repositories only"
+}

@@ -14,7 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: claude/zealous-sagan-FdaL5
+          ref: main
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-python@v5
@@ -23,6 +24,9 @@ jobs:
 
       - name: Run skill update script
         run: python scripts/update_skills.py
+
+      - name: Sync Claude skills and hooks from official Anthropic repositories
+        run: python Claude/scripts/sync_claude_skills.py
 
       - name: Commit and push if changed
         run: |
@@ -34,5 +38,6 @@ jobs:
           else
             DATE=$(date -u +%Y-%m-%d)
             git commit -m "chore: Claude Code skills update ${DATE}"
-            git push -u origin claude/zealous-sagan-FdaL5
+            git pull --rebase origin main
+            git push origin HEAD:main
           fi
