@@ -1,0 +1,19 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-08-13 15:25 UTC
+Version : 2.1.129 -> 2.1.231
+Source  : anthropics/claude-code
+============================================================
+
+[변경 요약 / Change Summary]
+
+----------------------------------------
+[원문 변경사항 / Raw Changes]
+
+## 2.1.231
+
+- Fixed MCP OAuth sign-in failing with a redirect URI mismatch for servers that use a pre-registered OAuth client, such as Slack
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml 최신화 완료
+[Status]   Catalog updated, committed to yeongam/Prompt-Guide
