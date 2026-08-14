@@ -1,0 +1,156 @@
+{
+  "date": "2026-08-15",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-08-15T00:30:04+09:00",
+  "scope": "coding, programming, and documentation skills",
+  "skills": [
+    {
+      "compatibility": [
+        "Namespaced separately from Claude Code slash-command skills.",
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "hash": "cf3afe78d40dd191",
+      "name": "mcp-builder",
+      "output": "Compact, repeatable instructions for the task the skill covers.",
+      "slug": "mcp-builder",
+      "source": "https://github.com/anthropics/skills/tree/main/skills/mcp-builder",
+      "source_branch": "main",
+      "source_commit": "ref:main",
+      "summary": "# MCP Server Development Guide ## Overview Create MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. The quality of an MCP server is measured by how well it enables LLMs to accomplish real-world tasks. --- # Process ## 🚀 High-Level Workflow Creating a high-quality MCP server involves four main phases: ### Phase 1: Deep Research and Planning #### 1.1.",
+      "token_policy": [
+        "Reference the upstream SKILL.md instead of copying its full body.",
+        "Keep the local card to trigger + one-line output + policy notes.",
+        "Load full skill content only when the skill actually fires."
+      ],
+      "trigger": "Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (."
+    },
+    {
+      "compatibility": [
+        "Namespaced separately from Claude Code slash-command skills.",
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "hash": "427516bdfb7c7f04",
+      "name": "skill-creator",
+      "output": "Compact, repeatable instructions for the task the skill covers.",
+      "slug": "skill-creator",
+      "source": "https://github.com/anthropics/skills/tree/main/skills/skill-creator",
+      "source_branch": "main",
+      "source_commit": "ref:main",
+      "summary": "# Skill Creator A skill for creating new skills and iteratively improving them. At a high level, the process of creating a skill goes like this: - Decide what you want the skill to do and roughly how it should do it - Write a draft of the skill - Create a few test prompts and run claude-with-access-to-the-skill on them - Help the user evaluate the results both qualitatively and quantitatively - While the runs happen.",
+      "token_policy": [
+        "Reference the upstream SKILL.md instead of copying its full body.",
+        "Keep the local card to trigger + one-line output + policy notes.",
+        "Load full skill content only when the skill actually fires."
+      ],
+      "trigger": "Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, edit, or optimize an existing skill, run evals to test a skill, benchmark skill performance with vari."
+    },
+    {
+      "compatibility": [
+        "Namespaced separately from Claude Code slash-command skills.",
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "hash": "bbbf008c6858458d",
+      "name": "docx",
+      "output": "Compact, repeatable instructions for the task the skill covers.",
+      "slug": "docx",
+      "source": "https://github.com/anthropics/skills/tree/main/skills/docx",
+      "source_branch": "main",
+      "source_commit": "ref:main",
+      "summary": "# DOCX creation, editing, and analysis A `.docx` is a ZIP archive of XML files. Choose your approach by task: | Task | Approach | |---|---| | **Create** a new document | Write a `docx` (npm) script — see gotchas below | | **Edit** an existing document | `unzip` → edit `word/document.xml` → `zip` (docx-js cannot open existing files) | | **Read** content | `pandoc -t markdown file.docx` | > Script paths below are rela.",
+      "token_policy": [
+        "Reference the upstream SKILL.md instead of copying its full body.",
+        "Keep the local card to trigger + one-line output + policy notes.",
+        "Load full skill content only when the skill actually fires."
+      ],
+      "trigger": "Use this skill whenever the user wants to create, read, edit, or manipulate Word documents (.docx files) or Word templates (.dotx files). Triggers include: any mention of 'Word doc', 'word document', '.docx', '.dotx', or requests to produc."
+    },
+    {
+      "compatibility": [
+        "Namespaced separately from Claude Code slash-command skills.",
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "hash": "663eef069a40409f",
+      "name": "pdf",
+      "output": "Compact, repeatable instructions for the task the skill covers.",
+      "slug": "pdf",
+      "source": "https://github.com/anthropics/skills/tree/main/skills/pdf",
+      "source_branch": "main",
+      "source_commit": "ref:main",
+      "summary": "# PDF Processing Guide ## Overview This guide covers essential PDF processing operations using Python libraries and command-line tools. For advanced features, JavaScript libraries, and detailed examples, see REFERENCE.md. If you need to fill out a PDF form, read FORMS.md and follow its instructions. ## Quick Start ## Python Libraries ### pypdf - Basic Operations #### Merge PDFs #### Split PDF #### Extract Metadata #.",
+      "token_policy": [
+        "Reference the upstream SKILL.md instead of copying its full body.",
+        "Keep the local card to trigger + one-line output + policy notes.",
+        "Load full skill content only when the skill actually fires."
+      ],
+      "trigger": "Use this skill whenever the user wants to do anything with PDF files. This includes reading or extracting text/tables from PDFs, combining or merging multiple PDFs into one, splitting PDFs apart, rotating pages, adding watermarks, creating."
+    },
+    {
+      "compatibility": [
+        "Namespaced separately from Claude Code slash-command skills.",
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "hash": "e254d2f26ab6a5cb",
+      "name": "pptx",
+      "output": "Compact, repeatable instructions for the task the skill covers.",
+      "slug": "pptx",
+      "source": "https://github.com/anthropics/skills/tree/main/skills/pptx",
+      "source_branch": "main",
+      "source_commit": "ref:main",
+      "summary": "# PPTX creation, editing, and analysis A `.pptx` is a ZIP archive of XML files. Choose your approach by task: | Task | Approach | |---|---| | **Create** a new deck | Write a `pptxgenjs` script — see gotchas below | | **Edit** an existing deck, or build from a template | unzip → edit `ppt/slides/slideN.xml` → zip | | **Read** content | `markitdown deck.pptx` (one block per slide under ` ` markers); visual grid: `pyth.",
+      "token_policy": [
+        "Reference the upstream SKILL.md instead of copying its full body.",
+        "Keep the local card to trigger + one-line output + policy notes.",
+        "Load full skill content only when the skill actually fires."
+      ],
+      "trigger": "Use this skill any time a .pptx or .potx file is involved in any way — as input, output, or both. This includes: creating slide decks, pitch decks, or presentations; reading, parsing, or extracting text from any .pptx or .potx file (even i."
+    },
+    {
+      "compatibility": [
+        "Namespaced separately from Claude Code slash-command skills.",
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "hash": "a5ef9c7f55b65f59",
+      "name": "xlsx",
+      "output": "Compact, repeatable instructions for the task the skill covers.",
+      "slug": "xlsx",
+      "source": "https://github.com/anthropics/skills/tree/main/skills/xlsx",
+      "source_branch": "main",
+      "source_commit": "ref:main",
+      "summary": "# XLSX creation, editing, and analysis | Task | Approach | |---|---| | **Create** or **edit** with formulas/formatting | `openpyxl` — see gotchas below | | **Bulk data** in or out | `pandas` (`read_excel`, `to_excel`) | | **Quick look** at a sheet | `markitdown file.xlsx` — `## SheetName` per sheet; reads `.xlsm` too. No cell coordinates, so don't plan edits from it | | **Read** a model (formulas *and* values) | two.",
+      "token_policy": [
+        "Reference the upstream SKILL.md instead of copying its full body.",
+        "Keep the local card to trigger + one-line output + policy notes.",
+        "Load full skill content only when the skill actually fires."
+      ],
+      "trigger": "Use this skill any time a spreadsheet file is the primary input or output. This means any task where the user wants to: open, read, edit, or fix an existing .xlsx, .xlsm, .xltx, .csv, or .tsv file (e.g., adding columns, computing formulas,."
+    },
+    {
+      "compatibility": [
+        "Namespaced separately from Claude Code slash-command skills.",
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "hash": "7b893aa6002c444e",
+      "name": "webapp-testing",
+      "output": "Compact, repeatable instructions for the task the skill covers.",
+      "slug": "webapp-testing",
+      "source": "https://github.com/anthropics/skills/tree/main/skills/webapp-testing",
+      "source_branch": "main",
+      "source_commit": "ref:main",
+      "summary": "# Web Application Testing To test local web applications, write native Python Playwright scripts. **Helper Scripts Available**: - `scripts/with_server.py` - Manages server lifecycle (supports multiple servers) **Always run scripts with `--help` first** to see usage. DO NOT read the source until you try running the script first and find that a customized solution is abslutely necessary. These scripts can be very larg.",
+      "token_policy": [
+        "Reference the upstream SKILL.md instead of copying its full body.",
+        "Keep the local card to trigger + one-line output + policy notes.",
+        "Load full skill content only when the skill actually fires."
+      ],
+      "trigger": "Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs."
+    }
+  ],
+  "source_policy": "official anthropics/skills GitHub repository only"
+}
