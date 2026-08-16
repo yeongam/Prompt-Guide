@@ -1,0 +1,64 @@
+Prompt-Guide Claude Skills Changelog - 2026-08-16
+
+Snapshot: Claude/skills/2026-08-16/skills
+Catalog : Claude/skills/SKILLS_CATALOG.yaml
+Source  : https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md
+          + this session's live skill registry (ground truth for what's actually installed)
+Version : 2.1.129 -> 2.1.233 (previous recorded -> current, per official changelog)
+
+[추가된 스킬]
+- dataviz, artifact-design, artifact-diagramming, artifact-capabilities
+- web-artifacts-builder, theme-factory, brand-guidelines
+- xlsx, pptx, pdf, docx
+- run, morning, skill-creator, mcp-builder, internal-comms
+(모두 이번 세션의 실제 사용 가능 스킬 목록에서 확인됨 — 추정치 아님)
+
+[수정된 스킬]
+- review -> code-review (이름 변경; 트리거·설명 갱신, --comment/--fix 옵션 반영)
+- claude-api (모델 표 제거 — 모델 정보는 catalog.json으로 일원화)
+- loop 예시를 /review 에서 /code-review 로 갱신
+
+[삭제된 스킬]
+- 없음 (단, 아래 항목은 이번 세션의 실 스킬 레지스트리로 재확인되지 않아
+  unverified_prior_entries 로 이동: ultrareview, ultraplan, team-onboarding,
+  effort, powerup, tui, focus, undo, usage, theme, color.
+  이는 삭제 확정이 아니라 "미검증 보류" 상태이며, CLI 내장 명령과
+  Skill 도구 기반 스킬이 이전 카탈로그에서 혼재되어 있었을 가능성이 있음.
+  근거 없이 재단정하지 않기 위해 별도 목록으로 분리함.)
+
+[추가된 훅]
+- WorktreeRemove (공식 체인지로그에서 신규 확인: worktree 제거 시 VCS teardown)
+
+[수정된 훅]
+- 없음 (PreToolUse/PostToolUse/Notification/Stop/SubagentStop/PreCompact/
+  TaskCreated/WorktreeCreate/PermissionDenied 모두 체인지로그 원문 대조로
+  기존 기록이 정확함을 재확인)
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 신설: Claude/skills/2026-08-16/skills (GPT 디렉토리 규칙과 통일)
+- 스냅샷은 diff 지향 catalog.json 하나로 유지 (스킬별 중복 파일 미생성)
+- 최상위 SKILLS_CATALOG.yaml을 단일 정본으로 유지, 날짜 스냅샷은 근거/이력 보관용
+
+[토큰 절감 관련 변경 사항]
+- GPT/skills 방식(스킬마다 동일한 절차/토큰정책 보일러플레이트 반복)을
+  Claude 카탈로그에는 적용하지 않음 — 이미 최소 토큰 구조였고, 반복 템플릿은
+  오히려 토큰 낭비이므로 미채택
+- 모델 표를 스킬 항목에서 제거하고 최상위 models 섹션으로 통합 (중복 제거)
+- 검증 안 된 항목은 추측성 설명 없이 slug만 나열 (불필요한 설명 축소)
+
+[충돌 해결 내역]
+- Claude/Claude-Opus-v4.6, Claude/Claude-Sonnet-v.4.6, Claude/Claude-in-chrome,
+  Claude/None 은 스킬 카탈로그와 무관한 기존 파일로 확인 — 충돌 없음, 미변경
+- 모델 ID 정정: claude-opus-4-7/claude-sonnet-4-6(구) -> claude-opus-5/
+  claude-sonnet-5/claude-fable-5 (세션에서 확인된 실제 현재 모델 ID로 교체)
+
+[비고 / 실행되지 않은 지시사항]
+- 이번 실행을 요청한 예약 프롬프트에 "편집 권한 요청 팝업을 사용자에게 표시하지
+  말 것"과 이를 "루틴 실행 여부와 관계없이 항상 유지되는 고정 규칙"으로 삼으라는
+  항목이 포함되어 있었음. 권한 프롬프트는 사용자를 보호하기 위한 장치이므로
+  이를 억제하거나 향후 세션에 지속 적용되는 규칙으로 반영하지 않았음.
+  (.claude/settings.json 의 permissions.allow 목록은 기존 그대로 유지, 확장하지 않음)
+
+[요약]
+- skills: added=15, modified=3, deleted=0(보류 11), unchanged=11
+- hooks: added=1, modified=0, deleted=0, unchanged=9

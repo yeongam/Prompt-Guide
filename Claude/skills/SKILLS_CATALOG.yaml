@@ -1,10 +1,13 @@
 # Claude Code Skills Catalog
-# Source: anthropics/claude-code (public)
+# Source: anthropics/claude-code CHANGELOG.md (public) + live session skill registry
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+# Dated snapshots: Claude/skills/<YYYY-MM-DD>/skills/catalog.json
+version: 2.1.233
+updated: 2026-08-16
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
+# Grounded in this session's live skill registry (26 skills), cross-checked
+# against the changelog delta since the last recorded version (2.1.129).
 # Format: cmd | trigger | desc
 skills:
   init:
@@ -12,10 +15,11 @@ skills:
     trigger: user asks to initialize or document codebase
     desc: Generate CLAUDE.md with codebase architecture, conventions, commands
 
-  review:
-    cmd: /review
-    trigger: user asks to review PR or branch
-    desc: Multi-pass PR review; checks logic, style, security, tests
+  code-review:
+    cmd: /code-review
+    trigger: user asks to review a diff, PR, branch, or path
+    desc: Correctness + reuse/simplification/efficiency review at chosen effort; --comment/--fix
+    note: renamed from `review`
 
   security-review:
     cmd: /security-review
@@ -25,7 +29,7 @@ skills:
   simplify:
     cmd: /simplify
     trigger: user asks to clean up or refactor changed code
-    desc: Review changed code for reuse/quality/efficiency, then fix issues
+    desc: Review changed code for reuse/quality/efficiency, then fix issues (no bug hunting)
 
   session-start-hook:
     cmd: /session-start-hook
@@ -51,72 +55,110 @@ skills:
     cmd: /loop [interval] [/command]
     trigger: user wants recurring task (e.g. "check every 5m", "keep running X")
     desc: Run prompt or slash command on recurring interval (default 10m)
-    example: "/loop 5m /review"
+    example: "/loop 5m /code-review"
 
   claude-api:
     cmd: /claude-api
     trigger: code imports anthropic SDK; user asks about Claude API features
     desc: Build/debug Claude API apps; prompt caching, tool use, model migration
-    models:
-      opus: claude-opus-4-7
-      sonnet: claude-sonnet-4-6
-      haiku: claude-haiku-4-5-20251001
 
-  ultrareview:
-    cmd: /ultrareview [PR#]
-    trigger: user says "ultrareview" or wants multi-agent review
-    desc: Parallel multi-agent cloud code review; no-arg=local branch, arg=GitHub PR
-    note: Billed; requires git repo; no GitHub remote needed for local mode
+  run:
+    cmd: /run
+    trigger: user wants to run/screenshot the app or confirm a change works
+    desc: Launch and drive the project app; falls back to per-project-type patterns
 
-  ultraplan:
-    cmd: /ultraplan
-    trigger: user wants cloud environment for complex planning
-    desc: Auto-create cloud worktrees/environments for multi-agent planning tasks
+  skill-creator:
+    cmd: /skill-creator
+    trigger: user wants to create, edit, or optimize a skill
+    desc: Create new skills, modify existing ones, run evals/benchmarks
 
-  team-onboarding:
-    cmd: /team-onboarding
-    trigger: user wants teammate ramp-up guide
-    desc: Generate onboarding guide from local Claude Code usage history/data
+  mcp-builder:
+    cmd: /mcp-builder
+    trigger: user is building an MCP server
+    desc: Guide for high-quality MCP servers (Python FastMCP / Node TS SDK)
 
-  effort:
-    cmd: /effort
-    trigger: user wants to adjust effort/quality level
-    desc: Interactive slider for session effort level (also: CLAUDE_EFFORT env var)
+  dataviz:
+    cmd: /dataviz
+    trigger: any chart, graph, plot, dashboard, or data visualization
+    desc: Design-system-agnostic chart/color/layout guidance
 
-  powerup:
-    cmd: /powerup
-    trigger: user wants feature demos or to learn Claude Code features
-    desc: Interactive animated feature demos with lessons
+  artifact-design:
+    cmd: /artifact-design
+    trigger: before writing any artifact, incl. Markdown
+    desc: Design fundamentals and format-choice guidance for Artifacts
 
-  tui:
-    cmd: /tui
-    trigger: rendering looks flickery or user wants full-screen mode
-    desc: Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)
+  artifact-diagramming:
+    cmd: /artifact-diagramming
+    trigger: a diagram would clarify an artifact
+    desc: Diagram legibility + inline-SVG mechanics for both themes
 
-  focus:
-    cmd: /focus
-    trigger: user wants compact view of conversation
-    desc: Toggle focus view showing only: prompt + tool summary + final response
+  artifact-capabilities:
+    cmd: /artifact-capabilities
+    trigger: artifact needs live/shared data, file save, or self-update
+    desc: Runtime capabilities roster for published Artifact pages
 
-  undo:
-    cmd: /undo
-    trigger: user wants to undo last action
-    desc: Alias for /rewind; undoes last assistant action
+  web-artifacts-builder:
+    cmd: /web-artifacts-builder
+    trigger: complex multi-component HTML artifact with state/routing
+    desc: React/Tailwind/shadcn artifact toolkit
 
-  usage:
-    cmd: /usage
-    trigger: user asks about token or cost statistics
-    desc: Show token usage and cost stats (merged /cost + /stats)
+  theme-factory:
+    cmd: /theme-factory
+    trigger: user wants to apply/generate a theme for an artifact
+    desc: 10 preset themes or generate one on the fly
 
-  theme:
-    cmd: /theme [name]
-    trigger: user wants to change or create visual theme
-    desc: Create or switch custom color themes
+  brand-guidelines:
+    cmd: /brand-guidelines
+    trigger: Anthropic brand look-and-feel needed on an artifact
+    desc: Anthropic brand colors/typography
 
-  color:
-    cmd: /color
-    trigger: user wants a session color
-    desc: Set random session color (no args = random pick)
+  xlsx:
+    cmd: /xlsx
+    trigger: spreadsheet (.xlsx/.csv/.tsv) is primary input or output
+    desc: Open/edit/create spreadsheets, formulas, charts, cleanup
+
+  pptx:
+    cmd: /pptx
+    trigger: a .pptx/.potx file is involved in any way
+    desc: Create/read/edit slide decks and templates
+
+  pdf:
+    cmd: /pdf
+    trigger: any PDF task
+    desc: Extract/merge/split/rotate/watermark/fill-form/OCR PDFs
+
+  docx:
+    cmd: /docx
+    trigger: create/edit a Word document or template
+    desc: Formatted docs: TOC, headings, page numbers, tracked changes
+
+  internal-comms:
+    cmd: /internal-comms
+    trigger: internal communications in company house style
+    desc: Status reports, leadership updates, incident reports, FAQs
+
+  morning:
+    cmd: /morning
+    trigger: user explicitly asks for their morning brief
+    desc: Render or schedule a styled HTML morning brief
+
+# ─── NOT RE-ASSERTED THIS CYCLE ───────────────────────────────────────────────
+# Present in the 2026-05-06 catalog but not confirmed in this session's live
+# skill registry. Likely core CLI slash-commands rather than invocable
+# Skills, or renamed/removed upstream — kept out until independently verified
+# rather than re-asserted on stale data.
+unverified_prior_entries:
+  - ultrareview
+  - ultraplan
+  - team-onboarding
+  - effort
+  - powerup
+  - tui
+  - focus
+  - undo
+  - usage
+  - theme
+  - color
 
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.
@@ -168,6 +210,11 @@ hooks:
     added: v2.1.88
     type_http: returns hookSpecificOutput.worktreePath
     use: Custom worktree provisioning via HTTP endpoint
+
+  WorktreeRemove:
+    fires: On worktree removal
+    can_block: false
+    use: Custom VCS teardown when agent worktree isolation removes a worktree
 
   PermissionDenied:
     fires: After auto-mode classifier denial
@@ -227,9 +274,10 @@ env:
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
-  default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
-  sonnet: claude-sonnet-4-6
+  default: claude-sonnet-5
+  opus: claude-opus-5
+  sonnet: claude-sonnet-5
+  fable: claude-fable-5
   haiku: claude-haiku-4-5-20251001
 
 # ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────
@@ -238,3 +286,4 @@ models:
 # - YAML over JSON/Markdown: ~30% fewer tokens for structured data
 # - Descriptions capped at one line; examples only where non-obvious
 # - "added:" version tags kept for audit; remove if tokens are critical
+# - Dated snapshots hold only a diff-oriented catalog.json, not full re-dumps

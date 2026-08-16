@@ -1,0 +1,44 @@
+{
+  "date": "2026-08-16",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "cli_version": "2.1.233",
+  "previous_recorded_version": "2.1.129",
+  "source": "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md",
+  "source_policy": "official anthropics/claude-code changelog + live session skill registry only; no invented content",
+  "skills": [
+    {"slug": "init", "trigger": "initialize/document a codebase", "desc": "Generate CLAUDE.md with architecture, conventions, commands", "category": "coding"},
+    {"slug": "code-review", "trigger": "review diff, PR, branch, or path", "desc": "Correctness + reuse/simplification/efficiency review at chosen effort; supports --comment/--fix", "category": "coding"},
+    {"slug": "security-review", "trigger": "security audit of pending branch changes", "desc": "OWASP-focused audit of pending diffs", "category": "coding"},
+    {"slug": "simplify", "trigger": "clean up or refactor changed code", "desc": "Reuse/quality/efficiency pass on changed code, then apply fixes (no bug hunting)", "category": "coding"},
+    {"slug": "session-start-hook", "trigger": "set up repo for Claude Code on the web", "desc": "Create SessionStart hook so web sessions can run tests/linters", "category": "coding"},
+    {"slug": "update-config", "trigger": "automated behavior / permission / env var requests", "desc": "Configure settings.json: hooks, permissions, env vars", "category": "coding"},
+    {"slug": "keybindings-help", "trigger": "remap keys or add chord shortcuts", "desc": "Customize ~/.claude/keybindings.json", "category": "coding"},
+    {"slug": "fewer-permission-prompts", "trigger": "user wants fewer permission dialogs", "desc": "Scan transcripts, add read-only Bash/MCP allowlist to .claude/settings.json", "category": "coding"},
+    {"slug": "loop", "trigger": "recurring task on an interval", "desc": "Run a prompt or slash command on a recurring interval (default 10m)", "category": "coding"},
+    {"slug": "claude-api", "trigger": "anthropic SDK usage / Claude API questions", "desc": "Model ids, pricing, params, streaming, tool use, MCP, caching, migration", "category": "coding"},
+    {"slug": "run", "trigger": "run/screenshot the app, confirm a change works", "desc": "Launch and drive the project app to see a change working", "category": "coding"},
+    {"slug": "skill-creator", "trigger": "create/edit/optimize a skill", "desc": "Create new skills, modify existing ones, run evals/benchmarks", "category": "coding"},
+    {"slug": "mcp-builder", "trigger": "build an MCP server", "desc": "Guide for high-quality MCP servers (Python FastMCP / Node TS SDK)", "category": "coding"},
+    {"slug": "dataviz", "trigger": "any chart/graph/plot/dashboard", "desc": "Design-system-agnostic chart/color/layout guidance", "category": "artifact"},
+    {"slug": "artifact-design", "trigger": "before writing any artifact incl. Markdown", "desc": "Design fundamentals for Artifacts", "category": "artifact"},
+    {"slug": "artifact-diagramming", "trigger": "a diagram belongs in an artifact", "desc": "Diagram legibility + inline-SVG mechanics for Artifacts", "category": "artifact"},
+    {"slug": "artifact-capabilities", "trigger": "artifact needs live/shared data, file save, self-update", "desc": "Runtime capabilities roster for published Artifact pages", "category": "artifact"},
+    {"slug": "web-artifacts-builder", "trigger": "complex multi-component HTML artifact", "desc": "React/Tailwind/shadcn artifacts w/ state or routing", "category": "artifact"},
+    {"slug": "theme-factory", "trigger": "apply a theme to an artifact", "desc": "10 preset themes or generate one on the fly", "category": "artifact"},
+    {"slug": "brand-guidelines", "trigger": "Anthropic brand look-and-feel needed", "desc": "Anthropic brand colors/typography for artifacts", "category": "artifact"},
+    {"slug": "xlsx", "trigger": "spreadsheet is primary input/output", "desc": "Open/edit/create .xlsx/.csv/.tsv, formulas, charts, cleanup", "category": "document"},
+    {"slug": "pptx", "trigger": ".pptx/.potx involved in any way", "desc": "Create/read/edit slide decks and templates", "category": "document"},
+    {"slug": "pdf", "trigger": "any PDF operation", "desc": "Extract/merge/split/rotate/watermark/fill/OCR PDFs", "category": "document"},
+    {"slug": "docx", "trigger": "create/edit a Word document or template", "desc": "Formatted docs: TOC, headings, page numbers, tracked changes", "category": "document"},
+    {"slug": "internal-comms", "trigger": "internal communications in house style", "desc": "Status reports, leadership updates, incident reports, FAQs", "category": "document"},
+    {"slug": "morning", "trigger": "user asks for their morning brief", "desc": "Render/schedule a styled HTML morning brief", "category": "other"}
+  ],
+  "excluded_pending_verification": [
+    "ultrareview", "ultraplan", "team-onboarding", "effort", "powerup",
+    "tui", "focus", "undo", "usage", "theme", "color"
+  ],
+  "excluded_reason": "present in prior catalog (recorded 2026-05-06) but not confirmed in this session's live skill registry; may be core CLI commands rather than invocable skills, or since renamed/removed upstream. Not re-asserted without a verifiable source to avoid re-introducing unverified content.",
+  "renamed": [
+    {"from": "review", "to": "code-review"}
+  ]
+}
