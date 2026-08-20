@@ -150,12 +150,14 @@ def request_text(url: str, attempts: int = 3) -> str:
         try:
             with urllib.request.urlopen(req, timeout=30) as response:
                 return response.read().decode("utf-8", errors="replace")
-        except urllib.error.HTTPError:
-            raise
+        except urllib.error.HTTPError as error:
+            # 4xx will not change on retry; only back off for server-side faults.
+            if error.code < 500 or attempt == attempts:
+                raise
         except urllib.error.URLError:
             if attempt == attempts:
                 raise
-            time.sleep(2**attempt)
+        time.sleep(2**attempt)
     raise urllib.error.URLError("unreachable")
 
 
@@ -566,6 +568,12 @@ def main() -> int:
     print(f"Synced {len(cards)} Claude skills to {skills_dir.relative_to(CLAUDE_ROOT.parent)}")
     print(f"Claude Code version: {previous_version or 'none'} -> {version}")
     print(f"Changelog: {changelog.relative_to(CLAUDE_ROOT.parent)}")
+
+    for note in skipped:
+        # Surfaced as an Actions annotation so a degraded run is never a silent pass.
+        print(f"::warning title=Claude sync degraded::{note}")
+    if skipped:
+        print(f"{len(skipped)} skill(s) unreachable; see the changelog.", file=sys.stderr)
     return 0
 
 

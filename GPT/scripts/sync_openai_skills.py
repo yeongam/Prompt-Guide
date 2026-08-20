@@ -13,6 +13,7 @@ import os
 import re
 import sys
 import textwrap
+import time
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
@@ -213,29 +214,67 @@ HOOK_SOURCES: tuple[HookSource, ...] = (
 )
 
 
-def request_json(url: str) -> dict[str, Any]:
-    headers = {
-        "Accept": "application/vnd.github+json",
-        "User-Agent": "prompt-guide-gpt-skill-sync",
-    }
+def fetch(url: str, headers: dict[str, str], attempts: int = 3) -> str:
+    req = urllib.request.Request(url, headers={"User-Agent": "prompt-guide-gpt-skill-sync"} | headers)
+    for attempt in range(1, attempts + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=30) as response:
+                return response.read().decode("utf-8", errors="replace")
+        except urllib.error.HTTPError as error:
+            # 4xx will not change on retry; only back off for server-side faults.
+            if error.code < 500 or attempt == attempts:
+                raise
+        except urllib.error.URLError:
+            if attempt == attempts:
+                raise
+        time.sleep(2**attempt)
+    raise urllib.error.URLError("unreachable")
+
+
+def request_api(url: str, accept: str) -> str:
+    headers = {"Accept": accept}
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
     if token:
         headers["Authorization"] = f"Bearer {token}"
-    req = urllib.request.Request(url, headers=headers)
-    with urllib.request.urlopen(req, timeout=30) as response:
-        return json.loads(response.read().decode("utf-8"))
+    return fetch(url, headers)
 
 
 def request_text(url: str) -> str:
-    req = urllib.request.Request(url, headers={"User-Agent": "prompt-guide-gpt-skill-sync"})
-    with urllib.request.urlopen(req, timeout=30) as response:
-        return response.read().decode("utf-8", errors="replace")
+    return fetch(url, {})
 
 
 def repo_commit(repo: str, branch: str) -> str:
-    data = request_json(f"https://api.github.com/repos/{repo}/commits/{branch}")
-    sha = str(data.get("sha", ""))
-    return sha[:12]
+    """Resolve a branch head to a short SHA.
+
+    The plain `/commits/{ref}` JSON response embeds the full commit diff, and
+    GitHub answers 422 rather than render it on large repositories such as
+    openai/openai-cookbook. The `.sha` media type and the git-ref endpoint both
+    return just the pointer, so neither can trip that limit.
+    """
+    try:
+        sha = request_api(
+            f"https://api.github.com/repos/{repo}/commits/{branch}",
+            accept="application/vnd.github.sha",
+        ).strip()
+        if re.fullmatch(r"[0-9a-f]{40}", sha):
+            return sha[:12]
+    except urllib.error.URLError:
+        pass
+
+    try:
+        payload = json.loads(
+            request_api(
+                f"https://api.github.com/repos/{repo}/git/ref/heads/{branch}",
+                accept="application/vnd.github+json",
+            )
+        )
+        sha = str(payload.get("object", {}).get("sha", ""))
+        if re.fullmatch(r"[0-9a-f]{40}", sha):
+            return sha[:12]
+    except (urllib.error.URLError, json.JSONDecodeError):
+        pass
+
+    return ""
 
 
 def repo_readme(repo: str, branch: str) -> str:
@@ -477,6 +516,7 @@ def write_changelog(
     hook_diff: dict[str, list[str]],
     skills_dir: Path,
     hooks_dir: Path,
+    degraded: list[str],
 ) -> None:
     CHANGELOGS_ROOT.mkdir(parents=True, exist_ok=True)
 
@@ -524,6 +564,7 @@ def write_changelog(
         "- slug 기준으로 중복 훅 통합",
         "- 기존 날짜 스킬/훅 스냅샷은 덮어쓰지 않고 신규 날짜에 기록",
         "- 변경 감지는 hash 비교로 수행",
+        *(f"- {note}" for note in degraded),
         "",
         "[요약]",
         (
@@ -541,18 +582,41 @@ def write_changelog(
     (CHANGELOGS_ROOT / f"{today}.txt").write_text("\n".join(lines), encoding="utf-8")
 
 
+def known_commits(*catalogs_and_keys: tuple[dict[str, Any], str]) -> dict[str, str]:
+    """Map source repo -> last known short SHA from the previous snapshots."""
+    known: dict[str, str] = {}
+    for catalog, collection in catalogs_and_keys:
+        for card in catalog.get(collection, []):
+            source = str(card.get("source", ""))
+            commit = str(card.get("source_commit", ""))
+            if source and commit:
+                known.setdefault(source.rsplit("github.com/", 1)[-1], commit)
+    return known
+
+
 def main() -> int:
     today = current_date()
+    prev_skills = previous_catalog(SKILLS_ROOT, today, "skills")
+    prev_hooks = previous_catalog(HOOKS_ROOT, today, "hooks")
+    fallback = known_commits((prev_skills, "skills"), (prev_hooks, "hooks"))
+
     skills: list[dict[str, Any]] = []
     hooks: list[dict[str, Any]] = []
     commits: dict[tuple[str, str], str] = {}
     readmes: dict[tuple[str, str], str] = {}
+    degraded: list[str] = []
 
     def source_commit(repo: str, branch: str) -> str:
         key = (repo, branch)
-        if key not in commits:
-            commits[key] = repo_commit(repo, branch)
-        return commits[key]
+        if key in commits:
+            return commits[key]
+        # A single unreachable source must not abort the whole routine.
+        commit = repo_commit(repo, branch)
+        if not commit:
+            commit = fallback.get(repo, "unknown")
+            degraded.append(f"{repo}@{branch}: commit 조회 실패, 직전 값({commit}) 유지")
+        commits[key] = commit
+        return commit
 
     def source_data(repo: str, branch: str) -> tuple[str, str]:
         key = (repo, branch)
@@ -571,13 +635,17 @@ def main() -> int:
     ensure_unique(skills, "skill")
     ensure_unique(hooks, "hook")
 
-    prev_skills = previous_catalog(SKILLS_ROOT, today, "skills")
-    prev_hooks = previous_catalog(HOOKS_ROOT, today, "hooks")
     skills_dir = write_skill_outputs(today, skills)
     hooks_dir = write_hook_outputs(today, hooks)
     skill_diff = compare(prev_skills, skills, "skills")
     hook_diff = compare(prev_hooks, hooks, "hooks")
-    write_changelog(today, skill_diff, hook_diff, skills_dir, hooks_dir)
+    write_changelog(today, skill_diff, hook_diff, skills_dir, hooks_dir, degraded)
+
+    for note in degraded:
+        # Surfaced as an Actions annotation so a degraded run is never a silent pass.
+        print(f"::warning title=GPT sync degraded::{note}")
+    if degraded:
+        print(f"{len(degraded)} source(s) degraded; see the changelog.", file=sys.stderr)
 
     print(f"Synced {len(skills)} GPT skills to {skills_dir.relative_to(GPT_ROOT)}")
     print(f"Synced {len(hooks)} GPT hooks to {hooks_dir.relative_to(GPT_ROOT)}")
