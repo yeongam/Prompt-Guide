@@ -1,0 +1,37 @@
+Prompt-Guide Claude Skills Changelog - 2026-08-23
+
+Snapshot: Claude/skills/2026-08-23/skills
+Source: official anthropics/claude-code repository (version 2.1.240)
+
+[추가된 스킬]
+- claude-api
+- code-review
+- document-generation
+- init
+- security-review
+- session-start-hook
+- simplify
+
+[수정된 스킬]
+- none
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 유지: skills/2026-08-23/skills
+- 각 스킬은 trigger, procedure, output, token_policy, compatibility로 경량화
+- 레거시 SKILLS_CATALOG.yaml은 버전/날짜 필드만 동기화하여 하위 호환 유지
+
+[토큰 절감 관련 변경 사항]
+- 긴 원문 CHANGELOG/README 복사를 피하고 커밋 해시와 버전만 저장
+- 스킬 절차는 짧은 실행 단위 4개 이하로 제한
+- 중복 설명 대신 공통 catalog.json으로 메타데이터 통합
+
+[충돌 해결 내역]
+- slug 기준으로 중복 스킬 통합
+- 기존 날짜 스킬 스냅샷은 덮어쓰지 않고 신규 날짜에 기록
+- 변경 감지는 hash 비교로 수행
+
+[요약]
+- skills: added=7, modified=0, deleted=0, unchanged=0

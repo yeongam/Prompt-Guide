@@ -1,0 +1,202 @@
+{
+  "date": "2026-08-23",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-08-23T00:10:54+09:00",
+  "skills": [
+    {
+      "category": "documentation",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "751b2ce7a29f6ada",
+      "name": "Codebase Init",
+      "output": "CLAUDE.md capturing architecture, conventions, and commands.",
+      "procedure": [
+        "Scan repo structure, build files, and existing docs.",
+        "Identify architecture, conventions, and common commands.",
+        "Write CLAUDE.md with concise, verifiable guidance.",
+        "Avoid restating what linters or type systems already enforce."
+      ],
+      "slug": "init",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "5cfc0a1905ce",
+      "source_version": "2.1.240",
+      "token_policy": [
+        "No repeated background context across turns.",
+        "Return decision-critical output only.",
+        "Reference the source repo instead of copying long docs."
+      ],
+      "trigger": "User asks to initialize or document an unfamiliar codebase."
+    },
+    {
+      "category": "programming",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "2657f92ca3730380",
+      "name": "Code Review",
+      "output": "Ranked review findings with file:line references.",
+      "procedure": [
+        "Diff the target against its base and read changed files in full.",
+        "Check logic correctness, style consistency, and test coverage.",
+        "Rank findings by severity; verify each before reporting.",
+        "Report only confirmed, actionable findings."
+      ],
+      "slug": "code-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "5cfc0a1905ce",
+      "source_version": "2.1.240",
+      "token_policy": [
+        "No repeated background context across turns.",
+        "Return decision-critical output only.",
+        "Reference the source repo instead of copying long docs."
+      ],
+      "trigger": "User asks to review a PR, branch, or diff."
+    },
+    {
+      "category": "programming",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "4632f9eebee53868",
+      "name": "Security Review",
+      "output": "Risk-ranked security findings for the pending diff.",
+      "procedure": [
+        "Scope to the current branch's pending diff.",
+        "Check for OWASP top-10 classes: injection, auth, XSS, SSRF, secrets.",
+        "Rank findings by exploitability and blast radius.",
+        "Skip theoretical issues with no reachable path."
+      ],
+      "slug": "security-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "5cfc0a1905ce",
+      "source_version": "2.1.240",
+      "token_policy": [
+        "No repeated background context across turns.",
+        "Return decision-critical output only.",
+        "Reference the source repo instead of copying long docs."
+      ],
+      "trigger": "User asks for a security audit of pending changes."
+    },
+    {
+      "category": "programming",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "39ec8bb276f9efb9",
+      "name": "Simplify",
+      "output": "Simplified code with quality fixes applied in place.",
+      "procedure": [
+        "Review changed code for reuse, redundancy, and unneeded abstraction.",
+        "Prefer deletion over addition when removing complexity.",
+        "Apply fixes directly rather than only reporting them.",
+        "Leave working behavior unchanged."
+      ],
+      "slug": "simplify",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "5cfc0a1905ce",
+      "source_version": "2.1.240",
+      "token_policy": [
+        "No repeated background context across turns.",
+        "Return decision-critical output only.",
+        "Reference the source repo instead of copying long docs."
+      ],
+      "trigger": "User asks to clean up, refactor, or simplify changed code."
+    },
+    {
+      "category": "programming",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "fbfe715792053e24",
+      "name": "Session Start Hook",
+      "output": "SessionStart hook enabling tests/linters in web sessions.",
+      "procedure": [
+        "Detect the project's test and lint commands.",
+        "Create a SessionStart hook that prepares the environment.",
+        "Keep the hook narrowly scoped to what the project needs."
+      ],
+      "slug": "session-start-hook",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "5cfc0a1905ce",
+      "source_version": "2.1.240",
+      "token_policy": [
+        "No repeated background context across turns.",
+        "Return decision-critical output only.",
+        "Reference the source repo instead of copying long docs."
+      ],
+      "trigger": "User wants test/lint runners available on web session start."
+    },
+    {
+      "category": "programming",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "cfbebaa4fa928845",
+      "name": "Claude API Programming",
+      "output": "Working Claude API integration with current SDK conventions.",
+      "procedure": [
+        "Confirm current model IDs and SDK version in use.",
+        "Apply prompt caching and tool-use patterns correctly.",
+        "Flag deprecated SDK 0.x patterns when migrating to 1.x.",
+        "Verify with the narrowest relevant request or test."
+      ],
+      "slug": "claude-api",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "5cfc0a1905ce",
+      "source_version": "2.1.240",
+      "token_policy": [
+        "No repeated background context across turns.",
+        "Return decision-critical output only.",
+        "Reference the source repo instead of copying long docs."
+      ],
+      "trigger": "Code imports the Anthropic SDK, or user asks about Claude API usage."
+    },
+    {
+      "category": "documentation",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "696954d5c4f19920",
+      "name": "Document Generation",
+      "output": "Generated or edited office document matching the requested format.",
+      "procedure": [
+        "Match the skill to the target file type (docx/pdf/pptx/xlsx).",
+        "Preserve existing formatting and structure when editing.",
+        "Read files fully before summarizing or redistributing them."
+      ],
+      "slug": "document-generation",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "5cfc0a1905ce",
+      "source_version": "2.1.240",
+      "token_policy": [
+        "No repeated background context across turns.",
+        "Return decision-critical output only.",
+        "Reference the source repo instead of copying long docs."
+      ],
+      "trigger": "Task requires producing or editing docx, pdf, pptx, or xlsx files."
+    }
+  ],
+  "source_policy": "official anthropics/claude-code GitHub repository only"
+}
