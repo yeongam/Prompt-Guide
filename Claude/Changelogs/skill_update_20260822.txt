@@ -1,0 +1,70 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-08-22 00:41 UTC
+Version : 2.1.238 → 2.1.239
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-08-22/
+============================================================
+
+[ ★ 신규 감지 스킬 (8개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /config  ← 수동 추가 필요
+  ? /cost  ← 수동 추가 필요
+  ? /goal  ← 수동 추가 필요
+  ? /insights  ← 수동 추가 필요
+  ? /list-agents  ← 수동 추가 필요
+  ? /resume  ← 수동 추가 필요
+  ? /voice  ← 수동 추가 필요
+  ? /workflows  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /insights
+  ~ /model
+  ~ /resume
+  ~ /voice
+  ~ /workflows
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-08-22/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Improved the reminder shown after compaction so a skill's original arguments are not re-run as a new request
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Added `/claude-api upgrade` to migrate Python projects from `anthropic` 0.x to 1.x, and updated the skill's Python reference for 1.x (timeouts use `anthropic.Timeout`, not `httpx.Timeout`)
+
+[ Hooks ]
+  PreToolUse
+
+[ Settings ]
+  ListAgents
+  awsAuthRefresh
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.239
+
+- Cost estimates (`/cost`, status line, `--max-budget-usd`) now include the 1.1× US-only-inference premium for data-residency workspaces
+- Added the one-time fullscreen renderer offer on Bedrock, Vertex, Foundry and other previously excluded setups; new installs there now start in fullscreen
+- Added `/claude-api upgrade` to migrate Python projects from `anthropic` 0.x to 1.x, and updated the skill's Python reference for 1.x (timeouts use `anthropic.Timeout`, not `httpx.Timeout`)
+- Cloud sessions: plugins synced from claude.ai now show as `name@synced`, work with `claude plugin enable/disable <name>@synced`, and never override a same-named plugin you installed
+- Alpine/musl builds: native image paste, clipboard, and audio-capture add-ons now load (musl-built binaries instead of glibc ones refused by the runtime)
+- The usage-limit message shown when your monthly spend limit is already used up now also says when your session or weekly limit resets
+- Fixed Bedrock streaming behind proxies that strip the response Content-Type header, which silently doubled billed API calls by re-running every turn non-streaming
+- Fixed Claude Code hanging at startup behind an HTTPS proxy when using Bedrock with an SSO profile and `awsAuthRefresh` — the credential pre-check now honors `HTTPS_PROXY`
+- Fixed a raw crash dump when starting Claude Code from a directory that no longer exists; it now prints a clear message
+- Fixed Edit and Write calls pausing for about 5 seconds in JetBrains IDE terminals when the Claude Code plugin is connected
+- Fixed a race where pressing Esc with a prompt queued could let the next turn finish early, leaving the session idle while Claude was still working and letting a later resubmit repeat actions
+- Fixed WebFetch retaining expired page content in memory for the whole session instead of the intended 15 minutes
+- Fixed cloud sessions (Claude Code on the web, desktop and mobile apps) resuming out of plan mode after an idle worker restart
+- Fixed M
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
