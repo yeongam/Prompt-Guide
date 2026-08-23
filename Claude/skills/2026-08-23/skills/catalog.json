@@ -1,0 +1,144 @@
+{
+  "date": "2026-08-23",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-08-24T00:13:20+09:00",
+  "source_policy": "official anthropics/claude-code repository only",
+  "catalog_ref": "../../SKILLS_CATALOG.yaml",
+  "skills": [
+    {
+      "slug": "code-review",
+      "name": "Code Review",
+      "hash": "0bf6fa610e95df8b",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "trigger": "Review the current diff, PR, branch, or path target for correctness bugs and reuse/simplification/efficiency cleanups.",
+      "procedure": [
+        "Scope the target: current diff, or a given PR number/branch/path.",
+        "Run at the requested effort level.",
+        "Check logic, style, security, and test coverage.",
+        "Support --comment and --fix flags.",
+        "Report findings most-severe first."
+      ],
+      "output": "Risk-ranked findings list; optionally inline PR comments or applied fixes.",
+      "token_policy": [
+        "Reuse the canonical SKILLS_CATALOG.yaml entry instead of restating it.",
+        "Keep this card to trigger + procedure + delta from the previous snapshot."
+      ],
+      "compatibility": [
+        "/review is a legacy alias since v2.1.227 - not a separate skill.",
+        "Runs as a background subagent since v2.1.218.",
+        "Do not overwrite existing dated skill snapshots."
+      ],
+      "summary": "Renamed from /review (kept as alias) in v2.1.227; runs as a background subagent since v2.1.218; no longer auto-runs on every turn since v2.1.215."
+    },
+    {
+      "slug": "claude-api",
+      "name": "Claude API",
+      "hash": "e753dd9a7ea54a26",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "trigger": "Code imports the anthropic SDK, or user asks about Claude API/Anthropic SDK features.",
+      "procedure": [
+        "Check target SDK (Python or TypeScript/JS).",
+        "Use `upgrade` subcommand for Python 0.x to 1.x migration.",
+        "Use `prompt-audit` subcommand for prompt/tool auditing.",
+        "Reference current model ids and pricing, not memorized defaults."
+      ],
+      "output": "Working Claude API integration code, or a migration/audit report.",
+      "token_policy": [
+        "Reuse the canonical SKILLS_CATALOG.yaml models table instead of restating it.",
+        "Link to source doc sections instead of copying long API reference text."
+      ],
+      "compatibility": [
+        "Reference model ids from SKILLS_CATALOG.yaml `models:` block.",
+        "Do not overwrite existing dated skill snapshots."
+      ],
+      "summary": "upgrade subcommand (Python SDK 0.x to 1.x) added v2.1.239; prompt-audit subcommand added v2.1.221; default reference model bumped to Claude Opus 5 as of v2.1.219."
+    },
+    {
+      "slug": "simplify",
+      "name": "Simplify",
+      "hash": "02301e49ec999bbf",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "trigger": "User asks to clean up, simplify, or refactor changed code (quality only).",
+      "procedure": [
+        "Review changed code for reuse, simplification, efficiency, altitude.",
+        "Prefer smallest working change; no premature abstractions.",
+        "Apply the fixes directly."
+      ],
+      "output": "Cleaned-up diff with no behavior change and no new bugs.",
+      "token_policy": [
+        "Reuse the canonical SKILLS_CATALOG.yaml entry instead of duplicating it."
+      ],
+      "compatibility": [
+        "Complements /code-review (bug-hunting); simplify does not hunt bugs.",
+        "Do not overwrite existing dated skill snapshots."
+      ],
+      "summary": "No changelog-visible behavior change between v2.1.129 and v2.1.241."
+    },
+    {
+      "slug": "security-review",
+      "name": "Security Review",
+      "hash": "1e049bd0e1dec1b7",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "trigger": "User asks for a security audit of pending changes on the current branch.",
+      "procedure": [
+        "Scope to current branch's pending diff.",
+        "Audit against OWASP-style categories.",
+        "Rank findings by risk."
+      ],
+      "output": "Risk-ranked security findings for the pending diff.",
+      "token_policy": [
+        "Reuse the canonical SKILLS_CATALOG.yaml entry instead of duplicating it."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots."
+      ],
+      "summary": "No changelog-visible behavior change between v2.1.129 and v2.1.241."
+    },
+    {
+      "slug": "init",
+      "name": "Init",
+      "hash": "4e6658e22e20328f",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "trigger": "User asks to initialize or document a codebase.",
+      "procedure": [
+        "Survey architecture, conventions, and common commands.",
+        "Generate or update CLAUDE.md with that context."
+      ],
+      "output": "A CLAUDE.md file capturing project-specific guidance.",
+      "token_policy": [
+        "Reuse the canonical SKILLS_CATALOG.yaml entry instead of duplicating it."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots."
+      ],
+      "summary": "No changelog-visible behavior change between v2.1.129 and v2.1.241."
+    },
+    {
+      "slug": "mcp-builder",
+      "name": "MCP Builder",
+      "hash": "0aac2e43cffcd245",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "trigger": "User is building an MCP server to integrate an external API or service.",
+      "procedure": [
+        "Design well-scoped tools for the target service.",
+        "Follow current MCP client behavior (elicitation forms, OAuth, header-minting).",
+        "Verify against a real client connection."
+      ],
+      "output": "A working MCP server exposing well-designed tools.",
+      "token_policy": [
+        "Reuse the canonical SKILLS_CATALOG.yaml entry instead of duplicating it."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "MCP OAuth/elicitation-form/header-minting behavior changed v2.1.229-v2.1.239 - verify against live client."
+      ],
+      "summary": "OAuth redirect-URI/127.0.0.1 handling fixed v2.1.229/v2.1.231; elicitation forms clipped in fullscreen fixed v2.1.239; headersHelper requires folder trust since v2.1.232."
+    }
+  ]
+}

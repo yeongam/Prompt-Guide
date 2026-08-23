@@ -1,0 +1,80 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-08-23 (KST)
+Version : 2.1.129 -> 2.1.241
+Source  : anthropics/claude-code (public GitHub repository)
+============================================================
+
+[변경 요약 / Change Summary]
+
+Added skills (신규 추가):
+  - Claude/skills/2026-08-23/skills/ : new dated-snapshot directory,
+    matching the existing GPT/skills/<date>/skills/ convention.
+    Cards added: code-review, claude-api, simplify, security-review,
+    init, mcp-builder (+ catalog.json index).
+  - These are snapshot documentation cards for skills that already
+    exist in Claude Code; no new runtime behavior was invented.
+
+Modified skills (수정):
+  - SKILLS_CATALOG.yaml: `review` renamed to `code-review` (canonical
+    slash command since v2.1.227); `/review` kept as a documented
+    legacy alias so nothing that depends on the old name breaks.
+  - claude-api: added `upgrade` (Python SDK 0.x->1.x migration,
+    v2.1.239) and `prompt-audit` (v2.1.221) subcommands; default
+    reference model updated to Claude Opus 5 (v2.1.219).
+  - models: block updated from claude-opus-4-7/claude-sonnet-4-6 to
+    the current generation (claude-opus-5, claude-sonnet-5,
+    claude-haiku-4-5-20251001, claude-fable-5).
+  - hooks: added DirectoryAdded (fires after /add-dir, v2.1.218).
+  - settings: added sandbox.filesystem.disabled (v2.1.216).
+  - env: added ANTHROPIC_DEFAULT_MODEL (v2.1.236) and
+    CLAUDE_CODE_WEBFETCH_CACHE_TTL_MS (v2.1.233).
+  - Fixed a pre-existing YAML bug: three `desc:` lines contained an
+    unquoted colon (effort, tui, focus entries), which made the
+    catalog fail to parse under a strict YAML loader. Quoted those
+    values; no semantic content changed.
+  - version/updated fields bumped to 2.1.241 / 2026-08-23.
+
+Deleted skills (삭제):
+  - None. No existing skill, hook, setting, or env var was removed —
+    stability of prior behavior was preserved (rule: do not break
+    existing skills when adding new ones).
+
+Optimized structure (구조 최적화):
+  - SKILLS_CATALOG.yaml remains the single canonical, flat-YAML
+    source of truth (already ~30% more token-efficient than nested
+    JSON/Markdown per its own notes).
+  - New dated skill cards under skills/<date>/skills/ are additive
+    documentation snapshots only: each card links back to the
+    canonical catalog instead of duplicating full detail, keeping
+    per-card size small (trigger + procedure + delta only).
+
+Token savings (토큰 절감):
+  - Dated cards carry one-line trigger/output/summary fields and
+    defer full detail to the canonical catalog rather than repeating
+    it, mirroring the token policy already used on the GPT side.
+  - No upstream changelog prose was copied verbatim; only short,
+    decision-relevant summaries were retained per card.
+
+Conflict resolution (충돌 해결):
+  - Catalog key `review` collided with the real, currently active
+    slash command name `code-review` (verified against the live
+    Claude Code skill roster, not assumed). Resolved non-destructively
+    by renaming the key to `code-review` and recording `/review` as a
+    legacy alias, so no consumer keyed on either name loses
+    functionality.
+  - New skills/<date>/ directory does not conflict with the existing
+    flat SKILLS_CATALOG.yaml; the two coexist by design (catalog =
+    canonical state, dated cards = point-in-time snapshots + diff
+    trail), matching the pattern already established under GPT/.
+
+------------------------------------------------------------
+[적용 상태] Claude/skills/SKILLS_CATALOG.yaml 및 2026-08-23 스냅샷 최신화 완료
+[Status]   Catalog + dated snapshot updated, committed to
+           yeongam/Prompt-Guide (branch: claude/zealous-sagan-5ccfn7)
+
+[참고 / Note] The previous Claude-side sync had not run since
+2026-05-06 (catalog stayed at v2.1.129) even though the GPT-side
+sync continued through 2026-06-05. This run catches the Claude
+catalog up to the current upstream version (2.1.241) in one pass.
+============================================================

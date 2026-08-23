@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.241
+updated: 2026-08-23
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -12,10 +12,12 @@ skills:
     trigger: user asks to initialize or document codebase
     desc: Generate CLAUDE.md with codebase architecture, conventions, commands
 
-  review:
-    cmd: /review
-    trigger: user asks to review PR or branch
-    desc: Multi-pass PR review; checks logic, style, security, tests
+  code-review:
+    cmd: /code-review
+    trigger: user asks to review PR, branch, or diff
+    desc: Multi-pass review; checks logic, style, security, tests
+    alias: /review (legacy name, kept as alias since v2.1.227)
+    note: Runs as a background subagent since v2.1.218
 
   security-review:
     cmd: /security-review
@@ -54,13 +56,18 @@ skills:
     example: "/loop 5m /review"
 
   claude-api:
-    cmd: /claude-api
+    cmd: /claude-api [upgrade | prompt-audit]
     trigger: code imports anthropic SDK; user asks about Claude API features
     desc: Build/debug Claude API apps; prompt caching, tool use, model migration
+    subcommands:
+      upgrade: Migrate Python projects from anthropic SDK 0.x to 1.x (added v2.1.239)
+      prompt-audit: Audit prompts/tools for issues (added v2.1.221)
+    note: Python reference updated for SDK 1.x timeouts (anthropic.Timeout, v2.1.239); default reference model is now Opus 5
     models:
-      opus: claude-opus-4-7
-      sonnet: claude-sonnet-4-6
+      opus: claude-opus-5
+      sonnet: claude-sonnet-5
       haiku: claude-haiku-4-5-20251001
+      fable: claude-fable-5
 
   ultrareview:
     cmd: /ultrareview [PR#]
@@ -81,7 +88,7 @@ skills:
   effort:
     cmd: /effort
     trigger: user wants to adjust effort/quality level
-    desc: Interactive slider for session effort level (also: CLAUDE_EFFORT env var)
+    desc: "Interactive slider for session effort level (also: CLAUDE_EFFORT env var)"
 
   powerup:
     cmd: /powerup
@@ -91,12 +98,12 @@ skills:
   tui:
     cmd: /tui
     trigger: rendering looks flickery or user wants full-screen mode
-    desc: Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)
+    desc: "Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)"
 
   focus:
     cmd: /focus
     trigger: user wants compact view of conversation
-    desc: Toggle focus view showing only: prompt + tool summary + final response
+    desc: "Toggle focus view showing only: prompt + tool summary + final response"
 
   undo:
     cmd: /undo
@@ -176,6 +183,12 @@ hooks:
     added: v2.1.95
     use: Custom permission escalation flows
 
+  DirectoryAdded:
+    fires: After /add-dir registers a directory mid-session
+    can_block: false
+    added: v2.1.218
+    use: React to newly trusted directories (indexing, linting setup)
+
   hook_invoke_types:
     - type: shell          # shell command (default)
     - type: mcp_tool       # invoke MCP tool directly (added v2.1.118)
@@ -215,6 +228,11 @@ settings:
     desc: Block specific domains even when broader allowlists exist
     added: v2.1.85
 
+  sandbox.filesystem.disabled:
+    type: bool
+    desc: Skip filesystem sandbox isolation entirely
+    added: v2.1.216
+
 # ─── ENV VARS ──────────────────────────────────────────────────────────────────
 env:
   CLAUDE_EFFORT: "Current effort level; usable in skill template strings as ${CLAUDE_EFFORT}"
@@ -224,13 +242,16 @@ env:
   OTEL_LOG_RAW_API_BODIES: "1 = emit full API request/response bodies as OTEL events"
   DISABLE_UPDATES: "1 = block all update paths including manual 'claude update'"
   CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1 = opt-in gateway /v1/models discovery"
+  ANTHROPIC_DEFAULT_MODEL: "Set default model without --model flag (added v2.1.236)"
+  CLAUDE_CODE_WEBFETCH_CACHE_TTL_MS: "Configure WebFetch session URL cache TTL (added v2.1.233)"
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
-  default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
-  sonnet: claude-sonnet-4-6
+  default: claude-sonnet-5
+  opus: claude-opus-5          # Fast mode available; Max subscribers only auto mode
+  sonnet: claude-sonnet-5
   haiku: claude-haiku-4-5-20251001
+  fable: claude-fable-5
 
 # ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────
 # This catalog is structured for minimal token overhead:
@@ -238,3 +259,5 @@ models:
 # - YAML over JSON/Markdown: ~30% fewer tokens for structured data
 # - Descriptions capped at one line; examples only where non-obvious
 # - "added:" version tags kept for audit; remove if tokens are critical
+# - Dated snapshot cards under skills/<date>/skills/ point back to this file
+#   for full detail instead of duplicating it (see Claude/Changelogs/ for diffs)
