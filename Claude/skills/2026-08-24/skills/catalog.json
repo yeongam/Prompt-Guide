@@ -1,0 +1,326 @@
+{
+  "date": "2026-08-24",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-08-24T15:17:19+00:00",
+  "skills": [
+    {
+      "category": "coding",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "2e24483474f9f348",
+      "name": "Code Review",
+      "output": "Ranked findings, optionally posted as inline PR comments or auto-fixed.",
+      "procedure": [
+        "Scope the diff or target (PR/branch/path) at the requested effort level.",
+        "Check correctness bugs first, then reuse/simplification/efficiency.",
+        "Rank findings by confidence; broaden coverage only at high effort."
+      ],
+      "slug": "code-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "token_policy": [
+        "One-line description; expand only when the user's phrasing is ambiguous.",
+        "Reuse this catalog instead of restating skill behavior inline.",
+        "Prefer the narrowest applicable skill over general-purpose exploration."
+      ],
+      "trigger": "user asks to review the current diff, a PR, branch, or path"
+    },
+    {
+      "category": "coding",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "325282e3ae03a3ab",
+      "name": "Security Review",
+      "output": "Risk-ranked list of security findings in the pending diff.",
+      "procedure": [
+        "Diff the current branch against its base.",
+        "Check against OWASP top-10 classes of vulnerability.",
+        "Rank findings by exploitability and blast radius."
+      ],
+      "slug": "security-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "token_policy": [
+        "One-line description; expand only when the user's phrasing is ambiguous.",
+        "Reuse this catalog instead of restating skill behavior inline.",
+        "Prefer the narrowest applicable skill over general-purpose exploration."
+      ],
+      "trigger": "user asks for a security audit of pending branch changes"
+    },
+    {
+      "category": "coding",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "33d483795c7c2a64",
+      "name": "Simplify",
+      "output": "Simplified diff with quality cleanups applied.",
+      "procedure": [
+        "Review changed code only, not the whole codebase.",
+        "Look for reuse, simplification, and efficiency opportunities.",
+        "Apply the fixes directly; does not hunt for correctness bugs."
+      ],
+      "slug": "simplify",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "token_policy": [
+        "One-line description; expand only when the user's phrasing is ambiguous.",
+        "Reuse this catalog instead of restating skill behavior inline.",
+        "Prefer the narrowest applicable skill over general-purpose exploration."
+      ],
+      "trigger": "user asks to clean up or refactor recently changed code"
+    },
+    {
+      "category": "coding",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "89e1e9bcdcdcf7b2",
+      "name": "Init",
+      "output": "CLAUDE.md with codebase architecture, conventions, and commands.",
+      "procedure": [
+        "Scan the repo for architecture, conventions, and commands.",
+        "Generate a CLAUDE.md capturing what a new contributor needs."
+      ],
+      "slug": "init",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "token_policy": [
+        "One-line description; expand only when the user's phrasing is ambiguous.",
+        "Reuse this catalog instead of restating skill behavior inline.",
+        "Prefer the narrowest applicable skill over general-purpose exploration."
+      ],
+      "trigger": "user asks to initialize or document a codebase"
+    },
+    {
+      "category": "programming",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "a1bfafb473ac6616",
+      "name": "Session Start Hook",
+      "output": "Configured SessionStart hook for Claude Code on the web.",
+      "procedure": [
+        "Create a SessionStart hook that prepares the environment.",
+        "Ensure the project can run its tests and linters during web sessions."
+      ],
+      "slug": "session-start-hook",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "token_policy": [
+        "One-line description; expand only when the user's phrasing is ambiguous.",
+        "Reuse this catalog instead of restating skill behavior inline.",
+        "Prefer the narrowest applicable skill over general-purpose exploration."
+      ],
+      "trigger": "user sets up a repo for Claude Code on the web and wants tests/linters to run automatically"
+    },
+    {
+      "category": "programming",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "601a1e0978417f86",
+      "name": "MCP Builder",
+      "output": "A working MCP server exposing well-designed tools to LLM clients.",
+      "procedure": [
+        "Design well-scoped tools around the target external service.",
+        "Implement with FastMCP (Python) or the MCP SDK (Node/TypeScript)."
+      ],
+      "slug": "mcp-builder",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "token_policy": [
+        "One-line description; expand only when the user's phrasing is ambiguous.",
+        "Reuse this catalog instead of restating skill behavior inline.",
+        "Prefer the narrowest applicable skill over general-purpose exploration."
+      ],
+      "trigger": "user is building an MCP server to integrate an external API or service"
+    },
+    {
+      "category": "programming",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "17c3de1f84436b0d",
+      "name": "Claude API",
+      "output": "Correct, current-version Claude API / Anthropic SDK usage or migration.",
+      "procedure": [
+        "Confirm current model IDs, pricing, and parameter support.",
+        "Cover streaming, tool use, MCP, prompt caching, and token counting as needed.",
+        "For version migrations, use the built-in upgrade path (e.g. anthropic 0.x -> 1.x)."
+      ],
+      "slug": "claude-api",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "token_policy": [
+        "One-line description; expand only when the user's phrasing is ambiguous.",
+        "Reuse this catalog instead of restating skill behavior inline.",
+        "Prefer the narrowest applicable skill over general-purpose exploration."
+      ],
+      "trigger": "code imports the Anthropic SDK or user asks about Claude API features/pricing/limits"
+    },
+    {
+      "category": "programming",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "f772ffa5c727c625",
+      "name": "Update Config",
+      "output": "Updated settings.json implementing the requested automated behavior.",
+      "procedure": [
+        "Edit settings.json / settings.local.json rather than relying on memory.",
+        "Wire hooks for behaviors that must fire automatically on lifecycle events."
+      ],
+      "slug": "update-config",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "token_policy": [
+        "One-line description; expand only when the user's phrasing is ambiguous.",
+        "Reuse this catalog instead of restating skill behavior inline.",
+        "Prefer the narrowest applicable skill over general-purpose exploration."
+      ],
+      "trigger": "user wants automated behaviors, permissions, env vars, or hooks configured"
+    },
+    {
+      "category": "programming",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "8b545faf94a06667",
+      "name": "Skill Creator",
+      "output": "A new or improved skill definition, optionally with eval results.",
+      "procedure": [
+        "Scaffold or edit the skill's SKILL.md and supporting files.",
+        "Tighten the description for accurate triggering.",
+        "Optionally run evals to benchmark performance."
+      ],
+      "slug": "skill-creator",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "token_policy": [
+        "One-line description; expand only when the user's phrasing is ambiguous.",
+        "Reuse this catalog instead of restating skill behavior inline.",
+        "Prefer the narrowest applicable skill over general-purpose exploration."
+      ],
+      "trigger": "user wants to create, edit, or optimize a skill"
+    },
+    {
+      "category": "documentation",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "f468761e22b9c6b5",
+      "name": "DOCX",
+      "output": "A created or edited Word document.",
+      "procedure": [
+        "Read or scaffold the document structure (headings, TOC, styles).",
+        "Apply requested edits, formatting, or find-and-replace."
+      ],
+      "slug": "docx",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "token_policy": [
+        "One-line description; expand only when the user's phrasing is ambiguous.",
+        "Reuse this catalog instead of restating skill behavior inline.",
+        "Prefer the narrowest applicable skill over general-purpose exploration."
+      ],
+      "trigger": "user wants to create, read, or edit a Word document (.docx/.dotx)"
+    },
+    {
+      "category": "documentation",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "b7180581163056f3",
+      "name": "PDF",
+      "output": "The resulting PDF file or extracted content.",
+      "procedure": [
+        "Extract text/tables/images or assemble the requested PDF operation.",
+        "Handle forms, watermarks, encryption, or OCR as requested."
+      ],
+      "slug": "pdf",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "token_policy": [
+        "One-line description; expand only when the user's phrasing is ambiguous.",
+        "Reuse this catalog instead of restating skill behavior inline.",
+        "Prefer the narrowest applicable skill over general-purpose exploration."
+      ],
+      "trigger": "user wants to create, read, merge, split, or otherwise manipulate a PDF"
+    },
+    {
+      "category": "documentation",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "117f70d9d9ad7f01",
+      "name": "PPTX",
+      "output": "A created or edited presentation file.",
+      "procedure": [
+        "Read or scaffold slides, layouts, speaker notes, or templates.",
+        "Apply requested edits and keep formatting consistent."
+      ],
+      "slug": "pptx",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "token_policy": [
+        "One-line description; expand only when the user's phrasing is ambiguous.",
+        "Reuse this catalog instead of restating skill behavior inline.",
+        "Prefer the narrowest applicable skill over general-purpose exploration."
+      ],
+      "trigger": "user wants to create, read, or edit a slide deck (.pptx/.potx)"
+    },
+    {
+      "category": "documentation",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "33550401a2b48271",
+      "name": "XLSX",
+      "output": "A created or edited spreadsheet file.",
+      "procedure": [
+        "Read or scaffold sheets, formulas, and formatting.",
+        "Apply requested edits, cleaning, or chart generation."
+      ],
+      "slug": "xlsx",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.241",
+      "token_policy": [
+        "One-line description; expand only when the user's phrasing is ambiguous.",
+        "Reuse this catalog instead of restating skill behavior inline.",
+        "Prefer the narrowest applicable skill over general-purpose exploration."
+      ],
+      "trigger": "user wants to create, read, or edit a spreadsheet (.xlsx/.csv/.tsv)"
+    }
+  ],
+  "source_policy": "official anthropics/claude-code repository only",
+  "source_version": "2.1.241"
+}
