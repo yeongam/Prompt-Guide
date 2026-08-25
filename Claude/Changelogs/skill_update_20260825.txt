@@ -1,0 +1,80 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-08-25 00:42 UTC
+Version : 2.1.241 → 2.1.243
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-08-25/
+============================================================
+
+[ ★ 신규 감지 스킬 (9개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /cost  ← 수동 추가 필요
+  ? /fast  ← 수동 추가 필요
+  ? /logout  ← 수동 추가 필요
+  ? /plugins  ← 수동 추가 필요
+  ? /reload-plugins  ← 수동 추가 필요
+  ? /rename  ← 수동 추가 필요
+  ? /resume  ← 수동 추가 필요
+  ? /tasks  ← 수동 추가 필요
+  ? /web-setup  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /effort
+  ~ /login
+  ~ /logout
+  ~ /loop
+  ~ /model
+  ~ /reload-plugins
+  ~ /rename
+  ~ /resume
+  ~ /status
+  ~ /usage
+  ~ /web-setup
+
+[ 삭제된 스킬 / Removed Skills ]
+  - /rename
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-08-25/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Added a Loops breakdown to `/usage`: per-loop run count, total tokens, tokens per run, and last run, so runaway or chatty `/loop` tasks are easy to spot
+  - Fixed workload identity federation in CI: processes in one job share the exchanged token instead of re-exchanging the single-use token; a rejected exchange fails fast with the server's message
+  - Fixed `/web-setup` repeatedly asking you to log in when an older GitHub CLI (without `gh auth token`) was already authenticated
+  - Improved attribution of usage telemetry to your organization for sessions that authenticate with `ANTHROPIC_AUTH_TOKEN` directly against the Anthropic API, so its data-handling settings apply
+  - Improved native binary size: about 2 MB smaller by storing the bundled skill and prompt text more compactly
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Added a Loops breakdown to `/usage`: per-loop run count, total tokens, tokens per run, and last run, so runaway or chatty `/loop` tasks are easy to spot
+  - Fixed Ctrl+R history search and up-arrow history breaking when `~/.claude/history.jsonl` contains a malformed entry
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.243
+
+- Added a Loops breakdown to `/usage`: per-loop run count, total tokens, tokens per run, and last run, so runaway or chatty `/loop` tasks are easy to spot
+- Added `modelPicker` setting: curate the `/model` picker with an ordered, labeled list of models (any id spelling, including Vertex/Bedrock ids), appended to or replacing the built-in lineup
+- Added `promptCacheTtl` and `subagentPromptCacheTtl` settings so API-key and cloud-provider users can keep a 1-hour prompt cache on the main conversation while subagents stay at 5 minutes
+- Added `modelPricing` managed setting so an organization's contracted per-model rates and discount multiplier are used for `/cost`, the status line, and telemetry cost figures instead of list price
+- Added a keyless sign-in under `/login` → Anthropic Console: "Sign in with your Console account" (recommended) alongside creating an API key, so organizations that don't allow API keys can sign in
+- Added a `Skipped sources` line to `/status` that lists managed settings sources (for example `managed-settings.json`) present but not applied because a higher-precedence managed source is active
+- Added a `managed` marker in `/mcp` and `/plugins` on claude.ai connectors whose authentication is managed by your organization
+- Added a tip pointing claude.ai users who haven't connected GitHub for Claude Code on the web to `/web-setup`
+- Added a `/status` line showing whether GitHub is connected for Claude Code on the web (Pro/Max), pointing to `/web-setup` when it isn't
+- Added the model (and effort level) each subagent ran on to `/tasks` and the agent detail dialogs
+- Fixed remote MCP servers in non-interactive (`-p`) and SDK sessions never recovering after a dropped connection; they now reconnect automatically or report as failed
+- Fixed MCP server sign-in started from the desktop app failing with "Invalid redirect URI" on servers that support client ID metadata documents (for example Linear)
+- Fixed auto mode staying unavailable at startu
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
