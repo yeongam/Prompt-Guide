@@ -1,0 +1,80 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-08-26 00:43 UTC
+Version : 2.1.243 → 2.1.246
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-08-26/
+============================================================
+
+[ ★ 신규 감지 스킬 (11개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /--  ← 수동 추가 필요
+  ? /autofix-pr  ← 수동 추가 필요
+  ? /background  ← 수동 추가 필요
+  ? /cd  ← 수동 추가 필요
+  ? /code-review  ← 수동 추가 필요
+  ? /fork  ← 수동 추가 필요
+  ? /goal  ← 수동 추가 필요
+  ? /permissions  ← 수동 추가 필요
+  ? /reload-plugins  ← 수동 추가 필요
+  ? /rename  ← 수동 추가 필요
+  ? /stats  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /--
+  ~ /autofix-pr
+  ~ /background
+  ~ /cd
+  ~ /code-review
+  ~ /color
+  ~ /fork
+  ~ /reload-plugins
+  ~ /stats
+  ~ /theme
+  ~ /ultrareview
+
+[ 삭제된 스킬 / Removed Skills ]
+  - /theme
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-08-26/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed path completion failing when the completion token or working directory contained a null byte
+  - Fixed a visible API error on the first prompt after idle when `apiKeyHelper` returns short-lived JWTs: an expired cached token is now refreshed before sending, and 401/403 auth errors retry quietly
+  - Improved attribution of usage telemetry to your organization for workload identity federation sessions, events sent while `apiKeyHelper` runs at startup, and after a login token expired while idle
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Fixed the UI stopping with a render error on the first tool call when a third-party Anthropic-compatible endpoint (`ANTHROPIC_BASE_URL`) streams a `tool_use` block without an `id`
+
+[ Hooks ]
+  Notification
+
+[ Settings ]
+  id
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.246
+
+- Added a startup warning for Bash allow rules with a wildcard before the subcommand (e.g. `Bash(git * main)`), since they also match options inserted before the subcommand
+- Added an Auto mode tab to `/permissions` for viewing and editing auto mode classifier rules
+- Added the turn's completion time to the end-of-turn duration line, e.g. `✻ Sautéed for 23s · done 6:05 PM`
+- Fixed fullscreen mode showing a blank transcript after resizing the terminal and jumping to the bottom until the next keypress
+- Fixed a severe transcript slowdown when a diff contained a very long single line (e.g. a base64 string); such lines now render truncated with a marker
+- Fixed erratic fullscreen scrolling when positioned at an earlier message, including jump-to-bottom getting stuck mid-transcript
+- Fixed background sessions failing to open after 45 seconds when Claude Code's starting directory had been deleted, the machine had slept, or the host is slow to start processes
+- Fixed background sessions failing to open with "Couldn't start the background service … EACCES" when another Claude Code process was re-installing the npm package at that moment
+- Fixed markdown rendering being disabled for a whole message when its first 500 characters contained no markdown, and for `+`/`N)` lists and setext headings
+- Fixed MCP tool calls interrupted by an incoming message in headless/remote sessions being reported to the model as "completed with no output" instead of an explicit interrupted error
+- Fixed MCP tool arguments being sent as JSON strings when the parameter's schema is empty (`{}`), instead of their real type
+- Fixed a command interrupted mid-run showing as "Ran 1 shell command" with no sign it was cut
+- Fixed pressing ← or running `/background` during a dynamic workflow restarting its finished subagents; it now asks first and says how many subagents would restart
+- Fixed opening a just-started session in `claude agents` while its worker was still booting (common on Windows)
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
