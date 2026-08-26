@@ -1,0 +1,64 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-08-26 15:15 UTC
+Version : 2.1.129 -> 2.1.246
+Source  : anthropics/claude-code
+============================================================
+
+[변경 요약 / Change Summary]
+
+Commands/Skills:
+  /--
+  /autofix-pr
+  /background
+  /cd
+  /code-review
+  /color
+  /fork
+  /goal
+  /permissions
+  /reload-plugins
+  /rename
+  /stats
+  /theme
+  /ultrareview
+
+Hooks:
+  Notification
+
+Settings:
+  id
+
+Env Vars:
+  ANTHROPIC_BASE_URL
+
+----------------------------------------
+[원문 변경사항 / Raw Changes]
+
+## 2.1.246
+
+- Added a startup warning for Bash allow rules with a wildcard before the subcommand (e.g. `Bash(git * main)`), since they also match options inserted before the subcommand
+- Added an Auto mode tab to `/permissions` for viewing and editing auto mode classifier rules
+- Added the turn's completion time to the end-of-turn duration line, e.g. `✻ Sautéed for 23s · done 6:05 PM`
+- Fixed fullscreen mode showing a blank transcript after resizing the terminal and jumping to the bottom until the next keypress
+- Fixed a severe transcript slowdown when a diff contained a very long single line (e.g. a base64 string); such lines now render truncated with a marker
+- Fixed erratic fullscreen scrolling when positioned at an earlier message, including jump-to-bottom getting stuck mid-transcript
+- Fixed background sessions failing to open after 45 seconds when Claude Code's starting directory had been deleted, the machine had slept, or the host is slow to start processes
+- Fixed background sessions failing to open with "Couldn't start the background service … EACCES" when another Claude Code process was re-installing the npm package at that moment
+- Fixed markdown rendering being disabled for a whole message when its first 500 characters contained no markdown, and for `+`/`N)` lists and setext headings
+- Fixed MCP tool calls interrupted by an incoming message in headless/remote sessions being reported to the model as "completed with no output" instead of an explicit interrupted error
+- Fixed MCP tool arguments being sent as JSON strings when the parameter's schema is empty (`{}`), instead of their real type
+- Fixed a command interrupted mid-run showing as "Ran 1 shell command" with no sign it was cut
+- Fixed pressing ← or running `/background` during a dynamic workflow restarting its finished subagents; it now asks first and says how many subagents would restart
+- Fixed opening a just-started session in `claude agents` while its worker was still booting (common on Windows) stopping it with "was stopped while the respawn was in flight"
+- Fixed `claude agents` listing a backgrounded named session twice; backgrounding the same conversation again now numbers the new row (e.g. `my-session (2)`)
+- Fixed the background retention sweep removing git worktrees under `.claude/worktrees/` that you created yourself when an old background-session record pointed at them
+- Fixed auto mode tool calls being denied as "temporarily unavailable" on very large sessions by scaling the safety-check deadline with prompt size
+- Fixed the plugin cache creating duplicate SHA-named directories for the same plugin
+- Fixed plugin skills whose frontmatter `name` already includes the `<plugin>:` prefix showing it doubled in the slash menu (e.g. `/plugin:plugin:skill`)
+- Fixed `claude plugin update` failing for an installed plugin given its bare name (only the fully-qualified name worked)
+- Fixed plugin installation failing when `plugin.json` was saved with a UTF-8 byte-order mark (BOM)
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml 최신화 완료
+[Status]   Catalog updated, committed to yeongam/Prompt-Guide

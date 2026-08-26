@@ -1,0 +1,148 @@
+{
+  "date": "2026-08-27",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-08-27T00:15:12+09:00",
+  "skills": [
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "d0c57aa01a40e489",
+      "name": "Claude Code Agent Programming",
+      "output": "Compact checklist for building on Claude Code's CLI and skill system.",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured tool calls over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "claude-code-agent-programming",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "005c5dade90c",
+      "summary": "# Claude Code ![](https://img.shields.io/badge/Node.js-18%2B-brightgreen?style=flat-square) [![npm]](https://www.npmjs.com/package/@anthropic-ai/claude-code) [npm]: https://img.shields.io/npm/v/@anthropic-ai/claude-code.svg?style=flat-square Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for slash commands, hooks, and terminal coding-agent workflows."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "53d419aac80a2f82",
+      "name": "Python Agent SDK Programming",
+      "output": "Minimal Python Agent SDK integration checklist.",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured tool calls over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "python-agent-sdk-programming",
+      "source": "https://github.com/anthropics/claude-agent-sdk-python",
+      "source_branch": "main",
+      "source_commit": "24956bbbd11a",
+      "summary": "# Claude Agent SDK for Python Python SDK for Claude Agent. See the [Claude Agent SDK documentation](https://platform.claude.com/docs/en/agent-sdk/python) for more information. ## Installation **Prerequisites:** - Python 3.10+ **Note:** The Claude Code CLI is automatically bundled with the package - no separate installation required! The SDK will use the bundled CLI by default. If you prefer to use a system-wide inst.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for Python agent-loop, tool, and subagent implementation."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "1eb56a81c4e97f95",
+      "name": "TypeScript Agent SDK Programming",
+      "output": "Compact TypeScript Agent SDK implementation checklist.",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured tool calls over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "typescript-agent-sdk-programming",
+      "source": "https://github.com/anthropics/claude-agent-sdk-typescript",
+      "source_branch": "main",
+      "source_commit": "86e1856fc3f5",
+      "summary": "# Claude Agent SDK ![](https://img.shields.io/badge/Node.js-18%2B-brightgreen?style=flat-square) [![npm]](https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk) [npm]: https://img.shields.io/npm/v/@anthropic-ai/claude-agent-sdk.svg?style=flat-square The Claude Agent SDK enables you to programmatically build AI agents with Claude Code's capabilities. Create autonomous agents that can understand codebases, edit.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for Node.js or TypeScript agent-loop and tool implementation."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "8fa84eabd5f7bc90",
+      "name": "Python API SDK Programming",
+      "output": "Lean Claude API request/response and migration checks.",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured tool calls over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "python-api-sdk-programming",
+      "source": "https://github.com/anthropics/anthropic-sdk-python",
+      "source_branch": "main",
+      "source_commit": "4474f31efa48",
+      "summary": "# Claude SDK for Python [![PyPI version](https://img.shields.io/pypi/v/anthropic.svg)](https://pypi.org/project/anthropic/) The Claude SDK for Python provides access to the [Claude API](https://docs.anthropic.com/en/api/) from Python applications. ## Documentation Full documentation is available at **[platform.claude.com/docs/en/api/sdks/python](https://platform.claude.com/docs/en/api/sdks/python)**. ## Installation.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for direct Messages API calls, streaming, and tool use in Python."
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "d40d2a1fe783c623",
+      "name": "Agent Skills Authoring & Documentation",
+      "output": "Concise skill-authoring and documentation-maintenance checklist.",
+      "procedure": [
+        "Check official source alignment first.",
+        "Prefer smallest working implementation.",
+        "Use structured tool calls over ad hoc parsing.",
+        "Keep prompt and code paths short.",
+        "Verify with the narrowest relevant command."
+      ],
+      "slug": "agent-skills-authoring-documentation",
+      "source": "https://github.com/anthropics/skills",
+      "source_branch": "main",
+      "source_commit": "3b3fad96af16",
+      "summary": "> **Note:** This repository contains Anthropic's implementation of skills for Claude. For information about the Agent Skills standard, see [agentskills.io](http://agentskills.io). [![skills.sh](https://skills.sh/b/anthropics/skills)](https://skills.sh/anthropics/skills) # Skills Skills are folders of instructions, scripts, and resources that Claude loads dynamically to improve performance on specialized tasks. Skill.",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical code or instructions.",
+        "Link to source repo instead of copying long docs."
+      ],
+      "trigger": "Use for authoring, updating, or maintaining Claude Agent Skills and docs."
+    }
+  ],
+  "source_policy": "official Anthropic GitHub repositories only"
+}
