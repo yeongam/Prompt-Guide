@@ -1,0 +1,70 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-08-27 05:52 UTC
+Version : 2.1.246 → 2.1.247
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-08-27/
+============================================================
+
+[ ★ 신규 감지 스킬 (5개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /config  ← 수동 추가 필요
+  ? /feedback  ← 수동 추가 필요
+  ? /install-github-app  ← 수동 추가 필요
+  ? /remote-control  ← 수동 추가 필요
+  ? /rename  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /claude-api
+  ~ /compact
+  ~ /install-github-app
+  ~ /model
+  ~ /plugin
+  ~ /remote-control
+  ~ /rename
+  ~ /terminal-setup
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-08-27/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Added `/claude-api cost-optimize` to profile an existing project's Claude API spend and work through cost levers (caching, token hygiene, batch, effort, model choice) one measured change at a time
+  - Fixed `/compact` and "Summarize from here" in sessions started with `--agent` summarizing under the default system prompt instead of the conversation's own
+  - Changed Sonnet 5's default auto-compact window to its full 1M context, so sessions on the 1M window now auto-compact at about 967K tokens instead of about 934K
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.247
+
+- Added the `SendFeedback` tool: when something goes wrong in a session, Claude can draft a feedback report for you to review and send from `/feedback` (turn off with the `feedbackDrafts` setting)
+- Added `{id, text, cooldownSessions, priority}` entries, `tipsFile`, and `label` to `spinnerTipsOverride`, so organizations can rotate their own tips alongside the built-in ones
+- Added a tip on Bash permission prompts pointing to auto mode, with a one-keystroke "Yes, and switch to auto mode" option
+- Added `/claude-api cost-optimize` to profile an existing project's Claude API spend and work through cost levers (caching, token hygiene, batch, effort, model choice) one measured change at a time
+- Updated the `/claude-api` skill with Admin API coverage (organization members, invites, workspaces, API keys, rate limit reports, workload identity federation, CMEK)
+- Fixed fast arrow-key + Enter sequences acting on the row above the one you navigated to in history search, `/config`, `/mcp`, `/skills`, background tasks, and `/model`
+- Fixed sub-agents dying on a first-call model 404: they now use the session's fallback model chain, and the error returned to the parent includes the error type, status, request id, and model
+- Fixed a hook or background agent that printed megabytes of error output being able to overflow the conversation and wedge the session on "Prompt is too long"
+- Fixed Ctrl keyboard shortcuts not firing under non-Latin (e.g. Cyrillic) keyboard layouts in kitty-protocol terminals
+- Fixed text like `<35;150;7M` being inserted into the prompt when a mouse report arrived split across reads right after the escape prefix
+- Fixed the Bash sandbox's after-command cleanup deleting a dotfile-managed `~/.claude/settings.json` symlink (nix/home-manager, stow) when it is repointed outside the sandbox's writable area
+- Fixed `/terminal-setup` overwriting your entire Zed `keymap.json` instead of merging in its keybinding
+- Fixed `/rename` silently confirming when 
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
