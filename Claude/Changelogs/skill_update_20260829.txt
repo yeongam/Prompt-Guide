@@ -1,0 +1,81 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-08-29 04:52 UTC
+Version : 2.1.250 → 2.1.251
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-08-29/
+============================================================
+
+[ ★ 신규 감지 스킬 (11개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /add-dir  ← 수동 추가 필요
+  ? /background  ← 수동 추가 필요
+  ? /cost  ← 수동 추가 필요
+  ? /feedback  ← 수동 추가 필요
+  ? /help  ← 수동 추가 필요
+  ? /radio  ← 수동 추가 필요
+  ? /remote-control  ← 수동 추가 필요
+  ? /schedule  ← 수동 추가 필요
+  ? /share  ← 수동 추가 필요
+  ? /tasks  ← 수동 추가 필요
+  ? /usage-credits  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /add-dir
+  ~ /background
+  ~ /effort
+  ~ /feedback
+  ~ /radio
+  ~ /remote-control
+  ~ /schedule
+  ~ /status
+  ~ /tasks
+  ~ /ultrareview
+  ~ /usage-credits
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-08-29/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Added a per-session prompt-cache line to `/cost` (hit ratio, misses, tokens re-cached, warm/cold) and a matching `prompt_cache` object for status line scripts
+  - Improved install size: the native binary is about 5 MB smaller
+  - Changed the footer PR badge on Bedrock, Vertex, and Foundry, and when telemetry is off, to call the GitHub API directly (via `gh auth token`, `GH_TOKEN`, or `GITHUB_TOKEN`) instead of `gh pr view`
+  - Removed syntax highlighting for six rarely used languages (1c, gml, isbl, mathematica, maxima, sqf); the binary is 2.5 MB smaller
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Fixed an `additionalDirectories` entry containing a null byte crashing startup, or breaking `/add-dir` and later settings updates when it came from an SDK host, IDE, or hook; it is now skipped
+
+[ Hooks ]
+  PostModelSwitch
+  PreModelSwitch
+
+[ Settings ]
+  micro
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.251
+
+- Added `PreModelSwitch` and `PostModelSwitch` hook events (block, confirm, or annotate a model switch); `SessionStart` resume hooks now receive session staleness and the estimated re-cache cost
+- Added live streaming of a foreground subagent's tool calls and results to Remote Control clients (background subagents, the default, still show status only)
+- Added a Spend limit bar to `/usage` and a `rate_limits.spend_limit` status line field for developers behind a Claude apps gateway with spend limits
+- Added a per-session prompt-cache line to `/cost` (hit ratio, misses, tokens re-cached, warm/cold) and a matching `prompt_cache` object for status line scripts
+- Added `attach`, `logs`, `stop`, `respawn`, and `rm` to `claude --help`; the `--resume` message for a running background session now names the exact `claude attach <id>` command
+- Fixed file tools (Read, Write, Edit) following a symlink swapped inside the working directory after the permission check, which could read or write outside the approved location
+- Fixed plugin commands declared in a marketplace entry being able to point outside the plugin directory; such paths are now rejected with a path-traversal error
+- Fixed project settings being able to enable detailed beta tracing or raw API body logging, and a lower-scope beta tracing endpoint bypassing an OTLP collector pinned by managed settings or a host app
+- Fixed the Workflow tool reading (and quoting in errors) a `scriptPath` outside what the session may read before the permission check ran
+- Fixed Grep and Glob not applying `Read(...)` deny rules to files reached through a symlinked search path
+- Fixed conversations getting stuck on "text content blocks must be non-empty" errors after a turn where the model produced only thinking
+- Fixed the first launch on a fresh install starting in default mode instead of auto mode for accounts whose startup default is auto mode
+- Fixed Opus 5 requests failing with "effort … is not supported when thinking 
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
