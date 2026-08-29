@@ -1,0 +1,184 @@
+{
+  "date": "2026-08-30",
+  "directory_rule": "YYYY-MM-DD/hooks",
+  "generated_at": "2026-08-30T00:11:28+09:00",
+  "hooks": [
+    {
+      "actions": [
+        "Block with exit code 2 or {decision:'block'} on violation.",
+        "Inject minimal extra context only when required."
+      ],
+      "checks": [
+        "Confirm the tool call matches an allowed pattern.",
+        "Reject destructive commands outside declared scope.",
+        "Keep validation logic short-circuiting and side-effect free."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "PreToolUse",
+      "hash": "ffe4a9b1626dc3f2",
+      "name": "Pre Tool Use Guard",
+      "slug": "pre-tool-use-guard",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_ref": "aa0d8b80ac08",
+      "summary": "Validate or block before any tool executes",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Fires before bash/file/MCP tool execution."
+    },
+    {
+      "actions": [
+        "Append compact result summary to the run log.",
+        "Chain follow-up automation only when explicitly configured."
+      ],
+      "checks": [
+        "Verify tool result before logging.",
+        "Avoid duplicate log entries for retried calls."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "PostToolUse",
+      "hash": "0e7064b4a625adeb",
+      "name": "Post Tool Use Logging",
+      "slug": "post-tool-use-logging",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_ref": "aa0d8b80ac08",
+      "summary": "Log results and trigger follow-up actions after a tool completes",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Fires after any tool call finishes."
+    },
+    {
+      "actions": [
+        "Send a single compact status update.",
+        "Avoid re-notifying for identical consecutive states."
+      ],
+      "checks": [
+        "Confirm the turn reached a terminal state.",
+        "Skip notification when nothing changed this turn."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "Stop",
+      "hash": "390857a3a0178b99",
+      "name": "Session Stop Notification",
+      "slug": "session-stop-notification",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_ref": "aa0d8b80ac08",
+      "summary": "Post-turn logging and notifications",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Fires after the assistant turn completes."
+    },
+    {
+      "actions": [
+        "Defer compaction until the current step commits.",
+        "Log the deferred-compaction reason once, not repeatedly."
+      ],
+      "checks": [
+        "Detect in-flight multi-step operations before compaction.",
+        "Block with exit code 2 or {decision:'block'} when unsafe."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "PreCompact",
+      "hash": "0d6fa054804edb9c",
+      "name": "Pre Compact Guard",
+      "slug": "pre-compact-guard",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_ref": "aa0d8b80ac08",
+      "summary": "Prevent conversation compaction during critical operations",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Fires before automatic context compaction."
+    },
+    {
+      "actions": [
+        "Return {retry:true} only for a corrected, narrower request.",
+        "Surface unresolved denials instead of looping silently."
+      ],
+      "checks": [
+        "Confirm the denial reason before requesting retry.",
+        "Cap retries to avoid classifier thrashing."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "PermissionDenied",
+      "hash": "dd7de6e347238aa2",
+      "name": "Permission Denied Retry",
+      "slug": "permission-denied-retry",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_ref": "aa0d8b80ac08",
+      "summary": "Custom permission escalation flow after auto-mode classifier denial",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Fires after the auto-mode permission classifier denies a call."
+    },
+    {
+      "actions": [
+        "Write one concise changelog under Claude/Changelogs.",
+        "Never prompt the user during automated routine execution."
+      ],
+      "checks": [
+        "Compare generated catalogs with the previous dated snapshot.",
+        "List added, modified, and deleted skills and hooks separately.",
+        "Confirm token-saving and conflict-resolution notes are present."
+      ],
+      "compatibility": [
+        "Do not modify GPT or Gemini directories.",
+        "Do not overwrite existing dated hook snapshots.",
+        "Record hook conflicts in the same dated changelog as skills."
+      ],
+      "event": "post_sync",
+      "hash": "97cb8174e1e83288",
+      "name": "Post Sync Changelog Guard",
+      "slug": "post-sync-changelog-guard",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_ref": "aa0d8b80ac08",
+      "summary": "Guard the daily Claude skill/hook sync routine itself",
+      "token_policy": [
+        "Do not copy upstream documents into hook output.",
+        "Keep hook cards short enough for quick pre/post-run loading.",
+        "Prefer catalog metadata over repeated inline context."
+      ],
+      "trigger": "Runs after generating Claude skills or hooks for the day."
+    }
+  ],
+  "source_policy": "official Anthropic GitHub repositories only"
+}
