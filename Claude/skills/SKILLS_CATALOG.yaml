@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.251
+updated: 2026-08-30
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -57,10 +57,12 @@ skills:
     cmd: /claude-api
     trigger: code imports anthropic SDK; user asks about Claude API features
     desc: Build/debug Claude API apps; prompt caching, tool use, model migration
+    note: v2.1.247 added Admin API coverage and `/claude-api cost-optimize`; v2.1.239 added `/claude-api upgrade` for Python project migration
     models:
-      opus: claude-opus-4-7
-      sonnet: claude-sonnet-4-6
+      opus: claude-opus-5
+      sonnet: claude-sonnet-5
       haiku: claude-haiku-4-5-20251001
+      fable: claude-fable-5
 
   ultrareview:
     cmd: /ultrareview [PR#]
@@ -176,6 +178,18 @@ hooks:
     added: v2.1.95
     use: Custom permission escalation flows
 
+  PreModelSwitch:
+    fires: Before a model switch is applied
+    can_block: true
+    added: v2.1.251
+    use: Block, confirm, or annotate a model switch
+
+  PostModelSwitch:
+    fires: After a model switch is applied
+    can_block: false
+    added: v2.1.251
+    use: Log/react to a completed model switch
+
   hook_invoke_types:
     - type: shell          # shell command (default)
     - type: mcp_tool       # invoke MCP tool directly (added v2.1.118)
@@ -215,6 +229,41 @@ settings:
     desc: Block specific domains even when broader allowlists exist
     added: v2.1.85
 
+  modelPicker:
+    type: object
+    desc: Curate which models appear in the /model picker
+    added: v2.1.243
+
+  promptCacheTtl:
+    type: "'5m' | '1h'"
+    desc: Default prompt-cache TTL for the session
+    added: v2.1.243
+
+  subagentPromptCacheTtl:
+    type: "'5m' | '1h'"
+    desc: Prompt-cache TTL applied to subagent calls
+    added: v2.1.243
+
+  modelPricing:
+    type: object
+    desc: Managed setting overriding per-model pricing (gateway/enterprise use)
+    added: v2.1.243
+
+  keybindingFlavor:
+    type: "'default' | 'readline'"
+    desc: Switch keybinding scheme (e.g. readline-style editing)
+    added: v2.1.238
+
+  spellcheck:
+    type: bool
+    desc: Underline misspelled words in the prompt input
+    added: v2.1.235
+
+  experimental.cacheTtl:
+    type: "'5m' | '1h'"
+    desc: Per-agent prompt-cache TTL override in agent frontmatter
+    added: v2.1.248
+
 # ─── ENV VARS ──────────────────────────────────────────────────────────────────
 env:
   CLAUDE_EFFORT: "Current effort level; usable in skill template strings as ${CLAUDE_EFFORT}"
@@ -224,13 +273,20 @@ env:
   OTEL_LOG_RAW_API_BODIES: "1 = emit full API request/response bodies as OTEL events"
   DISABLE_UPDATES: "1 = block all update paths including manual 'claude update'"
   CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1 = opt-in gateway /v1/models discovery"
+  ANTHROPIC_DEFAULT_MODEL: "Override the default model used when none is otherwise selected (added v2.1.236)"
+  CLAUDE_CODE_PROJECT_DIR_NAME: "Override the project directory name shown in UI/status (added v2.1.234)"
+  CLAUDE_CODE_WEBFETCH_CACHE_TTL_MS: "Integer ms TTL for the WebFetch self-cleaning cache (added v2.1.233)"
+  CLAUDE_CODE_RESTRICTED: "1 = run in restricted mode (same as --restricted; added v2.1.248)"
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
+# Corrected 2026-08-30: previous entries (claude-opus-4-7/claude-sonnet-4-6) did
+# not match any real Anthropic model id and have been replaced.
 models:
-  default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
-  sonnet: claude-sonnet-4-6
+  default: claude-sonnet-5
+  opus: claude-opus-5          # Fast mode uses Opus with faster output, not a smaller model
+  sonnet: claude-sonnet-5
   haiku: claude-haiku-4-5-20251001
+  fable: claude-fable-5
 
 # ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────
 # This catalog is structured for minimal token overhead:

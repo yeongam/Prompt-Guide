@@ -1,0 +1,63 @@
+{
+  "claude_code_version": "2.1.251",
+  "date": "2026-08-30",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-08-30T15:15:10+00:00",
+  "skills": [
+    {
+      "cmd": "/init",
+      "desc": "Generate CLAUDE.md with codebase architecture, conventions, commands",
+      "id": "init",
+      "trigger": "user asks to initialize or document codebase"
+    },
+    {
+      "cmd": "/review",
+      "desc": "Multi-pass PR review; checks logic, style, security, tests",
+      "id": "review",
+      "trigger": "user asks to review PR or branch"
+    },
+    {
+      "cmd": "/security-review",
+      "desc": "OWASP-focused audit of pending diffs; outputs risk-ranked findings",
+      "id": "security-review",
+      "trigger": "user asks security audit of current branch changes"
+    },
+    {
+      "cmd": "/simplify",
+      "desc": "Review changed code for reuse/quality/efficiency, then fix issues",
+      "id": "simplify",
+      "trigger": "user asks to clean up or refactor changed code"
+    },
+    {
+      "cmd": "/session-start-hook",
+      "desc": "Create SessionStart hook ensuring project can run tests and linters",
+      "id": "session-start-hook",
+      "trigger": "user wants test/lint runners on session start (web Claude Code)"
+    },
+    {
+      "cmd": "/update-config",
+      "desc": "Configure settings.json; handles hooks, permissions, env vars",
+      "id": "update-config",
+      "trigger": "automated behavior requests (\"when X\", \"allow Y\", \"set Z=val\")"
+    },
+    {
+      "cmd": "/keybindings-help",
+      "desc": "Customize ~/.claude/keybindings.json; supports chord bindings",
+      "id": "keybindings-help",
+      "trigger": "user wants to remap keys or add chord shortcuts"
+    },
+    {
+      "cmd": "/fewer-permission-prompts",
+      "desc": "Scan transcripts → add bash/MCP allowlist to .claude/settings.json",
+      "id": "fewer-permission-prompts",
+      "trigger": "user wants fewer permission dialogs"
+    },
+    {
+      "cmd": "/claude-api",
+      "desc": "Build/debug Claude API apps; prompt caching, tool use, model migration",
+      "id": "claude-api",
+      "trigger": "code imports anthropic SDK; user asks about Claude API features"
+    }
+  ],
+  "source_policy": "official anthropics/claude-code GitHub repository only"
+}

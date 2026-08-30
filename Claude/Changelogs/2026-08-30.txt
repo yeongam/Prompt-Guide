@@ -1,0 +1,40 @@
+Prompt-Guide Claude Skills Changelog - 2026-08-30
+
+Snapshot: Claude/skills/2026-08-30/skills
+Claude Code version: 2.1.129 -> 2.1.251
+Source: https://github.com/anthropics/claude-code (official CHANGELOG.md)
+
+[추가된 스킬]
+- claude-api
+- fewer-permission-prompts
+- init
+- keybindings-help
+- review
+- security-review
+- session-start-hook
+- simplify
+- update-config
+
+[수정된 스킬]
+- 없음
+
+[삭제된 스킬]
+- 없음
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 유지: Claude/skills/2026-08-30/skills
+- 각 스킬 카드는 cmd/trigger/desc 요약 위주로 경량화
+
+[토큰 절감 관련 변경 사항]
+- changelog 본문에는 diff(변경분)만 기록, 원문 전체 복사 없음
+- 카탈로그에 없는 커맨드/설정/훅은 이름만 기록해 후속 검토로 위임 (임의 설명 생성 금지)
+
+[충돌 해결 내역]
+- SKILLS_CATALOG.yaml을 단일 소스로 유지하고 날짜 스냅샷은 그 파생본으로 생성 (충돌 없음)
+- Claude/skills/2026-08-30/skills 디렉토리 신규 생성
+
+[변경분에서 감지된 신규 커맨드/훅/설정/환경변수 - 후속 검토용]
+- Commands: /--, /add-dir, /advisor, /agents, /autocompact, /autofix-pr, /background, /bg, /branch, /btw, /bug, /cd, /checkup, /chrome, /claude-api, /clear, /code-review, /color, /command, /commit-push-pr, /compact, /config, /context, /copy, /cost, /dataviz, /deep-research, /desktop, /diff, /doctor, /effort, /exit, /extra-usage, /fast, /feedback, /fork, /goal, /help, /ide, /insights, /install-github-app, /keybindings, /list-agents, /login, /logout, /loop, /mcp, /memory, /mobile, /model, /permissions, /plan, /plugin, /plugins, /powerup, /radio, /recap, /release-notes, /reload-plugins, /reload-skills, /remote-control, /rename, /resume, /review, /rewind, /sandbox, /schedule, /scroll-speed, /settings, /share, /simplify, /skills, /stats, /status, /subtask, /tasks, /teleport, /terminal-setup, /theme, /tmp, /tui, /ultraplan, /ultrareview, /update, /upgrade, /usage, /usage-credits, /verify, /voice, /web-setup, /workflows
+- Hooks: Notification, PostModelSwitch, PostToolUse, PreModelSwitch, PreToolUse, SessionStart, Stop, SubagentStop, WorktreeCreate
+- Settings: CLAUDE_CODE_PROCESS_WRAPPER, SendMessage, attribution.sessionUrl, autoMode.classifyAllShell, desktopSessionCleanupPeriodDays, dialogExpiry, disableBundledSkills, emojiCompletionEnabled, fallbackModel, feedbackDrafts, footerLinksRegexes, grep, keybindingFlavor, language, modelPicker, sandbox.credentials, sandbox.filesystem.disabled, sandbox.network.strictAllowlist, spellcheck, spinnerVerbs, subagentPromptCacheTtl, vimInsertModeRemaps, voice.enabled, wheelScrollAccelerationEnabled, workflowSizeGuideline, worktree.baseRef
+- Env: ANTHROPIC_API_KEY, ANTHROPIC_AUTH_TOKEN, ANTHROPIC_BASE_URL, ANTHROPIC_BEDROCK_REGION_PREFIX, ANTHROPIC_CUSTOM_HEADERS, ANTHROPIC_DEFAULT_MODEL, ANTHROPIC_DEFAULT_OPUS_MODEL, ANTHROPIC_DEFAULT_SONNET_MODEL, ANTHROPIC_MODEL, ANTHROPIC_SMALL_FAST_MODEL, ANTHROPIC_WORKSPACE_ID, AWS_REGION, CLAUDE_CLIENT_PRESENCE_FILE, CLAUDE_CODE_ALWAYS_ENABLE_EFFORT, CLAUDE_CODE_ATTRIBUTION_HEADER, CLAUDE_CODE_DISABLE_1M_CONTEXT, CLAUDE_CODE_DISABLE_BUNDLED_SKILLS, CLAUDE_CODE_DISABLE_MOUSE, CLAUDE_CODE_DISABLE_MOUSE_CLICKS, CLAUDE_CODE_EFFORT_LEVEL, CLAUDE_CODE_ENABLE_AUTO_MODE, CLAUDE_CODE_ENABLE_FEEDBACK_SURVEY_FOR_OTEL, CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY, CLAUDE_CODE_EXTRA_BODY, CLAUDE_CODE_FORWARD_SUBAGENT_TEXT, CLAUDE_CODE_GIT_BASH_PATH, CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS, CLAUDE_CODE_MAX_OUTPUT_TOKENS, CLAUDE_CODE_MAX_RETRIES, CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION, CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH, CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION, CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS, CLAUDE_CODE_MCP_TOOL_IDLE_TIMEOUT, CLAUDE_CODE_OAUTH_TOKEN, CLAUDE_CODE_OPUS_4_6_FAST_MODE_OVERRIDE, CLAUDE_CODE_OTEL_CONTENT_MAX_LENGTH, CLAUDE_CODE_PLUGIN_PREFER_HTTPS, CLAUDE_CODE_PROCESS_WRAPPER, CLAUDE_CODE_PROJECT_DIR_NAME, CLAUDE_CODE_PROVIDER_MANAGED_BY_HOST, CLAUDE_CODE_RETRY_WATCHDOG, CLAUDE_CODE_SAFE_MODE, CLAUDE_CODE_SESSION_ID, CLAUDE_CODE_STOP_HOOK_BLOCK_CAP, CLAUDE_CODE_SUBAGENT_MODEL, CLAUDE_CODE_TMPDIR, CLAUDE_CODE_TOOL_MEMORY_LIMIT, CLAUDE_CODE_USE_BEDROCK, CLAUDE_CODE_WEBFETCH_CACHE_TTL_MS, CLAUDE_CONFIG_DIR, CLAUDE_ENV_FILE, CLAUDE_MEMORY_STORES, CLAUDE_PROJECT_DIR, COLUMNS, DIRSTACK, DISABLE_EXTRA_USAGE_COMMAND, DISABLE_TELEMETRY, EADDRINUSE, ECOMPROMISED, ENABLE_PROMPT_CACHING_1H, FORCE_COLOR, GH_TOKEN, GITHUB_TOKEN, GIT_DIR, GIT_WORK_TREE, HEAD, HOME, HTTPS_PROXY, LINES, MCP_TOOL_TIMEOUT, NODE_EXTRA_CA_CERTS, NO_COLOR, NO_PROXY, OLDPWD, OTEL_EXPORTER_OTLP_ENDPOINT, OTEL_LOG_USER_PROMPTS, OTEL_RESOURCE_ATTRIBUTES, PATH, SELF_HOSTED_RUNNER_CLIENT_LABEL, TEMP, TMPDIR, TRACEPARENT
