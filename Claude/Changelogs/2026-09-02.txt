@@ -1,0 +1,31 @@
+Prompt-Guide Claude Skills Changelog - 2026-09-02
+
+Snapshot: Claude/skills/SKILLS_CATALOG.yaml
+Source: anthropics/claude-code (official CHANGELOG.md)
+Version: 2.1.129 -> 2.1.258
+
+[추가된 스킬]
+- none (bugfix-only upstream release, no new /commands, hooks, settings, or env vars detected)
+
+[수정된 스킬]
+- none
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- Claude/Changelogs/ created to mirror the existing GPT/Changelogs/ dated-log convention
+- Existing changelogs/ (repo-root) kept as-is: it is the sync target for the Stop hook in
+  .claude/settings.json that mirrors logs to the desktop path, and other automation may
+  depend on it; not moved or removed in this run
+
+[토큰 절감 관련 변경 사항]
+- No content growth this run; SKILLS_CATALOG.yaml diff is limited to version/updated fields
+
+[충돌 해결 내역]
+- None required; new Claude/Changelogs/ directory does not collide with any existing path
+
+[요약]
+- catalog: version 2.1.129 -> 2.1.258, updated field refreshed to 2026-09-02
+- upstream changes this cycle: 2 bugfixes (macOS 12 launch regression, scheduled-session
+  permission-approval content bug) - no skill/hook/setting/env additions to catalog
