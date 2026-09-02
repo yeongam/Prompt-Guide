@@ -1,0 +1,20 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-09-02 15:13 UTC
+Version : 2.1.129 -> 2.1.258
+Source  : anthropics/claude-code
+============================================================
+
+[변경 요약 / Change Summary]
+
+----------------------------------------
+[원문 변경사항 / Raw Changes]
+
+## 2.1.258
+
+- Fixed Claude Code failing to launch on macOS 12 (Monterey), a regression introduced in 2.1.255
+- Fixed remote and scheduled sessions failing with "user messages must have non-empty content" after a re-sent permission approval could not be applied
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml 최신화 완료
+[Status]   Catalog updated, committed to yeongam/Prompt-Guide
