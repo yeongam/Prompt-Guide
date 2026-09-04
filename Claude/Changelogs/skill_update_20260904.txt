@@ -1,0 +1,76 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-09-04 02:05 UTC
+Version : 2.1.259 → 2.1.260
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-09-04/
+============================================================
+
+[ ★ 신규 감지 스킬 (7개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /advisor  ← 수동 추가 필요
+  ? /chrome  ← 수동 추가 필요
+  ? /cost  ← 수동 추가 필요
+  ? /diff  ← 수동 추가 필요
+  ? /doctor  ← 수동 추가 필요
+  ? /reload-plugins  ← 수동 추가 필요
+  ? /rewind  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /chrome
+  ~ /cost
+  ~ /diff
+  ~ /doctor
+  ~ /effort
+  ~ /login
+  ~ /model
+  ~ /rewind
+  ~ /status
+  ~ /ultrareview
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-09-04/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Added `oidc.scope_on_refresh` to the Claude apps gateway for IdPs that return an id_token on refresh only when asked for `openid` again
+  - Fixed Bedrock model discovery, token counting and AWS SSO/STS credential calls failing with "unable to get local issuer certificate" when the corporate root CA is only in the OS certificate store
+  - Fixed Workflow tool subagents being restarted as stalled while a long context compaction was still in progress
+  - Improved the Claude apps gateway on Amazon Bedrock: input tokens for an aborted request are now counted with AWS's free CountTokens API (grant `bedrock:CountTokens`) instead of a one-token request
+  - Improved auto-compact for 1M-context models: Opus and Fable sessions now compact shortly before the 1M-token limit, and recovery compaction on very large contexts no longer times out at 10 minutes
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  userPluginUploadsEnabled
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.260
+
+- Added a diff panel that opens beside the conversation in fullscreen mode and shows your uncommitted changes as Claude edits; toggle it with `/diff`
+- Added a likely cause for prompt-cache misses (e.g. tool definitions or system prompt changed, idle past the TTL) to `/cost` and the status line's `prompt_cache` field
+- Added `/reload-plugins` to headless sessions, so it appears in the Claude Code Desktop and SDK command lists
+- Added a text form of `/advisor` (`/advisor`, `/advisor <model>`, `/advisor off`) for the desktop app, Remote Control, and other headless (`-p`/Agent SDK) sessions
+- Added `oidc.scope_on_refresh` to the Claude apps gateway for IdPs that return an id_token on refresh only when asked for `openid` again
+- Added Claude apps gateway support for newer Claude Desktop keys in `desktop` policy blocks, including `userPluginMarketplacesEnabled` and `userPluginUploadsEnabled`
+- Fixed `Edit`/`Write`/`Read` permission rules whose path contains parentheses being dropped as invalid or ignored by the Bash sandbox, which left "read-only" folders writable
+- Fixed one file permission rule with an uncompilable pattern (e.g. an unclosed `[`) making every file edit fail with `Invalid regular expression`; such a deny rule now guards the literal path it spells
+- Fixed Bash permission checks auto-approving zsh commands that hide a command substitution in a REPORTTIME, REPORTMEMORY or DIRSTACKSIZE assignment; these now prompt for approval
+- Fixed Bedrock model discovery, token counting and AWS SSO/STS credential calls failing with "unable to get local issuer certificate" when the corporate root CA is only in the OS certificate store
+- Fixed `permissions.blockReadsOutsideWorkingDirectories` on macOS hiding the user's git config from sandboxed git and hiding a worktree-isolated sub-agent's own checkout
+- Fixed managed settings not loading for claude.ai Enterprise/Team users who also had a leftover API key from an earlier `/login`
+- Fixed `/status` listing a si
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
