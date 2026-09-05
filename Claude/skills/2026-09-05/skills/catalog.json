@@ -1,0 +1,152 @@
+{
+  "date": "2026-09-05",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-09-05T00:00:00Z",
+  "skills": [
+    {
+      "slug": "skill-doctor",
+      "name": "Skill Doctor",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_file": "CHANGELOG.md",
+      "source_version": "2.1.261",
+      "summary": "Added `/skill-doctor` to show which loaded skills go unused and what they cost in context, so you can prune them.",
+      "trigger": "User wants to audit loaded skills for unused ones or check their context-token cost.",
+      "procedure": [
+        "Run /skill-doctor to list loaded skills with usage and context cost.",
+        "Flag skills that are loaded but never triggered.",
+        "Recommend disabling or scoping unused skills via skillOverrides."
+      ],
+      "output": "Per-skill usage/cost table plus prune recommendations.",
+      "token_policy": [
+        "Use this before adding new skills to a project, not after.",
+        "Prefer disabling over deleting when a skill may be needed later."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": null
+    },
+    {
+      "slug": "diff",
+      "name": "Diff Panel",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_file": "CHANGELOG.md",
+      "source_version": "2.1.260",
+      "summary": "Added a diff panel that opens beside the conversation in fullscreen mode and shows uncommitted changes as Claude edits; toggle it with `/diff`.",
+      "trigger": "User wants to watch file changes live while Claude works, or review a session's diff so far.",
+      "procedure": [
+        "Toggle /diff to open the panel beside the conversation.",
+        "Scroll the detail view with arrows, j/k, PgUp/PgDn, Space, Home/End.",
+        "Panel uses raw git blob content, ignoring workspace diff drivers/textconv (v2.1.222)."
+      ],
+      "output": "Live-updating uncommitted-changes diff view.",
+      "token_policy": [
+        "UI-only feature; no extra tokens consumed by toggling it."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content changed."
+      ],
+      "hash": null
+    },
+    {
+      "slug": "reload-skills",
+      "name": "Reload Skills",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_file": "CHANGELOG.md",
+      "source_version": "2.1.152",
+      "summary": "Added `/reload-skills` command to re-scan skill directories without restarting the session; SessionStart hooks can also return reloadSkills: true.",
+      "trigger": "A skill file changed on disk (e.g. this daily sync) and needs picking up mid-session.",
+      "procedure": [
+        "Run /reload-skills after editing or adding skill files.",
+        "Or have a SessionStart hook return {reloadSkills: true} to do it automatically."
+      ],
+      "output": "Session picks up new/changed skills without a restart.",
+      "token_policy": [
+        "Cheaper than restarting the session; conversation cache is preserved."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content changed."
+      ],
+      "hash": null
+    },
+    {
+      "slug": "commit-push-pr",
+      "name": "Commit Push PR",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_file": "CHANGELOG.md",
+      "source_version": "2.1.229",
+      "summary": "Stage, commit, push, and open a pull request in one step. Since v2.1.229, dangerous git/gh flags (--force, --amend, --no-verify, etc.) are no longer auto-approved.",
+      "trigger": "User wants to commit, push, and open a PR without separate manual steps.",
+      "procedure": [
+        "Stage and commit with a descriptive message.",
+        "Push to the configured push remote (remote.pushDefault, or the sole remote).",
+        "Open the pull request; confirm before any dangerous flag is used."
+      ],
+      "output": "Pushed branch plus opened pull request.",
+      "token_policy": [
+        "Single command replaces a multi-step git/gh sequence."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Never auto-approve --force/--amend/--no-verify (v2.1.229)."
+      ],
+      "hash": null
+    },
+    {
+      "slug": "autofix-pr",
+      "name": "Autofix PR",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_file": "CHANGELOG.md",
+      "source_version": "2.1.161",
+      "summary": "Background cloud session that diagnoses and pushes fixes for a PR's failing CI checks or review comments.",
+      "trigger": "User wants CI failures or reviewer feedback on an open PR fixed automatically.",
+      "procedure": [
+        "Diagnose the failing check or review comment.",
+        "Push a minimal fix scoped to that failure.",
+        "Report progress via the background task's progress count."
+      ],
+      "output": "Green CI / addressed review comment on the target PR.",
+      "token_policy": [
+        "Runs as a background cloud session; does not block the local session."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Requires a git repo; not the default branch (v2.1.161 worktree fix)."
+      ],
+      "hash": null
+    },
+    {
+      "slug": "install-github-app",
+      "name": "Install GitHub App",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_file": "CHANGELOG.md",
+      "source_version": "2.1.187",
+      "summary": "Install the Claude GitHub App so Claude can watch and act on PRs/issues. Since v2.1.187, GitHub Actions workflow setup is optional.",
+      "trigger": "User wants Claude Code wired into GitHub PR/issue activity for a repo.",
+      "procedure": [
+        "Run /install-github-app.",
+        "Choose whether to also set up the GitHub Actions workflow/secret, or install the App only.",
+        "GitHub-only: in a GitLab repo this points to the GitLab CI/CD docs instead (v2.1.259)."
+      ],
+      "output": "Claude GitHub App installed on the target repository.",
+      "token_policy": [
+        "One-time setup command; no recurring token cost."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Blocked only in background sessions with no client attached (v2.1.214+)."
+      ],
+      "hash": null
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.261
+updated: 2026-09-05
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -118,12 +118,72 @@ skills:
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
 
+  skill-doctor:
+    cmd: /skill-doctor
+    trigger: user wants to prune unused skills or check context cost of loaded skills
+    desc: Show which loaded skills go unused and what they cost in context
+    added: v2.1.261
+
+  diff:
+    cmd: /diff
+    trigger: user wants a live view of uncommitted changes while Claude edits
+    desc: Toggle a diff panel beside the conversation showing uncommitted changes
+    added: v2.1.260
+
+  reload-skills:
+    cmd: /reload-skills
+    trigger: a skill directory changed and needs picking up without restarting
+    desc: Re-scan skill directories to pick up new/changed skills mid-session
+    added: v2.1.152
+
+  commit-push-pr:
+    cmd: /commit-push-pr
+    trigger: user wants to commit, push, and open a PR in one step
+    desc: Stage, commit, push, and create a pull request; dangerous git/gh flags no longer auto-approved
+    note: since v2.1.229, --force/--amend/--no-verify etc. require explicit approval
+
+  autofix-pr:
+    cmd: /autofix-pr
+    trigger: user wants CI failures or review comments on a PR auto-fixed
+    desc: Background cloud session that diagnoses and pushes fixes for a PR's failing checks
+
+  install-github-app:
+    cmd: /install-github-app
+    trigger: user wants Claude to watch/act on GitHub PRs and issues
+    desc: Install the Claude GitHub App; workflow/secret setup is optional (v2.1.187+)
+
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.
 # Block: exit 2 OR return JSON {decision:"block", reason:"..."}
 # Retry: return JSON {retry:true} (PermissionDenied only)
 # Conditional: add `if` field using permission rule syntax
 hooks:
+  SessionStart:
+    fires: On session start, resume, clear, or fork
+    can_block: false
+    use: Load env/context; command-type hook only (not prompt/agent-type)
+    notes:
+      - "can return reloadSkills: true to re-scan skill dirs (v2.1.152)"
+      - "can set hookSpecificOutput.sessionTitle (v2.1.152)"
+      - "resume variant now receives session staleness + re-cache cost estimate (v2.1.251)"
+
+  DirectoryAdded:
+    fires: After /add-dir or SDK register_repo_root adds a working directory mid-session
+    can_block: false
+    added: v2.1.219
+
+  PreModelSwitch:
+    fires: Before a /model switch takes effect
+    can_block: true
+    use: Block, confirm, or annotate a model switch
+    added: v2.1.251
+
+  PostModelSwitch:
+    fires: After a /model switch takes effect
+    can_block: false
+    use: Annotate/log a completed model switch
+    added: v2.1.251
+
   PreToolUse:
     fires: Before any tool execution
     can_block: true
@@ -210,6 +270,27 @@ settings:
     desc: Custom URL template for PR footer badge (e.g. custom code-review tools)
     added: v2.1.101
 
+  disableBundledSkills:
+    type: bool
+    desc: Hide bundled skills, workflows, and built-in slash commands from the model
+    added: v2.1.169
+    env_equivalent: CLAUDE_CODE_DISABLE_BUNDLED_SKILLS
+
+  bashOutputMaxChars:
+    type: int
+    desc: Max inline chars of Bash command output before it is saved to a file (up to 128K)
+    added: v2.1.261
+
+  taskOutputMaxChars:
+    type: int
+    desc: Max inline chars of background-task output before it is saved to a file (up to 128K)
+    added: v2.1.261
+
+  workflowSizeGuideline:
+    type: "small | medium | large | unlimited"
+    desc: Advisory cap on agent count for Workflow tool scripts; settable from any settings file
+    added: v2.1.219
+
   sandbox.network.deniedDomains:
     type: "list[string]"
     desc: Block specific domains even when broader allowlists exist
@@ -224,13 +305,15 @@ env:
   OTEL_LOG_RAW_API_BODIES: "1 = emit full API request/response bodies as OTEL events"
   DISABLE_UPDATES: "1 = block all update paths including manual 'claude update'"
   CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1 = opt-in gateway /v1/models discovery"
+  CLAUDE_CODE_DISABLE_BUNDLED_SKILLS: "1 = hide bundled skills/workflows/built-in commands from the model (v2.1.169)"
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
-  default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
-  sonnet: claude-sonnet-4-6
+  default: claude-sonnet-5
+  opus: claude-opus-5          # Fast mode available; Max subscribers only auto mode
+  sonnet: claude-sonnet-5
   haiku: claude-haiku-4-5-20251001
+  fable: claude-fable-5-1       # 1m-context tag must be on the pin itself, not just the model (fixed v2.1.172)
 
 # ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────
 # This catalog is structured for minimal token overhead:

@@ -1,0 +1,49 @@
+Prompt-Guide Claude Skills Changelog - 2026-09-05
+
+Snapshot: Claude/skills/2026-09-05/skills
+Source: https://github.com/anthropics/claude-code (CHANGELOG.md)
+Catalog version: 2.1.129 -> 2.1.261
+
+[추가된 스킬]
+- skill-doctor (v2.1.261) - 사용되지 않는 스킬과 컨텍스트 비용 확인
+- diff (v2.1.260) - 세션 중 미커밋 변경사항 실시간 패널
+- reload-skills (v2.1.152) - 재시작 없이 스킬 디렉토리 재스캔
+- commit-push-pr - 커밋/푸시/PR 생성 일괄 처리 (위험 플래그 자동승인 제거, v2.1.229)
+- autofix-pr - PR CI 실패/리뷰 코멘트 자동 수정 백그라운드 세션
+- install-github-app - GitHub App 설치 (워크플로 설정 선택 가능, v2.1.187)
+
+[수정된 스킬]
+- SKILLS_CATALOG.yaml version/updated 필드 최신화 (2.1.129 -> 2.1.261, 2026-05-06 -> 2026-09-05)
+- models 섹션 오류 정정: 존재하지 않는 모델 ID(claude-opus-4-7, claude-sonnet-4-6) -> 실제 모델 ID(claude-opus-5, claude-sonnet-5, claude-haiku-4-5-20251001), fable(claude-fable-5-1) 추가
+- hooks 섹션에 SessionStart, DirectoryAdded(v2.1.219), PreModelSwitch/PostModelSwitch(v2.1.251) 추가 (기존 카탈로그에 누락)
+- settings 섹션에 disableBundledSkills(v2.1.169), bashOutputMaxChars/taskOutputMaxChars(v2.1.261), workflowSizeGuideline(v2.1.219) 추가
+- env 섹션에 CLAUDE_CODE_DISABLE_BUNDLED_SKILLS 추가
+
+[삭제된 스킬]
+- none (기존 20종 스킬 항목은 모두 유지)
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 유지: Claude/skills/2026-09-05/skills
+- 신규 스킬만 개별 .md 카드로 생성(6종); 기존 20종은 마스터 YAML 한 곳에만 유지해 중복 방지
+- 각 스킬 카드는 slug/trigger/procedure/output/token_policy/compatibility로 경량화 (GPT 스킬 포맷과 통일)
+
+[토큰 절감 관련 변경 사항]
+- 원문 CHANGELOG.md 전체(2.1.130~2.1.261, 약 130개 버전, 2800줄+) 대신 스킬/설정/훅/환경변수 관련 핵심 항목만 추출해 반영
+- 검증 불가능한 커밋 해시는 생성하지 않고 버전 번호(source_version)로 출처 명시
+- 각 스킬 카드 procedure는 3줄 내외로 제한
+
+[충돌 해결 내역]
+- 기존 SKILLS_CATALOG.yaml의 스킬/설정/환경변수 항목은 삭제 없이 유지한 채 신규 항목만 추가 (slug 중복 없음 확인 완료)
+- GPT/, Claude-Sonnet-v.4.6/, Claude-Opus-v4.6/, Claude-in-chrome/, Claude/None 등 다른 디렉토리는 변경하지 않음
+
+[검증 참고 사항]
+- 기존 카탈로그는 v2.1.129에서 멈춰 있었음(실제 최신 v2.1.261 대비 약 130개 버전 누락).
+  scripts/update_skills.py 및 .github/workflows/daily-skill-update.yml이 참조하는 브랜치
+  (claude/zealous-sagan-FdaL5, claude/kind-feynman-XQCh2)가 현재 브랜치(claude/zealous-sagan-flip2a)와
+  일치하지 않아, 해당 자동화가 실제로는 동작하지 않았던 것으로 보임.
+- 기존 models 섹션의 claude-opus-4-7 / claude-sonnet-4-6 는 실존하지 않는 모델 ID였음 -> 정정 완료.
+
+[요약]
+- skills: added=6, modified=1(master catalog), deleted=0
+- hooks: added=4(SessionStart, DirectoryAdded, PreModelSwitch, PostModelSwitch), modified=0, deleted=0
+- settings: added=4, env: added=1, models: corrected=3, added=1(fable)
