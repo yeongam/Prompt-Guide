@@ -1,0 +1,65 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-09-10 02:12 UTC
+Version : 2.1.266 → 2.1.267
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-09-10/
+============================================================
+
+[ ★ 신규 감지 스킬 (3개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /context  ← 수동 추가 필요
+  ? /copy  ← 수동 추가 필요
+  ? /diff  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /compact
+  ~ /context
+  ~ /copy
+  ~ /diff
+  ~ /login
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-09-10/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed resuming a session after `/compact` or another slash command ran via `-p --resume`: a spurious "Continue from where you left off." turn is no longer inserted
+  - [Claude Code on the web] Fixed GitHub Enterprise Server sessions showing your GitHub account as disconnected once its token expired; PR and issue operations now refresh it automatically
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Fixed a prompt-cache break when a print-mode (`-p`) conversation is resumed interactively: the system prompt prefix no longer changes
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.267
+
+- Added `maxEffortLevel` setting (top-level or per model under `modelSettings`): caps the effort level on every provider, including Bedrock, Vertex and Foundry; users can still pick a lower level
+- Added `--system-prompt-snapshot off` to render the system prompt fresh on every request instead of reusing the conversation's recorded prompt (for iterating on prompt text)
+- Fixed Cowork scheduled tasks in the cloud failing at startup for organizations whose managed settings require sandboxing
+- Fixed `/context` and other local command output rendering blank on mobile clients
+- Fixed shift+enter and option+backspace not working after reconnecting to a tmux or ssh session inside an agent view
+- Fixed the dim last-prompt header not appearing at the top of the conversation when scrolling up in fullscreen mode
+- Fixed Workflow `agent()` calls with large output schemas being refused in auto mode instead of being checked by the safety classifier
+- Fixed a case where a marketplace entry path containing a backslash could bypass the containment check for fetched marketplaces on macOS and Linux
+- Fixed expired AWS or Google Cloud credentials under a host app such as Claude Desktop retrying ten times with a generic "request failed" before the re-authenticate error appeared
+- Fixed resuming a session after `/compact` or another slash command ran via `-p --resume`: a spurious "Continue from where you left off." turn is no longer inserted
+- Fixed resuming a large session (transcript over 5 MB): parallel tool calls and their hook output are no longer dropped from the reloaded conversation
+- Fixed managed `allowedHttpHookUrls`, `httpHookAllowedEnvVars` and `allowedChannelPlugins` to admit nothing, not everything, when unreadable
+- Fixed `/login` on machines whose managed settings require Claude apps gateway sign-in: Esc now closes the dialog instead of doing nothing
+- Fixed artifact publishes cut off by a dropped connection mid-upload: they now retry once when Claude Code ca
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
