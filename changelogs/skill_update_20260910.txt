@@ -1,0 +1,46 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-09-10 15:10 UTC
+Version : 2.1.129 -> 2.1.267
+Source  : anthropics/claude-code
+============================================================
+
+[변경 요약 / Change Summary]
+
+Commands/Skills:
+  /compact
+  /context
+  /copy
+  /diff
+  /login
+
+----------------------------------------
+[원문 변경사항 / Raw Changes]
+
+## 2.1.267
+
+- Added `maxEffortLevel` setting (top-level or per model under `modelSettings`): caps the effort level on every provider, including Bedrock, Vertex and Foundry; users can still pick a lower level
+- Added `--system-prompt-snapshot off` to render the system prompt fresh on every request instead of reusing the conversation's recorded prompt (for iterating on prompt text)
+- Fixed Cowork scheduled tasks in the cloud failing at startup for organizations whose managed settings require sandboxing
+- Fixed `/context` and other local command output rendering blank on mobile clients
+- Fixed shift+enter and option+backspace not working after reconnecting to a tmux or ssh session inside an agent view
+- Fixed the dim last-prompt header not appearing at the top of the conversation when scrolling up in fullscreen mode
+- Fixed Workflow `agent()` calls with large output schemas being refused in auto mode instead of being checked by the safety classifier
+- Fixed a case where a marketplace entry path containing a backslash could bypass the containment check for fetched marketplaces on macOS and Linux
+- Fixed expired AWS or Google Cloud credentials under a host app such as Claude Desktop retrying ten times with a generic "request failed" before the re-authenticate error appeared
+- Fixed resuming a session after `/compact` or another slash command ran via `-p --resume`: a spurious "Continue from where you left off." turn is no longer inserted
+- Fixed resuming a large session (transcript over 5 MB): parallel tool calls and their hook output are no longer dropped from the reloaded conversation
+- Fixed managed `allowedHttpHookUrls`, `httpHookAllowedEnvVars` and `allowedChannelPlugins` to admit nothing, not everything, when unreadable
+- Fixed `/login` on machines whose managed settings require Claude apps gateway sign-in: Esc now closes the dialog instead of doing nothing
+- Fixed artifact publishes cut off by a dropped connection mid-upload: they now retry once when Claude Code can tell the upload never completed, instead of reporting an unknown outcome
+- Fixed `effort:` frontmatter on custom commands, skills, and subagents being ignored on models whose default effort is still pinned (Opus 4.7, Opus 4.8, Fable 5)
+- Fixed artifact publish failing with an unhelpful error when the page file isn't valid UTF-8 or contains a replacement character (U+FFFD); the error now names the line and column to fix
+- Fixed `claude agents` `@` directory menu not listing repositories created after the session started
+- Fixed Remote Control clients that join a Claude Desktop or VS Code session showing a stale permission mode until it was changed again
+- Fixed `claude remote-control` exiting and dropping every attached session when its server credential expires (about 30 days after start); the host now re-registers and keeps going
+- Fixed the usage-limit warning flickering on and off during a session when requests for different models or modes report different limit windows
+- Fixed e
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml 최신화 완료
+[Status]   Catalog updated, committed to yeongam/Prompt-Guide
