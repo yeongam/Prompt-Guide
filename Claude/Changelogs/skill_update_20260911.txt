@@ -1,0 +1,87 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-09-11 02:09 UTC
+Version : 2.1.267 → 2.1.268
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-09-11/
+============================================================
+
+[ ★ 신규 감지 스킬 (16개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /autofix-pr  ← 수동 추가 필요
+  ? /bin  ← 수동 추가 필요
+  ? /cost  ← 수동 추가 필요
+  ? /diff  ← 수동 추가 필요
+  ? /etc  ← 수동 추가 필요
+  ? /feedback  ← 수동 추가 필요
+  ? /fork  ← 수동 추가 필요
+  ? /reload-plugins  ← 수동 추가 필요
+  ? /remote-control  ← 수동 추가 필요
+  ? /remote-env  ← 수동 추가 필요
+  ? /rename  ← 수동 추가 필요
+  ? /resume  ← 수동 추가 필요
+  ? /teleport  ← 수동 추가 필요
+  ? /tmp  ← 수동 추가 필요
+  ? /var  ← 수동 추가 필요
+  ? /web-setup  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /bin
+  ~ /compact
+  ~ /diff
+  ~ /feedback
+  ~ /fork
+  ~ /login
+  ~ /plugin
+  ~ /reload-plugins
+  ~ /remote-env
+  ~ /rename
+  ~ /web-setup
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-09-11/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed plugin and marketplace errors showing a token or password from a git source URL
+  - Fixed the conversation summary produced by `/compact` and auto-compact mangling text that contained `$` sequences
+  - Fixed resuming a conversation that ended with `/compact`: its restored-file notes now load in the same order on every resume
+  - Fixed SDK prompt suggestions, side questions and `/rename` sending the conversation from before a compaction
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Fixed every turn failing with HTTP 400 on third-party Anthropic-compatible endpoints (`ANTHROPIC_BASE_URL`) since 2.1.265: a regex in the Artifact tool's input schema that those endpoints reject
+  - Fixed prompt caching and extended thinking breaking mid-session for SDK sessions using `excludeDynamicSections`: the first message is no longer re-rendered each request
+  - Fixed background agent and workflow rows in the agents panel expanding to many lines when their text contained line breaks
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  ListAgents
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.268
+
+- Added to the Claude apps gateway: with `pricing:` set in `gateway.yaml`, signed-in Claude Code clients receive the same rates through managed settings, so `/cost` and telemetry match the spend meter
+- Added a startup warning for gateways when `access_control.allow_cidrs` is empty, and a one-time warning the first time a request arrives from a public address
+- Added the `gatewayInternalNetworks` managed setting, letting administrators allow `/login` to a Claude apps gateway on their organization's own public IPv4 block
+- Added `claude self-hosted-runner --remove-session-state` (default off): delete each session's per-session directories under `<base-dir>/_sessions/` when the session ends
+- Added `configDirectory` to the output of `claude auth status --json`
+- Added `--json` to `claude plugin install`, `uninstall`, `update`, `enable` and `disable`, and `errorDetails`/`noteDetails` to each row of `claude plugin list --json`
+- Added browser-tab icons for published artifacts, chosen by Claude to match each page
+- Fixed every turn failing with HTTP 400 on third-party Anthropic-compatible endpoints (`ANTHROPIC_BASE_URL`) since 2.1.265: a regex in the Artifact tool's input schema that those endpoints reject
+- Fixed WebFetch hanging indefinitely on a server that keeps the response open without finishing; a fetch now fails after 300 seconds. Set `CLAUDE_CODE_WEBFETCH_DEADLINE_MS` to override the deadline (0 turns it off)
+- Fixed a respawned in-process teammate picking up tools or a system prompt from a same-named agent file in a folder you have not trusted
+- Fixed sustained high CPU usage: a busy loop in long-running idle sessions no longer pins a CPU core, and rapid terminal focus reports during a session recap no longer keep the CPU high
+- Fixed Claude sometimes replying "your message came through empty" after an MCP tool call
+- Fixed deny and ask permission rules on symlinked directories (`/etc`, `/tmp`, `/var` on macOS; `/bin` on Linux) not applying when a p
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
