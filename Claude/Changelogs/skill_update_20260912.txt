@@ -1,0 +1,71 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-09-12 02:14 UTC
+Version : 2.1.268 → 2.1.269
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-09-12/
+============================================================
+
+[ ★ 신규 감지 스킬 (5개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /btw  ← 수동 추가 필요
+  ? /diff  ← 수동 추가 필요
+  ? /fork  ← 수동 추가 필요
+  ? /goal  ← 수동 추가 필요
+  ? /insights  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /btw
+  ~ /diff
+  ~ /fork
+  ~ /goal
+  ~ /insights
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-09-12/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed the prompt cache being partially invalidated on the turn after a response was cut off at the output-token limit and automatically resumed
+  - Fixed the git status Claude is told after a compaction: it is now the current status, not the one from the start of the session
+  - Fixed sessions getting permanently stuck on "Prompt is too long" when auto-compaction had no complete earlier exchange to summarize (mostly Agent SDK sessions with very large prompts)
+  - Fixed `/goal` runs silently stalling after API errors, network drops, or token limits: the goal now retries with backoff, or pauses and says why, including until a usage limit resets
+  - [VSCode] Fixed the prompt cache clock and reopen notice for a session compacted after its last reply and then closed, which now reads as cold when reopened
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Fixed terminal escape codes, line breaks and oversized text from a background task's on-disk record reaching the task list and task notifications when work is resumed
+  - Fixed the prompt box's top border splitting into extra lines when viewing a background agent whose name or description has line breaks or is wider than the terminal
+
+[ Hooks ]
+  Stop
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.269
+
+- Added `claude plugin eval`: run a plugin's eval suite against Claude Code and get scored, reproducible results (JSON + HTML report); see `claude plugin eval --help`
+- Added `/output-style [name]` to list and switch output styles, including over Remote Control and in cloud and other headless sessions
+- Added a diff of the files a Bash command changed to the Bash tool result when the Bash tool handles file edits (setting `bashEditDiffEnabled`)
+- Added `OTEL_METRICS_INCLUDE_REPOSITORY` to tag OpenTelemetry metrics and events with `vcs.*` repository attributes; commit events get `vcs.ref.head.*` with `OTEL_LOG_TOOL_DETAILS`
+- Added `CLAUDE_CODE_GATEWAY_MODEL_DISCOVERY_TIMEOUT_MS` to extend the LLM gateway `/v1/models` discovery timeout (default 3s)
+- Added a spinner tip suggesting `/focus` for a view with just your prompt, a one-line work summary, and the response
+- Added `CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS` (1–256) to raise the Workflow tool's per-run concurrent agent limit for inference-bound fan-outs
+- Fixed the prompt cache being partially invalidated on the turn after a response was cut off at the output-token limit and automatically resumed
+- Fixed a case where resuming a session after interrupting Claude mid-thought could change how earlier context was re-sent, hurting prompt-cache reuse
+- Fixed F1/F2/F4 not working in kitty-protocol terminals and Delete in st, Alt+arrows acting as Escape in rxvt-unicode, and Shift+punctuation typing the unshifted key in WezTerm (regression in 2.1.247)
+- Fixed remote and headless sessions reporting "waiting for your input" while background agents were still running (set `CLAUDE_CODE_BG_TASKS_REPORT_RUNNING=0` to restore the old behavior)
+- Fixed the terminal's replies to capability queries (`^[[?1;2c`) appearing as stray text at startup in some terminals
+- Fixed rows at the top or bottom of the transcript going blank in fullscreen after resizing the terminal
+- Fixed a deny or ask permission rule starting wit
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
