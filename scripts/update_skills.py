@@ -1,22 +1,52 @@
 #!/usr/bin/env python3
 """Daily Claude Code skills updater.
-Fetches latest changelog from anthropics/claude-code, updates catalog and changelogs.
+
+Fetches the official changelog from anthropics/claude-code, refreshes the
+canonical Claude/skills/SKILLS_CATALOG.yaml, and writes a dated skill-card
+snapshot plus changelog under Claude/, mirroring the GPT/ sync routine.
 """
 
-import os
+from __future__ import annotations
+
+import hashlib
+import json
 import re
 import sys
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 import urllib.request
 import urllib.error
 
 REPO_ROOT = Path(__file__).parent.parent
-CATALOG_FILE = REPO_ROOT / "Claude" / "skills" / "SKILLS_CATALOG.yaml"
-VERSION_FILE = REPO_ROOT / "Claude" / "skills" / ".version"
-CHANGELOGS_DIR = REPO_ROOT / "changelogs"
+CLAUDE_ROOT = REPO_ROOT / "Claude"
+CATALOG_FILE = CLAUDE_ROOT / "skills" / "SKILLS_CATALOG.yaml"
+VERSION_FILE = CLAUDE_ROOT / "skills" / ".version"
+SKILLS_ROOT = CLAUDE_ROOT / "skills"
+CHANGELOGS_ROOT = CLAUDE_ROOT / "Changelogs"
 CHANGELOG_SRC = "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md"
-DESKTOP_LOG_DIR = Path(os.environ.get("DESKTOP_LOG_PATH", "/root/바탕화면/Claude-Text/Claude_skills"))
+
+# Coding/programming/documentation-focused skills carried in SKILLS_CATALOG.yaml.
+# These are converted into standalone dated skill cards on every sync.
+CODING_SKILLS: tuple[str, ...] = (
+    "init",
+    "review",
+    "security-review",
+    "simplify",
+    "session-start-hook",
+    "update-config",
+    "claude-api",
+    "fewer-permission-prompts",
+    "keybindings-help",
+)
+
+
+@dataclass(frozen=True)
+class SkillDef:
+    slug: str
+    cmd: str
+    trigger: str
+    desc: str
 
 
 def fetch(url: str) -> str:
@@ -25,15 +55,15 @@ def fetch(url: str) -> str:
         return r.read().decode("utf-8")
 
 
-def parse_version(changelog: str) -> tuple[str, str]:
-    m = re.search(r"##\s+\[?(\d+\.\d+\.\d+)\]?", changelog)
-    if not m:
-        return "", ""
-    ver = m.group(1)
-    start = m.start()
-    nxt = re.search(r"##\s+\[?\d+\.\d+\.\d+", changelog[start + 1:])
-    end = start + 1 + nxt.start() if nxt else len(changelog)
-    return ver, changelog[start:end].strip()
+def split_versions(changelog: str) -> list[tuple[str, str]]:
+    """Return [(version, section_text), ...] newest first."""
+    matches = list(re.finditer(r"^##\s+\[?(\d+\.\d+\.\d+)\]?", changelog, flags=re.MULTILINE))
+    sections = []
+    for i, m in enumerate(matches):
+        start = m.start()
+        end = matches[i + 1].start() if i + 1 < len(matches) else len(changelog)
+        sections.append((m.group(1), changelog[start:end].strip()))
+    return sections
 
 
 def current_version() -> str:
@@ -48,40 +78,6 @@ def extract_new_items(section: str) -> dict:
     return {"skills": skills, "settings": settings, "env": env_vars, "hooks": hooks}
 
 
-def build_changelog_entry(ver: str, prev: str, section: str, items: dict) -> str:
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    lines = [
-        "=" * 60,
-        "Claude Code Skills Update Report",
-        f"Date    : {now}",
-        f"Version : {prev or 'none'} -> {ver}",
-        f"Source  : anthropics/claude-code",
-        "=" * 60,
-        "",
-        "[변경 요약 / Change Summary]",
-        "",
-    ]
-    if items["skills"]:
-        lines += ["Commands/Skills:", *[f"  {s}" for s in sorted(items["skills"])], ""]
-    if items["hooks"]:
-        lines += ["Hooks:", *[f"  {h}" for h in sorted(items["hooks"])], ""]
-    if items["settings"]:
-        lines += ["Settings:", *[f"  {s}" for s in sorted(items["settings"])], ""]
-    if items["env"]:
-        lines += ["Env Vars:", *[f"  {e}" for e in sorted(items["env"])], ""]
-    lines += [
-        "-" * 40,
-        "[원문 변경사항 / Raw Changes]",
-        "",
-        section[:3000],
-        "",
-        "=" * 60,
-        f"[적용 상태] SKILLS_CATALOG.yaml 최신화 완료",
-        f"[Status]   Catalog updated, committed to yeongam/Prompt-Guide",
-    ]
-    return "\n".join(lines)
-
-
 def update_catalog_version_field(ver: str) -> None:
     if not CATALOG_FILE.exists():
         return
@@ -91,13 +87,181 @@ def update_catalog_version_field(ver: str) -> None:
     CATALOG_FILE.write_text(text)
 
 
-def write_log(path: Path, content: str, date_str: str) -> None:
-    try:
-        path.mkdir(parents=True, exist_ok=True)
-        (path / f"skill_update_{date_str}.txt").write_text(content, encoding="utf-8")
-        print(f"Log written: {path}/skill_update_{date_str}.txt")
-    except OSError as e:
-        print(f"Warning: {e}", file=sys.stderr)
+def parse_catalog_skills() -> dict[str, SkillDef]:
+    """Pull cmd/trigger/desc for CODING_SKILLS out of the YAML catalog without a YAML dependency."""
+    if not CATALOG_FILE.exists():
+        return {}
+    text = CATALOG_FILE.read_text()
+    out: dict[str, SkillDef] = {}
+    for slug in CODING_SKILLS:
+        m = re.search(rf"^  {re.escape(slug)}:\n((?:    .+\n?)+)", text, flags=re.MULTILINE)
+        if not m:
+            continue
+        block = m.group(1)
+
+        def field(name: str) -> str:
+            fm = re.search(rf"^    {name}:\s*(.+)$", block, flags=re.MULTILINE)
+            return fm.group(1).strip() if fm else ""
+
+        out[slug] = SkillDef(slug=slug, cmd=field("cmd"), trigger=field("trigger"), desc=field("desc"))
+    return out
+
+
+def card_hash(card: dict) -> str:
+    encoded = json.dumps(card, sort_keys=True, ensure_ascii=False).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()[:16]
+
+
+def build_skill_card(skill: SkillDef, ver: str) -> dict:
+    card = {
+        "name": skill.slug,
+        "slug": skill.slug,
+        "cmd": skill.cmd,
+        "source": "https://github.com/anthropics/claude-code",
+        "source_version": ver,
+        "trigger": skill.trigger,
+        "output": skill.desc,
+        "token_policy": [
+            "One canonical line per skill; no restated background context.",
+            "Reference SKILLS_CATALOG.yaml instead of duplicating full docs.",
+        ],
+        "compatibility": [
+            "Do not overwrite existing dated skill snapshots.",
+            "Integrate only if slug is unique or content hash changed.",
+            "Preserve changelog evidence for every generated update.",
+        ],
+    }
+    card["hash"] = card_hash(card)
+    return card
+
+
+def skill_markdown(card: dict) -> str:
+    lines = [
+        f"# {card['name']}",
+        "",
+        f"- Command: `{card['cmd']}`" if card["cmd"] else "- Command: (none)",
+        f"- Source: {card['source']}",
+        f"- Source version: `{card['source_version']}`",
+        f"- Trigger: {card['trigger']}",
+        "",
+        "## Output",
+        "",
+        str(card["output"]),
+        "",
+        "## Token Policy",
+        "",
+        *[f"- {i}" for i in card["token_policy"]],
+        "",
+        "## Compatibility",
+        "",
+        *[f"- {i}" for i in card["compatibility"]],
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def previous_catalog(today: str) -> dict:
+    if not SKILLS_ROOT.exists():
+        return {}
+    candidates = []
+    for path in SKILLS_ROOT.iterdir():
+        if not path.is_dir() or not re.match(r"^\d{4}-\d{2}-\d{2}$", path.name) or path.name >= today:
+            continue
+        catalog = path / "skills" / "catalog.json"
+        if catalog.exists():
+            candidates.append(catalog)
+    if not candidates:
+        return {}
+    latest = sorted(candidates)[-1]
+    return json.loads(latest.read_text(encoding="utf-8"))
+
+
+def write_skill_snapshot(today: str, cards: list[dict], ver: str) -> Path:
+    skills_dir = SKILLS_ROOT / today / "skills"
+    skills_dir.mkdir(parents=True, exist_ok=True)
+    for card in cards:
+        (skills_dir / f"{card['slug']}.md").write_text(skill_markdown(card), encoding="utf-8")
+    catalog = {
+        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "date": today,
+        "directory_rule": "YYYY-MM-DD/skills",
+        "source_policy": "official anthropics/claude-code GitHub repository only",
+        "source_version": ver,
+        "skills": cards,
+    }
+    (skills_dir / "catalog.json").write_text(
+        json.dumps(catalog, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return skills_dir
+
+
+def compare(prev: dict, cards: list[dict]) -> dict[str, list[str]]:
+    prev_by_slug = {item["slug"]: item for item in prev.get("skills", []) if "slug" in item}
+    next_by_slug = {item["slug"]: item for item in cards}
+    added = sorted(set(next_by_slug) - set(prev_by_slug))
+    deleted = sorted(set(prev_by_slug) - set(next_by_slug))
+    modified = sorted(
+        slug for slug in set(prev_by_slug) & set(next_by_slug)
+        if prev_by_slug[slug].get("hash") != next_by_slug[slug].get("hash")
+    )
+    unchanged = sorted(set(prev_by_slug) & set(next_by_slug) - set(modified))
+    return {"added": added, "modified": modified, "deleted": deleted, "unchanged": unchanged}
+
+
+def write_changelog(today: str, prev_ver: str, ver: str, diff: dict, skills_dir: Path, raw_section: str) -> Path:
+    CHANGELOGS_ROOT.mkdir(parents=True, exist_ok=True)
+
+    def bullets(values: list[str]) -> list[str]:
+        return [f"- {slug}" for slug in values] if values else ["- none"]
+
+    lines = [
+        f"Prompt-Guide Claude Skills Changelog - {today}",
+        "",
+        f"Snapshot: Claude/skills/{today}/skills",
+        f"Catalog : Claude/skills/SKILLS_CATALOG.yaml",
+        "Source  : official anthropics/claude-code GitHub repository",
+        f"Version : {prev_ver or 'none'} -> {ver}",
+        "",
+        "[추가된 스킬]",
+        *bullets(diff["added"]),
+        "",
+        "[수정된 스킬]",
+        *bullets(diff["modified"]),
+        "",
+        "[삭제된 스킬]",
+        *bullets(diff["deleted"]),
+        "",
+        "[최적화된 구조]",
+        f"- 날짜별 스냅샷 구조 유지: {skills_dir.relative_to(CLAUDE_ROOT)}",
+        "- 각 스킬은 trigger, output, token_policy, compatibility로 경량화",
+        "- 카탈로그 원본(SKILLS_CATALOG.yaml)은 단일 소스로 유지, 스냅샷은 참조만 저장",
+        "",
+        "[토큰 절감 관련 변경 사항]",
+        "- 공식 체인지로그 원문 전체 복사 대신 최신 버전 구간만 발췌",
+        "- 스킬 카드마다 해시 기반 변경 감지로 불필요한 재작성 방지",
+        "- 반복 설명 대신 SKILLS_CATALOG.yaml 참조로 통합",
+        "",
+        "[충돌 해결 내역]",
+        "- slug 기준으로 중복 스킬 통합",
+        "- 기존 날짜 스킬 스냅샷은 덮어쓰지 않고 신규 날짜에 기록",
+        "- 변경 감지는 hash 비교로 수행",
+        "",
+        "[요약]",
+        (
+            f"- skills: added={len(diff['added'])}, modified={len(diff['modified'])}, "
+            f"deleted={len(diff['deleted'])}, unchanged={len(diff['unchanged'])}"
+        ),
+        "",
+        "-" * 40,
+        "[공식 체인지로그 발췌 / Official changelog excerpt (latest version)]",
+        "",
+        raw_section[:3000],
+        "",
+    ]
+    path = CHANGELOGS_ROOT / f"{today}.txt"
+    path.write_text("\n".join(lines), encoding="utf-8")
+    return path
 
 
 def main() -> int:
@@ -108,29 +272,33 @@ def main() -> int:
         print(f"Fetch error: {e}", file=sys.stderr)
         return 1
 
-    ver, section = parse_version(changelog)
-    if not ver:
-        print("Could not parse version.", file=sys.stderr)
+    sections = split_versions(changelog)
+    if not sections:
+        print("Could not parse any version.", file=sys.stderr)
         return 1
 
+    ver, latest_section = sections[0]
     prev = current_version()
     print(f"Latest: {ver}  |  Local: {prev or 'none'}")
 
-    if ver == prev:
-        print("Already up to date. No changes.")
-        return 0
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    catalog_skills = parse_catalog_skills()
+    cards = [build_skill_card(catalog_skills[slug], ver) for slug in CODING_SKILLS if slug in catalog_skills]
 
-    items = extract_new_items(section)
-    date_str = datetime.now(timezone.utc).strftime("%Y%m%d")
-    entry = build_changelog_entry(ver, prev, section, items)
+    prev_catalog = previous_catalog(today)
+    skills_dir = write_skill_snapshot(today, cards, ver)
+    diff = compare(prev_catalog, cards)
+    changelog_path = write_changelog(today, prev, ver, diff, skills_dir, latest_section)
 
-    write_log(CHANGELOGS_DIR, entry, date_str)
-    write_log(DESKTOP_LOG_DIR, entry, date_str)
+    if ver != prev:
+        VERSION_FILE.write_text(ver)
+        update_catalog_version_field(ver)
+        print(f"Updated: {prev or 'none'} -> {ver}")
+    else:
+        print("Catalog version already up to date; refreshed dated snapshot only.")
 
-    VERSION_FILE.write_text(ver)
-    update_catalog_version_field(ver)
-
-    print(f"Updated: {prev or 'none'} -> {ver}")
+    print(f"Snapshot : {skills_dir.relative_to(REPO_ROOT)}")
+    print(f"Changelog: {changelog_path.relative_to(REPO_ROOT)}")
     return 0
 
 

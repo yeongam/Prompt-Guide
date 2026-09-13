@@ -1,0 +1,180 @@
+{
+  "date": "2026-09-13",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-09-13T15:13:02+00:00",
+  "skills": [
+    {
+      "cmd": "/init",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "2d210cbcd14c9b82",
+      "name": "init",
+      "output": "Generate CLAUDE.md with codebase architecture, conventions, commands",
+      "slug": "init",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.270",
+      "token_policy": [
+        "One canonical line per skill; no restated background context.",
+        "Reference SKILLS_CATALOG.yaml instead of duplicating full docs."
+      ],
+      "trigger": "user asks to initialize or document codebase"
+    },
+    {
+      "cmd": "/review",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "315802886a841e99",
+      "name": "review",
+      "output": "Multi-pass PR review; checks logic, style, security, tests",
+      "slug": "review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.270",
+      "token_policy": [
+        "One canonical line per skill; no restated background context.",
+        "Reference SKILLS_CATALOG.yaml instead of duplicating full docs."
+      ],
+      "trigger": "user asks to review PR or branch"
+    },
+    {
+      "cmd": "/security-review",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "041913162a41030e",
+      "name": "security-review",
+      "output": "OWASP-focused audit of pending diffs; outputs risk-ranked findings",
+      "slug": "security-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.270",
+      "token_policy": [
+        "One canonical line per skill; no restated background context.",
+        "Reference SKILLS_CATALOG.yaml instead of duplicating full docs."
+      ],
+      "trigger": "user asks security audit of current branch changes"
+    },
+    {
+      "cmd": "/simplify",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "ee0a4bc49096f79c",
+      "name": "simplify",
+      "output": "Review changed code for reuse/quality/efficiency, then fix issues",
+      "slug": "simplify",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.270",
+      "token_policy": [
+        "One canonical line per skill; no restated background context.",
+        "Reference SKILLS_CATALOG.yaml instead of duplicating full docs."
+      ],
+      "trigger": "user asks to clean up or refactor changed code"
+    },
+    {
+      "cmd": "/session-start-hook",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "13c3d481ce64564d",
+      "name": "session-start-hook",
+      "output": "Create SessionStart hook ensuring project can run tests and linters",
+      "slug": "session-start-hook",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.270",
+      "token_policy": [
+        "One canonical line per skill; no restated background context.",
+        "Reference SKILLS_CATALOG.yaml instead of duplicating full docs."
+      ],
+      "trigger": "user wants test/lint runners on session start (web Claude Code)"
+    },
+    {
+      "cmd": "/update-config",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "cfae14999809577d",
+      "name": "update-config",
+      "output": "Configure settings.json; handles hooks, permissions, env vars",
+      "slug": "update-config",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.270",
+      "token_policy": [
+        "One canonical line per skill; no restated background context.",
+        "Reference SKILLS_CATALOG.yaml instead of duplicating full docs."
+      ],
+      "trigger": "automated behavior requests (\"when X\", \"allow Y\", \"set Z=val\")"
+    },
+    {
+      "cmd": "/claude-api",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "6963afae24f36c06",
+      "name": "claude-api",
+      "output": "Build/debug Claude API apps; prompt caching, tool use, model migration",
+      "slug": "claude-api",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.270",
+      "token_policy": [
+        "One canonical line per skill; no restated background context.",
+        "Reference SKILLS_CATALOG.yaml instead of duplicating full docs."
+      ],
+      "trigger": "code imports anthropic SDK; user asks about Claude API features"
+    },
+    {
+      "cmd": "/fewer-permission-prompts",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "194e62b694bf9664",
+      "name": "fewer-permission-prompts",
+      "output": "Scan transcripts → add bash/MCP allowlist to .claude/settings.json",
+      "slug": "fewer-permission-prompts",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.270",
+      "token_policy": [
+        "One canonical line per skill; no restated background context.",
+        "Reference SKILLS_CATALOG.yaml instead of duplicating full docs."
+      ],
+      "trigger": "user wants fewer permission dialogs"
+    },
+    {
+      "cmd": "/keybindings-help",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "080aca0502c48093",
+      "name": "keybindings-help",
+      "output": "Customize ~/.claude/keybindings.json; supports chord bindings",
+      "slug": "keybindings-help",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.270",
+      "token_policy": [
+        "One canonical line per skill; no restated background context.",
+        "Reference SKILLS_CATALOG.yaml instead of duplicating full docs."
+      ],
+      "trigger": "user wants to remap keys or add chord shortcuts"
+    }
+  ],
+  "source_policy": "official anthropics/claude-code GitHub repository only",
+  "source_version": "2.1.270"
+}

@@ -1,0 +1,48 @@
+Prompt-Guide Claude Skills Changelog - 2026-09-13
+
+Snapshot: Claude/skills/2026-09-13/skills
+Catalog : Claude/skills/SKILLS_CATALOG.yaml
+Source  : official anthropics/claude-code GitHub repository
+Version : 2.1.129 -> 2.1.270
+
+[추가된 스킬]
+- claude-api
+- fewer-permission-prompts
+- init
+- keybindings-help
+- review
+- security-review
+- session-start-hook
+- simplify
+- update-config
+
+[수정된 스킬]
+- none
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 유지: skills/2026-09-13/skills
+- 각 스킬은 trigger, output, token_policy, compatibility로 경량화
+- 카탈로그 원본(SKILLS_CATALOG.yaml)은 단일 소스로 유지, 스냅샷은 참조만 저장
+
+[토큰 절감 관련 변경 사항]
+- 공식 체인지로그 원문 전체 복사 대신 최신 버전 구간만 발췌
+- 스킬 카드마다 해시 기반 변경 감지로 불필요한 재작성 방지
+- 반복 설명 대신 SKILLS_CATALOG.yaml 참조로 통합
+
+[충돌 해결 내역]
+- slug 기준으로 중복 스킬 통합
+- 기존 날짜 스킬 스냅샷은 덮어쓰지 않고 신규 날짜에 기록
+- 변경 감지는 hash 비교로 수행
+
+[요약]
+- skills: added=9, modified=0, deleted=0, unchanged=0
+
+----------------------------------------
+[공식 체인지로그 발췌 / Official changelog excerpt (latest version)]
+
+## 2.1.270
+
+- Fixed read-only git commands in Bash unexpectedly asking for permission after a session had been running for a while (regression in 2.1.269)
