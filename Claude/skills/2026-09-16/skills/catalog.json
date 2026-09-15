@@ -1,0 +1,373 @@
+{
+  "date": "2026-09-16",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-09-16T00:12:59+09:00",
+  "scope": "coding, programming, and documentation-related bundled skills",
+  "skills": [
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "35219fedad72939e",
+      "name": "Init",
+      "output": "CLAUDE.md documenting the codebase for future sessions.",
+      "procedure": [
+        "Scan repo structure, build tooling, and conventions.",
+        "Generate CLAUDE.md with architecture and commands."
+      ],
+      "removed": false,
+      "slug": "init",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "v2.1.272",
+      "source_version": "2.1.272",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical instructions.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "user asks to initialize or document a codebase"
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "670cdd5b116b0877",
+      "name": "Code Review",
+      "output": "Ranked findings, optionally posted as PR comments or auto-fixed.",
+      "procedure": [
+        "Renamed from /review; reports correctness bugs at a chosen effort level.",
+        "Also surfaces reuse/simplification/efficiency cleanups.",
+        "--comment posts inline PR comments; --fix applies findings to the working tree."
+      ],
+      "removed": false,
+      "slug": "code-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "v2.1.272",
+      "source_version": "2.1.272",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical instructions.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "review a diff, PR number, branch, or path for bugs and cleanup"
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "8489ec6353baea8c",
+      "name": "Simplify",
+      "output": "Working tree with cleanup fixes applied.",
+      "procedure": [
+        "Cleanup-only pass: reuse, simplification, efficiency, altitude.",
+        "Applies fixes directly; does not hunt for correctness bugs (use code-review)."
+      ],
+      "removed": false,
+      "slug": "simplify",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "v2.1.272",
+      "source_version": "2.1.272",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical instructions.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "user asks to clean up or refactor already-changed code"
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "87ffc0ebb7e0d962",
+      "name": "Security Review",
+      "output": "Risk-ranked security findings for the current diff.",
+      "procedure": [
+        "OWASP-focused audit of the pending diff.",
+        "Outputs risk-ranked findings."
+      ],
+      "removed": false,
+      "slug": "security-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "v2.1.272",
+      "source_version": "2.1.272",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical instructions.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "user asks for a security audit of pending branch changes"
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "6a205d199941de34",
+      "name": "Session Start Hook",
+      "output": "Configured SessionStart hook in the repo.",
+      "procedure": [
+        "Create a SessionStart hook so the project can run tests and linters."
+      ],
+      "removed": false,
+      "slug": "session-start-hook",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "v2.1.272",
+      "source_version": "2.1.272",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical instructions.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "user wants test/lint runners available in web Claude Code sessions"
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "8951f64ad9c49ef7",
+      "name": "Claude API",
+      "output": "API/SDK guidance, migration steps, or a prompt audit report.",
+      "procedure": [
+        "Context cost cut from ~200k+ to ~25k tokens via on-demand reference docs.",
+        "`upgrade` subcommand migrates Python projects from anthropic 0.x to 1.x.",
+        "`prompt-audit` subcommand audits prompts/tool descriptions for stale patterns.",
+        "Covers Admin API (members, invites, workspaces, keys, rate limits, CMEK)."
+      ],
+      "removed": false,
+      "slug": "claude-api",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "v2.1.272",
+      "source_version": "2.1.272",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical instructions.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "code imports the anthropic SDK, or user asks about Claude API features"
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "f4d97b02d21c4564",
+      "name": "Workflow Authoring",
+      "output": "A workflow script following the documented API and patterns.",
+      "procedure": [
+        "Split out of the Workflow tool description to cut its footprint from ~5.7k to ~1k tokens.",
+        "Covers script API, gotchas, resume, and quality patterns."
+      ],
+      "removed": false,
+      "slug": "workflow-authoring",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "v2.1.272",
+      "source_version": "2.1.272",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical instructions.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "authoring a Workflow tool script the user already opted into"
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "9f7abee0b2f9a6e4",
+      "name": "Dataviz",
+      "output": "A chart/dashboard consistent in light and dark, with accessible colors.",
+      "procedure": [
+        "Apply the brand-neutral palette and form heuristics before writing chart code.",
+        "Validate colors with the runnable OKLab color-difference palette validator."
+      ],
+      "removed": false,
+      "slug": "dataviz",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "v2.1.272",
+      "source_version": "2.1.272",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical instructions.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "creating any chart, graph, plot, or dashboard in any output medium"
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "4cd83855ba0e731c",
+      "name": "Artifact Design",
+      "output": "An artifact that follows the design system's fundamentals.",
+      "procedure": [
+        "Apply design fundamentals before the first line of an artifact.",
+        "Applies even to skill-instructed Markdown artifacts."
+      ],
+      "removed": false,
+      "slug": "artifact-design",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "v2.1.272",
+      "source_version": "2.1.272",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical instructions.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "load before writing any HTML/Markdown artifact"
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "bbfbebaf3f8bc901",
+      "name": "Artifact Capabilities",
+      "output": "An artifact wired to the correct runtime capability contract.",
+      "procedure": [
+        "Load before declaring `capabilities` or writing `window.claude.*` runtime code."
+      ],
+      "removed": false,
+      "slug": "artifact-capabilities",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "v2.1.272",
+      "source_version": "2.1.272",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical instructions.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "an artifact needs runtime behavior (live data, saved state, per-viewer memory)"
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "a841739c1631eb3f",
+      "name": "Artifact Diagramming",
+      "output": "A legible inline-SVG diagram inside the artifact.",
+      "procedure": [
+        "Draw the real mechanism, not decoration.",
+        "Use inline-SVG mechanics that stay legible in both themes."
+      ],
+      "removed": false,
+      "slug": "artifact-diagramming",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "v2.1.272",
+      "source_version": "2.1.272",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical instructions.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "a diagram would clarify an artifact's mechanism"
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "3be4136734befd89",
+      "name": "Run",
+      "output": "The app running with the change verified live, not just by tests.",
+      "procedure": [
+        "Prefer a project skill that already covers launching the app.",
+        "Otherwise fall back to built-in patterns per project type."
+      ],
+      "removed": false,
+      "slug": "run",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "v2.1.272",
+      "source_version": "2.1.272",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical instructions.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "user asks to run, start, or screenshot the app to confirm a change works"
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "24615e2d4952a511",
+      "name": "Skill Doctor",
+      "output": "A report of loaded-skill usage and context cost.",
+      "procedure": [
+        "Added as `/skill-doctor`.",
+        "Reports unused loaded skills and their token cost so they can be pruned."
+      ],
+      "removed": false,
+      "slug": "skill-doctor",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "v2.1.272",
+      "source_version": "2.1.272",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical instructions.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "user wants to see which loaded skills go unused and their context cost"
+    },
+    {
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "hash": "f10f2bbb61ecc41d",
+      "name": "Ultraplan (removed)",
+      "output": "n/a",
+      "procedure": [
+        "Feature removed from Claude Code; kept here only as a tombstone."
+      ],
+      "removed": true,
+      "slug": "ultraplan",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "v2.1.272",
+      "source_version": "2.1.272",
+      "token_policy": [
+        "Avoid repeated background context.",
+        "Return only decision-critical instructions.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "n/a"
+    }
+  ],
+  "source_policy": "official anthropics/claude-code repository only"
+}

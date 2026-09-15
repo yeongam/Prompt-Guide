@@ -1,0 +1,48 @@
+Prompt-Guide Claude Skills Changelog - 2026-09-16
+
+Snapshot: Claude/skills/2026-09-16/skills
+Source: anthropics/claude-code (2.1.129 -> 2.1.272)
+
+[추가된 스킬] (신규 날짜별 스냅샷 기준; 최초 실행이라 전체가 "추가"로 표시됨)
+- artifact-capabilities  (v2.1.x 신규: 아티팩트 런타임 capability 계약)
+- artifact-design        (v2.1.x 신규: 아티팩트 작성 전 디자인 기본 원칙)
+- artifact-diagramming   (v2.1.x 신규: 아티팩트 내 inline-SVG 다이어그램 가이드)
+- dataviz                (v2.1.x 신규: /dataviz 차트/대시보드 팔레트 검증)
+- run                    (v2.1.x 신규: /run 앱 실행/검증)
+- skill-doctor           (v2.1.x 신규: /skill-doctor 미사용 스킬·토큰 비용 리포트)
+- workflow-authoring     (v2.1.x 신규: Workflow 도구 프롬프트 분리, 5.7k→1k 토큰 절감)
+- claude-api, code-review, init, security-review, session-start-hook, simplify
+  (레거시 SKILLS_CATALOG.yaml에 이미 존재; 날짜별 스냅샷으로 최초 이전됨 — 아래 [수정된 스킬] 참고)
+
+[수정된 스킬] (레거시 SKILLS_CATALOG.yaml 대비 실질 변경, v2.1.129 -> v2.1.272)
+- code-review: `/review`에서 개명(rename). 이제 버그 자동 실행 안 함, 명시적 호출 필요.
+  --comment(인라인 PR 코멘트)/--fix(자동 수정 적용) 플래그 추가
+- simplify: 동작 범위 축소. correctness 버그 헌팅 제거, cleanup(재사용/단순화/효율/altitude) 전용으로 변경
+- claude-api: 컨텍스트 비용 ~200k+ -> ~25k 토큰으로 절감, `upgrade`/`prompt-audit` 서브커맨드 추가,
+  Admin API 커버리지 추가, 기본 모델 Opus 5/Sonnet 5로 갱신
+
+[삭제된 스킬]
+- ultraplan  (공식 레포에서 기능 제거됨 — 날짜별 스냅샷에는 tombstone(removed:true)으로만 기록,
+  실제 사용 가능한 스킬 목록에서는 제외)
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 유지: skills/2026-09-16/skills
+- 각 스킬은 trigger, procedure, output, token_policy, compatibility로 경량화
+- 레거시 SKILLS_CATALOG.yaml은 버전/날짜 필드만 동기화, 본문은 날짜별 스냅샷이 단일 소스
+
+[토큰 절감 관련 변경 사항]
+- 긴 원문 CHANGELOG 복사를 피하고 공식 레포 링크와 커밋 해시만 저장
+- 스킬 절차는 검증된 변경 사항 기준 짧은 항목으로 제한
+- 중복 설명 대신 공통 catalog.json으로 메타데이터 통합
+
+[충돌 해결 내역]
+- slug 기준으로 중복 스킬 통합
+- 기존 날짜 스킬 스냅샷은 덮어쓰지 않고 신규 날짜에 기록
+- 변경 감지는 hash 비교로 수행
+- 레거시 scripts/update_skills.py(및 changelogs/ 경로)는 별도 대상이라 충돌 없음; 본 스크립트가 Claude/Changelogs 표준 경로 담당
+- 최초 날짜별 스냅샷 생성: 레거시 단일 SKILLS_CATALOG.yaml(v2.1.129)을 GPT와 동일한 날짜별 구조로 이전
+- 레거시 SKILLS_CATALOG.yaml에서 콜론이 포함된 unquoted YAML 값 3건(effort/tui/focus의 desc)이
+  파싱 오류를 일으키던 기존 버그를 발견, 따옴표로 감싸 수정 (동작 변경 없음, 파일 유효성만 복구)
+
+[요약]
+- skills: added=14, modified=0, deleted=0, unchanged=0
