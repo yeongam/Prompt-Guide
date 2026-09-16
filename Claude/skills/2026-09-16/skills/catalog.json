@@ -1,0 +1,138 @@
+{
+  "date": "2026-09-16",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-09-16T15:13:35.415135+00:00",
+  "source_policy": "official Anthropic GitHub repositories only",
+  "skills": [
+    {
+      "slug": "claude-api-coding",
+      "name": "Claude API Coding",
+      "source": "https://github.com/anthropics/claude-cookbooks",
+      "source_ref": "main (fetched 2026-09-16)",
+      "trigger": "Use for implementing or debugging Claude API calls and examples.",
+      "output": "Small code-oriented checklist aligned with official Claude cookbook examples.",
+      "procedure": [
+        "Check the official source for the current API/CLI shape before coding.",
+        "Prefer the smallest working implementation over speculative abstractions.",
+        "Use the SDK's structured types/tools instead of hand-rolled parsing.",
+        "Keep generated snippets short; link back to the source repo for depth.",
+        "Verify with the narrowest relevant command or test before finishing."
+      ],
+      "token_policy": [
+        "Avoid repeating background context already in the source repo.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs verbatim."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "summary": "# Claude Cookbooks The Claude Cookbooks provide code and guides designed to help developers build with Claude, offering copy-able code snippets that you can easily integrate into your own projects. ## Prerequisites To make the most of the examples in this cookbook, you'll need a Claude API key (sign up for free [here](https://www.anthropic.com)). While the code examples are primarily written in Python, the concepts."
+    },
+    {
+      "slug": "python-sdk-programming",
+      "name": "Python SDK Programming",
+      "source": "https://github.com/anthropics/anthropic-sdk-python",
+      "source_ref": "main (fetched 2026-09-16)",
+      "trigger": "Use for Python SDK integration, request structure, and migration checks.",
+      "output": "Minimal Claude Python SDK guidance with verification steps.",
+      "procedure": [
+        "Check the official source for the current API/CLI shape before coding.",
+        "Prefer the smallest working implementation over speculative abstractions.",
+        "Use the SDK's structured types/tools instead of hand-rolled parsing.",
+        "Keep generated snippets short; link back to the source repo for depth.",
+        "Verify with the narrowest relevant command or test before finishing."
+      ],
+      "token_policy": [
+        "Avoid repeating background context already in the source repo.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs verbatim."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "summary": "# Claude SDK for Python The Claude SDK for Python provides access to the [Claude API](https://docs.anthropic.com/en/api/) from Python applications. ## Documentation Full documentation is available at **[platform.claude.com/docs/en/api/sdks/python](https://platform.claude.com/docs/en/api/sdks/python)**. ## Installation ```sh pip install anthropic ``` Upgrading from a `0.x` release? See the [v1 migration."
+    },
+    {
+      "slug": "typescript-sdk-programming",
+      "name": "TypeScript SDK Programming",
+      "source": "https://github.com/anthropics/anthropic-sdk-typescript",
+      "source_ref": "main (fetched 2026-09-16)",
+      "trigger": "Use for Node.js or TypeScript SDK integration and typed API work.",
+      "output": "Compact Claude TypeScript SDK implementation checklist.",
+      "procedure": [
+        "Check the official source for the current API/CLI shape before coding.",
+        "Prefer the smallest working implementation over speculative abstractions.",
+        "Use the SDK's structured types/tools instead of hand-rolled parsing.",
+        "Keep generated snippets short; link back to the source repo for depth.",
+        "Verify with the narrowest relevant command or test before finishing."
+      ],
+      "token_policy": [
+        "Avoid repeating background context already in the source repo.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs verbatim."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "summary": "# <img src=\".github/logo.svg\" alt=\"\" width=\"32\"> Claude SDK for TypeScript The Claude SDK for TypeScript provides access to the [Claude API](https://docs.anthropic.com/en/api/) from server-side TypeScript or JavaScript applications. ## Documentation Full documentation is available at **[platform.claude.com/docs/en/api/sdks/typescript](https://platform.claude.com/docs/en/api/sdks/typescript)**. ## Installation ```sh."
+    },
+    {
+      "slug": "agent-sdk-programming",
+      "name": "Agent SDK Programming",
+      "source": "https://github.com/anthropics/claude-agent-sdk-python",
+      "source_ref": "main (fetched 2026-09-16); TS variant: anthropics/claude-agent-sdk-typescript",
+      "trigger": "Use for building agents/tools/workflows with the Claude Agent SDK.",
+      "output": "Lean agent workflow design and implementation checklist.",
+      "procedure": [
+        "Check the official source for the current API/CLI shape before coding.",
+        "Prefer the smallest working implementation over speculative abstractions.",
+        "Use the SDK's structured types/tools instead of hand-rolled parsing.",
+        "Keep generated snippets short; link back to the source repo for depth.",
+        "Verify with the narrowest relevant command or test before finishing."
+      ],
+      "token_policy": [
+        "Avoid repeating background context already in the source repo.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs verbatim."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "summary": "# Claude Agent SDK for Python Python SDK for Claude Agent. See the [Claude Agent SDK documentation](https://platform.claude.com/docs/en/agent-sdk/python) for more information. ## Installation ```bash pip install claude-agent-sdk ``` **Prerequisites:** - Python 3.10+ **Note:** The Claude Code CLI is automatically bundled with the package - no separate installation required! The SDK will use the bundled CLI by."
+    },
+    {
+      "slug": "skills-authoring",
+      "name": "Skills Authoring & Maintenance",
+      "source": "https://github.com/anthropics/skills",
+      "source_ref": "main (fetched 2026-09-16)",
+      "trigger": "Use for creating, updating, or documenting Claude Skills (SKILL.md, structure, conventions).",
+      "output": "Checklist for authoring or syncing skills consistent with Anthropic's official skills repo.",
+      "procedure": [
+        "Check the official source for the current API/CLI shape before coding.",
+        "Prefer the smallest working implementation over speculative abstractions.",
+        "Use the SDK's structured types/tools instead of hand-rolled parsing.",
+        "Keep generated snippets short; link back to the source repo for depth.",
+        "Verify with the narrowest relevant command or test before finishing."
+      ],
+      "token_policy": [
+        "Avoid repeating background context already in the source repo.",
+        "Return only decision-critical code or instructions.",
+        "Link to the source repo instead of copying long docs verbatim."
+      ],
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content changed.",
+        "Preserve changelog evidence for every generated update."
+      ],
+      "summary": "Note: This repository contains Anthropic's implementation of skills for Claude. Skills are folders of instructions, scripts, and resources that Claude loads dynamically to improve performance on specialized tasks — teaching Claude how to complete specific tasks in a repeatable way, whether that's creating."
+    }
+  ]
+}
