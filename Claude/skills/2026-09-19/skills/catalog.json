@@ -1,0 +1,322 @@
+{
+  "date": "2026-09-19",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-09-19T00:11:18+09:00",
+  "repo_version": "2.1.276",
+  "skills": [
+    {
+      "category": "coding",
+      "cmd": "/code-review",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve Claude/skills/SKILLS_CATALOG.yaml entries not covered here."
+      ],
+      "hash": "4de68063e5534ded",
+      "name": "Code Review",
+      "output": "Ranked findings list, or applied fixes with --fix.",
+      "procedure": [
+        "Scope the diff or target (PR/branch/path/effort level).",
+        "Check correctness first; reuse/simplify/efficiency where in scope.",
+        "Rank findings by confidence; low/medium = fewer, high-confidence only.",
+        "Optionally post inline PR comments or apply fixes directly."
+      ],
+      "slug": "code-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.276",
+      "token_policy": [
+        "No duplicated background context between skills.",
+        "Reference this catalog instead of re-explaining the skill inline.",
+        "Keep procedure steps to the minimum needed to act."
+      ],
+      "trigger": "Review a diff, PR, branch, or path for correctness bugs and cleanups."
+    },
+    {
+      "category": "coding",
+      "cmd": "/security-review",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve Claude/skills/SKILLS_CATALOG.yaml entries not covered here."
+      ],
+      "hash": "82b6871d4c6d50e0",
+      "name": "Security Review",
+      "output": "Risk-ranked security findings for the pending diff.",
+      "procedure": [
+        "Diff the current branch against its base.",
+        "Flag injection, auth, secrets, and unsafe deserialization risks.",
+        "Rank by exploitability and blast radius."
+      ],
+      "slug": "security-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.276",
+      "token_policy": [
+        "No duplicated background context between skills.",
+        "Reference this catalog instead of re-explaining the skill inline.",
+        "Keep procedure steps to the minimum needed to act."
+      ],
+      "trigger": "Audit pending changes on the current branch for OWASP-class issues."
+    },
+    {
+      "category": "coding",
+      "cmd": "/simplify",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve Claude/skills/SKILLS_CATALOG.yaml entries not covered here."
+      ],
+      "hash": "a404052b561c2a75",
+      "name": "Simplify",
+      "output": "Directly-applied quality fixes to the diff.",
+      "procedure": [
+        "Read only the changed hunks, not the whole file.",
+        "Find duplication, dead abstractions, and inefficient patterns.",
+        "Apply the fix directly; do not report a separate findings list."
+      ],
+      "slug": "simplify",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.276",
+      "token_policy": [
+        "No duplicated background context between skills.",
+        "Reference this catalog instead of re-explaining the skill inline.",
+        "Keep procedure steps to the minimum needed to act."
+      ],
+      "trigger": "Clean up changed code for reuse, simplification, and efficiency only."
+    },
+    {
+      "category": "docs",
+      "cmd": "/init",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve Claude/skills/SKILLS_CATALOG.yaml entries not covered here."
+      ],
+      "hash": "ca61882717713518",
+      "name": "Init",
+      "output": "New or refreshed CLAUDE.md file.",
+      "procedure": [
+        "Scan repo structure, build tooling, and existing docs.",
+        "Extract commands, conventions, and architecture notes.",
+        "Write a single CLAUDE.md at the repo root."
+      ],
+      "slug": "init",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.276",
+      "token_policy": [
+        "No duplicated background context between skills.",
+        "Reference this catalog instead of re-explaining the skill inline.",
+        "Keep procedure steps to the minimum needed to act."
+      ],
+      "trigger": "Generate a CLAUDE.md capturing codebase architecture and conventions."
+    },
+    {
+      "category": "docs",
+      "cmd": "/session-start-hook",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve Claude/skills/SKILLS_CATALOG.yaml entries not covered here."
+      ],
+      "hash": "f406330abc4030d2",
+      "name": "Session Start Hook",
+      "output": "SessionStart hook wired into .claude/settings.json.",
+      "procedure": [
+        "Detect the project's test and lint commands.",
+        "Write a SessionStart hook entry in settings.json.",
+        "Verify the hook runs cleanly on a fresh session."
+      ],
+      "slug": "session-start-hook",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.276",
+      "token_policy": [
+        "No duplicated background context between skills.",
+        "Reference this catalog instead of re-explaining the skill inline.",
+        "Keep procedure steps to the minimum needed to act."
+      ],
+      "trigger": "Create a SessionStart hook so web sessions can run tests/linters."
+    },
+    {
+      "category": "programming",
+      "cmd": "/update-config",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve Claude/skills/SKILLS_CATALOG.yaml entries not covered here."
+      ],
+      "hash": "4a2ac9feba3dd961",
+      "name": "Update Config",
+      "output": "Updated settings.json/settings.local.json.",
+      "procedure": [
+        "Resolve target scope: project vs user settings.",
+        "Edit hooks, permissions, or env vars as requested.",
+        "Validate JSON before saving."
+      ],
+      "slug": "update-config",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.276",
+      "token_policy": [
+        "No duplicated background context between skills.",
+        "Reference this catalog instead of re-explaining the skill inline.",
+        "Keep procedure steps to the minimum needed to act."
+      ],
+      "trigger": "Configure the Claude Code harness via settings.json."
+    },
+    {
+      "category": "programming",
+      "cmd": "workflow-authoring",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve Claude/skills/SKILLS_CATALOG.yaml entries not covered here."
+      ],
+      "hash": "a625a9c5a7cbdea2",
+      "name": "Workflow Authoring",
+      "output": "A validated workflow script ready for the Workflow tool.",
+      "procedure": [
+        "Load before authoring any Workflow script.",
+        "Follow the agent()/parallel()/pipeline() API and phase() layout.",
+        "Keep agent count within the session's size guideline."
+      ],
+      "slug": "workflow-authoring",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.276",
+      "token_policy": [
+        "No duplicated background context between skills.",
+        "Reference this catalog instead of re-explaining the skill inline.",
+        "Keep procedure steps to the minimum needed to act."
+      ],
+      "trigger": "Reference for writing a Workflow tool script (agent/parallel/pipeline)."
+    },
+    {
+      "category": "programming",
+      "cmd": "/run",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve Claude/skills/SKILLS_CATALOG.yaml entries not covered here."
+      ],
+      "hash": "c69dcaaa8d0f5dd4",
+      "name": "Run",
+      "output": "A running app session confirming the change, or a screenshot.",
+      "procedure": [
+        "Prefer an existing project skill for launching the app.",
+        "Otherwise fall back to a built-in pattern for the project type.",
+        "Exercise the golden path and edge cases before reporting success."
+      ],
+      "slug": "run",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.276",
+      "token_policy": [
+        "No duplicated background context between skills.",
+        "Reference this catalog instead of re-explaining the skill inline.",
+        "Keep procedure steps to the minimum needed to act."
+      ],
+      "trigger": "Launch and drive the project's app to verify a change works live."
+    },
+    {
+      "category": "programming",
+      "cmd": "/claude-api",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve Claude/skills/SKILLS_CATALOG.yaml entries not covered here."
+      ],
+      "hash": "3d4d424640d1a2f0",
+      "name": "Claude API",
+      "output": "Correct, current guidance for Claude API/SDK usage.",
+      "procedure": [
+        "Identify the current model ids and pricing before quoting old ones.",
+        "Prefer prompt caching and streaming where applicable.",
+        "Cross-check tool-use and MCP integration patterns."
+      ],
+      "slug": "claude-api",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.276",
+      "token_policy": [
+        "No duplicated background context between skills.",
+        "Reference this catalog instead of re-explaining the skill inline.",
+        "Keep procedure steps to the minimum needed to act."
+      ],
+      "trigger": "Reference for the Claude API / Agent SDK: models, tools, caching."
+    },
+    {
+      "category": "programming",
+      "cmd": "/keybindings-help",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve Claude/skills/SKILLS_CATALOG.yaml entries not covered here."
+      ],
+      "hash": "af611cab88b03ee9",
+      "name": "Keybindings Help",
+      "output": "Updated keybindings.json.",
+      "procedure": [
+        "Identify the current binding to change or add.",
+        "Write the rebind or chord to keybindings.json.",
+        "Confirm no existing binding conflicts."
+      ],
+      "slug": "keybindings-help",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.276",
+      "token_policy": [
+        "No duplicated background context between skills.",
+        "Reference this catalog instead of re-explaining the skill inline.",
+        "Keep procedure steps to the minimum needed to act."
+      ],
+      "trigger": "Customize ~/.claude/keybindings.json, including chord bindings."
+    },
+    {
+      "category": "programming",
+      "cmd": "/fewer-permission-prompts",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve Claude/skills/SKILLS_CATALOG.yaml entries not covered here."
+      ],
+      "hash": "b6c4db12b532545b",
+      "name": "Fewer Permission Prompts",
+      "output": "Expanded settings.json permissions allowlist.",
+      "procedure": [
+        "Scan recent transcripts for repeated safe Bash/MCP calls.",
+        "Add a prioritized allowlist to project .claude/settings.json.",
+        "Never allowlist destructive or write-scope commands."
+      ],
+      "slug": "fewer-permission-prompts",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.276",
+      "token_policy": [
+        "No duplicated background context between skills.",
+        "Reference this catalog instead of re-explaining the skill inline.",
+        "Keep procedure steps to the minimum needed to act."
+      ],
+      "trigger": "Scan transcripts for common read-only calls, allowlist them."
+    },
+    {
+      "category": "programming",
+      "cmd": "/loop",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve Claude/skills/SKILLS_CATALOG.yaml entries not covered here."
+      ],
+      "hash": "6fabb4357e20261a",
+      "name": "Loop",
+      "output": "A scheduled recurring task.",
+      "procedure": [
+        "Parse the interval, or self-pace when none is given.",
+        "Re-invoke the same prompt/command each cycle.",
+        "Stop cleanly via the loop's own stop condition."
+      ],
+      "slug": "loop",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_version": "2.1.276",
+      "token_policy": [
+        "No duplicated background context between skills.",
+        "Reference this catalog instead of re-explaining the skill inline.",
+        "Keep procedure steps to the minimum needed to act."
+      ],
+      "trigger": "Run a prompt or slash command on a recurring interval."
+    }
+  ],
+  "source_policy": "official anthropics/claude-code repository only"
+}
