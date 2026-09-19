@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
-# Source: anthropics/claude-code (public)
+# Source: anthropics/claude-code CHANGELOG.md (public, verified by fetch)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.278
+updated: 2026-09-19
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -12,10 +12,11 @@ skills:
     trigger: user asks to initialize or document codebase
     desc: Generate CLAUDE.md with codebase architecture, conventions, commands
 
-  review:
-    cmd: /review
-    trigger: user asks to review PR or branch
-    desc: Multi-pass PR review; checks logic, style, security, tests
+  code-review:
+    cmd: /code-review [level] [pr#]
+    trigger: user asks to review PR, branch, or diff
+    desc: Multi-pass review; checks logic, style, security, tests
+    note: "/review is now an alias; /code-review ultra runs a deep cloud review"
 
   security-review:
     cmd: /security-review
@@ -51,16 +52,52 @@ skills:
     cmd: /loop [interval] [/command]
     trigger: user wants recurring task (e.g. "check every 5m", "keep running X")
     desc: Run prompt or slash command on recurring interval (default 10m)
-    example: "/loop 5m /review"
+    example: "/loop 5m /code-review"
 
   claude-api:
     cmd: /claude-api
     trigger: code imports anthropic SDK; user asks about Claude API features
     desc: Build/debug Claude API apps; prompt caching, tool use, model migration
     models:
-      opus: claude-opus-4-7
-      sonnet: claude-sonnet-4-6
+      opus: claude-opus-5
+      sonnet: claude-sonnet-5
       haiku: claude-haiku-4-5-20251001
+      fable: claude-fable-5-1
+
+  skill-doctor:
+    cmd: /skill-doctor
+    trigger: user wants to prune unused or expensive loaded skills
+    desc: Show which loaded skills go unused and what they cost in context
+
+  reload-skills:
+    cmd: /reload-skills
+    trigger: user adds/edits a skill file and wants it picked up without restart
+    desc: Re-scan skill directories without restarting the session
+
+  workflow-authoring:
+    cmd: /workflows
+    trigger: user wants multi-agent orchestration (pipeline/parallel subagents)
+    desc: Reference for writing Workflow tool scripts; requires explicit opt-in
+
+  run:
+    cmd: /run
+    trigger: user wants to launch, start, or screenshot the app to verify a change
+    desc: Launch and drive the project's app to see a change working live
+
+  mcp-builder:
+    cmd: (skill, no dedicated slash command)
+    trigger: user is building an MCP server to integrate an external API
+    desc: Guide for high-quality MCP servers (Python FastMCP / Node TypeScript SDK)
+
+  docs:
+    cmd: (skill, no dedicated slash command)
+    trigger: user asks for a shareable doc/memo/spec/PRD/runbook
+    desc: Create/edit living docs via the docs connector; not for chat-only notes
+
+  office-formats:
+    cmd: (skill, no dedicated slash command)
+    trigger: user names a .docx/.pdf/.pptx/.xlsx file or asks for one
+    desc: Create/read/edit Word, PDF, PowerPoint, and spreadsheet files
 
   ultrareview:
     cmd: /ultrareview [PR#]
@@ -81,7 +118,7 @@ skills:
   effort:
     cmd: /effort
     trigger: user wants to adjust effort/quality level
-    desc: Interactive slider for session effort level (also: CLAUDE_EFFORT env var)
+    desc: "Interactive slider for session effort level (also: CLAUDE_EFFORT env var)"
 
   powerup:
     cmd: /powerup
@@ -91,12 +128,12 @@ skills:
   tui:
     cmd: /tui
     trigger: rendering looks flickery or user wants full-screen mode
-    desc: Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)
+    desc: "Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)"
 
   focus:
     cmd: /focus
     trigger: user wants compact view of conversation
-    desc: Toggle focus view showing only: prompt + tool summary + final response
+    desc: "Toggle focus view showing only: prompt + tool summary + final response"
 
   undo:
     cmd: /undo
@@ -148,6 +185,27 @@ hooks:
     fires: After subagent turn completes
     can_block: false
     use: Subagent result aggregation
+
+  SessionStart:
+    fires: When a session starts or resumes
+    can_block: false
+    use: Prime context, run setup commands (e.g. test/lint runner checks)
+
+  SessionEnd:
+    fires: When a session exits or is switched away from (incl. /resume)
+    can_block: false
+    timeout_env: CLAUDE_CODE_SESSIONEND_HOOKS_TIMEOUT_MS
+    use: Cleanup, final logging; per-hook timeout configurable
+
+  UserPromptSubmit:
+    fires: When the user submits a prompt, before Claude sees it
+    can_block: true
+    use: Validate/augment the prompt before processing
+
+  SubagentStart:
+    fires: When a subagent (Agent tool) starts
+    can_block: false
+    use: Log/track subagent spawns
 
   PreCompact:
     fires: Before conversation compaction
@@ -227,10 +285,11 @@ env:
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
-  default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
-  sonnet: claude-sonnet-4-6
+  default: claude-sonnet-5
+  opus: claude-opus-5
+  sonnet: claude-sonnet-5
   haiku: claude-haiku-4-5-20251001
+  fable: claude-fable-5-1
 
 # ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────
 # This catalog is structured for minimal token overhead:
@@ -238,3 +297,5 @@ models:
 # - YAML over JSON/Markdown: ~30% fewer tokens for structured data
 # - Descriptions capped at one line; examples only where non-obvious
 # - "added:" version tags kept for audit; remove if tokens are critical
+# - Dated snapshot detail (see skills/<date>/skills/) stays out of this file;
+#   this file always reflects only the current state

@@ -1,0 +1,72 @@
+{
+  "date": "2026-09-19",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-09-19T00:00:00Z",
+  "source": "https://github.com/anthropics/claude-code",
+  "source_file": "CHANGELOG.md",
+  "prev_version": "2.1.129",
+  "new_version": "2.1.278",
+  "skills": [
+    {
+      "slug": "code-review",
+      "cmd": "/code-review [level] [pr#]",
+      "status": "renamed",
+      "note": "/review is now an alias of /code-review (introduced pre-2.1.278)",
+      "source_version": "2.1.278"
+    },
+    {
+      "slug": "skill-doctor",
+      "cmd": "/skill-doctor",
+      "status": "added",
+      "note": "Shows which loaded skills go unused and what they cost in context",
+      "source_version": "2.1.278"
+    },
+    {
+      "slug": "reload-skills",
+      "cmd": "/reload-skills",
+      "status": "added",
+      "note": "Re-scan skill directories without restarting the session",
+      "source_version": "2.1.278"
+    },
+    {
+      "slug": "workflow-authoring",
+      "cmd": "/workflows",
+      "status": "added",
+      "note": "Multi-agent Workflow tool scripting reference; requires explicit opt-in",
+      "source_version": "2.1.278"
+    },
+    {
+      "slug": "run",
+      "cmd": "/run (skill)",
+      "status": "added",
+      "note": "Launch and drive the project's app to verify a change works live",
+      "source_version": "2.1.278"
+    },
+    {
+      "slug": "mcp-builder",
+      "cmd": "(skill, no dedicated slash command)",
+      "status": "added",
+      "note": "Guide for building MCP servers (Python FastMCP / Node TypeScript SDK)",
+      "source_version": "2.1.278"
+    },
+    {
+      "slug": "docs",
+      "cmd": "(skill, no dedicated slash command)",
+      "status": "added",
+      "note": "Create/edit shareable living docs via a docs connector",
+      "source_version": "2.1.278"
+    },
+    {
+      "slug": "office-formats",
+      "cmd": "(skill, no dedicated slash command)",
+      "status": "added",
+      "note": "Create/read/edit .docx/.pdf/.pptx/.xlsx files",
+      "source_version": "2.1.278"
+    }
+  ],
+  "hooks_added": ["SessionStart", "SessionEnd", "UserPromptSubmit", "SubagentStart"],
+  "corrections": [
+    "models.opus/sonnet corrected from claude-opus-4-7/claude-sonnet-4-6 (unverifiable) to claude-opus-5/claude-sonnet-5 (verified current)",
+    "added models.fable: claude-fable-5-1"
+  ]
+}

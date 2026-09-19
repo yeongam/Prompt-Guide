@@ -1,0 +1,58 @@
+Prompt-Guide Claude Skills Changelog - 2026-09-19
+
+Snapshot: Claude/skills/2026-09-19/skills
+Catalog : Claude/skills/SKILLS_CATALOG.yaml
+Source  : https://github.com/anthropics/claude-code CHANGELOG.md (fetched and verified this run)
+Version : 2.1.129 -> 2.1.278
+
+[추가된 스킬]
+- skill-doctor        (/skill-doctor)
+- reload-skills        (/reload-skills)
+- workflow-authoring   (/workflows)
+- run                  (/run)
+- mcp-builder
+- docs
+- office-formats       (combines docx/pdf/pptx/xlsx)
+
+[수정된 스킬]
+- review -> code-review (review is now an alias of /code-review; cmd/desc updated)
+- claude-api models block corrected (see 충돌 해결 내역)
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- Claude/skills/ now follows the same YYYY-MM-DD/skills snapshot convention already used
+  under GPT/skills/, per fixed directory rule.
+- SKILLS_CATALOG.yaml stays the single canonical current-state source; the dated
+  snapshot only records what changed this run (added/renamed/corrected), not a full
+  re-dump of unchanged entries.
+- office-formats added as one combined card instead of four near-identical docx/pdf/
+  pptx/xlsx cards.
+
+[토큰 절감 관련 변경 사항]
+- New skill cards kept to slug/cmd/source/procedure/compatibility only; no upstream
+  prose copied in (Claude Code's CHANGELOG.md is release notes, not per-skill docs,
+  so there is nothing long to summarize away).
+- catalog.json snapshot records only the diff (status: added/renamed) instead of the
+  full current skill list, which already lives in SKILLS_CATALOG.yaml.
+
+[충돌 해결 내역]
+- IMPORTANT: the repository's only prior commit seeded Claude/skills/SKILLS_CATALOG.yaml
+  and .version in one shot (no real daily history existed despite the file's own
+  "auto-updated daily" claim). Its models block listed claude-opus-4-7 / claude-sonnet-4-6,
+  which do not match any real current Anthropic model ID and could not be verified against
+  any source. This run fetched the actual anthropics/claude-code CHANGELOG.md (HTTP 200,
+  verified) and corrected models.opus/sonnet to claude-opus-5/claude-sonnet-5, and added
+  models.fable: claude-fable-5-1, per the assistant's own current model identity.
+- The prior hooks list was missing SessionStart, SessionEnd, UserPromptSubmit and
+  SubagentStart, all of which are confirmed real in the fetched changelog; added them.
+- slug conflict: "review" renamed to "code-review" per the real changelog's rename
+  notice, with the old cmd kept as a documented alias rather than deleted, to avoid
+  breaking anything that still refers to /review.
+
+[요약]
+- skills: added=7, renamed=1, corrected=1 (models), deleted=0
+- hooks: added=4, deleted=0
+- Prior fabricated/unverifiable content: 1 block corrected (models), with the
+  correction documented above rather than silently overwritten.
