@@ -1,0 +1,290 @@
+{
+  "date": "2026-09-20",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-09-20T15:17:50+00:00",
+  "skills": [
+    {
+      "cmd": "/init",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve GPT/Gemini directory behavior; do not modify them."
+      ],
+      "hash": "802d30e7eb6bdf3f",
+      "name": "Init",
+      "output": "CLAUDE.md capturing architecture, conventions, and commands.",
+      "procedure": [
+        "Scan repo structure, build/test/lint commands, and conventions.",
+        "Draft CLAUDE.md sections: overview, commands, architecture, style.",
+        "Keep instructions terse and actionable, no filler prose."
+      ],
+      "slug": "init",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "7974a70773fa",
+      "source_version": "2.1.278",
+      "summary": "2.1.278 - Changed auto mode for Claude API and Enterprise users, and on Bedrock, Vertex, Foundry and gateways, to default to the server-side classifier, which does not charge for classifier overhead (`CLAUDE_CODE_AUTO_MODE_SERVER=0` opts out on Bedrock, Vertex, Foundry and gateways); warns on billed fallback. See https://code.claude.com/docs/en/auto-mode-classifier-billing - Added an `Auto mode server` row to `/stat.",
+      "token_policy": [
+        "Avoid repeated background context across turns.",
+        "Return only decision-critical instructions or code.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "user asks to initialize or document the codebase"
+    },
+    {
+      "cmd": "/review",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve GPT/Gemini directory behavior; do not modify them."
+      ],
+      "hash": "e5ef50c771617886",
+      "name": "Code Review",
+      "output": "Multi-pass review report with severity-ranked, verified findings.",
+      "procedure": [
+        "Diff the target branch/PR against its base.",
+        "Check logic correctness, style consistency, security, and test coverage.",
+        "Rank findings by severity; verify before reporting."
+      ],
+      "slug": "code-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "7974a70773fa",
+      "source_version": "2.1.278",
+      "summary": "2.1.278 - Changed auto mode for Claude API and Enterprise users, and on Bedrock, Vertex, Foundry and gateways, to default to the server-side classifier, which does not charge for classifier overhead (`CLAUDE_CODE_AUTO_MODE_SERVER=0` opts out on Bedrock, Vertex, Foundry and gateways); warns on billed fallback. See https://code.claude.com/docs/en/auto-mode-classifier-billing - Added an `Auto mode server` row to `/stat.",
+      "token_policy": [
+        "Avoid repeated background context across turns.",
+        "Return only decision-critical instructions or code.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "user asks to review a PR, branch, or diff"
+    },
+    {
+      "cmd": "/security-review",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve GPT/Gemini directory behavior; do not modify them."
+      ],
+      "hash": "53ad60615963edc3",
+      "name": "Security Review",
+      "output": "Risk-ranked security findings for the pending diff.",
+      "procedure": [
+        "Diff the current branch against its base.",
+        "Audit for OWASP Top 10 classes (injection, XSS, auth, secrets).",
+        "Rank findings by exploitability and impact."
+      ],
+      "slug": "security-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "7974a70773fa",
+      "source_version": "2.1.278",
+      "summary": "2.1.278 - Changed auto mode for Claude API and Enterprise users, and on Bedrock, Vertex, Foundry and gateways, to default to the server-side classifier, which does not charge for classifier overhead (`CLAUDE_CODE_AUTO_MODE_SERVER=0` opts out on Bedrock, Vertex, Foundry and gateways); warns on billed fallback. See https://code.claude.com/docs/en/auto-mode-classifier-billing - Added an `Auto mode server` row to `/stat.",
+      "token_policy": [
+        "Avoid repeated background context across turns.",
+        "Return only decision-critical instructions or code.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "user asks for a security audit of pending changes"
+    },
+    {
+      "cmd": "/simplify",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve GPT/Gemini directory behavior; do not modify them."
+      ],
+      "hash": "a9683fcd97d0dfcb",
+      "name": "Simplify",
+      "output": "Simplified diff with quality fixes applied.",
+      "procedure": [
+        "Review only the changed code, not the whole file.",
+        "Flag reuse, simplification, and efficiency opportunities.",
+        "Apply the fixes directly; leave bug-hunting to code-review."
+      ],
+      "slug": "simplify",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "7974a70773fa",
+      "source_version": "2.1.278",
+      "summary": "2.1.278 - Changed auto mode for Claude API and Enterprise users, and on Bedrock, Vertex, Foundry and gateways, to default to the server-side classifier, which does not charge for classifier overhead (`CLAUDE_CODE_AUTO_MODE_SERVER=0` opts out on Bedrock, Vertex, Foundry and gateways); warns on billed fallback. See https://code.claude.com/docs/en/auto-mode-classifier-billing - Added an `Auto mode server` row to `/stat.",
+      "token_policy": [
+        "Avoid repeated background context across turns.",
+        "Return only decision-critical instructions or code.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "user asks to clean up or refactor changed code"
+    },
+    {
+      "cmd": "/session-start-hook",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve GPT/Gemini directory behavior; do not modify them."
+      ],
+      "hash": "fe3ac3e6b021f97c",
+      "name": "Session Start Hook",
+      "output": "SessionStart hook ensuring tests/linters are ready in web sessions.",
+      "procedure": [
+        "Detect the project's test and lint commands.",
+        "Create a SessionStart hook in settings.json running them.",
+        "Verify the hook fires without interactive prompts."
+      ],
+      "slug": "session-start-hook",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "7974a70773fa",
+      "source_version": "2.1.278",
+      "summary": "2.1.278 - Changed auto mode for Claude API and Enterprise users, and on Bedrock, Vertex, Foundry and gateways, to default to the server-side classifier, which does not charge for classifier overhead (`CLAUDE_CODE_AUTO_MODE_SERVER=0` opts out on Bedrock, Vertex, Foundry and gateways); warns on billed fallback. See https://code.claude.com/docs/en/auto-mode-classifier-billing - Added an `Auto mode server` row to `/stat.",
+      "token_policy": [
+        "Avoid repeated background context across turns.",
+        "Return only decision-critical instructions or code.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "user wants test/lint runners available on web session start"
+    },
+    {
+      "cmd": "/update-config",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve GPT/Gemini directory behavior; do not modify them."
+      ],
+      "hash": "0c6fea8cf150f57a",
+      "name": "Update Config",
+      "output": "settings.json updated with the requested hook/permission/env var.",
+      "procedure": [
+        "Identify whether the request needs a hook, permission, or env var.",
+        "Edit settings.json (project or user scope) accordingly.",
+        "Confirm the change matches the requested trigger condition."
+      ],
+      "slug": "update-config",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "7974a70773fa",
+      "source_version": "2.1.278",
+      "summary": "2.1.278 - Changed auto mode for Claude API and Enterprise users, and on Bedrock, Vertex, Foundry and gateways, to default to the server-side classifier, which does not charge for classifier overhead (`CLAUDE_CODE_AUTO_MODE_SERVER=0` opts out on Bedrock, Vertex, Foundry and gateways); warns on billed fallback. See https://code.claude.com/docs/en/auto-mode-classifier-billing - Added an `Auto mode server` row to `/stat.",
+      "token_policy": [
+        "Avoid repeated background context across turns.",
+        "Return only decision-critical instructions or code.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "automated behavior requests (\"when X\", \"allow Y\", \"set Z=val\")"
+    },
+    {
+      "cmd": "/claude-api",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve GPT/Gemini directory behavior; do not modify them."
+      ],
+      "hash": "89c3f212ccd3513f",
+      "name": "Claude API",
+      "output": "Working Claude API integration aligned with current SDK behavior.",
+      "procedure": [
+        "Confirm current model IDs and API surface before coding.",
+        "Apply prompt caching, tool use, or migration guidance as needed.",
+        "Verify against the Anthropic SDK reference, not memory."
+      ],
+      "slug": "claude-api",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "7974a70773fa",
+      "source_version": "2.1.278",
+      "summary": "2.1.278 - Changed auto mode for Claude API and Enterprise users, and on Bedrock, Vertex, Foundry and gateways, to default to the server-side classifier, which does not charge for classifier overhead (`CLAUDE_CODE_AUTO_MODE_SERVER=0` opts out on Bedrock, Vertex, Foundry and gateways); warns on billed fallback. See https://code.claude.com/docs/en/auto-mode-classifier-billing - Added an `Auto mode server` row to `/stat.",
+      "token_policy": [
+        "Avoid repeated background context across turns.",
+        "Return only decision-critical instructions or code.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "code imports the Anthropic SDK; user asks about Claude API features"
+    },
+    {
+      "cmd": "/team-onboarding",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve GPT/Gemini directory behavior; do not modify them."
+      ],
+      "hash": "85a903d38cacffd0",
+      "name": "Team Onboarding",
+      "output": "Onboarding guide generated from local usage history and repo docs.",
+      "procedure": [
+        "Pull local Claude Code usage history and repo conventions.",
+        "Summarize common workflows, commands, and gotchas.",
+        "Produce a concise onboarding guide, not a full manual."
+      ],
+      "slug": "team-onboarding",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "7974a70773fa",
+      "source_version": "2.1.278",
+      "summary": "2.1.278 - Changed auto mode for Claude API and Enterprise users, and on Bedrock, Vertex, Foundry and gateways, to default to the server-side classifier, which does not charge for classifier overhead (`CLAUDE_CODE_AUTO_MODE_SERVER=0` opts out on Bedrock, Vertex, Foundry and gateways); warns on billed fallback. See https://code.claude.com/docs/en/auto-mode-classifier-billing - Added an `Auto mode server` row to `/stat.",
+      "token_policy": [
+        "Avoid repeated background context across turns.",
+        "Return only decision-critical instructions or code.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "user wants a teammate ramp-up guide"
+    },
+    {
+      "cmd": "/fewer-permission-prompts",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve GPT/Gemini directory behavior; do not modify them."
+      ],
+      "hash": "9a78f7cb77de8763",
+      "name": "Fewer Permission Prompts",
+      "output": "Allowlist added to settings.json reducing repeat permission prompts.",
+      "procedure": [
+        "Scan session transcripts for repeated read-only Bash/MCP calls.",
+        "Propose a prioritized allowlist.",
+        "Write the allowlist to project .claude/settings.json."
+      ],
+      "slug": "fewer-permission-prompts",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "7974a70773fa",
+      "source_version": "2.1.278",
+      "summary": "2.1.278 - Changed auto mode for Claude API and Enterprise users, and on Bedrock, Vertex, Foundry and gateways, to default to the server-side classifier, which does not charge for classifier overhead (`CLAUDE_CODE_AUTO_MODE_SERVER=0` opts out on Bedrock, Vertex, Foundry and gateways); warns on billed fallback. See https://code.claude.com/docs/en/auto-mode-classifier-billing - Added an `Auto mode server` row to `/stat.",
+      "token_policy": [
+        "Avoid repeated background context across turns.",
+        "Return only decision-critical instructions or code.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "user wants fewer permission dialogs"
+    },
+    {
+      "cmd": "/loop [interval] [/command]",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed.",
+        "Preserve GPT/Gemini directory behavior; do not modify them."
+      ],
+      "hash": "2b3e9440ed2ed170",
+      "name": "Loop",
+      "output": "Recurring execution of the given prompt/command at the set interval.",
+      "procedure": [
+        "Parse the interval and target prompt/command.",
+        "Schedule repeated firing at that interval, self-pacing if omitted.",
+        "Stop cleanly when the user ends the loop."
+      ],
+      "slug": "loop",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_branch": "main",
+      "source_commit": "7974a70773fa",
+      "source_version": "2.1.278",
+      "summary": "2.1.278 - Changed auto mode for Claude API and Enterprise users, and on Bedrock, Vertex, Foundry and gateways, to default to the server-side classifier, which does not charge for classifier overhead (`CLAUDE_CODE_AUTO_MODE_SERVER=0` opts out on Bedrock, Vertex, Foundry and gateways); warns on billed fallback. See https://code.claude.com/docs/en/auto-mode-classifier-billing - Added an `Auto mode server` row to `/stat.",
+      "token_policy": [
+        "Avoid repeated background context across turns.",
+        "Return only decision-critical instructions or code.",
+        "Link to the official repo instead of copying long docs."
+      ],
+      "trigger": "user wants a recurring task (\"check every 5m\", \"keep running X\")"
+    }
+  ],
+  "source_commit": "7974a70773fa",
+  "source_policy": "official anthropics/claude-code GitHub repository only",
+  "source_version": "2.1.278"
+}
