@@ -1,0 +1,33 @@
+Prompt-Guide Claude Skills Changelog - 2026-09-21
+
+Snapshot: Claude/skills/2026-09-21/skills
+Upstream version: 2.1.129 -> 2.1.278
+Source: official anthropics/claude-code GitHub repository
+
+[추가된 스킬]
+- code-review
+- plugin-eval
+- verify
+- workflow-authoring
+
+[수정된 스킬]
+- none
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷 구조 적용: skills/2026-09-21/skills
+- 스킬 카드는 trigger, procedure(최대 3단계), output, token_policy, compatibility로 경량화
+- 기존 flat SKILLS_CATALOG.yaml은 하위 호환을 위해 유지, 신규 스킬은 날짜별 스냅샷에 추가
+
+[토큰 절감 관련 변경 사항]
+- 업스트림 CHANGELOG 원문 대신 버전 태그와 절차 요약만 저장
+- 코딩/프로그래밍/문서 작업과 무관한 항목(과금, 모델 가격 등)은 카탈로그에서 제외
+- 중복 설명 대신 공통 catalog.json으로 메타데이터 통합
+
+[충돌 해결 내역]
+- flat catalog와 슬러그 충돌 없음; 신규 스킬은 추가(added)로만 반영
+
+[요약]
+- skills: added=4, modified=0, deleted=0, unchanged=0

@@ -1,8 +1,10 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+# New skills since 2.1.129 are tracked per-date under Claude/skills/YYYY-MM-DD/skills
+# (see scripts/sync_claude_skills.py and Claude/Changelogs/) rather than duplicated here.
+version: 2.1.278
+updated: 2026-09-21
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc

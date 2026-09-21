@@ -1,0 +1,104 @@
+{
+  "date": "2026-09-21",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-09-21T15:16:29+00:00",
+  "skills": [
+    {
+      "category": "coding",
+      "cmd": "/verify",
+      "compatibility": [
+        "Additive only: does not modify or remove existing flat-catalog entries.",
+        "Does not touch GPT/ or Gemini/ directories."
+      ],
+      "hash": "1914c5b1d8794b14",
+      "name": "Verify",
+      "output": "Pass/fail checklist for the current change set.",
+      "procedure": [
+        "Run the project's fast checks (lint, typecheck, unit tests) on the diff.",
+        "Re-read the diff adversarially for correctness issues.",
+        "Report pass/fail per check; do not auto-fix silently."
+      ],
+      "since_version": "2.1.215",
+      "slug": "verify",
+      "source": "https://github.com/anthropics/claude-code",
+      "token_policy": [
+        "One canonical card per skill; no duplicated background context.",
+        "Procedure capped at three steps; link to source instead of copying docs."
+      ],
+      "trigger": "user wants pending changes checked before finishing a task"
+    },
+    {
+      "category": "coding",
+      "cmd": "/code-review [PR#|branch|path] [--comment] [--fix]",
+      "compatibility": [
+        "Additive only: does not modify or remove existing flat-catalog entries.",
+        "Does not touch GPT/ or Gemini/ directories."
+      ],
+      "hash": "d4b4211351ac4062",
+      "name": "Code Review",
+      "output": "Ranked findings list, optionally posted as PR comments or auto-fixed.",
+      "procedure": [
+        "Review the diff for correctness bugs plus reuse/simplification/efficiency cleanups.",
+        "Runs as a background subagent since 2.1.218 so it no longer fills the conversation.",
+        "Report findings ranked by confidence; --comment posts inline, --fix applies them."
+      ],
+      "since_version": "2.1.218",
+      "slug": "code-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "token_policy": [
+        "One canonical card per skill; no duplicated background context.",
+        "Procedure capped at three steps; link to source instead of copying docs."
+      ],
+      "trigger": "user asks to review the current diff, a PR, or a branch"
+    },
+    {
+      "category": "coding",
+      "cmd": "claude plugin eval",
+      "compatibility": [
+        "Additive only: does not modify or remove existing flat-catalog entries.",
+        "Does not touch GPT/ or Gemini/ directories."
+      ],
+      "hash": "8909e2fc9f18977e",
+      "name": "Plugin Eval",
+      "output": "JSON + HTML eval report for the plugin under test.",
+      "procedure": [
+        "Run a plugin's eval suite against Claude Code.",
+        "Produce scored, reproducible results.",
+        "Emit both JSON and HTML report formats."
+      ],
+      "since_version": "2.1.269",
+      "slug": "plugin-eval",
+      "source": "https://github.com/anthropics/claude-code",
+      "token_policy": [
+        "One canonical card per skill; no duplicated background context.",
+        "Procedure capped at three steps; link to source instead of copying docs."
+      ],
+      "trigger": "user wants to test or score a plugin's eval suite"
+    },
+    {
+      "category": "coding",
+      "cmd": "Workflow tool (script API)",
+      "compatibility": [
+        "Additive only: does not modify or remove existing flat-catalog entries.",
+        "Does not touch GPT/ or Gemini/ directories."
+      ],
+      "hash": "002ccb7649e82a4f",
+      "name": "Workflow Authoring",
+      "output": "A workflow script ready to run via the Workflow tool.",
+      "procedure": [
+        "Load before writing a Workflow script: script API, resume, quality patterns.",
+        "Respect the session's workflow size guideline unless the user asks for a different scale.",
+        "Use pipeline()/parallel()/agent() to fan work out and verify findings as they land."
+      ],
+      "since_version": "2.1.130",
+      "slug": "workflow-authoring",
+      "source": "https://github.com/anthropics/claude-code",
+      "token_policy": [
+        "One canonical card per skill; no duplicated background context.",
+        "Procedure capped at three steps; link to source instead of copying docs."
+      ],
+      "trigger": "user opts into multi-agent orchestration for a task"
+    }
+  ],
+  "source_policy": "official anthropics/claude-code GitHub repository only"
+}
