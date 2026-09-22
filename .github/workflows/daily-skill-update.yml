@@ -8,23 +8,39 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: claude-skill-sync
+  cancel-in-progress: false
+
 jobs:
   update-skills:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: claude/zealous-sagan-FdaL5
-          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Run skill update script
+      - name: Run legacy skill update script (SKILLS_CATALOG.yaml version/date, root changelogs/)
         run: python scripts/update_skills.py
 
-      - name: Commit and push if changed
+      - name: Run dated Claude skill snapshot + Claude/Changelogs
+        run: python Claude/scripts/sync_claude_skills.py
+
+      - name: Block unexpected changes outside Claude/ and changelogs/
+        run: |
+          unexpected="$(git status --porcelain | awk '{print $2}' | grep -Ev '^(Claude/|changelogs/)' || true)"
+          if [ -n "$unexpected" ]; then
+            echo "Unexpected changes outside Claude/ and changelogs/:"
+            echo "$unexpected"
+            exit 1
+          fi
+
+      - name: Commit and push to main if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -34,5 +50,6 @@ jobs:
           else
             DATE=$(date -u +%Y-%m-%d)
             git commit -m "chore: Claude Code skills update ${DATE}"
-            git push -u origin claude/zealous-sagan-FdaL5
+            git pull --rebase origin main
+            git push origin HEAD:main
           fi

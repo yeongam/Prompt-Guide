@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.278
+updated: 2026-09-22
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -13,9 +13,29 @@ skills:
     desc: Generate CLAUDE.md with codebase architecture, conventions, commands
 
   review:
-    cmd: /review
-    trigger: user asks to review PR or branch
-    desc: Multi-pass PR review; checks logic, style, security, tests
+    cmd: /code-review
+    alias: /review
+    trigger: user asks to review PR or branch, or diff
+    desc: Review current diff or PR/branch/path at given effort; /review is now an alias
+    note: "/code-review ultra runs a deep multi-agent cloud review (see /ultrareview)"
+
+  skill-doctor:
+    cmd: /skill-doctor
+    trigger: user wants to prune unused or costly loaded skills
+    desc: Show which loaded skills go unused and what they cost in context
+    added: v2.1.261
+
+  dataviz:
+    cmd: /dataviz
+    trigger: user is building a chart, graph, or dashboard
+    desc: Chart/dashboard design guidance with a runnable color-palette validator
+    added: v2.1.198
+
+  reload-skills:
+    cmd: /reload-skills
+    trigger: skill directories changed and session wasn't restarted
+    desc: Re-scan skill directories without restarting the session
+    added: v2.1.152
 
   security-review:
     cmd: /security-review
@@ -58,8 +78,8 @@ skills:
     trigger: code imports anthropic SDK; user asks about Claude API features
     desc: Build/debug Claude API apps; prompt caching, tool use, model migration
     models:
-      opus: claude-opus-4-7
-      sonnet: claude-sonnet-4-6
+      opus: claude-opus-5
+      sonnet: claude-sonnet-5
       haiku: claude-haiku-4-5-20251001
 
   ultrareview:
@@ -227,9 +247,9 @@ env:
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
-  default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
-  sonnet: claude-sonnet-4-6
+  default: claude-sonnet-5     # default since v2.1.197
+  opus: claude-opus-5          # default Opus since v2.1.278; 1M context, fast mode
+  sonnet: claude-sonnet-5
   haiku: claude-haiku-4-5-20251001
 
 # ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────

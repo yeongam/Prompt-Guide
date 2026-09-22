@@ -1,0 +1,30 @@
+Prompt-Guide Claude Code Skills Changelog - 2026-09-22
+
+Snapshot: Claude/skills/2026-09-22/skills
+Source: anthropics/claude-code (official, CHANGELOG.md)
+Version: 2.1.129 -> 2.1.278
+
+[추가된 스킬]
+- skill-doctor
+- dataviz
+- reload-skills
+
+[수정된 스킬]
+- review
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 변경분 스냅샷 구조 유지: Claude/skills/2026-09-22/skills
+- 캐노니컬 소스는 SKILLS_CATALOG.yaml 단일 파일로 유지 (중복 금지)
+- 날짜 스냅샷에는 추가/수정된 스킬 카드만 기록, 전체 목록은 해시로만 추적
+
+[토큰 절감 관련 변경 사항]
+- 변경 없는 스킬은 카드 재작성 없이 해시만 비교
+- 원문 CHANGELOG 전체 복사 대신 관련 diff만 반영
+- 세션/과금/내비게이션류 커맨드는 코딩·문서 스킬 범위 밖으로 제외
+
+[충돌 해결 내역]
+- models.opus: claude-opus-4-7 -> claude-opus-5 (canonical file wins, no data lost)
+- models.sonnet: claude-sonnet-4-6 -> claude-sonnet-5 (canonical file wins, no data lost)
