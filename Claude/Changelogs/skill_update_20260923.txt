@@ -1,0 +1,94 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-09-23 02:30 UTC
+Version : 2.1.278 → 2.1.280
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-09-23/
+============================================================
+
+[ ★ 신규 감지 스킬 (18개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /artifacts  ← 수동 추가 필요
+  ? /autocompact  ← 수동 추가 필요
+  ? /btw  ← 수동 추가 필요
+  ? /chrome  ← 수동 추가 필요
+  ? /config  ← 수동 추가 필요
+  ? /cost  ← 수동 추가 필요
+  ? /export  ← 수동 추가 필요
+  ? /fast  ← 수동 추가 필요
+  ? /install-github-app  ← 수동 추가 필요
+  ? /memory  ← 수동 추가 필요
+  ? /mobile  ← 수동 추가 필요
+  ? /permissions  ← 수동 추가 필요
+  ? /plan  ← 수동 추가 필요
+  ? /sandbox  ← 수동 추가 필요
+  ? /setup-bedrock  ← 수동 추가 필요
+  ? /setup-vertex  ← 수동 추가 필요
+  ? /usage-credits  ← 수동 추가 필요
+  ? /workflows  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /autocompact
+  ~ /btw
+  ~ /compact
+  ~ /config
+  ~ /cost
+  ~ /effort
+  ~ /fast
+  ~ /install-github-app
+  ~ /mcp
+  ~ /memory
+  ~ /permissions
+  ~ /plugin
+  ~ /setup-vertex
+  ~ /skills
+  ~ /ultrareview
+  ~ /workflows
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-09-23/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed a session failing on every turn and `/compact` when its saved history held a malformed notice about MCP tools that could not be loaded
+  - Fixed a finished subagent's report being lost when the conversation that launched it was compacted before the report was read
+  - Fixed the Claude app showing a missing or stale context usage figure for Remote Control and cloud sessions right after /compact or /clear
+  - Fixed cloud and self-hosted runner sessions failing with "Authentication failed" after waiting out a long overload during which the session's access token was rotated
+  - Changed `/autocompact`'s footer hint to name ←/→, the keys that adjust other ordered values
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Fixed memory write conflicts in Cowork sessions showing Claude only the start and end of a memory file over about 10,800 characters, so the retried write dropped the middle
+  - [VSCode] Improved pasted-text handling in the chat box: a paste over 800 characters or over 2 line breaks is now marked so Claude can tell it from what you typed
+
+[ Hooks ]
+  Premium
+  Stop
+
+[ Settings ]
+  content
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.280
+
+- Added Claude Opus 5.5 (`claude-opus-5-5`), now the default Opus model — 1M context, $4/$20 per Mtok with $0.20/Mtok cache reads
+- Added mouse support to more lists in fullscreen mode: the wheel scrolls the `/skills` list, and a skill's state options in `/plugin` can be clicked
+- Added `CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH` to change the 2,048-character cap on MCP tool descriptions and server instructions for every MCP server in the session
+- Added hook output sizes and the number of oversized outputs saved to a file to the `hook_execution_complete` OpenTelemetry event
+- Fixed writes through a symlinked path being judged by their in-tree spelling: the prompt names where the write lands, and `acceptEdits`, allow rules and auto mode no longer approve one landing outside
+- Fixed auto mode retrying an action over and over when a safety check declined to review it; the action is now denied once, noting that retrying won't help
+- Fixed auto mode denying actions over and over without pause when a safety check gave no answer; retries now back off, and the turn stops with a message after ten in a row
+- Fixed Write calls failing validation when a model sends `path`, `file_text`, `file_content` or a stray `description` instead of `file_path` and `content`
+- Fixed Ctrl+C or Ctrl+D pressed twice in most dialogs (`/model`, `/effort`, `/config`, `/status`, `/usage`, `/plugin`, `/sandbox`, `/permissions`, `/artifacts`, `/mobile`, `/login`, `/upgrade`, `/usage-credits`, `/install-github-app`, `/setup-bedrock`, `/setup-vertex`) quitting Claude Code instead of closing the dialog
+- Fixed a click that only brought the terminal window to the front also triggering the item under the pointer — in search pickers, tab bars, agent/workflow rows, slash-command links and suggestion dropdowns
+- Fixed a stray `n` closing dialogs and a stray `y` confirming them; Enter and Esc accept and cancel (bind `y`/`n` to `confirm:yes`/`confirm:no` in `keybindings.json` to restore)
+- Fixed text
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
