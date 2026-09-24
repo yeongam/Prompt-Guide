@@ -1,0 +1,115 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-09-24 02:20 UTC
+Version : 2.1.280 → 2.1.281
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-09-24/
+============================================================
+
+[ ★ 신규 감지 스킬 (26개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /agents  ← 수동 추가 필요
+  ? /artifacts  ← 수동 추가 필요
+  ? /bg  ← 수동 추가 필요
+  ? /config  ← 수동 추가 필요
+  ? /context  ← 수동 추가 필요
+  ? /copy  ← 수동 추가 필요
+  ? /deep-research  ← 수동 추가 필요
+  ? /desktop  ← 수동 추가 필요
+  ? /diff  ← 수동 추가 필요
+  ? /export  ← 수동 추가 필요
+  ? /feedback  ← 수동 추가 필요
+  ? /heapdump  ← 수동 추가 필요
+  ? /help  ← 수동 추가 필요
+  ? /hooks  ← 수동 추가 필요
+  ? /ide  ← 수동 추가 필요
+  ? /insights  ← 수동 추가 필요
+  ? /install-github-app  ← 수동 추가 필요
+  ? /memory  ← 수동 추가 필요
+  ? /permissions  ← 수동 추가 필요
+  ? /remote-control  ← 수동 추가 필요
+  ? /sandbox  ← 수동 추가 필요
+  ? /setup-bedrock  ← 수동 추가 필요
+  ? /setup-vertex  ← 수동 추가 필요
+  ? /tasks  ← 수동 추가 필요
+  ? /teleport  ← 수동 추가 필요
+  ? /workflows  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /artifacts
+  ~ /batch
+  ~ /bg
+  ~ /config
+  ~ /context
+  ~ /deep-research
+  ~ /diff
+  ~ /feedback
+  ~ /heapdump
+  ~ /help
+  ~ /hooks
+  ~ /ide
+  ~ /install-github-app
+  ~ /login
+  ~ /loop
+  ~ /mcp
+  ~ /model
+  ~ /permissions
+  ~ /plugin
+  ~ /remote-control
+  ~ /setup-vertex
+  ~ /skills
+  ~ /teleport
+  ~ /ultrareview
+  ~ /usage
+  ~ /workflows
+
+[ 삭제된 스킬 / Removed Skills ]
+  - /agents
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-09-24/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed macOS credential writes dropping stored MCP OAuth tokens or deleting the keychain entry when the login keychain was locked (e.g. right after wake)
+  - Improved the time to resume very long sessions that have been compacted, most noticeably through the Agent SDK and Claude Desktop
+  - Improved the background workflow row below the prompt: it now shows the name, a progress bar, the agent count on wide terminals, elapsed time, total tokens, and the large-workflow warning
+  - Changed /workflows: each run's row leads with its status icon and elapsed time, and a narrow terminal keeps the run's name and time, dropping the agent and token counts first
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Fixed API errors from an HTML error page (such as a proxy's 429 or 502 page) printing the page's raw markup or leaving out the HTTP status, and error messages breaking onto a second line when the server's error text ended in a newline
+  - Improved plugin hook-failure errors to name the offending plugin, and added a `claude plugin validate` warning when a shell-form hook leaves `${CLAUDE_PLUGIN_ROOT}` unquoted (it breaks on plugin paths with spaces)
+
+[ Hooks ]
+  PreToolUse
+  Stop
+  WorktreeCreate
+
+[ Settings ]
+  disableBypassPermissionsMode
+  null
+  prompt
+  sandbox.network.allowLocalBinding
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.281
+
+- Added Claude apps gateway support for newer Claude Desktop keys in `desktop` policy blocks, including `blockReadsOutsideWorkingDirectories` and `disableBypassPermissionsMode`
+- Added `assume_role` on Claude apps gateway Bedrock upstreams: the gateway calls Bedrock as an IAM role it assumes through STS, in another AWS account if needed, optionally one session per developer
+- Added `guardrail: {id, version}` on Claude apps gateway Bedrock upstreams to apply an Amazon Bedrock guardrail to every request sent through them (set it on all Bedrock upstreams or none)
+- Added `telemetry.resource_attributes` to the Claude apps gateway config, to put fixed labels on the telemetry of Claude Desktop and `/login` sessions
+- Added `"attribution": false` in `settings.json` to hide all commit and PR attribution; older CLI versions skip a settings file that holds it, so keep the object form in files shared across versions
+- Added MCP URL-mode elicitation on 2026-07-28 protocol connections, so servers can ask Claude Code to open a browser-based flow; no waiting dialog is left on screen when the server has no way to confirm completion
+- Added MCP server checks to `claude plugin validate`: it reports `.mcp.json` entries that would be silently dropped at load, undeclared `${user_config.*}` references, and insecure URLs
+- Added an auto mode recommendation to `/insights` that estimates how many permission prompts auto mode could have handled in your recent sessions
+- Added a scrollbar to the `/skills`, `/mcp` and `/plugin` Installed lists in fullscreen mode, like the one `/workflows` now has: it appears while the mouse is over the list and can be clicked or dragged
+- Fixed a crash ("unrecoverable interface error") that could end a session while an API request was being retried
+- Fixed a turn that could retry indefinitely, ignoring `--max-turns`, when the model alternated unparseable tool calls and output-limit truncation
+- Fixed resumed sessions re-sending earlier turns in a c
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
