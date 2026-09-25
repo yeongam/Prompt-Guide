@@ -1,0 +1,428 @@
+{
+  "date": "2026-09-25",
+  "directory_rule": "YYYY-MM-DD/skills",
+  "generated_at": "2026-09-25T15:16:46+00:00",
+  "skills": [
+    {
+      "cmd": "/init",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Generate CLAUDE.md with codebase architecture, conventions, commands",
+      "hash": "6d32df1ecb079dfe",
+      "slug": "init",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "user asks to initialize or document codebase"
+    },
+    {
+      "cmd": "/code-review",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Multi-pass review for correctness bugs plus reuse/simplification/efficiency cleanups",
+      "hash": "c96129cc6f2a1042",
+      "slug": "code-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "user asks to review a diff, PR, branch, or path"
+    },
+    {
+      "cmd": "/security-review",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "OWASP-focused audit of pending diffs; outputs risk-ranked findings",
+      "hash": "01b93af434680788",
+      "slug": "security-review",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "user asks security audit of current branch changes"
+    },
+    {
+      "cmd": "/simplify",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Review changed code for reuse/quality/efficiency, then fix issues",
+      "hash": "1f67c8510631543c",
+      "slug": "simplify",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "user asks to clean up or refactor changed code"
+    },
+    {
+      "cmd": "/session-start-hook",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Create SessionStart hook ensuring project can run tests and linters",
+      "hash": "58a091a4d8d49cc7",
+      "slug": "session-start-hook",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "user wants test/lint runners on session start (web Claude Code)"
+    },
+    {
+      "cmd": "/update-config",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Configure settings.json; handles hooks, permissions, env vars",
+      "hash": "88e28a12c913ca4d",
+      "slug": "update-config",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "automated behavior requests (\"when X\", \"allow Y\", \"set Z=val\")"
+    },
+    {
+      "cmd": "/keybindings-help",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Customize keybindings.json; supports chord bindings",
+      "hash": "aaa771b1ccbc8793",
+      "slug": "keybindings-help",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "user wants to remap keys or add chord shortcuts"
+    },
+    {
+      "cmd": "/fewer-permission-prompts",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Scan transcripts, add bash/MCP allowlist to .claude/settings.json",
+      "hash": "2f666ab1910f661f",
+      "slug": "fewer-permission-prompts",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "user wants fewer permission dialogs"
+    },
+    {
+      "cmd": "/loop [interval] [/command]",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Run a prompt or slash command on a recurring interval (self-paced if no interval)",
+      "hash": "b27f731a404c785d",
+      "slug": "loop",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "user wants a recurring task (e.g. \"check every 5m\", \"keep running X\")"
+    },
+    {
+      "cmd": "/claude-api",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Build/debug Claude API apps: prompt caching, tool use, model migration",
+      "hash": "bbddfabf7100cef8",
+      "models": {
+        "haiku": "claude-haiku-4-5-20251001",
+        "opus": "claude-opus-5-5",
+        "sonnet": "claude-sonnet-5"
+      },
+      "slug": "claude-api",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "code imports the Anthropic SDK; user asks about Claude API features"
+    },
+    {
+      "cmd": "/workflow-authoring (reference)",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Script API, resume semantics, and worked examples for Workflow scripts",
+      "hash": "ef05b885906f9488",
+      "slug": "workflow-authoring",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "authoring a multi-agent Workflow tool script the user opted into"
+    },
+    {
+      "cmd": "/run",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Launch and drive the project app; falls back to built-in patterns per project type",
+      "hash": "0199e01346fc9954",
+      "slug": "run",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "user asks to run, start, or screenshot the app to verify a change"
+    },
+    {
+      "cmd": "(auto-trigger: chart/graph/plot/dashboard)",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Design-system-agnostic chart/color/layout guidance for artifacts and code",
+      "hash": "07157b1bd91a7da5",
+      "slug": "dataviz",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "about to create any chart, graph, plot, or data visualization"
+    },
+    {
+      "cmd": "(auto-trigger: before writing any artifact)",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Design fundamentals and contract for Artifacts (fonts, theming, size limits)",
+      "hash": "3f2526bccc9947e4",
+      "slug": "artifact-design",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "writing any Artifact, including a skill-instructed Markdown one"
+    },
+    {
+      "cmd": "(auto-trigger: artifact needs a diagram)",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Inline-SVG diagramming mechanics that stay legible in both themes",
+      "hash": "914839185e9795e6",
+      "slug": "artifact-diagramming",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "a picture would clarify an artifact's mechanism"
+    },
+    {
+      "cmd": "(auto-trigger: artifact needs runtime behavior)",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Runtime capability roster and typed call definitions for published Artifacts",
+      "hash": "82595cb89ac5d8d7",
+      "slug": "artifact-capabilities",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "an artifact needs live data, shared state, or another runtime capability"
+    },
+    {
+      "cmd": "/ultrareview [PR#]",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Parallel multi-agent cloud code review; no-arg=local branch, arg=GitHub PR",
+      "hash": "c3fbe9f1310a3ec8",
+      "slug": "ultrareview",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "user says \"ultrareview\" or wants multi-agent review"
+    },
+    {
+      "cmd": "/ultraplan",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Auto-create cloud worktrees/environments for multi-agent planning tasks",
+      "hash": "74679ba3ed2e68b3",
+      "slug": "ultraplan",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "user wants a cloud environment for complex planning"
+    },
+    {
+      "cmd": "/team-onboarding",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Generate onboarding guide from local Claude Code usage history/data",
+      "hash": "e5ccbd6a04dd4d7d",
+      "slug": "team-onboarding",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "user wants a teammate ramp-up guide"
+    },
+    {
+      "cmd": "/effort",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Interactive slider for session effort level (also: CLAUDE_EFFORT env var)",
+      "hash": "319394eabfb38ac4",
+      "slug": "effort",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "user wants to adjust effort/quality level"
+    },
+    {
+      "cmd": "/powerup",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Interactive animated feature demos with lessons",
+      "hash": "54eff3ff3752b713",
+      "slug": "powerup",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "user wants feature demos or to learn Claude Code features"
+    },
+    {
+      "cmd": "/tui",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Switch to flicker-free alt-screen TUI rendering",
+      "hash": "3c69aa436b716647",
+      "slug": "tui",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "rendering looks flickery or user wants full-screen mode"
+    },
+    {
+      "cmd": "/focus",
+      "compatibility": [
+        "Do not overwrite existing dated skill snapshots.",
+        "Integrate only if slug is unique or content hash changed."
+      ],
+      "desc": "Toggle focus view showing only: prompt + tool summary + final response",
+      "hash": "7a824f769c365329",
+      "slug": "focus",
+      "source": "https://github.com/anthropics/claude-code",
+      "source_commit": "",
+      "source_version": "2.1.282",
+      "token_policy": [
+        "Keep card to trigger + one-line desc; no upstream doc copies.",
+        "Link to the official repo instead of inlining long guidance."
+      ],
+      "trigger": "user wants a compact view of the conversation"
+    }
+  ],
+  "source_policy": "official anthropics/claude-code repository only",
+  "source_version": "2.1.282"
+}

@@ -1,0 +1,53 @@
+Prompt-Guide Claude Skills Changelog - 2026-09-25
+
+Snapshot: Claude/skills/2026-09-25/skills
+Source: anthropics/claude-code (CHANGELOG.md @ 2.1.282)
+
+[추가된 스킬 / Added]
+- artifact-capabilities
+- artifact-design
+- artifact-diagramming
+- claude-api
+- code-review
+- dataviz
+- effort
+- fewer-permission-prompts
+- focus
+- init
+- keybindings-help
+- loop
+- powerup
+- run
+- security-review
+- session-start-hook
+- simplify
+- team-onboarding
+- tui
+- ultraplan
+- ultrareview
+- update-config
+- workflow-authoring
+
+[수정된 스킬 / Modified]
+- 없음 (none)
+
+[삭제된 스킬 / Deleted]
+- 없음 (none)
+
+[최적화된 구조 / Structure optimizations]
+- 날짜별 스냅샷 구조 적용: skills/2026-09-25/skills (GPT 루틴과 동일한 YYYY-MM-DD/skills 규칙)
+- 각 스킬은 cmd, trigger, desc, token_policy, compatibility로 경량화
+- 기존 SKILLS_CATALOG.yaml / .version은 하위 호환을 위해 유지·동기화
+
+[토큰 절감 관련 변경 사항 / Token savings]
+- 스킬 카드는 trigger + 한 줄 설명만 유지, 원문 changelog 텍스트는 복사하지 않음
+- 공통 메타데이터(catalog.json)로 통합, 카드별 중복 설명 제거
+- 변경 감지는 hash 비교로 수행하여 불필요한 재작성을 피함
+
+[충돌 해결 내역 / Conflict resolution]
+- 'review' 슬러그를 실제 공식 스킬명인 'code-review'로 통합 (중복/구식 명칭 제거)
+- slug 기준 중복 스킬 통합, 기존 날짜 스냅샷은 덮어쓰지 않고 신규 날짜에 기록
+- claude-api 카드의 모델 ID를 현재 유효한 모델로 갱신 (기존 기능 손상 없음)
+
+[요약 / Summary]
+- added=23, modified=0, deleted=0, unchanged=0
