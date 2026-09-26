@@ -1,4 +1,4 @@
-# Skills v2.1.281 (2026-09-25)
+# Skills v2.1.282 (2026-09-26)
 > auto-updated from anthropics/claude-code — do not edit
 
 `/init` | user asks to initialize or document codebase → Generate CLAUDE.md with codebase architecture, conventions, commands

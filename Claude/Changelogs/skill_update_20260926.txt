@@ -1,0 +1,85 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-09-26 02:39 UTC
+Version : 2.1.282 → 2.1.283
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-09-26/
+============================================================
+
+[ ★ 신규 감지 스킬 (15개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /artifacts  ← 수동 추가 필요
+  ? /chrome  ← 수동 추가 필요
+  ? /context  ← 수동 추가 필요
+  ? /copy  ← 수동 추가 필요
+  ? /diff  ← 수동 추가 필요
+  ? /help  ← 수동 추가 필요
+  ? /hooks  ← 수동 추가 필요
+  ? /ide  ← 수동 추가 필요
+  ? /memory  ← 수동 추가 필요
+  ? /release-notes  ← 수동 추가 필요
+  ? /remote-control  ← 수동 추가 필요
+  ? /remote-env  ← 수동 추가 필요
+  ? /rewind  ← 수동 추가 필요
+  ? /tasks  ← 수동 추가 필요
+  ? /workflows  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /artifacts
+  ~ /context
+  ~ /diff
+  ~ /mcp
+  ~ /model
+  ~ /plugin
+  ~ /remote-control
+  ~ /tasks
+  ~ /ultrareview
+  ~ /usage
+  ~ /workflows
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-09-26/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Improved the compaction spinner: its timer now starts when compaction begins and it counts the summary's tokens as they stream, replacing the percentage bar
+  - [VSCode] Fixed a reloaded session showing a rewound-away turn, or only the rows before a compaction
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - [VSCode] Fixed the chat input showing its text slightly below the cursor and selection after pasting lines that end with a line break into a long prompt
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  keybindings.json
+  plugin.json
+  result.usage
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.283
+
+- Added `x-claude-code-prompt-id` to the gateway hint headers so LLM gateways can group the requests that serve one user prompt; opt in with `CLAUDE_CODE_GATEWAY_HINT_HEADERS=1`
+- Added `availableModelsMatch` managed setting: with `"exact"`, an `availableModels` entry allows only the model version it names, so new releases stay blocked until listed
+- Added `deniedModels` managed setting to block specific models, even when `availableModels` allows them
+- Added MCP tool, WebFetch and WebSearch outputs to the `tool.output` OpenTelemetry span event when `OTEL_LOG_TOOL_CONTENT=1`
+- Added `/doctor prompt-audit` (also `/checkup prompt-audit`) to audit your CLAUDE.md files, skills, agents and commands for prompting patterns written for older models
+- Added click-to-expand for truncated messages from your other sessions in fullscreen mode
+- Added `path` to `--plugin-dir` load-failure entries in the stream-json `system/init` `plugin_errors`, naming the directory that did not load
+- Added an opt-in `load_test_mode` block to the Claude apps gateway config: requests are built and signed but not sent upstream, and clients get a canned reply, so a deployment can be load tested
+- Added a `mantle` upstream provider to the Claude apps gateway for Amazon Bedrock's Mantle endpoint
+- Fixed SDK sessions losing a deferred tool call or finished tool result when a turn ended early, a held approval prompt after a worker restart, and a non-streaming fallback's `result.usage`
+- Fixed MCP progress notifications being discarded once a long-running tool call moved to the background; the background task now shows the latest progress
+- Fixed stdio MCP servers being left running when the session ended while they were still starting
+- Fixed a brief HTTP 404 from a stateless remote MCP server (for example a proxy mid-redeploy) leaving that server unusable for the rest of the session while still shown as connected
+- Fixed MCP sign-in for a server with no valid URL failing with an opaque SDK
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
