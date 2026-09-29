@@ -1,0 +1,39 @@
+Claude Skills Changelog | 2026-09-29 (UTC) | v2.1.129 -> v2.1.284
+Source: anthropics/claude-code CHANGELOG.md (127 releases)
+Layout: Claude/2026-09-29/skills/ (dated snapshot); Claude/skills/ mirrors latest (script compat)
+
+[추가된 스킬 / Added]
+- code-review (/code-review [level] [--comment|--fix|ultra]) - replaces /review
+- dataviz, goal, doctor(/checkup, prompt-audit), skill-doctor, reload-skills
+- claude-api subcommands: upgrade, prompt-audit
+- cmds: /cd /diff /plan /export /copy /tasks /usage-credits /reload-plugins /scroll-speed
+- hooks: PreModelSwitch PostModelSwitch DirectoryAdded MessageDisplay (+continueOnBlock, args exec form, terminalSequence)
+- settings/env: disableBundledSkills, syncClaudeAiSkills, maxEffortLevel, bash/taskOutputMaxChars,
+  CLAUDE_CODE_SAFE_MODE, _RESTRICTED, _SUBAGENT_MODEL_FORCE, _WORKFLOW_MAX_CONCURRENT_AGENTS etc.
+- models: claude-opus-5-5, claude-sonnet-5-5, claude-fable-5-1
+
+[수정된 스킬 / Modified]
+- simplify: cleanup-only review (reuse/simplify/efficiency) that applies fixes
+- claude-api: model ids updated (opus 4.7->5.5, sonnet 4.6->5.5)
+- models.default: sonnet-4-6 -> sonnet-5-5; /fast now Opus 5 and 4.8
+- /extra-usage -> /usage-credits; /undo folded into /rewind
+
+[삭제된 스킬 / Removed]
+- /review (renamed /code-review); /agents wizard (edit .claude/agents/)
+- removed entries: tui, effort, focus, theme, color, usage, undo, PreCompact... standalone skill blocks
+  -> moved into compact "cmds" list (still documented, not deleted)
+
+[최적화된 구조 / Structure]
+- One-line-per-skill entries; non-skill commands grouped in cmds; hooks/settings/env grouped
+- Removed trigger/desc/example/note multi-line fields and per-item "added:" tags (kept only where ver-gated)
+- Dedicated dated dir 2026-09-29/skills/
+
+[토큰 절감 / Token savings]
+- SKILLS_CATALOG.yaml 9230 B -> 4323 B (-53%) despite ~25 new items
+
+[충돌 해결 / Conflicts]
+- Required "날짜/skills" layout vs existing Claude/skills (used by scripts/update_skills.py):
+  kept both; dated snapshot is source, Claude/skills mirrors latest, script untouched
+- /review vs /code-review, /simplify redefinition: both listed with distinct roles
+- Changelogs dir created (did not exist); existing scripts/ writes to lowercase changelogs/ - left as is
+- GitHub API blocked for this session; used raw.githubusercontent.com CHANGELOG.md instead
