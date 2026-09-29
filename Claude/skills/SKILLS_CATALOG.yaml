@@ -23,16 +23,16 @@ skills:
   team-onboarding: "/team-onboarding: teammate guide from usage history"
   powerup: "/powerup: interactive feature lessons"
 cmds: # non-skill commands
-  session: [/cd <dir>, /add-dir, /plan, /focus, /tui, /diff, /rewind (=/undo), /export, /copy, /tasks, /status, /sandbox, /chrome]
-  usage: [/usage (cost+stats+loops), /cost (cache hit/miss), /usage-credits (was /extra-usage)]
-  config: [/effort, /model, /fast (Opus 5/4.8), /theme, /color, /scroll-speed, /config, /permissions, /advisor]
-  plugin: [/plugin, /reload-plugins, /workflows, /web-setup]
-  removed: [/agents wizard (edit .claude/agents/ or ask Claude), /review->/code-review]
+  session: ["/cd <dir>", "/add-dir", "/plan", "/focus", "/tui", "/diff", "/rewind (=/undo)", "/export", "/copy", "/tasks", "/status", "/sandbox", "/chrome"]
+  usage: ["/usage (cost+stats+loops)", "/cost (cache hit/miss)", "/usage-credits (was /extra-usage)"]
+  config: ["/effort", "/model", "/fast (Opus 5/4.8)", "/theme", "/color", "/scroll-speed", "/config", "/permissions", "/advisor"]
+  plugin: ["/plugin", "/reload-plugins", "/workflows", "/web-setup"]
+  removed: ["/agents wizard (edit .claude/agents/ or ask Claude)", "/review->/code-review"]
 hooks: # block: exit 2 | {decision:block,reason}; `if` = permission-rule syntax
-  block-capable: [PreToolUse, PreCompact(2.1.85), PreModelSwitch]
-  observe: [PostToolUse(continueOnBlock), Notification(agent_needs_input|agent_completed), Stop, SubagentStop, TaskCreated(2.1.90), WorktreeCreate(2.1.88), PermissionDenied(retry:true;2.1.95), PostModelSwitch, DirectoryAdded, MessageDisplay(transform/hide text), SessionStart(resume: staleness+recache cost)]
-  types: [shell (args:string[] = exec form), mcp_tool(2.1.118), http]
-  output: [terminalSequence]
+  block-capable: ["PreToolUse", "PreCompact(2.1.85)", "PreModelSwitch"]
+  observe: ["PostToolUse(continueOnBlock)", "Notification(agent_needs_input|agent_completed)", "Stop", "SubagentStop", "TaskCreated(2.1.90)", "WorktreeCreate(2.1.88)", "PermissionDenied(retry:true;2.1.95)", "PostModelSwitch", "DirectoryAdded", "MessageDisplay(transform/hide text)", "SessionStart(resume: staleness+recache cost)"]
+  types: ["shell (args:string[] = exec form)", "mcp_tool(2.1.118)", "http"]
+  output: ["terminalSequence"]
 settings:
   skillOverrides: "off|user-invocable-only|name-only"
   disableBundledSkills: "hide bundled skills/builtin cmds (env CLAUDE_CODE_DISABLE_BUNDLED_SKILLS)"

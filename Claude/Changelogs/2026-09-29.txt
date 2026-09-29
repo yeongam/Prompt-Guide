@@ -29,7 +29,7 @@ Layout: Claude/2026-09-29/skills/ (dated snapshot); Claude/skills/ mirrors lates
 - Dedicated dated dir 2026-09-29/skills/
 
 [토큰 절감 / Token savings]
-- SKILLS_CATALOG.yaml 9230 B -> 4323 B (-53%) despite ~25 new items
+- SKILLS_CATALOG.yaml 9230 B -> 4419 B (-53%) despite ~25 new items
 
 [충돌 해결 / Conflicts]
 - Required "날짜/skills" layout vs existing Claude/skills (used by scripts/update_skills.py):
