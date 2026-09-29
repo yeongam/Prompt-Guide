@@ -1,0 +1,85 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-09-29 03:23 UTC
+Version : 2.1.283 → 2.1.284
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-09-29/
+============================================================
+
+[ ★ 신규 감지 스킬 (13개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /artifacts  ← 수동 추가 필요
+  ? /config  ← 수동 추가 필요
+  ? /copy  ← 수동 추가 필요
+  ? /feedback  ← 수동 추가 필요
+  ? /help  ← 수동 추가 필요
+  ? /hooks  ← 수동 추가 필요
+  ? /keybindings  ← 수동 추가 필요
+  ? /net  ← 수동 추가 필요
+  ? /rate-limit-options  ← 수동 추가 필요
+  ? /recap  ← 수동 추가 필요
+  ? /settings  ← 수동 추가 필요
+  ? /tasks  ← 수동 추가 필요
+  ? /usage-credits  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /claude-api
+  ~ /effort
+  ~ /extra-usage
+  ~ /feedback
+  ~ /hooks
+  ~ /keybindings
+  ~ /loop
+  ~ /model
+  ~ /net
+  ~ /plugin
+  ~ /recap
+  ~ /settings
+  ~ /ultrareview
+  ~ /usage-credits
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-09-29/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed "Prompt is too long" errors that persisted after compacting: when the compacted request is still too long, Claude Code now compacts once more, keeping less of the recent conversation
+  - Improved the startup refusal when managed settings require a sign-in (`forceLoginMethod` or `forceLoginOrgUUID`) and an API key, token or `apiKeyHelper` is configured: it now names the credential in use, where it is set, and how to remove it
+  - [VSCode] Fixed "Prompt is too long" errors after compaction when a large text file is attached to a message
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Fixed tab bars in dialogs such as `/config` and `/plugin` breaking the title and tab labels mid-word in a narrow terminal; a tab that doesn't fit now moves to the next line whole
+  - Fixed vim mode leaving the cursor on an image placeholder's opening bracket after `dd` on the last line or `yy` at the end of the prompt, where `r` or `x` would break or delete the image
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  enforceAvailableModels
+  keybindings.json
+  period
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.284
+
+- Added Claude Sonnet 5.5 (`claude-sonnet-5-5`), now the default Sonnet model on the Anthropic API — 1M context, $2/$10 per Mtok with $0.20/Mtok cache reads
+- Added a "Yes, but ask again next time" answer to auto mode's prompt before a read outside the working directories, so you can allow that one read and still be asked about later ones
+- Added dollar amounts to the Claude apps gateway spend limit in `/usage` and the status line (for example "$271.40 / $500.00 spent this month") when the gateway runs this version or later; the status line's `rate_limits.spend_limit` also gains `used_usd`, `limit_usd` and `period`
+- Added `effortSlider:decreaseEffort`, `increaseEffort` and `toggleUltracode` keybinding actions, so the `/effort` slider's arrow and Tab keys can be rebound in `keybindings.json`
+- Added `/rate-limit-options` to `/help` and the command menu for claude.ai subscribers, so the usage-limit notices that mention it point to a command you can find
+- Added `/mcp reconnect all` in the interactive terminal to retry every MCP server that failed to connect or needs authentication at once
+- Added Claude apps gateway startup warnings when a managed policy's `availableModels` is empty, or leaves out the model Claude Code starts on without setting `model` or `enforceAvailableModels`
+- Added `auth: { google: {} }` for Claude apps gateway `telemetry.forward_to` destinations, so telemetry can be exported straight to Google Cloud's OTLP endpoint using the gateway's Google Cloud credentials
+- Added certificate client authentication (`private_key_jwt`) between the Claude apps gateway and its identity provider, for identity providers that issue certificate credentials instead of client secrets
+- Fixed a damaged response stream showing raw errors such as "JSON Parse error" or "undefined is not an object", or writing the word "undefined" into an answer, instead of being retried or reported as an interrupted response
+- Fixed an overloaded or server error arriving righ
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
