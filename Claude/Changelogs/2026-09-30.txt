@@ -1,0 +1,23 @@
+Claude Skills Sync Changelog - 2026-09-30
+=========================================
+Status: PARTIAL / NO CONTENT CHANGES APPLIED
+
+Version check
+- Catalog version : 2.1.129 (updated 2026-05-06)
+- npm latest      : @anthropic-ai/claude-code 2.1.285
+- Gap             : 156 releases behind
+- Blocker         : Session GitHub access is scoped to yeongam/prompt-guide only,
+                    so anthropics/claude-code (changelog/skills) was not read.
+                    Skill data was not invented; catalog left unchanged.
+
+Added skills      : none
+Modified skills   : none
+Deleted skills    : none
+Optimized structure: none (catalog already compact: one-line desc, YAML)
+Token savings     : none this run
+Conflict resolution: none (no new skills applied)
+
+Notes
+- Skills/ layout is Claude/skills/ (no date subdirectory exists in repo);
+  left as-is to avoid breaking existing structure.
+- To unblock: grant read access to anthropics/claude-code for this routine.
