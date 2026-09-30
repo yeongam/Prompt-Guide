@@ -1,0 +1,86 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-09-30 03:06 UTC
+Version : 2.1.284 → 2.1.285
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-09-30/
+============================================================
+
+[ ★ 신규 감지 스킬 (10개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /artifacts  ← 수동 추가 필요
+  ? /autofix-pr  ← 수동 추가 필요
+  ? /btw  ← 수동 추가 필요
+  ? /chrome  ← 수동 추가 필요
+  ? /cost  ← 수동 추가 필요
+  ? /remote-env  ← 수동 추가 필요
+  ? /resume  ← 수동 추가 필요
+  ? /schedule  ← 수동 추가 필요
+  ? /tasks  ← 수동 추가 필요
+  ? /teleport  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /artifacts
+  ~ /btw
+  ~ /chrome
+  ~ /claude-api
+  ~ /compact
+  ~ /cost
+  ~ /plugin
+  ~ /remote-env
+  ~ /resume
+  ~ /schedule
+  ~ /tasks
+  ~ /teleport
+  ~ /ultrareview
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-09-30/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed cloud sessions that restarted after their conversation was compacted refusing the next update to an artifact the session had already read or published
+  - Fixed switching models mid-session with a `set_model` request (such as the Agent SDK's `setModel`) leaving the new model on the built-in output-token limit and auto-compact window until restart
+  - Fixed sessions that authenticate with `ANTHROPIC_AUTH_TOKEN` against the Anthropic API never loading the organization's policy
+  - Fixed compacting or resuming a session failing, opening without its history, or crashing when its saved transcript holds a compaction marker or loop wakeup entry with missing or malformed fields
+  - Fixed the `/claude-api` eval runner scaffold counting responses cut off at `max_tokens` in the score averages; they are now marked truncated and counted separately
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Fixed `claude mcp list` and `claude mcp get`, and the not-found error of `claude mcp remove`, `login` and `logout`, printing line breaks and terminal escape sequences from MCP server names and values
+  - Fixed the Artifact tool sometimes reporting a publish as a conflict with another session after retrying a temporary server error, when the first attempt had actually succeeded
+  - Fixed vim mode: after editing in the external editor (Ctrl+G), `x` or `r` in NORMAL mode no longer breaks a pasted-text placeholder at the end of the prompt
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  alwaysLoad
+  core.longpaths
+  core.sshCommand
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.285
+
+- Added `CLAUDE_CODE_DISABLE_WEB_FETCH` environment variable to turn off the WebFetch tool
+- Added `claude --desktop` to open the Claude desktop app on the current directory, or on a session with `--continue` / `--resume <id>`
+- Added `claude plugin configure <plugin>` to show a plugin's options and which are unset, or save new values read from stdin with `--values-stdin`
+- Added `<server>.<key>=<value>` to `claude plugin install --config`, so a bundled `.mcpb` MCP server's own settings can be set at install time and it starts without visiting `/plugin` → Configure
+- Added `allowedProviders` managed setting to limit which API providers a machine may use (Anthropic API, a custom endpoint, Bedrock, Mantle, Vertex AI, Foundry, Claude Platform on AWS, or a Cloud gateway)
+- Added `CLAUDE_CODE_NONSTREAMING_TIMEOUT_RETRIES` environment variable to cap re-sends of a non-streaming fallback request that timed out
+- Fixed `claude -p` with `CLAUDE_CODE_FORK_SUBAGENT=1`: a subagent's own Agent call now runs in the foreground, so the subagent gets the child's result
+- Fixed plugin and marketplace installs and updates over SSH ignoring the ssh program set in `GIT_SSH` or in your git config's `core.sshCommand`
+- Fixed Claude Code refusing to start when the OS denies reading the managed settings file; it now warns and starts without that file's policies. Other read errors and unparseable files stop every session
+- Fixed cloud sessions that restarted after their conversation was compacted refusing the next update to an artifact the session had already read or published
+- Fixed `claude plugin disable` and `enable` with a full `name@marketplace` id changing a settings entry in another letter case instead of the installed plugin's own
+- Fixed files attached to a message sent over Remote Control being left out after a single failed download; a network error, timeout or server error is now retried up to twice
+- Fixed switching models mid-session with a `set_model` request (suc
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
