@@ -1,0 +1,73 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-10-01 03:12 UTC
+Version : 2.1.285 → 2.1.286
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-10-01/
+============================================================
+
+[ ★ 신규 감지 스킬 (6개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /artifacts  ← 수동 추가 필요
+  ? /exit  ← 수동 추가 필요
+  ? /feedback  ← 수동 추가 필요
+  ? /hooks  ← 수동 추가 필요
+  ? /protocol  ← 수동 추가 필요
+  ? /rewind  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /exit
+  ~ /feedback
+  ~ /hooks
+  ~ /login
+  ~ /plugin
+  ~ /protocol
+  ~ /rewind
+  ~ /status
+  ~ /usage
+
+[ 삭제된 스킬 / Removed Skills ]
+  - /ultrareview
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-10-01/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed the Claude apps gateway's spend meter pricing 1-hour prompt cache writes at the cheaper 5-minute rate, and counting only the first model call's input tokens on streamed turns that run a server-side tool such as web search
+  - Fixed percent-encoded Bearer tokens being only partly masked in error messages
+  - Fixed `/compact`, `/clear`, and `/rewind` typed while viewing a background agent's or teammate's transcript silently acting on the main conversation: a dialog now names the target and asks first
+  - Improved the model fallback notice and the autocompact-thrashing error to say when a fallback dropped the context window from 1M to 200K tokens
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  Stop
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.286
+
+- Added a count such as "2 of 5" to the permission prompt when several permission requests stack up
+- Added mouse support for the "N more" rows of lists in fullscreen mode: click one to jump to that end of the list, with hover and pressed states
+- Fixed several Claude Code processes and IDE extensions each opening a login browser when gcpAuthRefresh or awsAuthRefresh credentials expire
+- Fixed `claude --resume` and `--continue` sometimes losing every turn after a batch of parallel tool calls when the earlier session crashed or was killed
+- Fixed API 400 errors after a tool or hook returned an object, number or boolean instead of text, including in resumed sessions
+- Fixed cloud sessions with very large histories never waking up because the container was stopped while the transcript was still loading
+- Fixed the Claude apps gateway's spend meter pricing 1-hour prompt cache writes at the cheaper 5-minute rate, and counting only the first model call's input tokens on streamed turns that run a server-side tool such as web search
+- Fixed macOS sessions still showing "Not logged in" or "Login expired" after `/login` succeeds in another Claude Code window when a leftover `~/.claude/.credentials.json` exists
+- Fixed every turn failing when the Anthropic API refuses the model your default or a model alias resolves to: Claude Code now retries once on the previous model of the same tier
+- Fixed Remote Control sessions (including `claude remote-control`) staying connected after your organization's policy turns Remote Control off; they now disconnect with a notice
+- Fixed refusal and `--fallback-model` retries failing when the fallback model can't run fast; they now run at standard speed, with a one-time notice in interactive sessions
+- Fixed headless sessions repeating the "MCP servers require authentication" reminder after a successful re-authentication when the MCP discovery cache is enabled
+- Fixed `claude auth status` reporting a Console sign-in's stored API key
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
