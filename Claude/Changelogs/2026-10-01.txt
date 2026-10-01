@@ -1,0 +1,40 @@
+Claude Code Skills Update - 2026-10-01
+Source: anthropics/claude-code CHANGELOG | Version: 2.1.129 -> 2.1.286
+Layout: Claude/skills/<date>/skills/ (new: 2026-10-01; prior baseline moved to 2026-05-06)
+
+[추가된 스킬 / Added]
+- /code-review (effort levels, --comment, --fix), /skill-doctor, /dataviz, /goal, /cd,
+  /reload-skills, /reload-plugins, /doctor prompt-audit, /config key=value, /output-style,
+  /scroll-speed, /usage-credits, /plugin list|install, /mcp reconnect all
+- claude-api subcommands: upgrade, cost-optimize, prompt-audit
+- Hooks: PreModelSwitch, PostModelSwitch, MessageDisplay, DirectoryAdded
+  (+ hook args[] exec form, continueOnBlock, terminalSequence)
+- Settings: fallbackModel, maxEffortLevel, promptCacheTtl, disableBundledSkills,
+  syncClaudeAiSkills, sandbox.strictAllowlist/credentials, autoMode.hard_deny, worktree.baseRef, etc.
+- Env: CLAUDE_CODE_SAFE_MODE, _RESTRICTED, _MAX_CONCURRENT_SUBAGENTS, _MAX_SUBAGENTS_PER_SESSION,
+  _MAX_WEB_SEARCHES_PER_SESSION, ANTHROPIC_DEFAULT_MODEL, others
+
+[수정된 스킬 / Modified]
+- claude-api: models -> Opus 5.5 / Sonnet 5.5 / Haiku 4.5
+- /simplify scope: upstream renamed to /code-review; /simplify kept (still shipped here)
+- /usage, /undo, /effort, /doctor descriptions refreshed
+- /extra-usage -> /usage-credits (old name still works)
+
+[삭제된 스킬 / Removed]
+- /agents wizard (upstream removed; use Claude or edit .claude/agents/)
+- Per-entry "added:" version tags, trigger/desc split, long notes
+
+[최적화된 구조 / Structure]
+- Date dir rule kept: Claude/skills/2026-10-01/skills/SKILLS_CATALOG.yaml
+- Old catalog archived at Claude/skills/2026-05-06/skills/ (history, not loaded)
+- Single canonical file; each entry is one "cmd | use | effect" line
+- Claude/Changelogs/ created (reuse if present); scripts/update_skills.py paths updated
+
+[토큰 절감 / Token savings]
+- Catalog 9230 -> 6227 bytes (-33%) despite ~+14 skills, +4 hooks and many settings/env
+- Dropped duplicated trigger/desc fields, version tags, verbose comments
+
+[충돌 해결 / Conflicts]
+- /simplify vs /code-review: both retained, scopes distinguished (quality vs correctness)
+- Flat Claude/skills/ files vs date/skills rule: moved into dated dir; .version stays at Claude/skills/
+- Old update script wrote to ./changelogs and a desktop path: redirected to Claude/Changelogs
