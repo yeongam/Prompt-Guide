@@ -1,0 +1,76 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-10-02 03:14 UTC
+Version : 2.1.286 → 2.1.287
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-10-02/
+============================================================
+
+[ ★ 신규 감지 스킬 (7개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /advisor  ← 수동 추가 필요
+  ? /config  ← 수동 추가 필요
+  ? /context  ← 수동 추가 필요
+  ? /desktop  ← 수동 추가 필요
+  ? /memory  ← 수동 추가 필요
+  ? /skill  ← 수동 추가 필요
+  ? /stop  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /advisor
+  ~ /config
+  ~ /context
+  ~ /desktop
+  ~ /memory
+  ~ /model
+  ~ /skill
+  ~ /stop
+  ~ /ultrareview
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-10-02/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed a folder's CLAUDE.md being attached a second time after resuming a session or after a compaction
+  - Fixed the commit attribution reminder being delivered inside a tool result after a compaction
+  - Fixed the running-tool dot and three spinners still moving with the "Reduce motion" setting on, and /rewind's confirm screen updating its "ago" time while you type a note
+  - Fixed a revoked claude.ai login showing a generic `API Error: 401` instead of "OAuth token revoked"; in `-p` mode the error now starts with "Failed to authenticate"
+  - Fixed cloud sessions sometimes losing the earlier conversation when the session restarted while it was being compacted
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.287
+
+- Added Claude Mods: plugins may now modify deeper behavior
+- Added You should know, a built-in mod where a side agent watches your back and flags things you or Claude might miss. Turn it on with `/plugin enable cc-plugin-you-should-know@builtin` (for first-party sessions with telemetry on)
+- Added an `n:<text>` filter to the agents view that matches session names and tasks; a filter now shows matches in collapsed sections and Enter opens the first match
+- Added `prompt_text` to the OpenTelemetry `user_prompt` event, a copy of `prompt` for backends that nest dotted keys; drop or mask it wherever you drop or mask `prompt` (anthropics/claude-code#70763)
+- Added URL prompts from MCP servers on the 2025-11-25 protocol, for example to sign in. If a server no longer connects after this update, add "bareElicitationCapability": true to its MCP config entry
+- Windows: Added a startup warning when denying the Bash tool also turns off the PowerShell tool, so Claude has no shell tool
+- Self-hosted runner: Added a built-in `gh api` (REST only) for sessions that use Anthropic-managed git on macOS and Linux machines where the GitHub CLI is not installed
+- Fixed fast mode staying off in remote sessions owned by an agent with no user account, even when the organization allows it
+- Fixed Remote Control not receiving messages for minutes at a time when a reconnect request got no response; it now gives up after 30 seconds and retries
+- Fixed hooks configured with `asyncRewake` waking Claude over and over with "found issues" notifications when the hook's script file is missing; the broken hook is now reported once
+- Fixed tool heartbeats not reaching SDK hosts while the model's response stream was stalled with no data arriving
+- Fixed Bedrock and Vertex startup model checks ignoring an enforced `availableModels` list, which could collapse `/model` to one Opus row
+- Fixed the Claude in Chrome browser picker showing a JSON parse error when Chrome could not be reached
+- Fixed p
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
