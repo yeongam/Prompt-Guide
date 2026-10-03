@@ -1,0 +1,40 @@
+Claude Code Skills Sync | 2026-10-03 | 2.1.129 -> 2.1.288
+Source: anthropics/claude-code CHANGELOG.md
+Layout: Claude/skills (live) + Claude/2026-10-03/skills (dated snapshot)
+
+[Added skills]
+/code-review, /goal, /dataviz, /skill-doctor, /reload-skills, /reload-plugins,
+/plan, /cd, /btw, /copy, /diff, /scroll-speed, /advisor, /status, /doctor, /usage-credits
+Hooks: SubagentStart, DirectoryAdded, PreModelSwitch, PostModelSwitch, MessageDisplay
+Settings: modelPicker, modelPricing, workflowSizeGuideline, feedbackDrafts
+Env: *_MAX_SUBAGENTS_PER_SESSION, *_MAX_CONCURRENT_SUBAGENTS, *_MAX_WEB_SEARCHES_PER_SESSION,
+  *_MAX_MCP_DESCRIPTION_LENGTH, *_DISABLE_BUNDLED_SKILLS, *_SAFE_MODE, *_DISABLE_WEB_FETCH,
+  *_DISABLE_MOUSE_CLICKS, ANTHROPIC_DEFAULT_MODEL
+
+[Modified skills]
+/review -> alias of /code-review (PR: fast single-pass)
+/ultrareview: --post, git>=2.31 upload rules
+/loop: dynamic mode always available; /usage Loops breakdown
+/effort: labels Faster/Smarter, s=session-only
+/usage: now includes /cost; spend limit + attribution
+/undo: /rewind can resume pre-/clear
+models: opus-5-5, sonnet-5-5, fable-5-1 (haiku unchanged)
+
+[Deleted skills]
+/agents wizard (upstream removed), /extra-usage (renamed /usage-credits, old alias works),
+(none else; /tui, /team-onboarding, /powerup retained)
+Dropped hook/setting entries: none. Removed catalog "added:" version tags.
+
+[Optimized structure]
+- Catalog: 1 line per skill (flow-style YAML), keys cmd/when/desc
+- Dated snapshot dir Claude/2026-10-03/skills added; Claude/skills kept as live path
+- update_skills.py now writes to Claude/Changelogs (was changelogs/)
+
+[Token savings]
+- SKILLS_CATALOG.yaml 9230 -> 5988 bytes (-35%) despite +16 skills
+- Removed examples, notes, per-item added: tags, duplicate comments
+
+[Conflict resolution]
+- /simplify upstream renamed to /code-review: both kept (simplify marked legacy) so existing callers don't break
+- Flat Claude/skills vs date/skills rule: live copy kept + dated snapshot (no path breakage)
+- /cost merged into /usage, noted in /usage entry
