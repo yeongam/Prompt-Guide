@@ -1,0 +1,73 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-10-03 03:00 UTC
+Version : 2.1.287 → 2.1.288
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-10-03/
+============================================================
+
+[ ★ 신규 감지 스킬 (3개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /autocompact  ← 수동 추가 필요
+  ? /permissions  ← 수동 추가 필요
+  ? /usage-credits  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /autocompact
+  ~ /compact
+  ~ /login
+  ~ /permissions
+  ~ /plugin
+  ~ /theme
+  ~ /tui
+  ~ /usage-credits
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-10-03/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed long conversations failing with "Prompt is too long" instead of auto-compacting when the last reply reported zero token usage
+  - Fixed `--resume` sometimes dropping files and other context that a compaction had just restored
+  - Fixed Edit and Retry in Cowork cloud sessions refusing a message sent before `/compact` even though its history was still saved
+  - Fixed the first request in a fresh environment or after a model switch using the built-in output limit and auto-compact window, not the server's; that request may now wait up to 1.5 seconds
+  - Improved auto mode: when a conversation grows too long for the client-side safety classifier to review, it is now compacted instead of prompting for, or failing, every tool call
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  PreToolUse
+  Stop
+
+[ Settings ]
+  memory
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.288
+
+- Added `$.ui.selection()` for mods: returns the text you last selected in fullscreen mode and, when the selection lies within one transcript row, that row
+- Added a built-in `gh api` to cloud sessions whose image has no GitHub CLI, and fixed the built-in sending control characters from file names, jq filters or GitHub errors to the terminal
+- Added recovery for a prompt cleared with Ctrl+C: pressing Up on the empty prompt brings the draft back, including pasted text and images
+- Added a re-authenticate prompt when an MCP server asks for more OAuth scope during a tool call
+- Added `--max-findings <n>|all` to /code-review to report more or fewer findings than the usual limit; the choice is reused until you pass `--max-findings default`
+- Added Ctrl+F to find a session by name and Alt+↑/↓ to jump between groups in the agents view; both, and rename, can be rebound in keybindings.json
+- Added a screen reader mode announcement of the new permission mode when you approve a plan, including with Shift+Tab
+- Fixed mid-response API timeouts failing the turn: non-interactive sessions and subagents now continue from the partial response, and thinking-only responses are retried
+- Fixed long conversations failing with "Prompt is too long" instead of auto-compacting when the last reply reported zero token usage
+- Fixed `--resume` sometimes dropping files and other context that a compaction had just restored
+- Fixed a resumed session sometimes not saving the last response of a turn, so that the next `--resume` showed the prompt unanswered
+- Fixed resume occasionally loading a transcript cut short when the same session rewrote the file during the load
+- Fixed resuming a conversation started on 2.1.286 or earlier dropping the model's earlier thinking
+- Fixed session titles, memory recall and prompt hooks failing on Mantle or behind gateways that reject structured outputs; added `CLAUDE_CODE_DISABLE_STRUCTURED_OUTPUTS` to turn structured outputs off
+- Fixed auto mode denia
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
