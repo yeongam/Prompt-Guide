@@ -1,0 +1,47 @@
+Claude Skills Sync - 2026-10-05
+Source: anthropics/claude-code CHANGELOG.md | Version: 2.1.129 -> 2.1.289 (160 patch releases)
+Layout kept: Claude/skills/ (no dated dirs existed; unchanged for stability)
+
+[추가된 스킬 / Added]
+- /code-review, /goal, /btw, /plan, /workflows, /dataviz, /skill-doctor, /reload-skills,
+  /reload-plugins, /insights, /doctor, /diff, /advisor, /cd, /export, /feedback, /web-setup, /teleport
+- Hooks: PermissionRequest, UserPromptSubmit, SessionStart, Setup, SubagentStart, DirectoryAdded,
+  PreModelSwitch, PostModelSwitch, ConfigChange, MessageDisplay
+- Settings: maxEffortLevel, promptCacheTtl, subagentPromptCacheTtl, bashOutputMaxChars,
+  taskOutputMaxChars, modelPicker, attribution:false, sandbox.network.strictAllowlist,
+  sandbox.filesystem.disabled, workflowSizeGuideline, managed policies (allowedProviders, deniedModels...)
+- Env: ANTHROPIC_DEFAULT_MODEL, CLAUDE_CODE_RESTRICTED, CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS,
+  CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION, CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION, others
+- Models: claude-fable-5-1, claude-opus-5-5, claude-sonnet-5-5
+
+[수정된 스킬 / Modified]
+- /effort: session-only 's', maxEffortLevel cap
+- /usage: spend limit + per-loop breakdown
+- /init: AGENTS.md fallback
+- /ultrareview: browser link removed upstream
+- Model defaults: opus 4-7 -> opus-5-5, sonnet 4-6 -> sonnet-5-5
+- Hook list: PermissionRequest agent-type unsupported (command/http only)
+
+[삭제된 스킬 / Removed]
+- /review (replaced by /code-review upstream)
+- /agents wizard (not in catalog before; noted as removed)
+- /cost, /stats (already merged into /usage; note retained)
+- Obsolete env vars: CLAUDE_CODE_USE_POWERSHELL_TOOL, CLAUDE_STREAM_IDLE_TIMEOUT_MS,
+  OTEL_LOG_RAW_API_BODIES, CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY, showThinkingSummaries,
+  autoScrollEnabled, prUrlTemplate (niche/UI-only, dropped for size; still valid upstream)
+
+[최적화된 구조 / Optimized structure]
+- Skill entries: 4-line YAML blocks -> single-line "cmd | when | what"
+- Hooks/settings/env: per-item blocks -> one-line entries; "added: vX" tags and prose comments removed
+- Notes section deleted
+
+[토큰 절감 / Token savings]
+- SKILLS_CATALOG.yaml: 9230 -> 5828 bytes (-37%) while covering ~2x more commands/hooks
+- Estimated ~900 fewer tokens per full load
+
+[충돌 해결 / Conflicts]
+- /simplify: upstream notes rename to /code-review, but both exist in current runtime
+  -> kept both (simplify = cleanup, code-review = bug review) to avoid breaking existing use
+- /review entry replaced by /code-review (same purpose, no behavior lost)
+- Dated "날짜/skills" dir rule vs existing Claude/skills: kept existing path (stability rule 17)
+- scripts/update_skills.py now writes to Claude/Changelogs (was ./changelogs)
