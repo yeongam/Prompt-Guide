@@ -1,0 +1,36 @@
+Claude Code Skills Sync 2026-10-06
+Source: anthropics/claude-code | 2.1.129 -> 2.1.291
+Layout: Claude/skills/2026-10-06/skills/SKILLS_CATALOG.yaml (prev: 2026-05-06/skills/, moved)
+
+[Added skills]
+- code-review (/review now alias), verify, run, goal, dataviz, workflow-authoring, plugin-authoring
+- skill-doctor, reload-skills, reload-plugins
+- cmds: /cd /bg /btw /fast /advisor /insights /config key=value /usage-credits /rate-limit-options /scroll-speed
+- hooks: DirectoryAdded, MessageDisplay, PreModelSwitch, PostModelSwitch
+- settings/env: modelPicker, maxEffortLevel, promptCacheTtl, disableBundledSkills, workflowSizeGuideline,
+  attribution:false, sandbox.*, managed (allowedProviders/deniedModels/...), SAFE_MODE, RESTRICTED, subagent/web-search caps
+
+[Modified skills]
+- review -> code-review (levels, --comment/--fix, ultra)
+- claude-api: Opus 5 default, Opus 4.8 migration, Admin API
+- models: opus 4-7 -> opus-5-5, sonnet 4-6 -> sonnet-5-5, +fable-5-1 (all 1M ctx)
+- ultrareview: browser link removed; verify/code-review no longer auto-run
+
+[Deleted skills]
+- ultraplan (removed 2.1.222), /agents wizard (2.1.198), TaskOutput tool, OPUS_4_6_FAST_MODE_OVERRIDE
+- dropped from catalog (UI-only, no skill value): undo/usage/theme/color/tui/focus/powerup detail entries merged into one cmds line
+
+[Optimized structure]
+- Flat catalog -> dated dir Claude/skills/<date>/skills/ (old snapshot kept at 2026-05-06)
+- One line per entry: "cmd | use"; trigger/desc split fields removed
+- Settings/env grouped; version "added:" tags kept only for hooks
+
+[Token savings]
+- Catalog 9230 B -> 4735 B (-49%) despite ~2x more entries covered
+- Removed duplicate trigger+desc prose, multi-line YAML maps, example blocks
+
+[Conflicts resolved]
+- /review vs /code-review: merged into one entry (alias)
+- ultraplan present in old catalog but removed upstream: deleted
+- Old flat path vs date rule: moved with git mv (history kept); scripts/update_skills.py paths updated
+- Old script wrote to repo-root changelogs/ and Desktop path: now Claude/Changelogs/YYYY-MM-DD.txt only

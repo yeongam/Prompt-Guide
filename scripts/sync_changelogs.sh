@@ -14,9 +14,9 @@ git -C "$REPO_DIR" pull origin "$BRANCH" --quiet
 
 mkdir -p "$DESKTOP_DIR"
 
-if ls "$REPO_DIR/changelogs/"*.txt 1>/dev/null 2>&1; then
-    cp -u "$REPO_DIR/changelogs/"*.txt "$DESKTOP_DIR/"
-    echo "Synced $(ls "$REPO_DIR/changelogs/"*.txt | wc -l) changelog(s) to $DESKTOP_DIR"
+if ls "$REPO_DIR/Claude/Changelogs/"*.txt 1>/dev/null 2>&1; then
+    cp -u "$REPO_DIR/Claude/Changelogs/"*.txt "$DESKTOP_DIR/"
+    echo "Synced $(ls "$REPO_DIR/Claude/Changelogs/"*.txt | wc -l) changelog(s) to $DESKTOP_DIR"
 else
     echo "No changelogs found in repo yet."
 fi
