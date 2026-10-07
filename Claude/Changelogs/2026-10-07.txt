@@ -1,0 +1,39 @@
+Prompt-Guide Claude Skills Changelog - 2026-10-07
+
+Snapshot: Claude/skills/2026-10-07/skills
+Source: github.com/anthropics/claude-code (v2.1.292, plugins/*)
+Prior: catalog v2.1.129 (2026-05-06)
+
+[추가된 스킬]
+- git-commit, git-commit-push-pr, git-clean-gone (commit-commands)
+- pr-review-highsignal (code-review), pr-review-aspects (pr-review-toolkit)
+- feature-dev, frontend-design, opus-migration
+- plugin-dev (7 plugin-dev skills merged), hookify-rules (hookify)
+
+[수정된 스킬]
+- SKILLS_CATALOG.yaml: version 2.1.129 -> 2.1.292, added snapshot pointer + snapshot_skills list
+- .version: 2.1.292
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- One file per skill under date/skills/ (same layout as GPT/skills/<date>/skills)
+- Multi-file plugins (agents, commands, references) collapsed to a single SKILL.md-style file each
+- 14 source plugin-dev/hookify skill docs merged into 2 files
+
+[토큰 절감 관련 변경 사항]
+- ~195 KB source commands/skills -> ~7 KB (~96% smaller)
+- Removed examples, usage blurbs, tips, duplicated prose, long tutorials; kept triggers, rules, constraints
+- Catalog kept as single index; no duplication of skill text
+
+[충돌 해결 내역]
+- code-review plugin vs built-in code-review/review -> renamed pr-review-highsignal
+- commit plugin names vs built-ins -> prefixed git-
+- Interactive prompts in feature-dev -> automated-run fallback (recommended option, record assumptions)
+- opus-migration: points to claude-api skill for newer models (catalog default is newer than Opus 4.5)
+- Not imported (no coding/docs value or overlaps built-ins): ralph-wiggum, explanatory/learning-output-style, security-guidance, agent-sdk-dev, triage/dedupe commands
+
+[비고]
+- GitHub API returned 403 via proxy; used git clone of the official repo instead.
+- Existing skills unchanged; no deletions.

@@ -1,8 +1,9 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.292
+updated: 2026-10-07
+snapshot: skills/2026-10-07/skills
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -117,6 +118,9 @@ skills:
     cmd: /color
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
+
+# Snapshot skills (converted from anthropics/claude-code plugins; names avoid built-in collisions):
+snapshot_skills: [git-commit, git-commit-push-pr, git-clean-gone, pr-review-highsignal, pr-review-aspects, feature-dev, frontend-design, opus-migration, plugin-dev, hookify-rules]
 
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.
