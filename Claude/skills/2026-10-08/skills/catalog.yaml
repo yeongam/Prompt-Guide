@@ -1,0 +1,34 @@
+# Claude Code catalog | src: anthropics/claude-code CHANGELOG | v2.1.294 | 2026-10-08
+# detail per skill: <name>.md in this dir
+version: 2.1.294
+updated: 2026-10-08
+skills: [code-review,simplify(legacy),ultrareview,security-review,init,doctor,skill-doctor,claude-api,goal,loop,workflows,dataviz,session-start-hook,update-config,keybindings-help,fewer-permission-prompts,session-tools]
+cmds_dropped: [agents-wizard(ask Claude/edit .claude/agents), cost+stats->usage]
+hooks:  # event: effect (blocking=B)
+  PreToolUse: B pre-tool validate
+  PostToolUse: post-tool log
+  Stop/SubagentStop: post-turn
+  Notification: push alerts
+  PreCompact: B
+  TaskCreated: task log
+  WorktreeCreate: http worktreePath
+  PermissionDenied: {retry:true}
+  PreModelSwitch/PostModelSwitch: B/confirm/annotate model switch
+  DirectoryAdded: after /add-dir
+  MessageDisplay: transform/hide assistant text
+  types: [shell, mcp_tool, http, prompt, agent]  # prompt/agent hooks: write as conditions
+settings:
+  skillOverrides: off|user-invocable-only|name-only
+  disableBundledSkills: bool
+  syncClaudeAiSkills/syncClaudeAiPlugins: bool
+  maxEffortLevel: cap effort
+  bashOutputMaxChars/taskOutputMaxChars: <=128K inline output
+  promptCacheTtl/subagentPromptCacheTtl: 5m|1h
+  modelPicker, deniedModels, availableModelsMatch, allowedProviders: model governance
+  attribution: false|object
+  feedbackDrafts, maxProseWidth, timeFormat, timeZone, keybindingFlavor, spellcheck, bashEditDiffEnabled
+env:
+  CLAUDE_CODE_DISABLE_BUNDLED_SKILLS, CLAUDE_CODE_DISABLE_WEB_FETCH, CLAUDE_CODE_RESTRICTED=1,
+  CLAUDE_CODE_SUBAGENT_MODEL_FORCE, CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS, CLAUDE_CODE_MCP_STARTUP_WAIT_MS,
+  CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH, CLAUDE_CODE_TOOL_MEMORY_LIMIT, ANTHROPIC_DEFAULT_MODEL, CLAUDE_EFFORT
+models: {fable: claude-fable-5-1, opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5}  # fast mode: Opus 5/4.8

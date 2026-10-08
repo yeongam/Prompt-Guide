@@ -1,0 +1,32 @@
+Claude Skills Sync - 2026-10-08
+Source: anthropics/claude-code CHANGELOG.md | 2.1.129 -> 2.1.294
+Snapshot: Claude/skills/2026-10-08/skills
+
+[추가된 스킬]
+- code-review, ultrareview, doctor(/checkup, prompt-audit), skill-doctor, goal, workflows, dataviz, session-tools
+- (catalog) hooks: PreModelSwitch, PostModelSwitch, DirectoryAdded, MessageDisplay
+- (catalog) settings/env: maxEffortLevel, disableBundledSkills, promptCacheTtl, CLAUDE_CODE_RESTRICTED 등
+
+[수정된 스킬]
+- claude-api: +upgrade, cost-optimize, prompt-audit, managed-agents-onboard; models -> Opus 5.5/Sonnet 5.5/Haiku 5.5/Fable 5.1
+- simplify -> /code-review로 개편 (legacy 항목 유지)
+- loop, init, update-config, keybindings-help, session-start-hook, security-review, fewer-permission-prompts: 1~3줄로 축약
+- models: opus-4-7/sonnet-4-6/haiku-4-5 -> 5.x
+
+[삭제된 스킬]
+- /agents wizard (Claude에게 요청 또는 .claude/agents 직접 편집)
+- ultraplan, team-onboarding, effort, powerup, tui, focus, color, theme, usage 개별 항목: UI/세션 설정 성격이라 코딩/문서 범위 밖 -> 제거
+- Claude/skills/SKILLS_CATALOG.yaml (날짜 디렉토리로 이전)
+
+[최적화된 구조]
+- Claude/skills/<날짜>/skills/ 규칙 적용: 스킬당 1파일(.md) + catalog.yaml 인덱스
+- 위치: 코딩/프로그래밍/문서 관련만 변환, 설정/UI 명령은 session-tools 한 파일로 통합
+
+[토큰 절감]
+- catalog 240줄(~9KB) -> 약 40줄; 스킬 17파일 합계 약 4KB
+- "added:" 버전 태그, trigger 문구, 중복 설명 제거; 상세는 개별 .md로 지연 로딩
+
+[충돌 해결]
+- /simplify 이름 충돌: 공식은 /code-review로 통합, 현 환경은 둘 다 존재 -> simplify를 legacy 별칭으로 유지
+- 기존 평면 catalog 경로 vs 날짜 규칙: 날짜 디렉토리로 이동, scripts/update_skills.py 경로 갱신
+- 레거시 changelogs/ vs Claude/Changelogs: 스크립트 출력 경로를 Claude/Changelogs/<날짜>.txt로 통일
