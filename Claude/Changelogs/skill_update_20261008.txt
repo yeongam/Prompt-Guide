@@ -1,0 +1,65 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-10-08 03:39 UTC
+Version : 2.1.292 → 2.1.293
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-10-08/
+============================================================
+
+[ ★ 신규 감지 스킬 (1개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /feedback  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /clear
+  ~ /feedback
+  ~ /loop
+  ~ /model
+  ~ /tui
+  ~ /ultrareview
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-10-08/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed Claude sometimes treating its own last actions before a context compaction as done after it, and retracting or redoing finished work
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  builtinBrowserEnabled
+  mock.session
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.293
+
+- Added Claude Haiku 5.5 (`claude-haiku-5-5`), now the default Haiku model on the Anthropic API — 1M context, $0.10/$0.50 per Mtok ($0.50/$2.50 for prompts over 100K)
+- Added `agentType` to the `subagentStatusLine` payload, so scripts can tell custom subagent types apart
+- Added `isDeferred` to `$.tool.register` for mods: `false` lists the tool's schema in the prompt from the start instead of behind tool search
+- Fixed Claude sometimes treating its own last actions before a context compaction as done after it, and retracting or redoing finished work
+- Fixed a memory leak where an HTTP MCP connection kept every request it had sent until it closed
+- Fixed a message sent while Claude was working being lost when `←` moved the session to the background; if a queued message can't move, `←` now stays put and says so
+- Fixed `/model` effort ←/→ wrapping past the highest or lowest level, which could accidentally save Low as a model's default effort
+- Fixed `/tui` disconnecting Claude in Chrome in a session started with `--chrome`, and ignoring `--no-chrome`
+- Fixed Claude being told to continue or message subagents with `SendMessage` in sessions, including resumed ones, where a host, a permission rule or a `--tools` list removed that tool
+- Fixed subagents and `--agent` sessions being told a built-in tool was disabled for the whole session when only their own tool list left it out
+- Fixed a claude.ai-synced skill's edited description sometimes not reaching the model until a new conversation or `/clear`
+- Fixed `claude logs`, `stop`, `kill`, `rm` and `claude daemon status`, `stop`, `uninstall` sometimes signing you out when your login had expired or was about to
+- Fixed the footer's agents count disappearing after a momentary failure to read the sessions folder (for example, too many open files)
+- Fixed a custom agent named `worker` being shown as "Agent" when it starts, and the agent detail dialog's title losing the agent type once the agent finishes
+- Fixed the 
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
