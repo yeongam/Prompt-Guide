@@ -1,0 +1,33 @@
+Claude Code Skills Update - 2026-10-09
+Version: 2.1.129 -> 2.1.295 (source: anthropics/claude-code CHANGELOG.md)
+
+[추가된 스킬]
+- /goal, /dataviz, /skill-doctor, /reload-skills, /reload-plugins(headless), /cd, /advisor, /scroll-speed, /rate-limit-options, /config key=value
+- 모델 스킬: workflow-authoring, plugin-authoring, run
+- 훅: DirectoryAdded, MessageDisplay, PreModelSwitch, PostModelSwitch, onFailure:"block"
+- 설정/환경변수: fallbackModel, maxEffortLevel, modelPicker, disableBundledSkills, workflowSizeGuideline,
+  CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS 등 약 15개
+
+[수정된 스킬]
+- review -> code-review (2.1.147 개명; 노력수준/--comment/--fix/--max-findings 추가, /review는 별칭)
+- claude-api: Opus 4.8 마이그레이션 반영; models 값 최신화(claude-*-5-5)
+- skillOverrides, sandbox.* 설정 항목 확장
+
+[삭제된 스킬]
+- 없음 (/review는 code-review로 통합, TaskOutput 도구 제거는 카탈로그 비대상)
+
+[최적화된 구조]
+- Claude/skills -> Claude/2026-10-09/skills (날짜/skills 규칙 적용, git mv로 이력 유지)
+- Claude/Changelogs 신규 생성 (이후 중복 생성 안 함)
+- scripts/update_skills.py, sync_changelogs.sh: 최신 날짜 디렉토리/Changelogs 경로 자동 탐색
+- 카탈로그를 "name: cmd | use-when | effect" 한 줄 형식으로 재구성
+
+[토큰 절감]
+- SKILLS_CATALOG.yaml 9230B -> 약 5200B (약 44% 감소) 이면서 항목 수는 증가 (스킬 약 20 -> 33)
+- 다단 YAML 블록을 한 줄 항목으로, "added:" 버전 태그/예시/중복 설명 제거
+
+[충돌 해결]
+- 이름 충돌: /simplify(개명 공지) vs 현재 환경에 simplify 스킬 존속 -> 둘 다 유지하여 기존 동작 보존
+- /review 호출 호환: code-review 별칭으로 흡수
+- 구 경로(Claude/skills) 참조 스크립트 -> 신규 경로로 수정
+- Claude/None, Claude-in-chrome, 모델별 폴더는 변경하지 않음

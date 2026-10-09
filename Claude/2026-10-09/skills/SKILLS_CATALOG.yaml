@@ -1,0 +1,94 @@
+# Claude Code skills catalog (compact). Src: anthropics/claude-code. Daily 00:00 sync.
+version: 2.1.295
+updated: 2026-10-09
+# fmt: name: cmd | use-when | effect
+skills:
+  init: /init | document codebase | write CLAUDE.md
+  code-review: /code-review [low|medium|high|xhigh|max] [PR|branch] [--comment|--fix|--max-findings n] | review diff/PR for bugs | findings; alias /review
+  simplify: /simplify | clean up changed code | reuse/quality/efficiency fixes applied
+  security-review: /security-review | audit branch diff | risk-ranked findings
+  ultrareview: /ultrareview [PR#] | deep multi-agent review (billed) | cloud parallel review
+  ultraplan: /ultraplan | complex planning | cloud multi-agent plan
+  goal: /goal <condition> | keep working until condition met | multi-turn loop, live overlay
+  loop: /loop [interval] [cmd] | recurring task | repeat prompt/cmd (default self-paced)
+  dataviz: /dataviz | chart/dashboard | design guide + palette validator
+  claude-api: /claude-api | Anthropic SDK/API work | caching, tools, model migration (4.7->4.8)
+  session-start-hook: /session-start-hook | cloud session needs tests/linters | SessionStart hook
+  update-config: /update-config | "when X"/permissions/env | edit settings.json
+  fewer-permission-prompts: /fewer-permission-prompts | too many prompts | allowlist from transcripts
+  keybindings-help: /keybindings-help | remap keys | edit keybindings.json
+  skill-doctor: /skill-doctor | prune skills | unused skills + context cost
+  reload-skills: /reload-skills | skills changed on disk | rescan w/o restart
+  reload-plugins: /reload-plugins | plugin changes | reload (also headless)
+  workflow-authoring: n/a (model skill) | write Workflow script | script API ref
+  plugin-authoring: n/a (model skill) | make mod/hook/status line | authoring ref
+  run: n/a (model skill) | verify change in real app | launch+drive app
+  team-onboarding: /team-onboarding | teammate ramp-up | guide from usage history
+  cd: /cd <dir> | change working dir | keeps prompt cache
+  config: /config [key=value] | change setting | interactive or inline set
+  advisor: /advisor [model|off] | advisor model | text form for headless
+  effort: /effort | quality level | slider; $CLAUDE_EFFORT
+  powerup: /powerup | learn features | animated demos
+  tui: /tui | flicker | alt-screen render
+  focus: /focus | compact view | prompt+tool summary+final
+  undo: /undo | revert last action | alias /rewind
+  usage: /usage | tokens/cost | merged /cost+/stats
+  theme: /theme [name] | colors | create/switch
+  color: /color | session color | random
+  scroll-speed: /scroll-speed | wheel speed | live preview
+  rate-limit-options: /rate-limit-options | usage limits (claude.ai) | options
+  skills: /skills | list skills | mouse-scrollable list
+
+hooks: # name: fires | block?
+  PreToolUse: before tool | y
+  PostToolUse: after tool | n
+  Notification: push/agent_needs_input/agent_completed | n
+  Stop: turn end | n
+  SubagentStop: subagent end | n
+  PreCompact: before compaction | y
+  TaskCreated: task created | n
+  WorktreeCreate: worktree created (http->worktreePath) | n
+  PermissionDenied: classifier denial ({retry:true}) | n
+  DirectoryAdded: after /add-dir | n
+  MessageDisplay: transform/hide assistant text | n
+  PreModelSwitch: before model switch | y
+  PostModelSwitch: after model switch | n
+  # block: exit 2 or {decision:"block"}; command/http hooks: onFailure:"block"; types: shell|mcp_tool|http; `if` = permission-rule filter
+
+settings:
+  skillOverrides: off|user-invocable-only|name-only
+  disableBundledSkills: bool (env CLAUDE_CODE_DISABLE_BUNDLED_SKILLS)
+  disableSkillShellExecution: bool
+  fallbackModel: up to 3 models
+  maxEffortLevel: cap effort
+  modelPicker: curated /model list
+  promptCacheTtl/subagentPromptCacheTtl: 5m|1h
+  bashOutputMaxChars: inline output cap<=128K
+  attribution: false | {sessionUrl}
+  worktree.baseRef: fresh|head; worktree.bgIsolation: none
+  autoMode.classifyAllShell/hard_deny: classifier rules
+  workflowSizeGuideline: small|medium|large
+  sandbox: network.deniedDomains, network.strictAllowlist, filesystem.disabled, credentials
+  timeFormat/timeZone/maxProseWidth/spellcheck/keybindingFlavor/emojiCompletionEnabled/vimInsertModeRemaps: UI
+  prUrlTemplate/showThinkingSummaries/autoScrollEnabled: legacy UI
+  managed: availableModels, deniedModels, enforceAvailableModels, allowedProviders, requiredMin/MaximumVersion, managedMcpServers, modelPricing
+
+env:
+  CLAUDE_EFFORT: effort level
+  ANTHROPIC_DEFAULT_MODEL: start model
+  CLAUDE_CODE_SUBAGENT_MODEL(_FORCE): subagent model
+  CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS: 20
+  CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION: 200
+  CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION: 200
+  CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS: 1-256
+  CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH: 2048
+  CLAUDE_CODE_MCP_STARTUP_WAIT_MS: 0=no wait
+  CLAUDE_CODE_SAFE_MODE: no customizations
+  CLAUDE_CODE_RESTRICTED: no exec tools
+  CLAUDE_CODE_NO_FLICKER: =/tui
+  CLAUDE_CODE_DISABLE_WEB_FETCH: off WebFetch
+  CLAUDE_CODE_SESSION_ID: in Bash env
+  CLAUDE_STREAM_IDLE_TIMEOUT_MS: ms
+  DISABLE_UPDATES: block updates
+
+models: {default: claude-sonnet-5-5, opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5}
