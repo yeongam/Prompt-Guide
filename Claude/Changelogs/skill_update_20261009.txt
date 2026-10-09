@@ -1,0 +1,79 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-10-09 03:45 UTC
+Version : 2.1.293 → 2.1.295
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-10-09/
+============================================================
+
+[ ★ 신규 감지 스킬 (10개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /advisor  ← 수동 추가 필요
+  ? /branch  ← 수동 추가 필요
+  ? /config  ← 수동 추가 필요
+  ? /context  ← 수동 추가 필요
+  ? /copy  ← 수동 추가 필요
+  ? /fast  ← 수동 추가 필요
+  ? /output-style  ← 수동 추가 필요
+  ? /reload-plugins  ← 수동 추가 필요
+  ? /resume  ← 수동 추가 필요
+  ? /rewind  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /advisor
+  ~ /branch
+  ~ /config
+  ~ /context
+  ~ /loop
+  ~ /model
+  ~ /output-style
+  ~ /plugin
+  ~ /reload-plugins
+  ~ /rewind
+  ~ /tui
+  ~ /ultrareview
+  ~ /usage
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-10-09/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed a stopped scheduled task coming back on resume after a rewind, and a scheduled task being lost on resume after Esc or a rewind following a compaction
+  - Improved token counts behind a Claude apps gateway on Amazon Bedrock, which `/context` and large file reads use: the gateway now gets them from AWS's CountTokens API instead of a one-token model request. Grant `bedrock:CountTokens` to use it
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Fixed `--tools` and `--restricted` not applying to built-in tools that register after launch, and deprecated tool names reaching tools outside the caller's tool set
+
+[ Hooks ]
+  PostgreSQL
+
+[ Settings ]
+  description
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.295
+
+- Added `onFailure: "block"` for command and HTTP hooks: a hook that can't start, times out, or exits with an unexpected code blocks the action instead of letting it through
+- Added Program Status Protocol (OSC 7501) support: terminals that implement it can show whether Claude Code is working, waiting on you, or done
+- Added quoted text to the `/copy` picker, so a drafted message copies without its `>` markers
+- Added a warning to `claude plugin install`, `enable`, `disable` and `marketplace add` when the settings file they write to does not load
+- Added a line on stderr, when it is a terminal, that says what a `claude -p` run is waiting for when it stays open after its last turn
+- Added support for `timeouts.upstream_ttfb_ms` on the Claude apps gateway's Bedrock, Vertex, Foundry and other cloud upstreams: a value you set now limits how long a stream may take to start there, after which it fails over or gets a 502
+- Added a "Backgrounding cancelled" message when you stop the turn while `←` is waiting for the current tool to finish
+- Added an optional `models` list to every Claude apps gateway upstream: only the listed models are sent there, on failover too, and one `*` in an entry is a wildcard
+- Added support for `forceLoginMethod: "gateway"` and `forceLoginGatewayUrl` in your own user settings on machines with no managed settings, so `/login` opens on that Claude apps gateway
+- Added advice to `claude plugin validate` when a plugin's README has no install line: it prints the line to paste and never changes the exit code, even with `--strict`
+- Added `upstream_request_id` to the Claude apps gateway's `inference` audit event: the request ID from Amazon Bedrock, the Anthropic API or another upstream, for support cases
+- Added `$.ui.notify` for mods: raises a native notification through your own notification setting and says which channel sent it
+- Added children to a mod's `Button`: strings and `Text`, so a row of a list is one pressable with a chip or a 
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
