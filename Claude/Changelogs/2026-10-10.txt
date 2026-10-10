@@ -19,7 +19,7 @@ Source: anthropics/claude-code CHANGELOG.md (main), 2.1.129 -> 2.1.296 (139 rele
 
 [삭제된 스킬]
 - review (code-review로 이름 변경, 통합)
-- color, theme, effort, tui, undo, usage, focus, 개별 항목 -> 스킬이 아닌 내장 명령이므로 cmds 한 줄로 축약
+- color, theme, effort, tui, undo, usage, focus: 스킬이 아닌 내장 명령이므로 cmds 한 줄로 축약
 
 [최적화된 구조]
 - 날짜 스냅샷 규칙 준수: Claude/skills/YYYY-MM-DD/skills
@@ -27,7 +27,7 @@ Source: anthropics/claude-code CHANGELOG.md (main), 2.1.129 -> 2.1.296 (139 rele
 - 신규 스냅샷은 skills.yaml 1개로 통합 (스킬 1줄 = 1항목)
 
 [토큰 절감 관련 변경 사항]
-- 카탈로그 9.2KB -> 약 4KB (약 55% 감소)
+- 카탈로그 9.2KB -> 약 2.9KB (약 68% 감소)
 - trigger/desc 한 줄 통합, added 태그/주석/중복 설명 제거
 - hooks/settings/env/cmds는 이름 목록으로 축약
 
