@@ -1,0 +1,34 @@
+# Claude Code skills v2.1.296 | src: anthropics/claude-code CHANGELOG | synced 2026-10-10
+# fmt: name: cmd | trigger | desc   (1 line each; canonical, do not duplicate elsewhere)
+version: 2.1.296
+skills:
+  # coding
+  code-review: /code-review [low|medium|high|xhigh|max] [--comment|--fix|--max-findings n|all] | review diff/PR/branch | bugs+cleanup findings, numbered list
+  simplify: /simplify | clean up changed code | reuse/quality/efficiency fixes (no bug hunt)
+  security-review: /security-review | audit branch changes | risk-ranked findings
+  ultrareview: /ultrareview [PR#] | multi-agent cloud review | billed; git 2.31+; local or PR
+  ultraplan: /ultraplan | complex cloud planning | multi-agent worktrees
+  run: /run | run/screenshot app, verify change | project skill first, else per-type pattern
+  goal: /goal <condition> | keep working until condition met | turns/tokens overlay
+  claude-api: /claude-api [cost-optimize|upgrade|managed-agents-onboard <url|name>] | anthropic SDK code, model/cost questions | Opus 4.8+, py 0.x->1.x
+  workflow-authoring: n/a | write Workflow script | script API, patterns
+  # docs
+  init: /init | document codebase | generate CLAUDE.md (AGENTS.md read if no CLAUDE.md)
+  dataviz: /dataviz | chart/dashboard design | palette validator
+  # config / meta
+  update-config: /update-config | hooks/permissions/env | settings.json
+  fewer-permission-prompts: /fewer-permission-prompts | reduce prompts | allowlist from transcripts
+  keybindings-help: /keybindings-help | remap keys | keybindings.json (effortSlider:* actions)
+  session-start-hook: /session-start-hook | cloud test/lint setup | SessionStart hook
+  plugin-authoring: n/a | make mod/hook/command/pane | plugin dev
+  skill-doctor: /skill-doctor | prune skills | unused skills + context cost
+  reload-skills: /reload-skills | rescan skill dirs | no restart
+  loop: /loop [interval] [cmd] | recurring task | default 10m; see /usage Loops
+  team-onboarding: /team-onboarding | teammate guide | from usage history
+  powerup: /powerup | learn features | demos
+hooks:  # block: exit 2 | {decision:"block"}; types: shell|mcp_tool|http
+  events: [PreToolUse*, PostToolUse, Notification, Stop, SubagentStop, PreCompact*, TaskCreated, WorktreeCreate, PermissionDenied(retry:true), DirectoryAdded]  # *=can block
+settings: [skillOverrides(off|user-invocable-only|name-only), modelPicker, modelPricing, workflowSizeGuideline, feedbackDrafts, disableSkillShellExecution, prUrlTemplate, sandbox.network.deniedDomains]
+env: [CLAUDE_EFFORT, CLAUDE_CODE_NO_FLICKER, ANTHROPIC_DEFAULT_MODEL, CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION(200), CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL, CLAUDE_CODE_GATEWAY_MODEL_DISCOVERY_TIMEOUT_MS]
+cmds: [/focus, /usage(+cost,loops), /undo=/rewind, /cd, /config k=v, /output-style, /diff, /doctor prompt-audit, /plugin list, /effort]
+models: {opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5, fable: claude-fable-5-1}
