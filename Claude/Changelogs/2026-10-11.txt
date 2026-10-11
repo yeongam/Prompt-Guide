@@ -20,7 +20,7 @@ Source: anthropics/claude-code (CHANGELOG.md + plugins/README.md), v2.1.296
 
 [삭제된 스킬]
 - review (-> code-review)
-- color, tui-only entries merged: color removed; undo/focus/tui kept as one-liners
+- color (유효 사용처 없음, 제거); undo/focus/tui/theme/powerup은 commands 한 줄로 축약
 
 [최적화된 구조]
 - 날짜별 구조 적용: skills/YYYY-MM-DD/skills
@@ -28,7 +28,7 @@ Source: anthropics/claude-code (CHANGELOG.md + plugins/README.md), v2.1.296
 - 항목별 cmd|when|what 한 줄 형식, trigger/desc/note 필드 제거
 
 [토큰 절감 관련 변경 사항]
-- 카탈로그 9230B(33 항목) -> 약 6.5KB(60+ 항목); 항목당 평균 토큰 약 55% 감소
+- 카탈로그 9230B -> 5138B (약 44% 감소), 항목은 33개 -> 약 70개로 확장
 - "added:" 버전 태그/중복 설명/주석 제거
 
 [충돌 해결 내역]
