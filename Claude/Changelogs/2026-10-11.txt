@@ -1,0 +1,38 @@
+Prompt-Guide Claude Skills Changelog - 2026-10-11
+
+Snapshot: Claude/skills/2026-10-11/skills (baseline: Claude/skills/2026-05-06/skills, v2.1.129)
+Source: anthropics/claude-code (CHANGELOG.md + plugins/README.md), v2.1.296
+
+[추가된 스킬]
+- code-review, run, plugin-authoring, workflow-authoring, skill-doctor
+- claude-opus-4-5-migration, frontend-design, hookify, feature-dev, commit-commands,
+  pr-review-toolkit, plugin-dev, agent-sdk-dev, ralph-wiggum, security-guidance, output-styles
+- commands: doctor(prompt-audit), diff, advisor, reload-plugins, web-setup, usage-credits
+- hooks: PreModelSwitch/PostModelSwitch; hook onFailure:"block"
+
+[수정된 스킬]
+- claude-api: +/claude-api upgrade (py anthropic 0.x->1.x)
+- loop: +Loops breakdown in /usage
+- usage: +spend limit, prompt-cache stats
+- effort: +session-only (s); keybinding actions
+- init: AGENTS.md fallback
+- models / settings / env tables refreshed to v2.1.296
+
+[삭제된 스킬]
+- review (-> code-review)
+- color, tui-only entries merged: color removed; undo/focus/tui kept as one-liners
+
+[최적화된 구조]
+- 날짜별 구조 적용: skills/YYYY-MM-DD/skills
+- 기존 flat 파일(SKILLS_CATALOG.yaml, .version)을 2026-05-06/skills로 이동 (내용 보존)
+- 항목별 cmd|when|what 한 줄 형식, trigger/desc/note 필드 제거
+
+[토큰 절감 관련 변경 사항]
+- 카탈로그 9230B(33 항목) -> 약 6.5KB(60+ 항목); 항목당 평균 토큰 약 55% 감소
+- "added:" 버전 태그/중복 설명/주석 제거
+
+[충돌 해결 내역]
+- /review vs /code-review: code-review로 통합, review 삭제
+- 플러그인 훅 중복명: 이름 충돌 시 하나만 로드(2.1.296 /plugin 안내) - 카탈로그에 단일 항목만 유지
+- 기존 날짜 디렉토리 없음: 베이스라인을 2026-05-06로 보존해 기존 동작 유지
+- 참고: .github/workflows/daily-skill-update.yml이 참조하는 scripts/update_skills.py 가 레포에 없음 (미수정)

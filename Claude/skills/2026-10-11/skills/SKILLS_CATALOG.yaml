@@ -1,0 +1,82 @@
+# Claude Code catalog | src: anthropics/claude-code | v2.1.296 | 2026-10-11
+# fmt: name: cmd | when | what  (compact, 1 line each)
+v: 2.1.296
+skills:
+  init: /init | init/document codebase | write CLAUDE.md (AGENTS.md read if no CLAUDE.md)
+  code-review: /code-review [level] [PR] [--comment|--fix] | review diff/PR | bug findings, optional inline comments/fixes (replaces /review)
+  security-review: /security-review | audit branch diff | risk-ranked findings
+  simplify: /simplify | clean changed code | reuse/quality/efficiency fixes
+  session-start-hook: /session-start-hook | cloud test/lint setup | SessionStart hook
+  update-config: /update-config | "when X"/allow/env | settings.json hooks,perms,env
+  keybindings-help: /keybindings-help | remap keys | keybindings.json (effortSlider:* actions)
+  fewer-permission-prompts: /fewer-permission-prompts | fewer dialogs | allowlist from transcripts
+  loop: /loop [interval] [cmd] | recurring task | interval or self-paced; /usage shows Loops breakdown
+  claude-api: /claude-api [upgrade] | anthropic SDK code | API/caching/tools; upgrade=py 0.x->1.x
+  run: /run | run/screenshot app | launch+drive project app
+  plugin-authoring: /plugin-authoring | make mod/hook/statusline | plugin mods
+  workflow-authoring: /workflow-authoring | write Workflow script | multi-agent orchestration ref
+  skill-doctor: /skill-doctor | prune skills | unused skills + context cost
+  ultrareview: /ultrareview [PR#] | multi-agent review | billed cloud review
+  ultraplan: /ultraplan | complex planning | cloud multi-agent plan
+  team-onboarding: /team-onboarding | teammate ramp-up | guide from usage
+  claude-opus-4-5-migration: skill | migrate to Opus 4.5 | model strings, beta headers, prompts
+  frontend-design: skill (auto) | frontend work | distinctive UI guidance
+  hookify: /hookify[:list|:configure|:help] | block unwanted behavior | rules from conversation
+  feature-dev: /feature-dev | new feature | 7-phase flow; agents code-explorer/architect/reviewer
+  commit-commands: /commit /commit-push-pr /clean_gone | git flow | commit/push/PR
+  pr-review-toolkit: /pr-review-toolkit:review-pr | deep PR review | comments,tests,errors,types,simplify
+  plugin-dev: /plugin-dev:create-plugin | build plugins | 7 skills + validator agents
+  agent-sdk-dev: /new-sdk-app | Agent SDK project | scaffold + verifier agents
+  ralph-wiggum: /ralph-loop /cancel-ralph | iterate to done | Stop-hook loop
+  security-guidance: hook PreToolUse | edit safety | warns 9 insecure patterns
+  output-styles: hook SessionStart | explanatory/learning | educational context
+commands:
+  doctor: /doctor [prompt-audit] | audit CLAUDE.md/skills/agents for old-model prompting (alias /checkup)
+  usage: /usage | tokens, spend limit, loops (merges /cost,/stats); /cost shows prompt-cache hit/miss
+  effort: /effort | slider; s=session-only
+  diff: /diff | side panel of uncommitted changes (fullscreen)
+  advisor: /advisor [model|off] | advisor model
+  focus: /focus | prompt+summary+response view
+  tui: /tui | flicker-free alt-screen
+  undo: /undo | alias /rewind
+  reload-plugins: /reload-plugins | also headless
+  web-setup: /web-setup | GitHub for Claude Code web
+  usage-credits: /usage-credits | request higher limit (Enterprise)
+  theme: /theme [name] | themes
+  powerup: /powerup | feature demos
+hooks:
+  # block: exit 2 | {decision:block} ; type: shell|mcp_tool|http ; onFailure:"block" fails closed (2.1.295)
+  PreToolUse: before tool; blockable
+  PostToolUse: after tool
+  Stop/SubagentStop: after turn
+  Notification: push events
+  PreCompact: before compaction; blockable
+  TaskCreated: on TaskCreate
+  WorktreeCreate: http returns worktreePath
+  PermissionDenied: {retry:true} reruns classifier
+  PreModelSwitch/PostModelSwitch: block/confirm/annotate model switch (2.1.251)
+settings:
+  skillOverrides: off|user-invocable-only|name-only
+  disableSkillShellExecution: bool
+  syncClaudeAiSkills/syncClaudeAiPlugins: false opts out of claude.ai sync
+  maxEffortLevel: cap effort (top-level or modelSettings)
+  promptCacheTtl/subagentPromptCacheTtl: 5m|1h
+  bashOutputMaxChars/taskOutputMaxChars: <=128K inline output
+  modelPicker, deniedModels, availableModelsMatch, allowedProviders: model/provider curation (managed)
+  attribution: false hides commit/PR attribution
+  timeFormat/timeZone/maxProseWidth/bashEditDiffEnabled/feedbackDrafts: display+tools
+  sandbox.network.deniedDomains: block domains
+env:
+  CLAUDE_EFFORT: effort in templates
+  CLAUDE_CODE_SUBAGENT_MODEL(_FORCE): subagent model override
+  CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL: workflow agent model
+  CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS: 1-256
+  CLAUDE_CODE_RESTRICTED=1: no command/code tools
+  CLAUDE_CODE_DISABLE_WEB_FETCH: 1=off
+  CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH: default 2048
+  CLAUDE_CODE_MCP_STARTUP_WAIT_MS: 0=no wait
+  CLAUDE_CODE_RETRY_WATCHDOG(_MAX_WAIT_MS): unattended 429/529 retry
+  CLAUDE_CODE_OVERLOADED_RETRY_(BASE|MAX)_DELAY_MS: 529 backoff
+  CLAUDE_CODE_NO_FLICKER: =/tui
+  DISABLE_UPDATES: 1=block updates
+models: {opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5, fable: claude-fable-5-1}
