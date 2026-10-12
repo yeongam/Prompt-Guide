@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.296
+updated: 2026-10-12
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -22,10 +22,11 @@ skills:
     trigger: user asks security audit of current branch changes
     desc: OWASP-focused audit of pending diffs; outputs risk-ranked findings
 
-  simplify:
-    cmd: /simplify
-    trigger: user asks to clean up or refactor changed code
-    desc: Review changed code for reuse/quality/efficiency, then fix issues
+  code-review:
+    cmd: /code-review [level] [--fix|--comment]
+    trigger: user asks to review/clean up/refactor diff or PR
+    desc: Review diff/PR for bugs+reuse/efficiency; --fix applies, --comment posts inline
+    alias: /simplify (quality-only cleanup, applies fixes)
 
   session-start-hook:
     cmd: /session-start-hook
@@ -57,16 +58,13 @@ skills:
     cmd: /claude-api
     trigger: code imports anthropic SDK; user asks about Claude API features
     desc: Build/debug Claude API apps; prompt caching, tool use, model migration
-    models:
-      opus: claude-opus-4-7
-      sonnet: claude-sonnet-4-6
-      haiku: claude-haiku-4-5-20251001
+    models: see models section
 
   ultrareview:
     cmd: /ultrareview [PR#]
     trigger: user says "ultrareview" or wants multi-agent review
     desc: Parallel multi-agent cloud code review; no-arg=local branch, arg=GitHub PR
-    note: Billed; requires git repo; no GitHub remote needed for local mode
+    note: billed; needs git repo
 
   ultraplan:
     cmd: /ultraplan
@@ -81,7 +79,7 @@ skills:
   effort:
     cmd: /effort
     trigger: user wants to adjust effort/quality level
-    desc: Interactive slider for session effort level (also: CLAUDE_EFFORT env var)
+    desc: "Interactive slider for session effort level (also CLAUDE_EFFORT env var)"
 
   powerup:
     cmd: /powerup
@@ -91,12 +89,12 @@ skills:
   tui:
     cmd: /tui
     trigger: rendering looks flickery or user wants full-screen mode
-    desc: Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)
+    desc: "Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)"
 
   focus:
     cmd: /focus
     trigger: user wants compact view of conversation
-    desc: Toggle focus view showing only: prompt + tool summary + final response
+    desc: "Toggle focus view showing only: prompt + tool summary + final response"
 
   undo:
     cmd: /undo
@@ -115,8 +113,67 @@ skills:
 
   color:
     cmd: /color
-    trigger: user wants a session color
-    desc: Set random session color (no args = random pick)
+    desc: Set session color
+
+  # ── new in 2.1.130-2.1.296 (coding/docs/productivity) ──
+  dataviz:
+    cmd: /dataviz
+    trigger: chart/dashboard/data-viz creation
+    desc: Chart design guidance + runnable color-palette validator
+
+  goal:
+    cmd: /goal <condition>
+    trigger: user wants autonomous multi-turn work until condition met
+    desc: Keep working across turns until done; live elapsed/turns/tokens panel
+
+  workflows:
+    cmd: /workflows
+    trigger: large task needing tens-hundreds of parallel agents (explicit opt-in)
+    desc: Dynamic workflows orchestrate background agents; /workflows lists runs
+
+  skill-doctor:
+    cmd: /skill-doctor
+    trigger: user wants to prune unused skills / cut context cost
+    desc: Shows unused loaded skills + context cost
+
+  reload-skills:
+    cmd: /reload-skills
+    trigger: skills edited mid-session
+    desc: Re-scan skill dirs without restart (/reload-plugins for plugins)
+
+  doctor:
+    cmd: /doctor [prompt-audit]
+    trigger: config problems; CLAUDE.md/skills bloat
+    desc: Diagnose setup; prompt-audit flags old-model prompt patterns; suggests trimming CLAUDE.md
+    alias: /checkup
+
+  cd:
+    cmd: /cd <dir>
+    trigger: move session to other dir
+    desc: Change working dir mid-session, prompt cache preserved
+
+  output-style:
+    cmd: /output-style [name]
+    desc: List/switch output styles (works headless)
+
+  claude-api-sub:
+    cmd: "/claude-api cost-optimize | upgrade | managed-agents-onboard <url>"
+    desc: API spend profiling; anthropic py 0.x->1.x migration; Managed Agents setup
+
+  config-set:
+    cmd: /config key=value
+    desc: Set any setting from prompt (interactive, -p, Remote Control); --help lists keys
+
+  usage-credits:
+    cmd: /usage-credits
+    desc: Renamed from /extra-usage (old name works)
+
+  advisor:
+    cmd: /advisor [model|off]
+    desc: Advisor model toggle (text form for headless/desktop)
+
+  doc-note:
+    note: AGENTS.md is read when project has no CLAUDE.md
 
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.
@@ -153,19 +210,16 @@ hooks:
     fires: Before conversation compaction
     can_block: true
     block_method: "exit 2 OR {decision:'block'}"
-    added: v2.1.85
     use: Prevent compaction during critical operations
 
   TaskCreated:
     fires: When task created via TaskCreate tool
     can_block: false
-    added: v2.1.90
     use: Log/track task creation events
 
   WorktreeCreate:
     fires: On worktree creation
     can_block: false
-    added: v2.1.88
     type_http: returns hookSpecificOutput.worktreePath
     use: Custom worktree provisioning via HTTP endpoint
 
@@ -173,8 +227,11 @@ hooks:
     fires: After auto-mode classifier denial
     can_block: false
     retry: "return {retry:true} to re-run classifier"
-    added: v2.1.95
     use: Custom permission escalation flows
+
+  DirectoryAdded:
+    fires: After /add-dir registers a working dir
+    can_block: false
 
   hook_invoke_types:
     - type: shell          # shell command (default)
@@ -187,33 +244,39 @@ settings:
   skillOverrides:
     type: "off | user-invocable-only | name-only"
     desc: "off=hidden from model+slash, user-invocable-only=hidden from model, name-only=minimal exposure"
-    added: v2.1.126
 
   autoScrollEnabled:
     type: bool
     desc: Disable auto-scroll in fullscreen TUI mode
-    added: v2.1.100
 
   showThinkingSummaries:
     type: bool
     default: false
     desc: Control thinking summary generation in responses
-    added: v2.1.95
 
   disableSkillShellExecution:
     type: bool
     desc: Disable inline shell execution within skill definitions
-    added: v2.1.98
 
   prUrlTemplate:
     type: string
     desc: Custom URL template for PR footer badge (e.g. custom code-review tools)
-    added: v2.1.101
 
   sandbox.network.deniedDomains:
     type: "list[string]"
     desc: Block specific domains even when broader allowlists exist
-    added: v2.1.85
+
+  disableBundledSkills: {type: bool, desc: Hide bundled skills/workflows/builtin cmds from model (env CLAUDE_CODE_DISABLE_BUNDLED_SKILLS)}
+  fallbackModel: {type: "list<=3", desc: Fallback models when primary overloaded}
+  maxEffortLevel: {type: string, desc: Cap effort level; also per modelSettings}
+  modelPicker: {type: list, desc: Curate /model picker}
+  worktree.baseRef: {type: "fresh|head", desc: Base ref for new worktrees}
+  sandbox.credentials: {desc: Block sandboxed cmds from credential files/secret env}
+  sandbox.network.strictAllowlist: {desc: Deny non-allowlisted hosts without prompting}
+  autoMode.classifyAllShell: {desc: Route all shell cmds through auto-mode classifier}
+  workflowSizeGuideline: {desc: Advisory workflow size small/medium/large}
+  attribution.sessionUrl: {desc: Omit session URL from attribution}
+  maxProseWidth: {type: int, desc: Cap prose width}
 
 # ─── ENV VARS ──────────────────────────────────────────────────────────────────
 env:
@@ -223,18 +286,16 @@ env:
   CLAUDE_STREAM_IDLE_TIMEOUT_MS: "Integer ms for streaming idle watchdog timeout"
   OTEL_LOG_RAW_API_BODIES: "1 = emit full API request/response bodies as OTEL events"
   DISABLE_UPDATES: "1 = block all update paths including manual 'claude update'"
+  ANTHROPIC_DEFAULT_MODEL: "Model new sessions start on; /model overrides"
+  CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION: "Subagent spawn cap (default 200)"
   CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1 = opt-in gateway /v1/models discovery"
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
-  default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
-  sonnet: claude-sonnet-4-6
+  default: claude-sonnet-5   # 1M ctx
+  fable: claude-fable-5
+  opus: claude-opus-4-8
+  sonnet: claude-sonnet-5
   haiku: claude-haiku-4-5-20251001
 
-# ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────
-# This catalog is structured for minimal token overhead:
-# - One canonical source (this file); skills reference it rather than duplicate
-# - YAML over JSON/Markdown: ~30% fewer tokens for structured data
-# - Descriptions capped at one line; examples only where non-obvious
-# - "added:" version tags kept for audit; remove if tokens are critical
+# Token notes: single source; one-line descs; no per-entry version tags.

@@ -1,0 +1,38 @@
+Claude Skills Sync - 2026-10-12
+Source: anthropics/claude-code CHANGELOG.md | Version: 2.1.129 -> 2.1.296
+
+[추가된 스킬 / Added]
+/dataviz, /goal, /workflows, /skill-doctor, /reload-skills, /doctor (prompt-audit, alias /checkup),
+/cd, /output-style, /claude-api subcommands (cost-optimize, upgrade, managed-agents-onboard),
+/config key=value, /usage-credits, /advisor
+Hook: DirectoryAdded
+Settings: disableBundledSkills, fallbackModel, maxEffortLevel, modelPicker, worktree.baseRef,
+  sandbox.credentials, sandbox.network.strictAllowlist, autoMode.classifyAllShell,
+  workflowSizeGuideline, attribution.sessionUrl, maxProseWidth
+Env: ANTHROPIC_DEFAULT_MODEL, CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION
+Models: sonnet-5 (default, 1M ctx), fable-5, opus-4-8
+
+[수정된 스킬 / Modified]
+- simplify -> code-review (upstream rename; /simplify kept as alias)
+- models: opus 4-7 -> 4-8, sonnet 4-6 -> 5; claude-api now references models section
+- version/updated fields -> 2.1.296 / 2026-10-12
+
+[삭제된 스킬 / Removed]
+- None (/agents wizard removed upstream; not in catalog)
+
+[최적화된 구조 / Structure]
+- Skills catalog stays single-file Claude/skills/SKILLS_CATALOG.yaml (+ .version)
+- Models listed once; claude-api references it instead of duplicating
+
+[토큰 절감 / Token savings]
+- Removed all per-entry "added: vX" tags and the verbose trailing notes block
+- Shortened notes (ultrareview, color); new entries are 1-line descs
+- Net: file grew ~2.0KB for 13 new skills + 11 settings (≈0.15KB/entry)
+
+[충돌 해결 / Conflicts]
+- Spec asks for "날짜/skills" layout; existing live layout is Claude/skills. Kept Claude/skills to avoid
+  breaking scripts/update_skills.py; date is tracked in Changelogs/<date>.txt and catalog 'updated'.
+- scripts/update_skills.py writes to repo-root changelogs/; spec path is Claude/Changelogs (script not modified).
+- simplify vs code-review naming: merged under code-review with alias.
+- Fixed pre-existing YAML parse errors (unquoted values containing ": "); catalog now loads with PyYAML.
+- Item 9 (no permission popups): no prompt mechanism available in this routine; no popups triggered.
