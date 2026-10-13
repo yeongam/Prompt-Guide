@@ -1,0 +1,92 @@
+# Claude Code Skills Catalog (compact) | src: anthropics/claude-code | repo: yeongam/Prompt-Guide
+# fmt: name: cmd | trigger | desc   (single source; reference, don't duplicate)
+version: 2.1.296
+updated: 2026-10-13
+
+skills:
+  # coding
+  init: /init | init/document codebase | write CLAUDE.md (AGENTS.md read if no CLAUDE.md)
+  code-review: /code-review [low|medium|high|xhigh|max|ultra] [PR#|branch] [--comment|--fix|--max-findings n] | review diff/PR | correctness findings; ultra=cloud deep review. Aliases: /review, /ultrareview
+  simplify: /simplify | clean up changed code | reuse/quality/efficiency review then fix
+  security-review: /security-review | security audit of branch diff | risk-ranked findings
+  claude-api: /claude-api [upgrade|prompt-audit] | anthropic SDK code/questions | build/debug API apps, caching, tools; upgrade py 0.x->1.x; audit prompts for old-model patterns
+  run: /run | run/screenshot app, verify change | launch app, drive it
+  workflow-authoring: n/a (model-loaded) | writing Workflow scripts | multi-agent workflow API ref
+  plugin-authoring: n/a | make mod/plugin/hook/statusline | mod authoring ref
+  session-start-hook: /session-start-hook | web sessions need tests/lint | SessionStart hook
+  update-config: /update-config | "when X"/permissions/env | edit settings.json hooks/perms/env
+  fewer-permission-prompts: /fewer-permission-prompts | too many prompts | transcript-derived allowlist
+  keybindings-help: /keybindings-help | rebind keys | edit keybindings.json
+  loop: /loop [interval] [cmd] | recurring task | repeat prompt/command (see /usage Loops)
+  dataviz: /dataviz | any chart/dashboard | palette + validator, form/mark/interaction rules
+  # docs (anthropic-skills)
+  docs: n/a | doc/report/guide | editable shared doc (default for documents)
+  docx: n/a | .docx | Word create/edit
+  pptx: n/a | .pptx | slides file
+  xlsx: n/a | .xlsx/.csv | spreadsheet
+  pdf: n/a | .pdf | read/merge/split/fill/OCR
+  # session/ux
+  skill-doctor: /skill-doctor | prune skills | unused skills + context cost
+  doctor: /doctor [prompt-audit] (alias /checkup) | health check | audit CLAUDE.md/skills for old-model prompts; trim CLAUDE.md
+  usage: /usage | token/cost | cost+stats, loops, spend limit; /cost shows prompt-cache hit
+  effort: /effort | quality level | slider; s=session-only; CLAUDE_EFFORT
+  focus: /focus | compact view | prompt+summary+response
+  tui: /tui | flicker | alt-screen (CLAUDE_CODE_NO_FLICKER)
+  diff: /diff | see uncommitted edits | side panel (fullscreen)
+  cd: /cd <dir> | change workdir | keeps prompt cache
+  config: /config [key=value] | change setting | works in -p/RC
+  advisor: /advisor [model|off] | advisor model | text form in headless
+  workflows: /workflows | view workflow runs | agent status filter (f)
+  rewind: /rewind (alias /undo) | undo | can resume from before /clear
+  reload-plugins: /reload-plugins | refresh plugins | also headless
+  web-setup: /web-setup | Claude Code on web | connect GitHub
+  teleport: /teleport | continue cloud session locally | claude --teleport <id>
+  team-onboarding: /team-onboarding | teammate ramp-up | guide from usage history
+  powerup: /powerup | learn features | interactive demos
+  theme: /theme [name] | theme | create/switch
+  color: /color | session color | random
+  feedback: /feedback | report issue | drafts (SendFeedback tool; feedbackDrafts)
+  # removed upstream (2.1.2xx): ultraplan
+
+hooks:   # block: exit 2 | {decision:"block"}; onFailure:"block" fails closed (2.1.2xx)
+  PreToolUse: before tool | block
+  PostToolUse: after tool | no block
+  Notification: push events (agent_needs_input/agent_completed) | no block
+  Stop: turn end | no block
+  SubagentStop: subagent end | no block
+  PreCompact: before compaction | block
+  TaskCreated: TaskCreate | no block
+  WorktreeCreate: worktree create | http->worktreePath
+  PermissionDenied: auto-mode denial | {retry:true}
+  PreModelSwitch/PostModelSwitch: model switch | block/confirm/annotate
+  DirectoryAdded: after /add-dir | no block
+  types: shell(default) | mcp_tool | http
+
+settings:  # .claude/settings.json | ~/.claude/settings.json
+  skillOverrides: off|user-invocable-only|name-only (alias keys apply)
+  disableBundledSkills: hide bundled skills (env CLAUDE_CODE_DISABLE_BUNDLED_SKILLS)
+  disableSkillShellExecution: no inline shell in skills
+  syncClaudeAiSkills/syncClaudeAiPlugins: false to opt out of claude.ai sync
+  promptCacheTtl/subagentPromptCacheTtl: 5m|1h cache TTL
+  maxEffortLevel: cap effort
+  bashOutputMaxChars/taskOutputMaxChars: inline output cap (<=128K)
+  modelPicker/availableModels/deniedModels/enforceAvailableModels: model curation
+  attribution: false | {sessionUrl:false}
+  sandbox: network.deniedDomains, network.strictAllowlist, filesystem.disabled, credentials
+  autoMode.classifyAllShell: classify all shell cmds
+  workflowSizeGuideline: advisory workflow size
+  timeFormat/timeZone, maxProseWidth, spellcheck, emojiCompletionEnabled, keybindingFlavor: UI
+  autoScrollEnabled, showThinkingSummaries, prUrlTemplate: (unchanged)
+
+env:
+  CLAUDE_EFFORT: effort level (${CLAUDE_EFFORT} in skills)
+  CLAUDE_CODE_SAFE_MODE: (--safe-mode) disable customizations
+  CLAUDE_CODE_RESTRICTED: (--restricted) no command tools/WebFetch
+  CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION: spawn cap (def 200)
+  CLAUDE_CODE_DISABLE_BUNDLED_SKILLS: hide bundled skills
+  CLAUDE_CODE_DISABLE_WEB_FETCH: disable WebFetch
+  CLAUDE_CODE_NO_FLICKER / CLAUDE_CODE_USE_POWERSHELL_TOOL / CLAUDE_STREAM_IDLE_TIMEOUT_MS / DISABLE_UPDATES / OTEL_LOG_RAW_API_BODIES / CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: unchanged
+  ANTHROPIC_DEFAULT_MODEL: start model (/model overrides)
+  CLAUDE_CLIENT_PRESENCE_FILE: mute mobile push when present
+
+models: {default: claude-sonnet-5-5, opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5, fable: claude-fable-5-1}

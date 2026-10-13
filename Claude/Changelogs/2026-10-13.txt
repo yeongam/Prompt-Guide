@@ -1,0 +1,43 @@
+Claude Skills Sync - 2026-10-13
+Source: anthropics/claude-code CHANGELOG  |  2.1.129 -> 2.1.296 (139 releases)
+Location: Claude/2026-10-13/skills/ (moved from Claude/skills/)
+
+[추가된 스킬 / Added]
+- code-review (/code-review [level|ultra] [--comment|--fix]); /review and /ultrareview folded in as aliases
+- run, workflow-authoring, plugin-authoring, dataviz
+- skill-doctor, doctor (prompt-audit, alias /checkup), diff, cd, config key=value, advisor, workflows,
+  rewind (alias /undo), reload-plugins, web-setup, teleport, feedback
+- claude-api subcommands: upgrade, prompt-audit
+- doc skills: docs, docx, pptx, xlsx, pdf
+- hooks: PreModelSwitch, PostModelSwitch, DirectoryAdded; onFailure:"block"
+- settings/env: disableBundledSkills, syncClaudeAiSkills/Plugins, promptCacheTtl, subagentPromptCacheTtl,
+  maxEffortLevel, bashOutputMaxChars, modelPicker, deniedModels, sandbox.*, autoMode.classifyAllShell,
+  CLAUDE_CODE_SAFE_MODE, CLAUDE_CODE_RESTRICTED, CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION, ANTHROPIC_DEFAULT_MODEL
+
+[수정된 스킬 / Modified]
+- init: AGENTS.md fallback
+- usage: loops breakdown, spend limit, prompt-cache hit (/cost)
+- effort: "s" = session-only
+- models: updated to Claude 5 family
+- scripts/update_skills.py, sync_changelogs.sh: paths -> Claude/<date>/skills, Claude/Changelogs
+
+[삭제된 스킬 / Removed]
+- ultraplan (removed upstream)
+- ultrareview, review as standalone entries (now /code-review aliases)
+- tui/undo/usage etc. kept; no other removals
+
+[최적화된 구조 / Structure]
+- Claude/skills -> Claude/2026-10-13/skills (date/skills rule)
+- Claude/Changelogs created (once)
+- Catalog rewritten: one line per entry, trigger+desc merged, nested blocks flattened
+
+[토큰 절감 / Token savings]
+- SKILLS_CATALOG.yaml 9230 B -> ~5.9 KB despite ~2x more entries
+  (removed per-entry multi-line fields, 'added:' tags, examples, notes, boilerplate comments)
+
+[충돌 해결 / Conflicts]
+- /simplify: upstream renamed to /code-review (cleanup behavior removed upstream), but runtime still ships both
+  -> kept simplify (cleanup) and code-review (bugs) as separate entries
+- /review, /ultrareview vs /code-review -> merged as aliases to avoid duplicate triggers
+- ultraplan removed upstream -> dropped
+- Old date-less Claude/skills path -> migrated; scripts updated to match
