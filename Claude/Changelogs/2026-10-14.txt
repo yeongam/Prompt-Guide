@@ -1,0 +1,41 @@
+Claude Skills Sync - 2026-10-14
+Source: anthropics/claude-code CHANGELOG.md | Version: 2.1.129 -> 2.1.299
+Layout: Claude/skills/<date>/skills/SKILLS_CATALOG.yaml (prev snapshot: 2026-05-06)
+
+[추가된 스킬 / Added]
+- /code-review (replaces /review), /run, /dataviz, /skill-doctor, /reload-skills
+- /goal, /cd, /doctor prompt-audit (/checkup), /output-style, /usage-credits, /rate-limit-options
+- /claude-api subcommands: upgrade, cost-optimize, prompt-audit, managed-agents-onboard
+- /config key=value, /plugin list|install --marketplace, /mcp reconnect all
+- Skill groups: workflow-authoring, plugin-authoring, artifact-*, docs/docx/pptx/xlsx/pdf
+- Hooks: PreModelSwitch, PostModelSwitch, DirectoryAdded, MessageDisplay, UserPromptSubmit
+- Settings/env: disableBundledSkills, fallbackModel, modelPicker, maxEffortLevel, idleCompaction,
+  worktree.baseRef, sandbox.*, Tool(param:value) rules; ~25 CLAUDE_CODE_* env vars
+- Models: opus-5-5, sonnet-5-5, haiku-5-5, fable-5-1
+
+[수정된 스킬 / Modified]
+- claude-api: models 4.x -> 5.x
+- /fast: Opus 5 / 4.8 only
+- /usage: now includes warnings (max effort, workflows, large tool results)
+- /rewind: can resume from before /clear
+- /resume: lists background (--bg) sessions
+- models.default: sonnet-4-6 -> sonnet-5-5
+
+[삭제된 스킬 / Removed]
+- /review (superseded by /code-review), /agents wizard, "Default teammate model" setting, Opus 4.7 fast mode
+
+[최적화된 구조 / Structure]
+- Catalog regrouped: code / docs / config / session / hooks / settings / env / models
+- Old catalog moved to 2026-05-06/skills/ (history kept); new in 2026-10-14/skills/
+- update_skills.py: writes catalog to <date>/skills/, logs to Claude/Changelogs/<date>.txt
+
+[토큰 절감 / Token savings]
+- Catalog 9230 -> 5336 bytes (-42%) despite ~2x the entries
+- One line per skill; "added:" tags, examples, notes, per-entry multi-line fields removed
+- Env vars/settings grouped in lists; unchanged UI commands merged into one line
+
+[충돌 해결 / Conflicts]
+- /review vs /code-review: kept alias note, single entry (code-review)
+- Dated layout vs flat Claude/skills/: flat catalog moved via git mv; .version kept at Claude/skills/
+- Script paths (changelogs/, flat catalog) repointed to Claude/Changelogs and dated dir
+- Not touched: GPT/, Gemini/, Claude prompt files

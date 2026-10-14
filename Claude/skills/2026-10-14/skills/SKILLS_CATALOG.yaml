@@ -1,0 +1,87 @@
+# Claude Code skills catalog | src: anthropics/claude-code CHANGELOG | daily sync
+# fmt: name: cmd | use (trigger/desc). Single source; reference, don't duplicate.
+version: 2.1.299
+updated: 2026-10-14
+prev: 2.1.129 (2026-05-06/skills)
+
+# ─ code / programming ─
+code:
+  init: /init | generate CLAUDE.md (architecture, conventions, cmds)
+  code-review: /code-review [low..max] [--comment|--fix] | correctness review of diff/PR (replaces /review)
+  ultrareview: /ultrareview [PR#] | multi-agent cloud review; billed
+  security-review: /security-review | risk-ranked audit of pending diff
+  simplify: /simplify | reuse/efficiency cleanup of changed code, applies fixes
+  run: /run | launch app, verify change works
+  claude-api: /claude-api [upgrade|cost-optimize|prompt-audit|managed-agents-onboard <url|name>] | Claude API/SDK; Opus5.5/Sonnet5.5/Haiku5.5/Fable5.1; py anthropic 0.x->1.x
+  session-start-hook: /session-start-hook | SessionStart hook for tests/linters (cloud)
+  workflow-authoring: skill | write Workflow scripts (needs user opt-in)
+  plugin-authoring: skill | build mods/hooks/panes; `claude plugin init <name>`
+  goal: /goal <condition> | keep working across turns until met
+  cd: /cd <dir> | change working dir, keep prompt cache
+# ─ docs / writing ─
+docs:
+  dataviz: /dataviz | chart/dashboard design + palette validator
+  artifact-design|capabilities|diagramming: skill | HTML artifact pages (design, runtime, SVG)
+  docs|docx|pptx|xlsx|pdf: skill | document/file generation
+# ─ config / maintenance ─
+config:
+  update-config: /update-config | settings.json hooks/permissions/env
+  config: "/config key=value" | set any setting inline; --help lists keys
+  keybindings-help: /keybindings-help | ~/.claude/keybindings.json
+  fewer-permission-prompts: /fewer-permission-prompts | allowlist from transcripts
+  loop: /loop [interval] [cmd] | recurring/self-paced run
+  skill-doctor: /skill-doctor | unused skills + context cost; prune
+  reload-skills: /reload-skills | rescan skill dirs
+  reload-plugins: /reload-plugins | reload plugins (also headless)
+  doctor: "/doctor [prompt-audit]" | diagnostics; alias /checkup; audits CLAUDE.md/skills for old-model patterns
+  output-style: /output-style [name] | list/switch styles
+  plugin: "/plugin list|install <p> --marketplace <src>" | plugin mgmt
+  mcp: "/mcp reconnect all" | retry failed MCP servers
+# ─ session ─
+session:
+  effort: /effort | effort level (CLAUDE_EFFORT)
+  fast: /fast | fast mode; Opus5/4.8 only
+  usage: /usage | tokens/cost; warns max effort, workflows, big tool results
+  usage-credits: /usage-credits | request higher limit (Enterprise)
+  rate-limit-options: /rate-limit-options | limit options (claude.ai)
+  rewind: /rewind (alias /undo) | also resumes pre-/clear
+  focus|tui|theme|color|scroll-speed|powerup|team-onboarding|ultraplan: cmd | UI/onboarding, unchanged
+  resume: /resume | includes --bg sessions
+removed: [/agents wizard (edit .claude/agents/ or ask Claude), /review->code-review, "Default teammate model" cfg, Opus4.7 fast]
+
+# ─ hooks (shell|mcp_tool|http) ─ block: exit 2 | {decision:"block"}
+hooks:
+  Pre/PostToolUse: before(block)/after tool
+  Notification|Stop|SubagentStop: alerts/turn end
+  PreCompact: block compaction
+  TaskCreated: task created
+  WorktreeCreate: http -> hookSpecificOutput.worktreePath
+  PermissionDenied: {retry:true} reruns classifier
+  PreModelSwitch|PostModelSwitch: block/confirm/annotate model switch
+  DirectoryAdded: after /add-dir
+  MessageDisplay: transform/hide assistant text
+  UserPromptSubmit: prompt submit
+
+# ─ settings (.claude/settings.json) ─
+settings:
+  skillOverrides: off|user-invocable-only|name-only
+  disableBundledSkills: hide bundled skills (env CLAUDE_CODE_DISABLE_BUNDLED_SKILLS)
+  syncClaudeAiSkills|syncClaudeAiPlugins: false = opt out of claude.ai sync
+  fallbackModel: up to 3 fallbacks
+  modelPicker: curated /model list
+  maxEffortLevel: cap effort
+  idleCompaction: false = off
+  autoMode.classifyAllShell: classify all shell
+  worktree.baseRef: fresh|head
+  sandbox: {network.strictAllowlist, network.deniedDomains, filesystem.disabled, credentials}
+  permissions: "Tool(param:value)" e.g. Agent(model:opus)
+  misc: [maxProseWidth, keybindingFlavor, vimInsertModeRemaps, attribution.sessionUrl, footerLinksRegexes, wheelScrollAccelerationEnabled, disableSkillShellExecution, prUrlTemplate, showThinkingSummaries, autoScrollEnabled]
+
+# ─ env ─
+env:
+  model: [ANTHROPIC_DEFAULT_MODEL, CLAUDE_CODE_SUBAGENT_MODEL_FORCE, CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL, CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS]
+  tokens: [CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS, CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH, CLAUDE_CODE_DISABLE_FILE_MENTIONS, CLAUDE_CODE_DISABLE_WEB_FETCH, CLAUDE_CODE_WEBFETCH_CACHE_TTL_MS]
+  retry: [CLAUDE_CODE_OVERLOADED_RETRY_BASE_DELAY_MS, CLAUDE_CODE_OVERLOADED_RETRY_MAX_DELAY_MS, CLAUDE_CODE_RETRY_WATCHDOG_MAX_WAIT_MS, CLAUDE_CODE_NONSTREAMING_TIMEOUT_RETRIES]
+  other: [CLAUDE_CODE_SAFE_MODE, CLAUDE_CODE_MCP_STARTUP_WAIT_MS, CLAUDE_CODE_PLUGIN_PREFER_HTTPS, CLAUDE_CODE_SESSION_ID, CLAUDE_CODE_DISABLE_MOUSE_CLICKS, CLAUDE_CLIENT_PRESENCE_FILE, CLAUDE_CODE_NO_FLICKER, CLAUDE_EFFORT]
+
+models: {default: claude-sonnet-5-5, opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5, fable: claude-fable-5-1}  # all 1M ctx
