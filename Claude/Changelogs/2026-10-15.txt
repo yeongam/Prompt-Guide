@@ -1,0 +1,54 @@
+Prompt-Guide Claude Skills Changelog - 2026-10-15
+
+Snapshot: Claude/skills/2026-10-15/skills
+Source: anthropics/claude-code @ 94506ff (CHANGELOG 2.1.300)
+Version: 2.1.129 -> 2.1.300
+
+[추가된 스킬]  (plugin 커맨드/스킬 -> <plugin>--<name>.md, 코딩/프로그래밍/문서 관련만)
+- agent-sdk-dev--new-sdk-app
+- claude-opus-4-5-migration--claude-opus-4-5-migration
+- code-review--code-review
+- commit-commands--clean_gone
+- commit-commands--commit-push-pr
+- commit-commands--commit
+- feature-dev--feature-dev
+- frontend-design--frontend-design
+- hookify--configure
+- hookify--hookify
+- hookify--list
+- hookify--writing-rules
+- plugin-dev--agent-development
+- plugin-dev--command-development
+- plugin-dev--create-plugin
+- plugin-dev--hook-development
+- plugin-dev--mcp-integration
+- plugin-dev--plugin-settings
+- plugin-dev--plugin-structure
+- plugin-dev--skill-development
+- pr-review-toolkit--review-pr
+- ralph-wiggum--cancel-ralph
+- ralph-wiggum--ralph-loop
+
+[수정된 스킬]
+- SKILLS_CATALOG.yaml: version/updated 갱신, plugin_skills 섹션 추가 (기존 skills/hooks/settings/env/models 항목 유지)
+
+[삭제된 스킬]
+- none (hookify--help, ralph-wiggum--help 는 문서성 중복이라 적용 대상에서 제외)
+
+[최적화된 구조]
+- 날짜/skills 규칙 적용: Claude/skills/2026-10-15/skills/
+- 플랫 파일 1개/스킬, 네이밍 <plugin>--<name>.md
+- repo 내부 유지보수용 커맨드(.claude/commands: dedupe, triage-issue 등)와 output-style/security-guidance 훅 플러그인은 제외
+- scripts/update_skills.py: 변경로그 경로를 Claude/Changelogs/<YYYY-MM-DD>.txt 로 수정
+
+[토큰 절감 관련 변경 사항]
+- 원본 25개 파일 193,913B -> 23개 파일 약 168KB(카탈로그 제외 기준) 이하
+- frontmatter를 name/description/argument-hint/allowed-tools만 유지
+- HTML 주석, 연속 빈 줄, 12줄 초과 코드블록, Examples/Resources/References/Troubleshooting 등 섹션 제거
+- 문서성 help 2개 제거; 카탈로그는 1줄 설명(YAML) 유지
+
+[충돌 해결 내역]
+- 기존 Claude/skills/SKILLS_CATALOG.yaml 이 날짜 디렉토리 규칙과 불일치 -> git mv 로 2026-10-15/skills/ 로 이동 (내용 보존)
+- .version 은 스크립트 호환을 위해 Claude/skills/.version 에 유지 (2.1.300)
+- 내장 스킬(init, review, simplify 등)과 이름이 겹치는 code-review 는 plugin 접두사로 구분
+- 기존 changelogs/ 경로 -> Claude/Changelogs/ 로 일원화

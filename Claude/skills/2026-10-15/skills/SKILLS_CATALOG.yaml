@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.300
+updated: 2026-10-15
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -117,6 +117,32 @@ skills:
     cmd: /color
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
+
+# ─── PLUGIN SKILLS (file: <plugin>--<name>.md in this dir) ───────────────────
+plugin_skills:
+  agent-sdk-dev--new-sdk-app: Create and setup a new Claude Agent SDK application
+  claude-opus-4-5-migration--claude-opus-4-5-migration: Migrate prompts and code from Claude Sonnet 4.0, Sonnet 4.5, or Opus 4.1 to Opus 4.5. Use 
+  code-review--code-review: Code review a pull request
+  commit-commands--clean_gone: Cleans up all git branches marked as [gone] (branches that have been deleted on the remote
+  commit-commands--commit-push-pr: Commit, push, and open a PR
+  commit-commands--commit: Create a git commit
+  feature-dev--feature-dev: Guided feature development with codebase understanding and architecture focus
+  frontend-design--frontend-design: Guidance for distinctive, intentional visual design when building new UI or reshaping an e
+  hookify--configure: Enable or disable hookify rules interactively
+  hookify--hookify: Create hooks to prevent unwanted behaviors from conversation analysis or explicit instruct
+  hookify--list: List all configured hookify rules
+  hookify--writing-rules: This skill should be used when the user asks to "create a hookify rule", "write a hook rul
+  plugin-dev--agent-development: This skill should be used when the user asks to "create an agent", "add an agent", "write 
+  plugin-dev--command-development: This skill should be used when the user asks to "create a slash command", "add a command",
+  plugin-dev--create-plugin: Guided end-to-end plugin creation workflow with component design, implementation, and vali
+  plugin-dev--hook-development: This skill should be used when the user asks to "create a hook", "add a PreToolUse/PostToo
+  plugin-dev--mcp-integration: This skill should be used when the user asks to "add MCP server", "integrate MCP", "config
+  plugin-dev--plugin-settings: This skill should be used when the user asks about "plugin settings", "store plugin config
+  plugin-dev--plugin-structure: This skill should be used when the user asks to "create a plugin", "scaffold a plugin", "u
+  plugin-dev--skill-development: This skill should be used when the user wants to "create a skill", "add a skill to plugin"
+  pr-review-toolkit--review-pr: Comprehensive PR review using specialized agents
+  ralph-wiggum--cancel-ralph: Cancel active Ralph Wiggum loop
+  ralph-wiggum--ralph-loop: Start Ralph Wiggum loop in current session
 
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.
