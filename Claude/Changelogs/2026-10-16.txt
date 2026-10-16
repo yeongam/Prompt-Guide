@@ -1,0 +1,35 @@
+Claude Skills Changelog 2026-10-16
+Upstream: anthropics/claude-code CHANGELOG  |  2.1.129 -> 2.1.301
+
+[추가된 스킬 / Added]
+- /code-review  (/review 대체; effort 레벨, --comment, --fix, ultra)
+- /dataviz      (차트/대시보드 가이드 + 팔레트 검증기)
+- /skill-doctor (미사용 스킬/컨텍스트 비용 확인)
+- /reload-skills(재시작 없이 스킬 재스캔)
+- /goal         (완료 조건까지 다중 턴 작업)
+- Hook DirectoryAdded; settings disableBundledSkills, syncClaudeAiSkills, modelPicker
+- Env CLAUDE_CODE_ENABLE_TODO_TOOLS, CLAUDE_CODE_SAFE_MODE, CLAUDE_CODE_DISABLE_ADVISOR_TOOL
+
+[수정된 스킬 / Modified]
+- /simplify   : cleanup 전용 리뷰 + 수정 적용으로 설명 갱신
+- /claude-api : upgrade, prompt-audit 서브커맨드, OTEL 가이드; 모델 ID 최신화
+- models      : fable-5-1, opus-5-5, sonnet-5-5, haiku-5-5 (기본 sonnet-5-5)
+- version/updated 필드 2.1.301 / 2026-10-16
+
+[삭제된 스킬 / Removed]
+- /review 독립 항목 (code-review의 alias로 병합)
+
+[최적화된 구조 / Structure]
+- 최신본: Claude/skills/ (스크립트 호환 유지) + 날짜 스냅샷: Claude/2026-10-16/skills/
+- 일부 항목 인라인(flow) 형식으로 축약
+
+[토큰 절감 / Token savings]
+- "added:" 감사 태그 및 example 필드 제거, TOKEN OPTIMIZATION 주석 블록 축약
+- /review 중복 항목 제거
+- 카탈로그 약 9.2KB -> 약 9.9KB (신규 5개 스킬/설정 추가 후에도 증가분 최소화)
+
+[충돌 해결 / Conflicts]
+- /review vs /code-review: upstream에서 alias화 → code-review 단일 항목으로 통합
+- "날짜/skills" 규칙 vs 기존 Claude/skills 경로(스크립트 의존): 둘 다 유지
+- scripts/update_skills.py는 changelogs/(소문자)를 사용 → Claude/Changelogs/ 사용 규칙과 상이; 기존 동작 보존 위해 미수정
+- 스킵: 환경 목록에만 있고 upstream 변경로그에 근거 없는 run/plugin-authoring/workflow-authoring (미등록)
