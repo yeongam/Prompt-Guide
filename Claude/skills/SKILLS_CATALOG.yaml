@@ -98,7 +98,7 @@ skills:
   effort:
     cmd: /effort
     trigger: user wants to adjust effort/quality level
-    desc: Interactive slider for session effort level (also: CLAUDE_EFFORT env var)
+    desc: Interactive slider for session effort level (also - CLAUDE_EFFORT env var)
 
   powerup:
     cmd: /powerup
@@ -108,12 +108,12 @@ skills:
   tui:
     cmd: /tui
     trigger: rendering looks flickery or user wants full-screen mode
-    desc: Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)
+    desc: Switch to flicker-free alt-screen TUI rendering (also - CLAUDE_CODE_NO_FLICKER)
 
   focus:
     cmd: /focus
     trigger: user wants compact view of conversation
-    desc: Toggle focus view showing only: prompt + tool summary + final response
+    desc: Toggle focus view showing only - prompt + tool summary + final response
 
   undo:
     cmd: /undo

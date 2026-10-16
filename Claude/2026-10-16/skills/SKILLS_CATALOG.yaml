@@ -56,7 +56,7 @@ skills:
   claude-api:
     cmd: /claude-api
     trigger: code imports anthropic SDK; user asks about Claude API features
-    desc: Build/debug Claude API apps; caching, tool use, OTEL tracing; subcommands: upgrade (py 0.x->1.x), prompt-audit
+    desc: Build/debug Claude API apps; caching, tool use, OTEL tracing; subcommands upgrade (py 0.x->1.x), prompt-audit
     models: {fable: claude-fable-5-1, opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5}
 
   dataviz:
@@ -98,7 +98,7 @@ skills:
   effort:
     cmd: /effort
     trigger: user wants to adjust effort/quality level
-    desc: Interactive slider for session effort level (also: CLAUDE_EFFORT env var)
+    desc: Interactive slider for session effort level (also - CLAUDE_EFFORT env var)
 
   powerup:
     cmd: /powerup
@@ -108,12 +108,12 @@ skills:
   tui:
     cmd: /tui
     trigger: rendering looks flickery or user wants full-screen mode
-    desc: Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)
+    desc: Switch to flicker-free alt-screen TUI rendering (also - CLAUDE_CODE_NO_FLICKER)
 
   focus:
     cmd: /focus
     trigger: user wants compact view of conversation
-    desc: Toggle focus view showing only: prompt + tool summary + final response
+    desc: Toggle focus view showing only - prompt + tool summary + final response
 
   undo:
     cmd: /undo

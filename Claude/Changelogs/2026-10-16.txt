@@ -22,11 +22,12 @@ Upstream: anthropics/claude-code CHANGELOG  |  2.1.129 -> 2.1.301
 [최적화된 구조 / Structure]
 - 최신본: Claude/skills/ (스크립트 호환 유지) + 날짜 스냅샷: Claude/2026-10-16/skills/
 - 일부 항목 인라인(flow) 형식으로 축약
+- 기존 YAML 파싱 오류(desc 내 ": ") 수정
 
 [토큰 절감 / Token savings]
 - "added:" 감사 태그 및 example 필드 제거, TOKEN OPTIMIZATION 주석 블록 축약
 - /review 중복 항목 제거
-- 카탈로그 약 9.2KB -> 약 9.9KB (신규 5개 스킬/설정 추가 후에도 증가분 최소화)
+- 카탈로그 9.2KB -> 약 9.9KB (신규 항목 추가분 포함, 중복/감사 태그 제거로 증가 최소화)
 
 [충돌 해결 / Conflicts]
 - /review vs /code-review: upstream에서 alias화 → code-review 단일 항목으로 통합
