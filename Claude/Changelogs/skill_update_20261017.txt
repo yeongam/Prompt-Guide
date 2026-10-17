@@ -1,0 +1,69 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-10-17 02:13 UTC
+Version : 2.1.301 → 2.1.302
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-10-17/
+============================================================
+
+[ ★ 신규 감지 스킬 (5개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /autocompact  ← 수동 추가 필요
+  ? /config  ← 수동 추가 필요
+  ? /design-login  ← 수동 추가 필요
+  ? /design-sync  ← 수동 추가 필요
+  ? /feedback  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /design-login
+  ~ /effort
+  ~ /feedback
+  ~ /mcp
+  ~ /plugin
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-10-17/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Added an `Idle compaction` row to `/config` for turning idle compaction off or back on; the notices shown after an idle compaction now say how to turn it off
+  - Fixed a "Prompt is too long" error when stopping a turn while the conversation was being compacted
+  - Fixed `/autocompact` and `/effort` saving to the wrong model when a gateway names Opus 4 or 4.1 with a prefix, such as `anthropic/claude-opus-4-1`
+  - Fixed a prompt cache miss when a tool added mid-session was loaded again through ToolSearch or after compaction
+  - Improved auto mode with the server-side classifier: a conversation too long for the safety check is now compacted, instead of every checked tool call being denied
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - [Cloud sessions] Fixed the pull request status bar in cloud sessions flipping a pull request with merge conflicts back to ready while GitHub rechecked it
+
+[ Hooks ]
+  (없음)
+
+[ Settings ]
+  cacheScope
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.302
+
+- Added `CLAUDE_CODE_AUTO_MODE_MODEL` to choose the model the client-side auto mode classifier uses; it does not change the model for server-side auto mode
+- Added an `Idle compaction` row to `/config` for turning idle compaction off or back on; the notices shown after an idle compaction now say how to turn it off
+- Added a notice to `/design-sync` and `/design-login` that standalone Claude Design (claude.ai/design) closes by December 14, 2026
+- Fixed a "Prompt is too long" error when stopping a turn while the conversation was being compacted
+- Fixed requests failing with "diagnostics: Extra inputs are not permitted" after switching to Vertex or Bedrock mid-session
+- Fixed the Read tool loading an image file of any size, or a pipe or device named like an image, entirely into memory; image sources over 128 MB are now refused
+- Fixed `/autocompact` and `/effort` saving to the wrong model when a gateway names Opus 4 or 4.1 with a prefix, such as `anthropic/claude-opus-4-1`
+- Fixed a prompt cache miss when a tool added mid-session was loaded again through ToolSearch or after compaction
+- Fixed `claude plugin` and other subcommands sometimes exiting before a queued settings or config write finished, which could lose the change or leave a `.tmp` file behind
+- Fixed plugin marketplaces re-cloning on every refresh, and newly installed git plugins showing version "unknown", when git defaults to the reftable ref format
+- Fixed the PowerShell tool not finding commands in a plugin's `bin/` folder, and reporting an error when a search that finds nothing (rg, grep, findstr, git grep) is piped into `Select-Object` or another formatting cmdlet
+- Fixed Claude in the desktop app pointing you to claude.ai settings or `/mcp` to authorize or reconnect an MCP server where that option isn't available
+- Fixed artifact publishes sometimes failing when Claude sent an empty list of edits, and Claude retrying an artifact update the wrong way after a newer version of the artifact tu
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
