@@ -1,0 +1,36 @@
+Claude Skills Sync 2026-10-17
+Source: anthropics/claude-code CHANGELOG  |  2.1.129 -> 2.1.302
+Output: Claude/2026-10-17/skills/ (SKILLS_CATALOG.yaml, .version)
+
+[추가된 스킬 / Added]
+/code-review, /goal, /dataviz, /skill-doctor, /reload-skills, /cd, /diff,
+/workflows, /advisor, /fast, /btw, /scroll-speed, /web-setup, /design-sync,
+/doctor (prompt-audit), /claude-api upgrade|prompt-audit
+Hooks: PreModelSwitch, PostModelSwitch, DirectoryAdded, MessageDisplay (+onFailure:"block", terminalSequence)
+Settings: disableBundledSkills, syncClaudeAiSkills, workflowSizeGuideline, modelPicker, modelPricing, feedbackDrafts
+Env: CLAUDE_CODE_SAFE_MODE, CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION, CLAUDE_CODE_AUTO_MODE_MODEL, ANTHROPIC_DEFAULT_MODEL
+
+[수정된 스킬 / Modified]
+/simplify  -> upstream renamed to /code-review (cleanup behavior removed upstream)
+/effort    -> ultracode toggle, session-only (s)
+/usage     -> loops, spend limit, cache-miss cause; /extra-usage -> /usage-credits
+/claude-api -> models updated (Fable 5.1, Opus 5.5, Sonnet 5.5, Haiku 5.5)
+/init      -> AGENTS.md fallback
+/undo      -> /rewind can resume pre-/clear
+
+[삭제된 스킬 / Removed]
+None. (No upstream removal of existing catalog entries; /simplify kept as alias.)
+
+[최적화된 구조 / Structure]
+- New dated layout: Claude/<date>/skills/ (2026-10-17)
+- Entries collapsed to one line "cmd | trigger | desc"; hooks/settings/env/models one line each
+- Legacy Claude/skills/ left untouched so scripts/update_skills.py keeps working
+
+[토큰 절감 / Token savings]
+- Catalog 9230 B -> 5486 B (-41%) despite +16 skills, +4 hooks, +6 settings
+- Dropped per-entry 'added:', 'example', 'note', and prose comment blocks
+
+[충돌 해결 / Conflicts]
+- /simplify vs /code-review: kept both; /simplify marked compat alias, /code-review canonical
+- Model IDs: replaced old opus-4-7/sonnet-4-6/haiku-4-5 with current IDs
+- Old Claude/skills not overwritten (script path dependency); migrate script path in a later run

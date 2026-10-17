@@ -1,0 +1,94 @@
+# Claude Code skills catalog | src: anthropics/claude-code | v2.1.302 | 2026-10-17
+# fmt: name: "cmd | trigger | desc"  (compact; one line each)
+version: 2.1.302
+updated: 2026-10-17
+
+skills:
+  # coding
+  init: "/init | init/document codebase | gen CLAUDE.md (AGENTS.md fallback if absent)"
+  code-review: "/code-review [low|medium|high|xhigh|max] [--comment|--fix] | review diff/PR for bugs | correctness review at effort level; --comment=inline PR comments; medium also reports cleanup+CLAUDE.md findings (replaces /simplify)"
+  simplify: "/simplify | cleanup changed code | reuse/quality/efficiency fixes (upstream: renamed to /code-review; kept as alias for compat)"
+  review: "/review | review PR | multi-pass PR review"
+  security-review: "/security-review | audit branch diff | risk-ranked findings"
+  ultrareview: "/ultrareview [PR#] | multi-agent review | cloud, billed; no arg=local branch"
+  ultraplan: "/ultraplan | complex planning | cloud multi-agent worktrees"
+  goal: "/goal <condition> | work until done | keeps going across turns until condition met; interactive/-p/RC"
+  claude-api: "/claude-api [upgrade|prompt-audit] | anthropic SDK code | build/debug API apps; upgrade=py 0.x->1.x; prompt-audit=flag old-model prompt patterns; OTEL tracing guide"
+  dataviz: "/dataviz | chart/dashboard | design guidance + palette validator"
+  session-start-hook: "/session-start-hook | test/lint on cloud session start | SessionStart hook"
+  cd: "/cd <dir> | change session dir | keeps prompt cache"
+  diff: "/diff | view uncommitted changes | side panel (fullscreen)"
+  workflows: "/workflows | manage workflow runs | list/stop(x)/filter(f)"
+  # config / docs / maintenance
+  update-config: "/update-config | automation/permissions/env | edit settings.json"
+  keybindings-help: "/keybindings-help | remap keys | ~/.claude/keybindings.json (effortSlider:* actions)"
+  fewer-permission-prompts: "/fewer-permission-prompts | fewer dialogs | allowlist from transcripts"
+  loop: "/loop [interval] [cmd] | recurring task | default 10m"
+  skill-doctor: "/skill-doctor | prune skills | shows unused skills + context cost"
+  reload-skills: "/reload-skills | skills changed | rescan dirs w/o restart"
+  doctor: "/doctor [prompt-audit] | diagnose | audits CLAUDE.md/skills/agents; suggests trimming CLAUDE.md"
+  team-onboarding: "/team-onboarding | teammate ramp-up | guide from usage history"
+  # session / ui
+  effort: "/effort [ultracode on|off] | adjust effort | slider; s=session-only; ${CLAUDE_EFFORT}"
+  usage: "/usage | tokens/cost | merged /cost+/stats; loops, spend limit, cache-miss cause; /usage-credits=extra usage"
+  advisor: "/advisor [model|off] | second-model advice | opt-in"
+  fast: "/fast | faster output | same model"
+  focus: "/focus | compact view | prompt+summary+response"
+  tui: "/tui | flicker-free | CLAUDE_CODE_NO_FLICKER"
+  undo: "/undo | undo | alias /rewind (can resume pre-/clear)"
+  btw: "/btw | side question | c=copy markdown"
+  powerup: "/powerup | learn features | interactive demos"
+  theme: "/theme [name] | colors | custom themes"
+  color: "/color | session color | random"
+  scroll-speed: "/scroll-speed | wheel speed | live preview"
+  web-setup: "/web-setup | cloud sessions | GitHub connect"
+  design-sync: "/design-sync, /design-login | Claude Design | standalone closes 2026-12-14"
+
+hooks:  # block=exit 2 or {decision:"block"}; types: shell|mcp_tool|http; onFailure:"block" for command/http
+  PreToolUse: "before tool | blockable"
+  PostToolUse: "after tool"
+  Notification: "push events; agent_needs_input/agent_completed"
+  Stop: "turn end"
+  SubagentStop: "subagent end"
+  PreCompact: "before compaction | blockable"
+  TaskCreated: "task created"
+  WorktreeCreate: "worktree created | http returns worktreePath"
+  PermissionDenied: "auto-mode denial | {retry:true}"
+  PreModelSwitch: "before model switch | block/confirm/annotate"
+  PostModelSwitch: "after model switch"
+  DirectoryAdded: "after /add-dir"
+  MessageDisplay: "transform/hide assistant text on display"
+  extra: "hook JSON field terminalSequence emits notifications/titles/bells"
+
+settings:  # .claude/settings.json or ~/.claude/settings.json
+  skillOverrides: "off|user-invocable-only|name-only"
+  disableBundledSkills: "bool (env CLAUDE_CODE_DISABLE_BUNDLED_SKILLS) hide bundled skills"
+  disableSkillShellExecution: "bool"
+  syncClaudeAiSkills: "bool (false=opt out); also syncClaudeAiPlugins"
+  workflowSizeGuideline: "small|medium|large advisory"
+  modelPicker: "ordered labeled /model list"
+  modelPricing: "managed; contracted rates"
+  feedbackDrafts: "bool; SendFeedback tool"
+  autoScrollEnabled: "bool"
+  showThinkingSummaries: "bool (default false)"
+  prUrlTemplate: "string"
+  sandbox.network.deniedDomains: "list"
+
+env:
+  CLAUDE_EFFORT: "effort; usable in skills"
+  CLAUDE_CODE_NO_FLICKER: "1=alt-screen"
+  CLAUDE_CODE_USE_POWERSHELL_TOOL: "1=PowerShell tool"
+  CLAUDE_STREAM_IDLE_TIMEOUT_MS: "idle watchdog ms"
+  CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION: "default 200"
+  CLAUDE_CODE_SAFE_MODE: "1=disable all customizations (--safe-mode)"
+  CLAUDE_CODE_AUTO_MODE_MODEL: "auto-mode classifier model"
+  ANTHROPIC_DEFAULT_MODEL: "start model; /model overrides"
+  CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1=gateway /v1/models"
+  DISABLE_UPDATES: "1=block updates"
+  OTEL_LOG_RAW_API_BODIES: "1=raw bodies"
+
+models:  # 1M ctx default on Opus 4.7+/Sonnet 5+/Fable
+  fable: claude-fable-5-1
+  opus: claude-opus-5-5
+  sonnet: claude-sonnet-5-5
+  haiku: claude-haiku-5-5
