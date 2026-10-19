@@ -1,0 +1,58 @@
+# Claude Code skills catalog (compact). Source: @anthropic-ai/claude-code release + session skill roster.
+# Row format: name: "cmd | trigger | desc"
+version: 2.1.303
+updated: 2026-10-19
+skills:
+  init: "/init | init/document codebase | generate CLAUDE.md"
+  review: "/review | review PR/branch | multi-pass PR review"
+  code-review: "/code-review [level] [--comment|--fix] | review diff/PR | correctness findings, optional inline comments/fixes"
+  security-review: "/security-review | security audit of branch diff | OWASP risk-ranked findings"
+  simplify: "/simplify | clean up changed code | reuse/quality/efficiency fixes"
+  session-start-hook: "/session-start-hook | test/lint on session start | create SessionStart hook"
+  update-config: "/update-config | automated behavior, permissions, env | edit settings.json"
+  keybindings-help: "/keybindings-help | remap keys | edit keybindings.json"
+  fewer-permission-prompts: "/fewer-permission-prompts | fewer dialogs | allowlist from transcripts"
+  loop: "/loop [interval] [cmd] | recurring task | repeat prompt; omit interval=self-paced"
+  claude-api: "/claude-api | anthropic SDK code/questions | API, caching, tools, model migration"
+  run: "/run | run app/confirm change works | launch+drive project app"
+  plugin-authoring: "/plugin-authoring | build mod/hook/status line/slash cmd | author plugin"
+  workflow-authoring: "/workflow-authoring | write Workflow script | script API reference"
+  ultrareview: "/ultrareview [PR#] | multi-agent review | parallel cloud review (billed)"
+  ultraplan: "/ultraplan | complex planning | cloud worktrees for multi-agent plans"
+  team-onboarding: "/team-onboarding | teammate ramp-up | guide from usage history"
+  effort: "/effort | adjust effort | slider; CLAUDE_EFFORT"
+  powerup: "/powerup | learn features | interactive demos"
+  tui: "/tui | flicker/full-screen | alt-screen render; CLAUDE_CODE_NO_FLICKER"
+  focus: "/focus | compact view | prompt+tool summary+final reply"
+  undo: "/undo | undo last action | alias /rewind"
+  usage: "/usage | token/cost stats | merged /cost+/stats"
+  theme: "/theme [name] | change theme | create/switch themes"
+  color: "/color | session color | random pick"
+hooks:
+  # block: exit 2 or {decision:"block",reason}; `if` field = permission-rule filter
+  PreToolUse: "before tool | block=y | validate/log/inject context"
+  PostToolUse: "after tool | block=n | log/follow-up"
+  Notification: "push event | block=n | forward alerts"
+  Stop: "turn end | block=n | post-turn logging"
+  SubagentStop: "subagent end | block=n | aggregate results"
+  PreCompact: "before compaction | block=y | v2.1.85"
+  TaskCreated: "TaskCreate | block=n | v2.1.90"
+  WorktreeCreate: "worktree create | block=n | v2.1.88; http returns hookSpecificOutput.worktreePath"
+  PermissionDenied: "auto-mode denial | block=n | v2.1.95; {retry:true} reruns classifier"
+  types: [shell, mcp_tool(v2.1.118), http]
+settings:
+  skillOverrides: "off|user-invocable-only|name-only (v2.1.126)"
+  autoScrollEnabled: "bool; fullscreen auto-scroll (v2.1.100)"
+  showThinkingSummaries: "bool=false (v2.1.95)"
+  disableSkillShellExecution: "bool (v2.1.98)"
+  prUrlTemplate: "string; PR badge URL (v2.1.101)"
+  sandbox.network.deniedDomains: "list; block domains (v2.1.85)"
+env:
+  CLAUDE_EFFORT: "effort level; ${CLAUDE_EFFORT} in skills"
+  CLAUDE_CODE_NO_FLICKER: "1=alt-screen"
+  CLAUDE_CODE_USE_POWERSHELL_TOOL: "1=PowerShell tool"
+  CLAUDE_STREAM_IDLE_TIMEOUT_MS: "stream idle watchdog ms"
+  OTEL_LOG_RAW_API_BODIES: "1=raw API bodies as OTEL"
+  DISABLE_UPDATES: "1=block all updates"
+  CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1=gateway /v1/models"
+models: {fable: claude-fable-5-1, opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5}

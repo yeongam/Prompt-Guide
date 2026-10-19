@@ -1,0 +1,33 @@
+Prompt-Guide Claude Skills Changelog - 2026-10-19
+
+Version: 2.1.129 -> 2.1.303 (npm @anthropic-ai/claude-code latest)
+Snapshot: Claude/skills/2026-10-19/skills
+
+[주의 / Limitation]
+- anthropics/claude-code GitHub 레포는 이 세션 범위 밖이라 접근 불가(CHANGELOG.md 미확인).
+- 버전은 npm 공식 릴리스, 신규 스킬은 세션 스킬 목록 기준. 상세 신규 기능은 다음 실행에서 재확인 필요.
+
+[추가된 스킬]
+- code-review, run, plugin-authoring, workflow-authoring
+
+[수정된 스킬]
+- models 항목: opus-5-5 / sonnet-5-5 / haiku-5-5 / fable-5-1 로 갱신
+- claude-api: 모델 목록은 models 항목 참조로 일원화
+
+[삭제된 스킬]
+- none (review, ultrareview 등은 세션 목록에 없으나 미확인이므로 안정성 위해 유지)
+
+[최적화된 구조]
+- 날짜/skills 규칙 적용: Claude/skills/2026-10-19/skills/SKILLS_CATALOG.yaml
+- 기존 flat Claude/skills/SKILLS_CATALOG.yaml 제거(이동)
+- Claude/skills/.version = 2.1.303
+
+[토큰 절감 관련 변경 사항]
+- 스킬당 다중행 YAML -> "cmd | trigger | desc" 1행 문자열
+- 중복 모델 목록, 주석, 설명성 문단 제거
+- 카탈로그 약 9.2KB -> 약 5KB (신규 4개 스킬 포함)
+
+[충돌 해결 내역]
+- 신규 스킬명이 기존과 중복 없음; review/code-review 병존(별개 명령)
+- 구조 충돌: flat 파일 vs 날짜 디렉토리 -> 날짜 디렉토리로 통합
+- scripts/update_skills.py, 워크플로 경로는 이번 실행에서 미수정(기존 동작 유지)
