@@ -1,0 +1,75 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-10-20 02:42 UTC
+Version : 2.1.303 → 2.1.304
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-10-20/
+============================================================
+
+[ ★ 신규 감지 스킬 (8개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /Volumes  ← 수동 추가 필요
+  ? /artifacts  ← 수동 추가 필요
+  ? /auto-mode-setup  ← 수동 추가 필요
+  ? /config  ← 수동 추가 필요
+  ? /fast  ← 수동 추가 필요
+  ? /media  ← 수동 추가 필요
+  ? /privacy-settings  ← 수동 추가 필요
+  ? /reload-skills  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /artifacts
+  ~ /config
+  ~ /loop
+  ~ /media
+  ~ /privacy-settings
+  ~ /reload-skills
+  ~ /usage
+
+[ 삭제된 스킬 / Removed Skills ]
+  - /fast
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-10-20/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Added the names of the tools called earlier to the compaction summary in the transcript view (Ctrl+O)
+  - Fixed a "Context limit reached" or "Prompt is too long" error after stopping a turn while Claude Code was compacting a conversation the API had rejected as too long
+  - Fixed `CLAUDE_CODE_AUTO_COMPACT_WINDOW=200k` silently setting a 100K window: the variable now accepts `k` and `M` suffixes like `--autocompact`, and warns when a value is out of range or ignored
+  - Improved resume of large compacted sessions in SDK and headless mode: the first request after resuming is sent sooner
+  - Changed compaction to send Claude the skill list again afterwards; `/reload-skills` now sends only new or changed skills
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  PreToolUse
+  Stop
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.304
+
+- Added a transcript line when a plugin that runs first skips one of your mod's hooks, naming the event and the plugin
+- Added `decider: "person"` to a mod's `tool.check` answer: only the permission dialog or a host's callback can approve the ask, and it is refused with the mod's reason where nobody can be asked
+- Added `e.isReadOnly` to a mod's `tool.check` event, set when the tool call is read-only
+- Added `/auto-mode-setup`: a guided setup that reads your project and recent sessions to teach auto mode about your environment, now also available on Bedrock, Vertex, Foundry, Claude apps gateway and telemetry-disabled sessions
+- Added `/claude-api managed-agents-secure`, which compares a Managed Agents agent's settings with Anthropic's published security guide, without changing anything
+- Added the names of the tools called earlier to the compaction summary in the transcript view (Ctrl+O)
+- Added a warning on Pro and Max plans when resuming an inactive conversation would use a noticeable share of your 5-hour usage limit: resume anyway, or start a new conversation and Claude can look up the previous one if you refer to it
+- Fixed the organization policy not refreshing until the hourly check after approving an `ANTHROPIC_API_KEY` at startup or switching "Use custom API key" in `/config`
+- Fixed sandboxed commands failing to start on Linux when a `sandbox.filesystem.denyRead` glob contains brackets that are not a character class, such as a `[user-id]` route folder
+- Fixed `rm -r` of a mounted drive or a folder at its top level (`/Volumes`, `/media`, WSL's `/mnt/c`) not getting the safety prompt that `rm -rf /Applications` gets
+- Fixed `CLAUDE_CODE_TRANSCRIPT_LOCAL_GC` dropping messages from the saved transcript when the disk filled up while the file was being trimmed
+- Fixed a plugin keeping a headless run going past `--max-turns`, Stop, or ended input by spawning subagents or re-running a finished one
+- Fixed a failed mod reload removing the tools and comma
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
