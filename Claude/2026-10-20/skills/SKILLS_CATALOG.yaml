@@ -1,0 +1,60 @@
+# Claude Code skills catalog | src: anthropics/claude-code | compact format
+version: 2.1.304
+updated: 2026-10-20
+# skills: name: "cmd | use-when | effect"  (flag: [m]=manual-only)
+skills:
+  # code
+  code-review: "/code-review [low|med|high|xhigh|max|ultra] [PR#] [--comment|--fix] | review diff/PR | bg subagent; reuses last level; alias /review"
+  simplify: "/simplify | clean changed code | reuse/quality/efficiency fixes"
+  security-review: "/security-review | audit branch diff | risk-ranked findings"
+  ultrareview: "/ultrareview [PR#] | deep multi-agent cloud review | billed; git>=2.31 for local upload"
+  commit-push-pr: "/commit-push-pr | ship changes | dangerous flags (--force/--amend/--no-verify) not auto-approved"
+  claude-api: "/claude-api [prompt-audit|managed-agents-secure] | Anthropic SDK apps | caching/tools/migration; not on Remote Control"
+  goal: "/goal <cond> | work until condition met | multi-turn, live overlay"
+  loop: "/loop [interval] [cmd] | recurring/self-paced task | dynamic mode always available"
+  auto-mode-setup: "/auto-mode-setup | teach auto mode your env | reads project+sessions"
+  # docs/data
+  init: "/init | create CLAUDE.md | AGENTS.md read if no CLAUDE.md"
+  dataviz: "/dataviz | charts/dashboards | palette validator"
+  deep-research: "/deep-research [m] | multi-source report | manual start only"
+  # config/meta
+  update-config: "/update-config | settings.json hooks/perms/env | -"
+  keybindings-help: "/keybindings-help | rebind keys | ~/.claude/keybindings.json"
+  fewer-permission-prompts: "/fewer-permission-prompts | cut prompts | allowlist from transcripts"
+  session-start-hook: "/session-start-hook | test/lint on cloud session start | SessionStart hook"
+  plugin-authoring: "plugin-authoring | build mods/hooks | scans keys before share"
+  skill-doctor: "/skill-doctor | find unused skills + context cost | prune"
+  reload-skills: "/reload-skills | rescan skill dirs | sends only new/changed"
+  # session
+  effort: "/effort [ultracode on|off] | effort per model | s=session only"
+  fast: "/fast | fast mode | Opus 5/4.8"
+  usage: "/usage | tokens/cost/loops/spend | warns max effort/workflows"
+  focus: "/focus | compact view | prompt+summary+reply"
+  cd: "/cd <dir> | change cwd | keeps prompt cache"
+  autocompact: "/autocompact | window per model | -"
+  advisor: "/advisor [model|off] | advisor model | AWS platform+headless"
+  rewind: "/rewind (/undo) | undo; resume pre-/clear | -"
+  # removed: /agents wizard (v2.1.198; edit .claude/agents/), /extra-usage->/usage-credits
+hooks:  # block: exit 2 | {decision:block}
+  PreToolUse: "before tool; blocks"
+  PostToolUse: "after tool"
+  PreCompact: "before compaction; blocks"
+  TaskCreated: "task created"
+  WorktreeCreate: "worktree create; http returns worktreePath"
+  PermissionDenied: "auto-mode denial; {retry:true}"
+  DirectoryAdded: "after /add-dir (v2.1.219)"
+  Notification/Stop/SubagentStop: "non-blocking events"
+  types: "shell|mcp_tool|http"
+settings:
+  skillOverrides: "off|user-invocable-only|name-only"
+  disableBundledSkills: "bool (+env CLAUDE_CODE_DISABLE_BUNDLED_SKILLS)"
+  disableSkillShellExecution: bool
+  modelPicker: "ordered model list"
+  workflowSizeGuideline: "small|medium|large"
+  feedbackDrafts: bool
+env:
+  CLAUDE_EFFORT: "usable as ${CLAUDE_EFFORT}"
+  CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION: "default 200"
+  ANTHROPIC_DEFAULT_MODEL: "start model; /model overrides"
+  CLAUDE_CODE_NO_FLICKER: "1=alt-screen"
+models: {opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5, fable: claude-fable-5-1}

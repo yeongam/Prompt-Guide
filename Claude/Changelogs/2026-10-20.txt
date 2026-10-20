@@ -1,0 +1,41 @@
+Claude Skills Changelog 2026-10-20
+Version: 2.1.129 -> 2.1.304 (src: anthropics/claude-code CHANGELOG)
+Layout : Claude/skills -> Claude/2026-10-20/skills (prev snapshot kept at Claude/2026-05-06/skills)
+
+[추가된 스킬 / Added]
+- code-review (replaces review/simplify-bug role; alias /review)
+- commit-push-pr, goal, auto-mode-setup, dataviz, deep-research(manual)
+- plugin-authoring, skill-doctor, reload-skills, cd, autocompact, advisor, fast
+- claude-api subcommands: prompt-audit, managed-agents-secure
+- hooks: DirectoryAdded | settings: disableBundledSkills, modelPicker,
+  workflowSizeGuideline, feedbackDrafts | env: CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION,
+  ANTHROPIC_DEFAULT_MODEL
+
+[수정된 스킬 / Modified]
+- /review -> alias of /code-review (levels, --comment, --fix, bg subagent)
+- /simplify kept (cleanup-only; bug review moved to /code-review)
+- /loop: dynamic mode always available; /effort: per-model + ultracode toggle
+- /usage: merged cost/loops/spend; /undo merged into /rewind entry
+- /claude-api: models updated to Opus 5.5 / Sonnet 5.5 / Haiku 5.5 / Fable 5.1
+- /extra-usage renamed /usage-credits (not tracked: billing-only)
+
+[삭제된 스킬 / Removed]
+- /agents wizard (v2.1.198), team-onboarding, ultraplan, powerup, tui, theme, color
+  (UI/onboarding only, not coding/docs; dropped for token savings)
+- standalone review entry (merged into code-review)
+
+[최적화된 구조 / Structure]
+- Dated layout Claude/<date>/skills; scripts auto-select latest date dir
+- Changelogs moved to Claude/Changelogs (single dir, not recreated if present)
+- Catalog: one line per skill "cmd | use-when | effect", grouped code/docs/config/session
+
+[토큰 절감 / Token savings]
+- SKILLS_CATALOG.yaml 9230 B -> ~3.6 KB (-61%)
+- Removed per-skill multi-line trigger/desc/example/added fields and notes block
+- Hooks/settings/env trimmed to keys relevant to skills
+
+[충돌 해결 / Conflicts]
+- review vs code-review vs simplify: /review aliased to code-review; simplify retained
+- old path Claude/skills vs dated rule: old snapshot moved intact to Claude/2026-05-06/skills
+- scripts/update_skills.py and sync_changelogs.sh repointed (changelogs/ -> Claude/Changelogs/)
+- Old models (opus-4-7/sonnet-4-6) superseded by 5.x IDs
