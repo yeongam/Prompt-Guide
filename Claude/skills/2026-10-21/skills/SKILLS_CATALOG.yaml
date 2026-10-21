@@ -1,0 +1,47 @@
+# Claude Code skills catalog (src: anthropics/claude-code; daily 00:00 UTC)
+version: 2.1.129
+updated: 2026-10-21
+# skill: cmd | use-when | effect
+skills:
+  init: ["/init", "init/document codebase", "generate CLAUDE.md"]
+  review: ["/review", "review PR/branch", "multi-pass logic/style/security/tests"]
+  security-review: ["/security-review", "audit branch diff", "OWASP risk-ranked findings"]
+  simplify: ["/simplify", "clean up changed code", "reuse/quality/efficiency fixes"]
+  session-start-hook: ["/session-start-hook", "test/lint on session start", "SessionStart hook"]
+  update-config: ["/update-config", "'when X'/allow/env settings", "edit settings.json hooks/perms/env"]
+  keybindings-help: ["/keybindings-help", "remap keys", "edit ~/.claude/keybindings.json"]
+  fewer-permission-prompts: ["/fewer-permission-prompts", "fewer dialogs", "allowlist from transcripts"]
+  loop: ["/loop [interval] [/cmd]", "recurring task", "run prompt on interval (default 10m)"]
+  claude-api: ["/claude-api", "anthropic SDK code/API questions", "API apps/caching/tools/migration"]
+  ultrareview: ["/ultrareview [PR#]", "multi-agent review (billed)", "parallel cloud review; no arg=local"]
+  ultraplan: ["/ultraplan", "complex planning", "cloud worktrees for multi-agent plans"]
+  team-onboarding: ["/team-onboarding", "teammate ramp-up", "guide from local usage"]
+  effort: ["/effort", "adjust effort", "slider; CLAUDE_EFFORT"]
+  powerup: ["/powerup", "learn features", "animated demos"]
+  tui: ["/tui", "flicker/full-screen", "alt-screen TUI; CLAUDE_CODE_NO_FLICKER"]
+  focus: ["/focus", "compact view", "prompt+tool summary+final reply"]
+  undo: ["/undo", "undo last action", "alias of /rewind"]
+  usage: ["/usage", "token/cost stats", "merged /cost+/stats"]
+  theme: ["/theme [name]", "change theme", "create/switch themes"]
+  color: ["/color", "session color", "random pick"]
+models: {default: claude-sonnet-4-6, opus: claude-opus-4-7, sonnet: claude-sonnet-4-6, haiku: claude-haiku-4-5-20251001}
+# hook: fires [block?]; all in settings.json; types: shell|mcp_tool|http
+hooks:
+  PreToolUse: ["before tool", block]
+  PostToolUse: ["after tool", no]
+  Notification: ["push event", no]
+  Stop: ["turn end", no]
+  SubagentStop: ["subagent end", no]
+  PreCompact: ["before compaction", block]
+  TaskCreated: ["TaskCreate", no]
+  WorktreeCreate: ["worktree create; http returns hookSpecificOutput.worktreePath", no]
+  PermissionDenied: ["auto-mode denial; {retry:true} reruns classifier", no]
+# block = exit 2 | {decision:"block",reason}
+settings:
+  skillOverrides: "off|user-invocable-only|name-only"
+  autoScrollEnabled: bool
+  showThinkingSummaries: bool(false)
+  disableSkillShellExecution: bool
+  prUrlTemplate: string
+  sandbox.network.deniedDomains: list
+env: [CLAUDE_EFFORT, CLAUDE_CODE_NO_FLICKER, CLAUDE_CODE_USE_POWERSHELL_TOOL, CLAUDE_STREAM_IDLE_TIMEOUT_MS, OTEL_LOG_RAW_API_BODIES, DISABLE_UPDATES, CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY]

@@ -1,0 +1,26 @@
+Claude Skills Routine Changelog - 2026-10-21
+
+Snapshot: Claude/skills/2026-10-21/skills
+Upstream: anthropics/claude-code NOT fetched (session GitHub scope limited to yeongam/prompt-guide). Version stays 2.1.129; re-sync via .github/workflows/daily-skill-update.yml.
+
+[추가된 스킬]
+- none
+
+[수정된 스킬]
+- none (21 skills' content preserved; format compacted)
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- Claude/skills/{SKILLS_CATALOG.yaml,.version} -> Claude/skills/2026-10-21/skills/ (date/skills rule)
+- skills: 4-field blocks -> 1-line [cmd, use-when, effect]; hooks -> [fires, can_block]
+- scripts/update_skills.py: targets latest date/skills dir; logs to Claude/Changelogs/YYYY-MM-DD.txt
+
+[토큰 절감]
+- SKILLS_CATALOG.yaml 9230 -> ~2800 bytes (~70% less)
+- Removed per-item "added:" tags, example/note fields, verbose notes
+
+[충돌 해결]
+- Old flat path vs date/skills rule: moved with git mv (history kept)
+- Old script wrote to root changelogs/ + desktop path: unified to Claude/Changelogs
