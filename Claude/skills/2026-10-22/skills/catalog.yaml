@@ -1,0 +1,60 @@
+# Claude Code catalog | src: anthropics/claude-code | v2.1.308 | 2026-10-22
+# fmt: name: cmd | when | what. Details in sibling *.md (load on demand only)
+version: 2.1.308
+skills:
+  init: /init | document codebase | write CLAUDE.md (AGENTS.md read if no CLAUDE.md)
+  review: /review | review PR/branch | multi-pass logic/style/security/tests
+  security-review: /security-review | audit branch diff | OWASP risk-ranked
+  simplify: /simplify | clean changed code | reuse/quality/efficiency fixes
+  session-start-hook: /session-start-hook | web sessions need test/lint | SessionStart hook
+  update-config: /update-config | "when X"/allow/env | settings.json hooks,perms,env
+  keybindings-help: /keybindings-help | remap keys | keybindings.json
+  fewer-permission-prompts: /fewer-permission-prompts | fewer dialogs | allowlist from transcripts
+  loop: /loop [interval] [cmd] | recurring task | default 10m; /usage shows per-loop cost
+  claude-api: /claude-api [sub] | anthropic SDK/API | sub: api-version, upgrade, cost-optimize, managed-agents-onboard, managed-agents-secure
+  ultrareview: /ultrareview [PR#] | multi-agent review | billed; no arg=local branch
+  ultraplan: /ultraplan | cloud multi-agent planning | auto cloud worktrees
+  team-onboarding: /team-onboarding | teammate ramp-up | from usage history
+  skill-doctor: /skill-doctor | prune skills | unused skills + context cost
+  doctor-prompt-audit: /doctor prompt-audit | old-model prompt patterns | audits CLAUDE.md/skills/agents
+  auto-mode-setup: /auto-mode-setup | tune auto mode | reads project+sessions
+  advisor: /advisor [model|off] | second-model advice | off via CLAUDE_CODE_DISABLE_ADVISOR_TOOL=1
+  output-style: /output-style [name] | switch style | works headless
+  diff: /diff | see uncommitted edits | side panel
+  effort: /effort | quality level | s=session-only; CLAUDE_EFFORT
+  focus: /focus | compact view | prompt+summary+reply
+  tui: /tui | flicker | CLAUDE_CODE_NO_FLICKER
+  usage: /usage | tokens/cost | cache line in /cost
+  undo: /undo | revert last | alias /rewind
+  powerup: /powerup | learn features | demos
+  theme: /theme [name] | colors | custom themes
+  color: /color | session color | random
+  reload-plugins: /reload-plugins | plugin changes | headless ok
+  web-setup: /web-setup | GitHub for web sessions | needs workflow scope
+# plugin-derived (official plugins/ dir) -> files below
+plugins:
+  commit: commit.md | /commit /commit-push-pr /clean-gone
+  pr-review: pr-review.md | /code-review-pr [--comment], /review-pr [aspects]
+  feature-dev: feature-dev.md | /feature-dev [desc]
+  frontend-design: frontend-design.md | UI build/redesign
+hooks:
+  events: PreToolUse(block) PostToolUse Notification Stop SubagentStop PreCompact(block) TaskCreated WorktreeCreate PermissionDenied(retry) PreModelSwitch PostModelSwitch
+  types: shell | mcp_tool | http
+  block: exit 2 | {decision:block,reason}
+  onFailure: "block" -> fail-closed on start error/timeout/bad exit
+settings:
+  skillOverrides: off|user-invocable-only|name-only
+  disableSkillShellExecution: bool
+  idleCompaction: bool
+  maxEffortLevel: cap effort
+  promptCacheTtl/subagentPromptCacheTtl: 5m|1h
+  bashOutputMaxChars/taskOutputMaxChars: <=128K
+  attribution: false hides commit/PR attribution
+  syncClaudeAiSkills/syncClaudeAiPlugins: false opts out
+  modelPicker, timeFormat, timeZone, maxProseWidth, spellcheck, keybindingFlavor
+env:
+  CLAUDE_EFFORT, CLAUDE_CODE_NO_FLICKER, CLAUDE_CODE_DISABLE_FILE_MENTIONS(paths only), CLAUDE_CODE_DISABLE_WEB_FETCH,
+  CLAUDE_CODE_SUBAGENT_MODEL(_FORCE), CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL, CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS(1-256),
+  CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS, CLAUDE_CODE_AUTO_MODE_MODEL, CLAUDE_CODE_RETRY_WATCHDOG(+_MAX_WAIT_MS),
+  CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH, CLAUDE_CODE_MCP_STARTUP_WAIT_MS, ANTHROPIC_DEFAULT_MODEL, CLAUDE_CODE_RESTRICTED
+models: {opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5, fable: claude-fable-5-1}

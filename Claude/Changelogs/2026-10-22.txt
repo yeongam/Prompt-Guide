@@ -1,0 +1,34 @@
+Claude skills sync 2026-10-22
+Source: anthropics/claude-code (2.1.129 -> 2.1.308)
+Snapshot: Claude/skills/2026-10-22/skills/
+
+[Added skills]
+- /skill-doctor, /doctor prompt-audit, /auto-mode-setup, /advisor, /output-style, /diff, /reload-plugins, /web-setup
+- /claude-api subcommands: api-version, upgrade, cost-optimize, managed-agents-onboard, managed-agents-secure
+- Plugin-derived (coding/docs): commit (/commit, /commit-push-pr, /clean-gone), pr-review (/code-review-pr, /review-pr), feature-dev, frontend-design
+- Hooks: PreModelSwitch, PostModelSwitch, onFailure:"block"
+- Settings/env: idleCompaction, maxEffortLevel, promptCacheTtl, bashOutputMaxChars, attribution:false, syncClaudeAiSkills, CLAUDE_CODE_DISABLE_FILE_MENTIONS, CLAUDE_CODE_SUBAGENT_MODEL_FORCE, etc.
+
+[Modified skills]
+- /effort (session-only 's'), /usage (loop breakdown, cache line), /claude-api, /init (AGENTS.md fallback)
+- models: opus-4-7/sonnet-4-6/haiku-4-5 -> claude-opus-5-5/sonnet-5-5/haiku-5-5/fable-5-1
+
+[Deleted skills]
+- None (all prior entries kept for stability)
+- Not imported (not coding/docs): hookify, plugin-dev, ralph-wiggum, output-style plugins, SDK/migration plugins
+
+[Optimized structure]
+- Old flat Claude/skills/ moved to 2026-05-06/skills/ (catalog.yaml, .version); new dated dir 2026-10-22/skills/ (date/skills rule)
+- Catalog: one line per skill (cmd | when | what); detail files loaded on demand
+
+[Token savings]
+- catalog 9230 B -> 3977 B (-57%) despite ~15 more entries; "added:" tags dropped
+- Plugin sources 30066 B -> 2878 B (-90%) in 4 files
+- Dropped boilerplate, examples, repeated agent-assumption text
+
+[Conflict resolution]
+- Plugin /code-review vs built-in /review -> renamed /code-review-pr
+- Plugin /review-pr kept as aspect-based variant, merged into pr-review.md
+- feature-dev waits for user input -> added unattended mode (assume + proceed)
+- commit-push-pr: PR creation only when requested
+- Note: .github/workflows/daily-skill-update.yml references missing scripts/update_skills.py and branch claude/zealous-sagan-FdaL5; untouched
