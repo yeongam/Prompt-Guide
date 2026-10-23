@@ -1,0 +1,32 @@
+Claude Skills Sync 2026-10-23
+Source: anthropics/claude-code CHANGELOG | 2.1.129 -> 2.1.309
+
+[추가된 스킬 / Added]
+- code-review (replaces review), verify, run, goal, dataviz, skill-doctor, doctor prompt-audit,
+  auto-mode-setup, reload-skills, reload-plugins, cd, diff, workflows, advisor
+- claude-api subcommands: upgrade, prompt-audit; Opus 4.8 migration
+- Hooks: MessageDisplay, DirectoryAdded, PreModelSwitch, PostModelSwitch; onFailure:block, args exec form
+- Settings/env: ~40 entries (maxEffortLevel, fallbackModel, modelPicker, idleCompaction, sandbox.*, CLAUDE_CODE_* limits)
+
+[수정된 스킬 / Modified]
+- loop (self-paced), ultrareview (workspace trust), effort (s = session only), usage (loops/cache/spend), claude-api (tracing)
+- Models updated to 5.x family
+
+[삭제된 스킬 / Removed]
+- review (-> code-review), undo/focus/color/theme/tui folded into compact groups (ui, misc); no function dropped
+
+[최적화된 구조 / Structure]
+- Claude/skills/<date>/skills/ layout: 2026-05-06 (archived old catalog.yaml), 2026-10-23 (new)
+- Split: catalog.yaml (skills) + hooks-settings.yaml (hooks/settings/env)
+- Skills grouped: code/docs/config/ui; one line per skill "cmd | use when | effect"
+
+[토큰 절감 / Token savings]
+- Skills catalog 9230 B -> 2590 B (-72%) despite ~14 more skills
+- Dropped "added:" tags, per-skill trigger/desc blocks, comments; hooks/settings one-liners
+- Skills loaded on demand: catalog only; hooks-settings read only for config tasks
+
+[충돌 해결 / Conflicts]
+- review vs code-review: kept code-review (upstream rename), noted replaces /review
+- undo = /rewind alias merged
+- Flat Claude/skills/SKILLS_CATALOG.yaml moved to dated dir via git mv (history kept)
+- Not changed: scripts/update_skills.py and workflow still target the old flat path; needs follow-up to write dated dir
