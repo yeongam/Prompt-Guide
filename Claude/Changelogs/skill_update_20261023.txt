@@ -1,0 +1,75 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-10-23 02:38 UTC
+Version : 2.1.307 → 2.1.309
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-10-23/
+============================================================
+
+[ ★ 신규 감지 스킬 (7개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /code-review  ← 수동 추가 필요
+  ? /goal  ← 수동 추가 필요
+  ? /privacy-settings  ← 수동 추가 필요
+  ? /proc  ← 수동 추가 필요
+  ? /rename  ← 수동 추가 필요
+  ? /rewind  ← 수동 추가 필요
+  ? /verify  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /claude-api
+  ~ /code-review
+  ~ /goal
+  ~ /privacy-settings
+  ~ /proc
+  ~ /rename
+  ~ /rewind
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-10-23/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed sessions compacting repeatedly after reading files under a very large nested CLAUDE.md; a nested CLAUDE.md over the size limit now loads only its start
+  - Fixed Claude asking for permission on each artifact update for the rest of a turn after the conversation was compacted in that turn
+  - Updated the /claude-api skill: service account keys and Workload Identity Federation tokens can now manage OpenTelemetry destinations
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  PreToolUse
+
+[ Settings ]
+  cd
+  coordinator
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.309
+
+- Fixed sandboxed Bash commands on macOS and Linux running the shell's startup files outside the sandbox before each command
+- Fixed macOS sandbox `denyWrite` glob patterns not applying at a path's real location when the pattern's folder is reached through a symlink
+- Fixed sandboxed commands and auto-accepted edits being able to modify the MCP config file passed with `--mcp-config`
+- Fixed a disabled MCP server being reconnected by a later permission prompt in print and SDK sessions
+- Fixed the Bash permission check trusting a variable set by a command whose redirect can fail to open
+- Fixed Bash permission checks not prompting for some compound commands that change directory before running git when the `cd` is wrapped or prefixed, as they do for a plain `cd`
+- Fixed an `Edit(path)` deny rule not blocking a Bash redirect to that path in some commands that also held a subshell
+- Fixed worktree-isolated sessions accepting some locale-prefixed commands the isolation guard should refuse
+- Fixed worktree-isolated sessions on zsh accepting some arithmetic commands that the isolation guard should refuse
+- Fixed worktrees and branch checkouts that Claude Code creates so they ignore git replace refs, as its other git operations already do
+- Fixed profile store write protection not applying when the config directory is reached through a symlink
+- Fixed sessions compacting repeatedly after reading files under a very large nested CLAUDE.md; a nested CLAUDE.md over the size limit now loads only its start
+- Fixed ctrl+enter (send now) only queuing a message when pressed before the response had started, and restarting a prompt's hooks while leaving the message queued when pressed while those hooks were running
+- Fixed key-bound slash commands running in the shell from `!` mode
+- Fixed ctrl+o not showing messages from other agents and sessions that are still waiting to be delivered; they now appear in full under the transcript, marked as waiting
+- Fixed long tool outpu
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
