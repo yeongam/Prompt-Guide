@@ -1,27 +1,27 @@
 # Claude Code skills catalog (compact). Source: anthropics/claude-code. Synced from 2.1.129 snapshot (upstream not re-fetched 2026-10-24).
 version: 2.1.129
 skills: # name: cmd | trigger | desc
-  init: {cmd: /init, when: init/document codebase, do: generate CLAUDE.md}
-  review: {cmd: /review, when: review PR/branch, do: multi-pass review (logic,style,security,tests)}
-  security-review: {cmd: /security-review, when: security audit of branch diff, do: OWASP risk-ranked findings}
-  simplify: {cmd: /simplify, when: clean up changed code, do: review reuse/quality/efficiency then fix}
-  session-start-hook: {cmd: /session-start-hook, when: test/lint on web session start, do: create SessionStart hook}
-  update-config: {cmd: /update-config, when: "when X"/allow Y/set Z=val, do: edit settings.json (hooks,perms,env)}
-  keybindings-help: {cmd: /keybindings-help, when: remap keys/chords, do: edit ~/.claude/keybindings.json}
-  fewer-permission-prompts: {cmd: /fewer-permission-prompts, when: fewer dialogs, do: allowlist from transcripts into .claude/settings.json}
-  loop: {cmd: "/loop [interval] [/cmd]", when: recurring task, do: run prompt/command on interval (default 10m)}
-  claude-api: {cmd: /claude-api, when: anthropic SDK code/API questions, do: API apps, caching, tool use, migration}
-  ultrareview: {cmd: "/ultrareview [PR#]", when: multi-agent review, do: parallel cloud review (billed; git repo required)}
-  ultraplan: {cmd: /ultraplan, when: complex planning, do: cloud worktrees for multi-agent planning}
-  team-onboarding: {cmd: /team-onboarding, when: teammate ramp-up, do: guide from local usage history}
-  effort: {cmd: /effort, when: adjust effort, do: slider; env CLAUDE_EFFORT}
-  powerup: {cmd: /powerup, when: learn features, do: interactive demos}
-  tui: {cmd: /tui, when: flicker/fullscreen, do: alt-screen TUI; env CLAUDE_CODE_NO_FLICKER=1}
-  focus: {cmd: /focus, when: compact view, do: show prompt+tool summary+final reply}
-  undo: {cmd: /undo, when: undo last action, do: alias of /rewind}
-  usage: {cmd: /usage, when: token/cost stats, do: merged /cost+/stats}
-  theme: {cmd: "/theme [name]", when: change theme, do: create/switch color themes}
-  color: {cmd: /color, when: session color, do: random session color}
+  init: {cmd: "/init", when: "init/document codebase", do: "generate CLAUDE.md"}
+  review: {cmd: "/review", when: "review PR/branch", do: "multi-pass review (logic,style,security,tests)"}
+  security-review: {cmd: "/security-review", when: "security audit of branch diff", do: "OWASP risk-ranked findings"}
+  simplify: {cmd: "/simplify", when: "clean up changed code", do: "review reuse/quality/efficiency then fix"}
+  session-start-hook: {cmd: "/session-start-hook", when: "test/lint on web session start", do: "create SessionStart hook"}
+  update-config: {cmd: "/update-config", when: "when X\"/allow Y/set Z=val", do: "edit settings.json (hooks,perms,env)"}
+  keybindings-help: {cmd: "/keybindings-help", when: "remap keys/chords", do: "edit ~/.claude/keybindings.json"}
+  fewer-permission-prompts: {cmd: "/fewer-permission-prompts", when: "fewer dialogs", do: "allowlist from transcripts into .claude/settings.json"}
+  loop: {cmd: "/loop [interval] [/cmd]", when: "recurring task", do: "run prompt/command on interval (default 10m)"}
+  claude-api: {cmd: "/claude-api", when: "anthropic SDK code/API questions", do: "API apps, caching, tool use, migration"}
+  ultrareview: {cmd: "/ultrareview [PR#]", when: "multi-agent review", do: "parallel cloud review (billed; git repo required)"}
+  ultraplan: {cmd: "/ultraplan", when: "complex planning", do: "cloud worktrees for multi-agent planning"}
+  team-onboarding: {cmd: "/team-onboarding", when: "teammate ramp-up", do: "guide from local usage history"}
+  effort: {cmd: "/effort", when: "adjust effort", do: "slider; env CLAUDE_EFFORT"}
+  powerup: {cmd: "/powerup", when: "learn features", do: "interactive demos"}
+  tui: {cmd: "/tui", when: "flicker/fullscreen", do: "alt-screen TUI; env CLAUDE_CODE_NO_FLICKER=1"}
+  focus: {cmd: "/focus", when: "compact view", do: "show prompt+tool summary+final reply"}
+  undo: {cmd: "/undo", when: "undo last action", do: "alias of /rewind"}
+  usage: {cmd: "/usage", when: "token/cost stats", do: "merged /cost+/stats"}
+  theme: {cmd: "/theme [name]", when: "change theme", do: "create/switch color themes"}
+  color: {cmd: "/color", when: "session color", do: "random session color"}
 hooks: # event: blockable; block=exit 2 or {decision:block,reason}; types: shell|mcp_tool|http; optional `if` rule filter
   PreToolUse: {block: true}
   PostToolUse: {block: false}
