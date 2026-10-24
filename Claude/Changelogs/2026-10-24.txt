@@ -1,0 +1,24 @@
+Prompt-Guide Claude Skills Changelog - 2026-10-24
+
+Snapshot: Claude/skills/2026-10-24/skills
+Upstream: anthropics/claude-code NOT re-fetched (session GitHub scope limited to yeongam/prompt-guide); version stays 2.1.129.
+
+[추가된 스킬]
+- none (no upstream access)
+
+[수정된 스킬]
+- all 21 skill entries rewritten to compact one-line form (cmd/when/do); semantics unchanged
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- flat Claude/skills/{.version,SKILLS_CATALOG.yaml} -> Claude/skills/<date>/skills/ rule
+- hooks/settings/env/models condensed; 'added:' tags and comment blocks removed
+
+[토큰 절감 관련 변경 사항]
+- SKILLS_CATALOG.yaml 9230 B -> 3289 B
+
+[충돌 해결 내역]
+- none; old flat files removed after identical content migrated
+- note: .github/workflows/daily-skill-update.yml calls missing scripts/update_skills.py and targets another branch; not changed
