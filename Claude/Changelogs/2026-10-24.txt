@@ -17,7 +17,7 @@ Upstream: anthropics/claude-code NOT re-fetched (session GitHub scope limited to
 - hooks/settings/env/models condensed; 'added:' tags and comment blocks removed
 
 [토큰 절감 관련 변경 사항]
-- SKILLS_CATALOG.yaml 9230 B -> 3289 B (was 9230 B)
+- SKILLS_CATALOG.yaml 9230 B -> 3289 B
 
 [충돌 해결 내역]
 - none; old flat files removed after identical content migrated
