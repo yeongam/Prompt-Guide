@@ -12,9 +12,10 @@ import urllib.request
 import urllib.error
 
 REPO_ROOT = Path(__file__).parent.parent
-CATALOG_FILE = REPO_ROOT / "Claude" / "skills" / "SKILLS_CATALOG.yaml"
+DATE_DIR = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+CATALOG_FILE = REPO_ROOT / "Claude" / "skills" / DATE_DIR / "skills" / "SKILLS_CATALOG.yaml"
 VERSION_FILE = REPO_ROOT / "Claude" / "skills" / ".version"
-CHANGELOGS_DIR = REPO_ROOT / "changelogs"
+CHANGELOGS_DIR = REPO_ROOT / "Claude" / "Changelogs"
 CHANGELOG_SRC = "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md"
 DESKTOP_LOG_DIR = Path(os.environ.get("DESKTOP_LOG_PATH", "/root/바탕화면/Claude-Text/Claude_skills"))
 
@@ -84,7 +85,11 @@ def build_changelog_entry(ver: str, prev: str, section: str, items: dict) -> str
 
 def update_catalog_version_field(ver: str) -> None:
     if not CATALOG_FILE.exists():
-        return
+        prev = sorted((REPO_ROOT / "Claude" / "skills").glob("*/skills/SKILLS_CATALOG.yaml"))
+        if not prev:
+            return
+        CATALOG_FILE.parent.mkdir(parents=True, exist_ok=True)
+        prev[-1].rename(CATALOG_FILE)
     text = CATALOG_FILE.read_text()
     text = re.sub(r"^version:.*$", f"version: {ver}", text, flags=re.MULTILINE)
     text = re.sub(r"^updated:.*$", f"updated: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}", text, flags=re.MULTILINE)

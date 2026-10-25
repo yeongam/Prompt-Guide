@@ -1,0 +1,82 @@
+# Claude Code catalog | src: anthropics/claude-code | repo: yeongam/Prompt-Guide
+# fmt: name: /cmd | use-when | effect   (single source; no duplication)
+version: 2.1.310
+updated: 2026-10-25
+
+skills:
+  # coding / programming
+  init: /init | document codebase | write CLAUDE.md
+  code-review: /code-review [low..max] [PR|branch] [--comment|--fix] | review diff/PR | bug findings; --fix applies
+  review: /review [PR] | review PR | multi-pass PR review
+  ultrareview: /ultrareview [PR#] | deep review | multi-agent cloud review (billed)
+  security-review: /security-review | audit branch | risk-ranked findings
+  simplify: /simplify | clean changed code | reuse/efficiency fixes (no bug hunt)
+  run: /run | verify change in real app | launch+drive app
+  claude-api: /claude-api | anthropic SDK code | build/debug, caching, tools, prompt-audit, OTEL tracing
+  workflow-authoring: /workflow-authoring | write Workflow script | script API+patterns
+  goal: /goal <cond> | work till done | loop across turns until condition met
+  autofix-pr: /autofix-pr | PR CI/review loop | auto-fix PR
+  # documents / data
+  dataviz: /dataviz | chart/dashboard | design guide + palette validator
+  docs: /docs | doc authoring | editable shared docs
+  docx/pdf/pptx/xlsx: file-format skills | .docx .pdf .pptx .xlsx I/O | create/edit/extract
+  # config / session
+  update-config: /update-config | hooks/permissions/env | edit settings.json
+  fewer-permission-prompts: /fewer-permission-prompts | fewer dialogs | add allowlist
+  keybindings-help: /keybindings-help | remap keys | edit keybindings.json
+  session-start-hook: /session-start-hook | tests/lint on start | SessionStart hook
+  plugin-authoring: /plugin-authoring | build mod/hook | plugin dev guide
+  loop: /loop [interval] [cmd] | recurring task | repeat (default 10m)
+  skill-doctor: /skill-doctor | prune skills | unused skills + context cost
+  reload-skills: /reload-skills | skills edited | rescan dirs, no restart
+  reload-plugins: /reload-plugins | plugins edited | reload (headless too)
+  auto-mode-setup: /auto-mode-setup | tune auto mode | guided project setup
+  cd: /cd <dir> | change cwd | keeps prompt cache
+  effort: /effort | quality level | slider; ${CLAUDE_EFFORT}
+  fast: /fast | speed | toggle fast mode
+  advisor: /advisor | second model | pick advisor (advisorModel)
+  usage: /usage | tokens/cost | stats+warnings (/cost alias)
+  usage-credits: /usage-credits | raise limit | request from admin (Enterprise)
+  rewind: /rewind (/undo) | undo | restore, incl. pre-/clear
+  team-onboarding: /team-onboarding | ramp-up | guide from usage
+  ui: /tui /focus /theme /color /scroll-speed /btw /powerup | display+help | view/theme/side-question/demos
+
+hooks:  # block: exit 2 | {decision:"block"}; types: shell|mcp_tool|http
+  pre: [PreToolUse*, PreCompact*, PreModelSwitch*]       # *=can block
+  post: [PostToolUse, PostModelSwitch, SubagentStop, Stop, Notification, TaskCreated, MessageDisplay]
+  session: [SessionStart(staleness+recache cost), Setup, UserPromptSubmit, SubagentStart, ConfigChange, DirectoryAdded]
+  perm: [PermissionRequest, PermissionDenied(retry:true)]
+  worktree: [WorktreeCreate(http→worktreePath), WorktreeRemove]
+
+settings:  # .claude/settings.json | ~/.claude/settings.json
+  skillOverrides: off|user-invocable-only|name-only
+  disableBundledSkills: bool            # env CLAUDE_CODE_DISABLE_BUNDLED_SKILLS
+  disableSkillShellExecution: bool
+  syncClaudeAiSkills/syncClaudeAiPlugins: bool  # false=opt out
+  model: [fallbackModel, maxEffortLevel, modelPicker, workflowSizeGuideline]
+  git: [worktree.baseRef, attribution.sessionUrl, prUrlTemplate]
+  autoMode.classifyAllShell: bool
+  sandbox: [network.strictAllowlist, network.deniedDomains, filesystem.disabled, credentials]
+  ui: [showThinkingSummaries, autoScrollEnabled, footerLinksRegexes, wheelScrollAccelerationEnabled]
+
+env:
+  CLAUDE_EFFORT: effort level
+  CLAUDE_CODE_NO_FLICKER: 1=alt-screen
+  CLAUDE_CODE_DISABLE_BUNDLED_SKILLS: 1=hide bundled skills
+  CLAUDE_CODE_SAFE_MODE: safe mode
+  CLAUDE_CODE_SUBAGENT_MODEL_FORCE / CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL: subagent model
+  CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS: workflow cap
+  CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH, CLAUDE_CODE_MCP_STARTUP_WAIT_MS: MCP tuning
+  CLAUDE_CODE_DISABLE_WEB_FETCH, CLAUDE_CODE_WEBFETCH_CACHE_TTL_MS: web fetch
+  CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS: idle compact threshold
+  CLAUDE_CODE_DISABLE_ADVISOR_TOOL: 1=off advisor
+  DISABLE_UPDATES: 1=block updates
+  CLAUDE_STREAM_IDLE_TIMEOUT_MS: stream watchdog
+
+models:  # alias: id
+  fable: claude-fable-5-1
+  opus: claude-opus-5-5
+  sonnet: claude-sonnet-5-5
+  haiku: claude-haiku-5-5   # 1M ctx
+
+# token notes: one file; one-line entries; no prose. Prune via /skill-doctor, skillOverrides:name-only.

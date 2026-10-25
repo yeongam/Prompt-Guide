@@ -1,0 +1,40 @@
+Claude Skills Update 2026-10-25
+Source: anthropics/claude-code CHANGELOG.md | 2.1.129 -> 2.1.310
+Location: Claude/skills/2026-10-25/skills/SKILLS_CATALOG.yaml
+
+[Added skills]
+/code-review /run /dataviz /goal /skill-doctor /reload-skills /reload-plugins /cd /advisor
+/auto-mode-setup /usage-credits /autofix-pr /workflow-authoring /plugin-authoring /fast /scroll-speed /btw
+docs/docx/pdf/pptx/xlsx (doc skills)
+Hooks: PreModelSwitch PostModelSwitch MessageDisplay DirectoryAdded Setup SubagentStart ConfigChange PermissionRequest UserPromptSubmit WorktreeRemove
+Settings: disableBundledSkills syncClaudeAiSkills fallbackModel maxEffortLevel modelPicker workflowSizeGuideline worktree.baseRef attribution.sessionUrl autoMode.classifyAllShell sandbox.{strictAllowlist,filesystem.disabled,credentials}
+Env: CLAUDE_CODE_DISABLE_BUNDLED_SKILLS SAFE_MODE SUBAGENT_MODEL_FORCE WORKFLOW_SUBAGENT_MODEL WORKFLOW_MAX_CONCURRENT_AGENTS MAX_MCP_DESCRIPTION_LENGTH etc.
+
+[Modified skills]
+claude-api: +prompt-audit subcommand, +OTEL tracing guidance
+usage: now merges /cost + /stats, +warnings (max effort, workflows)
+models: opus-4-7/sonnet-4-6/haiku-4-5 -> fable-5-1/opus-5-5/sonnet-5-5/haiku-5-5
+hooks/settings/env: reorganized into grouped lists (see below)
+version/updated: 2.1.129 -> 2.1.310
+
+[Deleted skills]
+None removed upstream. Merged: /ultraplan, /tui, /focus, /theme, /color, /powerup, /undo -> grouped lines (/undo under /rewind, UI cmds under "ui"); /ultraplan dropped (not in 2.1.310 changelog usage).
+
+[Optimized structure]
+- Catalog moved to dated layout: Claude/skills/<date>/skills/ (was Claude/skills/)
+- Changelogs dir: Claude/Changelogs (single dir; scripts repointed from changelogs/)
+- Skills grouped: coding / documents / config+session
+- Hooks grouped by phase; settings grouped by area
+- update_skills.py auto-renames previous dated catalog on new day
+
+[Token savings]
+- Catalog 9230 B -> ~4.9 KB (~47% smaller)
+- Multi-line skill blocks (cmd/trigger/desc) -> one-line "cmd | use-when | effect"
+- Removed per-item "added:" tags, repeated hook fields and prose notes
+
+[Conflict resolution]
+- Existing path Claude/skills/SKILLS_CATALOG.yaml kept in git history via git mv (no duplicate)
+- .version kept at Claude/skills/.version (script-compatible)
+- Script path constants updated; py_compile passed; YAML parse validated
+- Overlap /review vs /code-review and /cost vs /usage kept as separate entries with cross-notes
+- Fetching skills unavailable offline (e.g. docx/pdf) listed as references only
