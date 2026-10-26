@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
-# Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+# Maintained: yeongam/Prompt-Guide (auto-updated daily; layout: <date>/skills, Claude/skills=symlink to latest)
+version: 2.1.310
+updated: 2026-10-26
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -12,10 +12,11 @@ skills:
     trigger: user asks to initialize or document codebase
     desc: Generate CLAUDE.md with codebase architecture, conventions, commands
 
-  review:
-    cmd: /review
-    trigger: user asks to review PR or branch
-    desc: Multi-pass PR review; checks logic, style, security, tests
+  code-review:
+    cmd: /code-review [low|medium|high|xhigh|max] [target] [--comment] [--fix] [--max-findings n]
+    trigger: user asks to review diff, PR#, branch or path
+    desc: Bug-focused review at effort level; --comment posts inline PR comments, --fix applies findings
+    alias: /review (legacy name, same intent)
 
   security-review:
     cmd: /security-review
@@ -54,13 +55,9 @@ skills:
     example: "/loop 5m /review"
 
   claude-api:
-    cmd: /claude-api
+    cmd: /claude-api [upgrade|prompt-audit|managed-agents-secure]
     trigger: code imports anthropic SDK; user asks about Claude API features
     desc: Build/debug Claude API apps; prompt caching, tool use, model migration
-    models:
-      opus: claude-opus-4-7
-      sonnet: claude-sonnet-4-6
-      haiku: claude-haiku-4-5-20251001
 
   ultrareview:
     cmd: /ultrareview [PR#]
@@ -81,7 +78,7 @@ skills:
   effort:
     cmd: /effort
     trigger: user wants to adjust effort/quality level
-    desc: Interactive slider for session effort level (also: CLAUDE_EFFORT env var)
+    desc: Interactive slider for session effort level (env CLAUDE_EFFORT)
 
   powerup:
     cmd: /powerup
@@ -91,12 +88,12 @@ skills:
   tui:
     cmd: /tui
     trigger: rendering looks flickery or user wants full-screen mode
-    desc: Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)
+    desc: "Switch to flicker-free alt-screen TUI rendering (also: CLAUDE_CODE_NO_FLICKER)"
 
   focus:
     cmd: /focus
     trigger: user wants compact view of conversation
-    desc: Toggle focus view showing only: prompt + tool summary + final response
+    desc: "Toggle focus view showing only: prompt + tool summary + final response"
 
   undo:
     cmd: /undo
@@ -106,7 +103,7 @@ skills:
   usage:
     cmd: /usage
     trigger: user asks about token or cost statistics
-    desc: Show token usage and cost stats (merged /cost + /stats)
+    desc: Token/cost stats incl. per-/loop breakdown and cache-miss cause (merged /cost + /stats)
 
   theme:
     cmd: /theme [name]
@@ -117,6 +114,68 @@ skills:
     cmd: /color
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
+
+  # ── added 2.1.130→2.1.310 (coding/docs/workflow) ──
+  dataviz:
+    cmd: /dataviz
+    trigger: any chart/graph/dashboard/visualization
+    desc: Chart design guidance + runnable color-palette validator
+  workflow-authoring:
+    cmd: /workflow-authoring
+    trigger: writing a Workflow script (opted-in multi-agent)
+    desc: Script API, resume, quality patterns; load before authoring; does not authorize running
+  run:
+    cmd: /run
+    trigger: run/start/screenshot app or verify change in real app
+    desc: Launch + drive project app (CLI/server/TUI/Electron/browser)
+  verify:
+    cmd: /verify
+    trigger: confirm a change works end-to-end
+    desc: Verify change via project/nested-package skill
+  plugin-authoring:
+    cmd: /plugin-authoring
+    trigger: build mod (panel, status line, toast, slash cmd, tool-call hook)
+    desc: Make/debug mods and hooks modules
+  goal:
+    cmd: /goal <condition>
+    trigger: keep working across turns until condition met
+    desc: Completion-condition loop; interactive, -p, Remote Control
+  auto-mode-setup:
+    cmd: /auto-mode-setup
+    trigger: teach auto mode your environment
+    desc: Guided setup from project + recent sessions
+  skill-doctor:
+    cmd: /skill-doctor
+    trigger: prune unused skills / context cost
+    desc: Show unused loaded skills + context cost
+  doctor-prompt-audit:
+    cmd: /doctor prompt-audit
+    trigger: audit CLAUDE.md/skills/agents for old-model prompt patterns
+    desc: Also /checkup prompt-audit; /claude-api prompt-audit for API prompts
+  reload-skills:
+    cmd: /reload-skills
+    trigger: skill dirs changed mid-session
+    desc: Re-scan skills without restart
+  design-sync:
+    cmd: /design-sync
+    trigger: sync Claude Design; standalone claude.ai/design closes 2026-12-14
+    desc: Design sync/login
+  diff:
+    cmd: /diff
+    trigger: view uncommitted changes live (fullscreen)
+    desc: Toggle diff panel
+  cd:
+    cmd: /cd <dir>
+    trigger: change session working dir
+    desc: Move session dir keeping prompt cache
+  advisor:
+    cmd: /advisor [model|off]
+    trigger: use advisor model
+    desc: Pick/disable advisor (CLAUDE_CODE_DISABLE_ADVISOR_TOOL=1 off)
+  config:
+    cmd: /config key=value
+    trigger: set any setting from prompt
+    desc: "/config --help lists shorthand keys"
 
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.
@@ -153,19 +212,16 @@ hooks:
     fires: Before conversation compaction
     can_block: true
     block_method: "exit 2 OR {decision:'block'}"
-    added: v2.1.85
     use: Prevent compaction during critical operations
 
   TaskCreated:
     fires: When task created via TaskCreate tool
     can_block: false
-    added: v2.1.90
     use: Log/track task creation events
 
   WorktreeCreate:
     fires: On worktree creation
     can_block: false
-    added: v2.1.88
     type_http: returns hookSpecificOutput.worktreePath
     use: Custom worktree provisioning via HTTP endpoint
 
@@ -173,8 +229,12 @@ hooks:
     fires: After auto-mode classifier denial
     can_block: false
     retry: "return {retry:true} to re-run classifier"
-    added: v2.1.95
     use: Custom permission escalation flows
+
+  PreModelSwitch: {fires: before model switch, can_block: true}
+  PostModelSwitch: {fires: after model switch, can_block: false}
+  DirectoryAdded: {fires: after /add-dir, can_block: false}
+  onFailure: "block option for command/http hooks: start fail/timeout/bad exit blocks action"
 
   hook_invoke_types:
     - type: shell          # shell command (default)
@@ -187,33 +247,36 @@ settings:
   skillOverrides:
     type: "off | user-invocable-only | name-only"
     desc: "off=hidden from model+slash, user-invocable-only=hidden from model, name-only=minimal exposure"
-    added: v2.1.126
 
   autoScrollEnabled:
     type: bool
     desc: Disable auto-scroll in fullscreen TUI mode
-    added: v2.1.100
 
   showThinkingSummaries:
     type: bool
     default: false
     desc: Control thinking summary generation in responses
-    added: v2.1.95
 
   disableSkillShellExecution:
     type: bool
     desc: Disable inline shell execution within skill definitions
-    added: v2.1.98
 
   prUrlTemplate:
     type: string
     desc: Custom URL template for PR footer badge (e.g. custom code-review tools)
-    added: v2.1.101
 
   sandbox.network.deniedDomains:
     type: "list[string]"
     desc: Block specific domains even when broader allowlists exist
-    added: v2.1.85
+
+  syncClaudeAiSkills: "bool; false = stop syncing claude.ai skills"
+  idleCompaction: "bool; false = off (CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS min, default 200K)"
+  maxEffortLevel: "cap effort"
+  bashOutputMaxChars: "int<=128K inline bash output cap; taskOutputMaxChars same"
+  promptCacheTtl: "5m|1h; subagentPromptCacheTtl separate"
+  attribution: "false = hide commit/PR attribution"
+  modelPicker: "curate /model list"
+  deniedModels: "block models (managed)"
 
 # ─── ENV VARS ──────────────────────────────────────────────────────────────────
 env:
@@ -224,17 +287,18 @@ env:
   OTEL_LOG_RAW_API_BODIES: "1 = emit full API request/response bodies as OTEL events"
   DISABLE_UPDATES: "1 = block all update paths including manual 'claude update'"
   CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1 = opt-in gateway /v1/models discovery"
+  CLAUDE_CODE_DISABLE_WEB_FETCH: "1 = disable WebFetch"
+  CLAUDE_CODE_DISABLE_FILE_MENTIONS: "1 = @mentions pass paths only"
+  CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION: "subagent spawn cap (default 200)"
+  CLAUDE_CODE_RESTRICTED: "1 = no command/code tools"
+  ANTHROPIC_DEFAULT_MODEL: "start model; /model overrides"
 
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
-  default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
-  sonnet: claude-sonnet-4-6
-  haiku: claude-haiku-4-5-20251001
+  default: claude-sonnet-5-5
+  fable: claude-fable-5-1
+  opus: claude-opus-5-5      # fast mode: Opus 5 / 4.8
+  sonnet: claude-sonnet-5-5
+  haiku: claude-haiku-5-5
 
-# ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────
-# This catalog is structured for minimal token overhead:
-# - One canonical source (this file); skills reference it rather than duplicate
-# - YAML over JSON/Markdown: ~30% fewer tokens for structured data
-# - Descriptions capped at one line; examples only where non-obvious
-# - "added:" version tags kept for audit; remove if tokens are critical
+# Compact: one-line descs, no "added:" tags, models listed once, YAML only.

@@ -1,0 +1,38 @@
+Claude Skills Update 2026-10-26
+Source: anthropics/claude-code CHANGELOG   Version: 2.1.129 -> 2.1.310
+
+[추가된 스킬]
+/dataviz, /workflow-authoring, /run, /verify, /plugin-authoring, /goal,
+/auto-mode-setup, /skill-doctor, /doctor prompt-audit, /reload-skills,
+/design-sync, /diff, /cd, /advisor, /config key=value
+Hooks: PreModelSwitch, PostModelSwitch, DirectoryAdded, onFailure:"block"
+Settings: syncClaudeAiSkills, idleCompaction, maxEffortLevel, bashOutputMaxChars,
+  taskOutputMaxChars, promptCacheTtl, attribution:false, modelPicker, deniedModels
+Env: CLAUDE_CODE_DISABLE_WEB_FETCH, _DISABLE_FILE_MENTIONS, _MAX_SUBAGENTS_PER_SESSION,
+  _RESTRICTED, ANTHROPIC_DEFAULT_MODEL
+
+[수정된 스킬]
+- review -> code-review (effort level, --comment/--fix/--max-findings); /review kept as alias
+- claude-api: subcommands upgrade | prompt-audit | managed-agents-secure
+- usage: per-/loop breakdown, cache-miss cause
+- models: sonnet-5-5 (default), opus-5-5, haiku-5-5, fable-5-1
+
+[삭제된 스킬]
+- None removed. Upstream removed /agents wizard (not in catalog). Removed per-model
+  "models:" block under claude-api (duplicate of top-level models).
+
+[최적화된 구조]
+- Layout: Claude/2026-10-26/skills/ (canonical); Claude/skills -> symlink to latest date dir
+  (keeps scripts/paths working). Next runs add a new <date>/skills and repoint symlink.
+- Claude/Changelogs/ created (didn't exist); scripts/update_skills.py now writes there.
+
+[토큰 절감]
+- Dropped all "added: vX" tags and the verbose optimization footer.
+- Removed duplicated model lists. New entries are 1-line trigger/desc.
+- Catalog ~12.1KB after adding 15 skills + hooks/settings/env.
+
+[충돌 해결]
+- review vs code-review: merged under code-review, /review noted as alias.
+- Pre-existing invalid YAML (unquoted ": " in scalars) fixed; catalog now parses (36 skills).
+- Model IDs 4.x -> 5.x replaced to match current runtime.
+- Upstream items for Windows/gateway/OTel/mod-hook internals skipped (not skills).
