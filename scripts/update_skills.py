@@ -12,9 +12,15 @@ import urllib.request
 import urllib.error
 
 REPO_ROOT = Path(__file__).parent.parent
-CATALOG_FILE = REPO_ROOT / "Claude" / "skills" / "SKILLS_CATALOG.yaml"
-VERSION_FILE = REPO_ROOT / "Claude" / "skills" / ".version"
-CHANGELOGS_DIR = REPO_ROOT / "changelogs"
+SKILLS_DIR = REPO_ROOT / "Claude" / datetime.now(timezone.utc).strftime("%Y-%m-%d") / "skills"
+if not SKILLS_DIR.exists():  # carry forward latest dated dir
+    prev_dirs = sorted(d for d in (REPO_ROOT / "Claude").glob("20??-??-??") if d / "skills" != SKILLS_DIR)
+    if prev_dirs:
+        import shutil
+        shutil.copytree(prev_dirs[-1] / "skills", SKILLS_DIR)
+CATALOG_FILE = SKILLS_DIR / "SKILLS_CATALOG.yaml"
+VERSION_FILE = SKILLS_DIR / ".version"
+CHANGELOGS_DIR = REPO_ROOT / "Claude" / "Changelogs"
 CHANGELOG_SRC = "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md"
 DESKTOP_LOG_DIR = Path(os.environ.get("DESKTOP_LOG_PATH", "/root/바탕화면/Claude-Text/Claude_skills"))
 

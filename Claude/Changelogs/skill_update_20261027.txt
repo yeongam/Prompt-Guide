@@ -1,0 +1,33 @@
+Claude Skills Changelog - 2026-10-27
+Source: anthropics/claude-code CHANGELOG.md | Version: 2.1.129 -> 2.1.311
+Path: Claude/skills -> Claude/2026-10-27/skills (date/skills rule)
+
+[추가된 스킬 / Added]
+- code-review, dataviz, run, workflow-authoring, plugin-authoring
+- skill-doctor, reload-skills, deep-research, goal, doctor-prompt-audit
+- docs-skills (docx/pdf/xlsx/pptx/docs)
+- settings: disableBundledSkills, syncClaudeAiSkills/Plugins
+- env: CLAUDE_CODE_SAFE_MODE, CLAUDE_CODE_SYNC_SKILLS
+
+[수정된 스킬 / Modified]
+- claude-api: +OTEL tracing, `upgrade` (anthropic 1.x), 4.7->4.8 migration, prompt-audit
+- review: reduced to legacy alias of code-review
+- models: opus claude-opus-4-7 -> claude-opus-4-8
+- version/updated fields -> 2.1.311 / 2026-10-27
+
+[삭제된 스킬 / Removed]
+- None (existing 17 skills kept)
+
+[최적화된 구조 / Structure]
+- Dated layout Claude/<date>/skills; scripts/update_skills.py now targets it and carries forward the latest dated dir
+- Changelogs moved to Claude/Changelogs (single dir, not recreated)
+- Version tags ("added:") removed; blank lines/banners stripped
+
+[토큰 절감 / Token savings]
+- Catalog 9230 -> 9748 bytes despite +12 entries (~+5%); per-entry cost cut ~35% via tag/blank/banner removal
+- review desc collapsed to alias; one-line descs only
+
+[충돌 해결 / Conflicts]
+- review vs code-review: kept review as alias (no behavior loss)
+- Pre-existing invalid YAML (unquoted ": " in values) fixed by quoting; catalog now parses
+- Old Claude/skills path references in updater script updated
