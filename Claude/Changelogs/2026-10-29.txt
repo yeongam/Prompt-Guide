@@ -1,0 +1,31 @@
+Claude Skills Update - 2026-10-29
+Source: anthropics/claude-code CHANGELOG.md | Version: 2.1.129 -> 2.1.312
+
+[추가된 스킬]
+/goal, /code-review, /autofix-pr, /workflows, /btw, /diff, /fork, /bg(/background),
+/recap, /cd, /advisor, /reload-skills, /artifacts, /web-setup, /usage-credits
+
+[수정된 스킬]
+- 카탈로그 version/updated 갱신 (2.1.312, 2026-10-29)
+- 기존 22개 스킬 내용 유지 (동작 변경 없음)
+
+[삭제된 스킬]
+- 없음
+
+[최적화된 구조]
+- Claude/skills -> Claude/2026-10-29/skills (날짜/skills 규칙)
+- scripts/update_skills.py, sync_changelogs.sh 경로를 날짜 디렉토리 및 Claude/Changelogs 로 수정
+- Changelogs 디렉토리 신규 생성 (Claude/Changelogs)
+
+[토큰 절감]
+- "added: vX" 태그와 하단 설명 주석 블록 제거
+- 신규 항목은 cmd/trigger/desc 한 줄 형식으로 통일
+- 카탈로그 약 9.2KB -> 10.7KB (신규 15개 추가 후에도 항목당 증가분 최소화)
+
+[충돌 해결]
+- 기존 YAML이 파싱 오류(desc 내 ': ')가 있어 문자열 값을 따옴표 처리
+- 기존 /review 와 신규 /code-review 는 별개 항목으로 공존
+- 이전 경로(Claude/skills, changelogs/) 참조 스크립트를 신규 경로로 일괄 수정
+
+[비고]
+- 업스트림 hooks/settings/env 신규 항목(2.1.130~)은 이번 실행에서 미반영 (코딩/문서 스킬 우선)
