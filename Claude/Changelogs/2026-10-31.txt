@@ -1,0 +1,36 @@
+Prompt-Guide Claude Skills Changelog - 2026-10-31
+Snapshot: Claude/skills/2026-10-31/skills (prev: Claude/skills/2026-05-06/skills)
+Source: anthropics/claude-code CHANGELOG (v2.1.129 -> v2.1.316)
+
+[추가된 스킬]
+- code-review, dataviz, skill-doctor, doctor-prompt-audit, auto-mode-setup, plugin-authoring
+- claude-api 서브명령: upgrade, prompt-audit, managed-agents-secure
+- 개별 스킬 문서(코딩/문서): claude-api, code-review, simplify, security-review, init, dataviz, documentation-maintenance, session-start-hook
+- 신규 커맨드/설정/훅/env: /advisor /diff /checkup /usage-credits /web-setup /teleport, PreModelSwitch/PostModelSwitch/DirectoryAdded 훅, idleCompaction 등
+
+[수정된 스킬]
+- claude-api: 모델 ID를 claude-fable-5-1 / opus-5-5 / sonnet-5-5 / haiku-5-5 로 갱신
+- loop, usage, effort, init(AGENTS.md 지원), ultrareview(브라우저 링크 제거) 설명 갱신
+- hooks: onFailure:"block", mcp_tool/http 타입 유지
+
+[삭제된 스킬]
+- review (-> code-review로 대체), /agents 마법사, TaskOutput 도구
+- 저가치 항목 제거: tui, theme, color, undo (catalog 에서 제외; 기본 /help로 확인 가능)
+
+[최적화된 구조]
+- 날짜별 구조 적용: skills/<date>/skills (기존 flat 파일은 2026-05-06/skills 로 이동, 보존)
+- catalog.yaml: 항목당 1줄 "cmd | use" 형식, 상세는 스킬별 .md(5줄 내외)
+
+[토큰 절감 관련 변경 사항]
+- catalog 9,230B -> 3,908B (약 58% 감소) 신규 항목 포함
+- trigger/desc 중복 필드 제거, 예시/주석 삭제, 버전 태그는 괄호 1개로 축약
+- 스킬 .md 8개 합계 약 1.6KB, 호출 시에만 로드
+
+[충돌 해결 내역]
+- review vs code-review: 기존 /review 항목을 code-review로 통합(이름 충돌 제거)
+- 기존 flat 경로 vs 날짜 규칙: 기존 파일을 git mv로 날짜 폴더에 이동(이력 유지)
+- Changelogs 디렉토리: 신규 생성 (기존 없음)
+
+[참고]
+- .github/workflows/daily-skill-update.yml 이 참조하는 scripts/update_skills.py 가 저장소에 없음. 워크플로 미동작 가능성, 이번 실행에서는 수정하지 않음.
+- GitHub 릴리스 API 접근 불가로 npm registry(v2.1.316) 및 CHANGELOG.md 기준으로 동기화함.

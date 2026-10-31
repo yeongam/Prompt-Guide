@@ -1,0 +1,62 @@
+# Claude Code skills catalog v2.1.316 | src: anthropics/claude-code CHANGELOG | 2026-10-31
+# fmt: name: cmd | use. Details of coding/doc skills: <name>.md in this dir. Prev: ../../2026-05-06
+v: 2.1.316
+skills:
+  init: /init | generate CLAUDE.md (AGENTS.md read if no CLAUDE.md, v2.1.277)
+  code-review: /code-review [low|medium|high|xhigh|max] [target] [--comment|--fix] | bug review (replaces /review)
+  security-review: /security-review | audit pending branch diff
+  simplify: /simplify | reuse/efficiency cleanup of changed code
+  claude-api: /claude-api [upgrade|prompt-audit|managed-agents-secure] | Claude API/SDK work
+  dataviz: /dataviz | chart/dashboard design + palette validator (2.1.198)
+  skill-doctor: /skill-doctor | list unused skills + context cost (2.1.261)
+  doctor-prompt-audit: /doctor prompt-audit | audit CLAUDE.md/skills/agents for old-model prompt patterns (2.1.283)
+  session-start-hook: /session-start-hook | SessionStart hook for tests/lint
+  update-config: /update-config | settings.json hooks/permissions/env
+  keybindings-help: /keybindings-help | keybindings.json
+  fewer-permission-prompts: /fewer-permission-prompts | allowlist from transcripts
+  auto-mode-setup: /auto-mode-setup | guided auto-mode rules (2.1.304)
+  loop: /loop [interval] [cmd] | recurring task; /usage shows per-loop cost
+  ultrareview: /ultrareview [PR#] | multi-agent cloud review (billed)
+  ultraplan: /ultraplan | cloud multi-agent planning
+  team-onboarding: /team-onboarding | teammate ramp-up guide
+  powerup: /powerup | feature demos
+  plugin-authoring: /plugin-authoring | build mods/hooks/panels
+cmds: # non-skill, added since 2.1.129
+  /advisor: pick advisor model|off
+  /diff: diff panel (fullscreen)
+  /focus: compact view
+  /effort: slider; s=session-only
+  /usage: tokens/cost/loops/cache warnings
+  /cost: prompt-cache hit/miss line
+  /reload-plugins: also headless
+  /usage-credits: Enterprise limit request
+  /web-setup: GitHub for web sessions
+  /teleport: continue cloud session locally
+  /checkup: alias /doctor
+removed: [review(->code-review), /agents wizard(2.1.198), TaskOutput tool(2.1.277), claude ultrareview browser link]
+hooks: # events; block=exit2|{decision:block}; onFailure:"block" (2.1.295)
+  block-capable: [PreToolUse, PreCompact, PreModelSwitch, PostModelSwitch(annotate)]
+  info: [PostToolUse, Notification(+agent_needs_input/agent_completed), Stop, SubagentStop, TaskCreated, WorktreeCreate, PermissionDenied(retry), DirectoryAdded]
+  types: [shell, mcp_tool, http]
+  precompact_out_cap: 10000ch
+settings: # key: effect (ver)
+  idleCompaction: false disables idle compaction (2.1.299)
+  promptCacheTtl/subagentPromptCacheTtl: 5m|1h cache (2.1.243)
+  maxEffortLevel: cap effort (2.1.267)
+  bashOutputMaxChars/taskOutputMaxChars: inline output cap<=128K (2.1.261; taskOutput no-op since 2.1.277)
+  attribution: false hides commit/PR attribution (2.1.281)
+  maxProseWidth, timeFormat, timeZone, keybindingFlavor, spellcheck, emojiCompletionEnabled, vimInsertModeRemaps: UI (2.1.208-2.1.282)
+  syncClaudeAiSkills/syncClaudeAiPlugins: false opts out (2.1.275)
+  sandbox.network.strictAllowlist, sandbox.filesystem.disabled: sandbox (2.1.216-219)
+  autoMode.classifyAllShell: classify all shell (2.1.193)
+  workflowSizeGuideline: advisory (2.1.219)
+  skillOverrides: off|user-invocable-only|name-only (2.1.126)
+  managed: availableModelsMatch, deniedModels, allowedProviders, modelPricing, managedMcpServers
+env:
+  CLAUDE_CODE_DISABLE_ULTRATHINK: 1 disables ultrathink keyword
+  CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS: idle compaction min (default 200K)
+  CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION: default 200
+  CLAUDE_CODE_RESTRICTED: 1 = --restricted
+  ANTHROPIC_DEFAULT_MODEL: start model (persist /model)
+  CLAUDE_AX_SCREEN_READER: 1
+models: {fable: claude-fable-5-1, opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5}  # fast mode: Opus 5/4.8 only
