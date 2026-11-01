@@ -1,0 +1,76 @@
+# Claude Code skills catalog | src: anthropics/claude-code | v2.1.316 | 2026-11-01
+# fmt: name: trigger | effect. Detail files in this dir: code-review, claude-api, dataviz, project-docs
+v: 2.1.316
+skills:
+  code-review: review diff/PR; `/code-review [low|medium|high|xhigh|max|ultra] [PR#] [--comment|--fix]`; alias /review; ultra=cloud deep review (replaces /ultrareview)
+  simplify: reuse/quality/efficiency cleanup of changed code, applies fixes
+  security-review: security audit of branch diff
+  init: generate CLAUDE.md
+  claude-api: Claude API/SDK apps; subcmds api-version|upgrade|cost-optimize|managed-agents-onboard|managed-agents-secure
+  dataviz: charts/dashboards guidance + palette validator
+  doctor: setup checkup+fix (alias /checkup); `prompt-audit` flags old-model prompting in CLAUDE.md/skills/agents
+  skill-doctor: unused skills + context cost
+  session-start-hook: SessionStart hook for test/lint in web sessions
+  update-config: settings.json hooks/permissions/env
+  keybindings-help: ~/.claude/keybindings.json
+  fewer-permission-prompts: allowlist from transcripts
+  loop: recurring prompt/command [interval]
+  goal: completion condition; keeps working across turns
+  design-sync: Claude Design sync (standalone closes 2026-12-14)
+  auto-mode-setup: tune auto mode to project
+  workflow-authoring: Workflow tool scripts (multi-agent)
+cmds:  # no skill file; one-liners
+  /cd: change cwd keep cache
+  /btw: side question
+  /diff: uncommitted-changes panel
+  /focus: compact view
+  /advisor: pick advisor model
+  /effort: set effort (agent view too)
+  /fast: fast mode (Opus 5.x, 4.8 deprecated; removed 2026-11-30)
+  /usage: tokens+cost, loops, warnings (/cost merged)
+  /usage-credits: ex /extra-usage
+  /config key=val: set any setting
+  /output-style [name]
+  /reload-skills: rescan skills
+  /reload-plugins
+  /plugin list|install <p> --marketplace <s>
+  /mcp reconnect all
+  /teleport: continue cloud session locally
+  /web-setup
+  /rewind: also resumes pre-/clear (/undo alias)
+  /resume: incl. bg sessions
+  /insights
+  /scroll-speed
+removed: [/ultrareview(use /code-review ultra), /powerup, /agents(ask Claude or edit .claude/agents), /simplify->code-review rename reverted (both exist), /extra-usage(renamed)]
+hooks:
+  events: [PreToolUse, PostToolUse, Notification, Stop, SubagentStop, PreCompact, TaskCreated, WorktreeCreate, PermissionDenied]
+  types: [shell, mcp_tool, http]
+  block: exit 2 | {decision:block}
+  onFailure: "block" (new; cmd/http hook that fails/times out blocks action)
+  mod_hooks: agent.spawn, prompt.change, prompt.autocomplete, skill.prompt, session.append, tool.check, turn.step
+settings:
+  skillOverrides: off|user-invocable-only|name-only
+  disableBundledSkills: hide bundled skills (env CLAUDE_CODE_DISABLE_BUNDLED_SKILLS)
+  disableSkillShellExecution: bool
+  maxEffortLevel: cap effort
+  bashOutputMaxChars/taskOutputMaxChars: inline output cap<=128K
+  idleCompaction: false=off
+  attribution: false=hide commit/PR attribution
+  timeFormat/timeZone/maxProseWidth: display
+  allowedProviders/deniedModels/availableModelsMatch/managedMcpServers: managed
+  showThinkingSummaries/autoScrollEnabled/prUrlTemplate/sandbox.network.deniedDomains: unchanged
+env:
+  ANTHROPIC_DEFAULT_MODEL: start model
+  CLAUDE_CODE_SUBAGENT_EFFORT/SUBAGENT_MODEL_FORCE/WORKFLOW_SUBAGENT_MODEL/WORKFLOW_MAX_CONCURRENT_AGENTS: subagent+workflow control
+  CLAUDE_CODE_AUTO_MODE_MODEL: classifier model
+  CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS: default 200K
+  CLAUDE_CODE_DISABLE_ULTRATHINK/WEB_FETCH/FILE_MENTIONS/ADVISOR_TOOL: feature off
+  CLAUDE_CODE_RETRY_WATCHDOG(+_MAX_WAIT_MS): unattended retry
+  CLAUDE_CODE_MCP_STARTUP_WAIT_MS/MAX_MCP_DESCRIPTION_LENGTH: MCP
+  CLAUDE_CODE_SESSION_ID: in Bash env
+  kept: CLAUDE_EFFORT, CLAUDE_CODE_NO_FLICKER, CLAUDE_CODE_USE_POWERSHELL_TOOL, CLAUDE_STREAM_IDLE_TIMEOUT_MS, DISABLE_UPDATES
+models:  # default: Opus 5.5 (paid plans), Sonnet 5.5
+  fable: claude-fable-5-1
+  opus: claude-opus-5-5
+  sonnet: claude-sonnet-5-5
+  haiku: claude-haiku-5-5
