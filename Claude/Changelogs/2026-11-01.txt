@@ -23,7 +23,7 @@ Snapshot: Claude/skills/2026-11-01/skills
 - scripts/update_skills.py: 출력 경로 Claude/Changelogs/YYYY-MM-DD.txt, 삭제된 catalog 의존 제거
 
 [토큰 절감 관련 변경 사항]
-- 카탈로그 9.2KB -> 약 5KB 규모, trigger/desc 통합(name: trigger | effect)
+- 카탈로그 9.2KB -> catalog 4.0KB (상세 md 포함 총 5.9KB), trigger/desc 통합(name: trigger | effect)
 - 'added:' 버전 태그, 반복 설명, 예시 제거; 변경 없는 설정은 한 줄로 묶음
 - 상세 문서는 필요 시에만 로드(catalog에서 파일명만 참조)
 
