@@ -1,0 +1,45 @@
+Prompt-Guide Claude Skills Changelog - 2026-11-02
+
+Snapshot: Claude/skills/2026-11-02/skills (v2.1.129 -> v2.1.316)
+Source: anthropics/claude-code CHANGELOG.md (main)
+
+[추가된 스킬]
+- code-review, goal, workflows(ultracode), dataviz, auto-mode-setup, reload-skills,
+  skill-doctor, doctor(prompt-audit), cd, diff, resume, rewind, fast, advisor, usage-credits
+- 추가된 훅: DirectoryAdded, MessageDisplay, PreModelSwitch, PostModelSwitch
+- 추가된 설정/환경변수: disableBundledSkills, syncClaudeAiSkills, modelPicker, workflowSizeGuideline,
+  feedbackDrafts, CLAUDE_CODE_SAFE_MODE, CLAUDE_CODE_SUBAGENT_EFFORT, CLAUDE_CODE_DISABLE_ULTRATHINK,
+  ANTHROPIC_DEFAULT_MODEL, CLAUDE_CODE_SESSION_ID, 훅 onFailure/continueOnBlock/args/terminalSequence
+
+[수정된 스킬]
+- claude-api: upgrade/prompt-audit 서브명령, 모델 opus-5-5 / sonnet-5-5 / haiku-5-5 / fable-5-1
+- simplify: 정리 전용으로 역할 축소 (버그 리뷰는 code-review)
+- effort: 슬라이더 라벨 Faster/Smarter, s=세션 한정
+- fast: Opus 5.5 전용 (Opus 4.8 폐기 예정, 2026-11-30 제거)
+- usage: /cost 통합 + Loops/spend limit 표시, usage-credits(구 extra-usage)
+- keybindings-help: effortSlider:* 액션 추가
+- 훅 목록: Notification에 agent_needs_input/agent_completed
+
+[삭제된 스킬]
+- review (-> code-review로 대체), ultraplan (2.1.222 제거), /agents 마법사 (2.1.198 제거), TaskOutput 도구 (2.1.277 제거)
+- 구 항목 undo/stats는 rewind로 통합
+
+[최적화된 구조]
+- 날짜별 스냅샷 규칙 유지: Claude/skills/YYYY-MM-DD/skills
+- 기존 평면 파일(Claude/skills/SKILLS_CATALOG.yaml, .version)을 2026-05-06/skills 로 이동 (git mv, 이력 보존)
+- 카탈로그를 coding/docs/config/session 그룹의 단일 라인 항목으로 재구성
+
+[토큰 절감 관련 변경 사항]
+- 항목당 1줄 flow-style YAML, 긴 trigger 문장/주석/added 버전 태그 제거
+- 카탈로그 약 8.4KB -> 약 6.3KB (스킬 수는 24 -> 33으로 증가했음에도 축소)
+- 세부 서술은 공식 CHANGELOG 링크로 대체
+
+[충돌 해결 내역]
+- /review vs /code-review: 신규 이름으로 통합, 구 이름은 별칭 표기 없이 삭제 처리
+- /simplify: 이름 유지, 역할만 정리 (code-review와 중복 제거)
+- /ultraplan: 업스트림 제거에 따라 삭제
+- 기존 스냅샷 덮어쓰지 않고 신규 날짜 디렉토리에 기록
+- Claude/Claude-Opus-v4.6, Claude-Sonnet-v.4.6, Claude-in-chrome, None 파일은 변경하지 않음
+
+[비고]
+- .github/workflows/daily-skill-update.yml 은 브랜치 claude/zealous-sagan-FdaL5 를 참조하며 scripts/update_skills.py 에 의존 (본 실행에서 미수정)

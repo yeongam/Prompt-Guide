@@ -1,0 +1,78 @@
+# Claude Code catalog | src: anthropics/claude-code | v2.1.316 | 2026-11-02
+# fmt: cmd | use | desc (1 line). Compact; see 2026-05-06 snapshot for prior full form.
+version: 2.1.316
+updated: 2026-11-02
+skills:
+  # coding / programming
+  init: {cmd: /init, use: document codebase, desc: generate CLAUDE.md (AGENTS.md read if no CLAUDE.md)}
+  code-review: {cmd: "/code-review [low|medium|high|xhigh|max] [--comment|--fix]", use: review diff/PR for bugs, desc: replaces old /review; effort-leveled; --comment posts PR inline}
+  simplify: {cmd: /simplify, use: cleanup changed code, desc: reuse/efficiency cleanup then fix (quality only)}
+  security-review: {cmd: /security-review, use: audit branch diff, desc: risk-ranked findings}
+  ultrareview: {cmd: "/ultrareview [PR#]", use: multi-agent review, desc: billed; local branch or PR}
+  claude-api: {cmd: "/claude-api [upgrade|prompt-audit]", use: Anthropic SDK work, desc: caching/tools/migration; upgrade=py 0.x->1.x; OTEL tracing}
+  goal: {cmd: /goal, use: run until condition met, desc: multi-turn completion condition; works in -p}
+  loop: {cmd: "/loop [interval] [cmd]", use: recurring task, desc: interval or self-paced; see /usage Loops}
+  workflows: {cmd: "ultracode keyword", use: dynamic multi-agent workflow, desc: 'word "workflow" no longer triggers; size via workflowSizeGuideline'}
+  session-start-hook: {cmd: /session-start-hook, use: test/lint on session start, desc: SessionStart hook}
+  # docs / data
+  dataviz: {cmd: /dataviz, use: chart/dashboard, desc: palette validator + design rules}
+  # config / maintenance
+  update-config: {cmd: /update-config, use: settings.json hooks/perms/env, desc: harness config}
+  keybindings-help: {cmd: /keybindings-help, use: remap keys, desc: keybindings.json; effortSlider:* actions}
+  fewer-permission-prompts: {cmd: /fewer-permission-prompts, use: fewer dialogs, desc: transcript scan -> allowlist}
+  auto-mode-setup: {cmd: /auto-mode-setup, use: teach auto mode env, desc: guided; all providers}
+  reload-skills: {cmd: /reload-skills, use: rescan skills, desc: no restart}
+  skill-doctor: {cmd: /skill-doctor, use: prune unused skills, desc: unused skills + context cost}
+  doctor: {cmd: "/doctor [prompt-audit]", use: diagnose config, desc: audits CLAUDE.md/skills for old-model prompt patterns}
+  # session
+  cd: {cmd: /cd, use: change workdir, desc: keeps prompt cache}
+  diff: {cmd: /diff, use: view uncommitted changes, desc: fullscreen side panel}
+  focus: {cmd: /focus, use: compact view, desc: prompt+summary+response}
+  rewind: {cmd: "/rewind (/undo)", use: undo, desc: can resume from before /clear}
+  resume: {cmd: /resume, use: reopen session, desc: includes bg sessions}
+  effort: {cmd: /effort, use: effort level, desc: slider Faster/Smarter; s=session-only}
+  fast: {cmd: /fast, use: faster output, desc: Opus 5.5 only; Opus 4.8 deprecated, removed 2026-11-30}
+  advisor: {cmd: "/advisor [model|off]", use: advisor model, desc: opt-in}
+  usage: {cmd: /usage, use: tokens/cost, desc: +Loops, spend limit, warnings; /cost for cache misses}
+  usage-credits: {cmd: /usage-credits, use: extra usage, desc: formerly /extra-usage}
+  tui: {cmd: /tui, use: flicker-free, desc: alt-screen}
+  powerup: {cmd: /powerup, use: learn features, desc: demos}
+  team-onboarding: {cmd: /team-onboarding, use: teammate guide, desc: from usage history}
+  theme: {cmd: /theme, use: themes, desc: switch/create}
+  color: {cmd: /color, use: session color, desc: random}
+  # removed upstream (do not use): ultraplan(2.1.222), /agents wizard(2.1.198), TaskOutput tool(2.1.277)
+hooks:  # block: exit 2 | {decision:block}; cmd/http hooks: onFailure:"block"; args:[..] = exec form
+  PreToolUse: {block: y}
+  PostToolUse: {block: n, continueOnBlock: opt}
+  Notification: {block: n, note: agent_needs_input/agent_completed}
+  Stop: {block: n}
+  SubagentStop: {block: n}
+  PreCompact: {block: y}
+  TaskCreated: {block: n}
+  WorktreeCreate: {block: n, http: hookSpecificOutput.worktreePath}
+  PermissionDenied: {block: n, retry: "{retry:true}"}
+  DirectoryAdded: {block: n, new: after /add-dir}
+  MessageDisplay: {block: n, new: transform/hide assistant text}
+  PreModelSwitch: {block: y, new: y}
+  PostModelSwitch: {block: n, new: y}
+  types: [shell, mcp_tool, http]
+  output: terminalSequence field for notifications/bells
+settings:
+  skillOverrides: "off|user-invocable-only|name-only"
+  disableBundledSkills: bool (env CLAUDE_CODE_DISABLE_BUNDLED_SKILLS)
+  disableSkillShellExecution: bool
+  syncClaudeAiSkills: "bool, default sync; syncClaudeAiPlugins likewise"
+  modelPicker: ordered model list
+  workflowSizeGuideline: small|medium|large
+  feedbackDrafts: bool
+  prUrlTemplate: str
+  sandbox.network.deniedDomains: list
+env:
+  CLAUDE_EFFORT: usable as ${CLAUDE_EFFORT}
+  CLAUDE_CODE_SESSION_ID: in Bash subprocess
+  CLAUDE_CODE_SAFE_MODE: all customizations off (--safe-mode)
+  CLAUDE_CODE_SUBAGENT_EFFORT: default subagent effort
+  CLAUDE_CODE_DISABLE_ULTRATHINK: "1=off"
+  ANTHROPIC_DEFAULT_MODEL: start model, /model overrides
+  CLAUDE_CODE_NO_FLICKER: "1=/tui"
+models: {default: claude-sonnet-5-5, opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5, fable: claude-fable-5-1}
