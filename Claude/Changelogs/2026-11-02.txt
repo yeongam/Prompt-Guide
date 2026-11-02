@@ -31,7 +31,7 @@ Source: anthropics/claude-code CHANGELOG.md (main)
 
 [토큰 절감 관련 변경 사항]
 - 항목당 1줄 flow-style YAML, 긴 trigger 문장/주석/added 버전 태그 제거
-- 카탈로그 약 8.4KB -> 약 6.3KB (스킬 수는 24 -> 33으로 증가했음에도 축소)
+- 카탈로그 9,230B -> 5,196B (약 44% 감소, 스킬 항목 수는 증가)
 - 세부 서술은 공식 CHANGELOG 링크로 대체
 
 [충돌 해결 내역]
