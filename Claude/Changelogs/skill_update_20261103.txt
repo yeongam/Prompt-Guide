@@ -1,0 +1,71 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-11-03 04:40 UTC
+Version : 2.1.316 → 2.1.317
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-11-03/
+============================================================
+
+[ ★ 신규 감지 스킬 (4개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /artifacts  ← 수동 추가 필요
+  ? /design-sync  ← 수동 추가 필요
+  ? /remote-control  ← 수동 추가 필요
+  ? /schedule  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /artifacts
+  ~ /design-sync
+  ~ /loop
+  ~ /remote-control
+  ~ /schedule
+  ~ /team-onboarding
+  ~ /usage
+
+[ 삭제된 스킬 / Removed Skills ]
+  - /team-onboarding
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-11-03/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed `claude auth status` exiting before a slow token refresh was saved, which could sign you out on the next run
+  - Fixed screen readers speaking a running subagent's elapsed time and token count on every change in screen reader mode
+  - Fixed the Claude apps gateway hiding Amazon Bedrock's "Input is too long." error, which left sessions failing every turn with "upstream rejected the request" instead of compacting
+  - Fixed "Prompt is too long" after automatic compaction in sessions whose very large CLAUDE.md changed since it was last sent
+  - Fixed stdio MCP servers receiving an empty `AWS_BEARER_TOKEN_BEDROCK` when their env config sets it to empty; the variable is now unset, so the server can use the machine's own AWS credentials
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  Stop
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.317
+
+- Added a warning to `/schedule` when a new cloud scheduled task gets connectors you did not ask for, with how to remove them
+- Added a check that asks before a web or shell tool call sends your account email address to the network
+- Added `onFailure: "block"` for Agent SDK hook callbacks, so a callback that fails blocks the action instead of letting it run
+- Added a notice in Claude Desktop's Code tab when your organization's remote managed settings haven't loaded for the session, and another once they do
+- Added a notice when auto mode's check has no answer for a subagent's tool call, which used to leave nothing in the main view
+- Added `anthropic.plan`, `anthropic.seat_type`, `anthropic.provider` and `anthropic.custom_base_url` to OTel metrics, events and spans
+- Added a cost report to the Claude apps gateway admin API, `GET /v1/organizations/analytics/cost`, for reading past spend over a date range in total, per developer, per day or per IdP group
+- Added a daily record of each developer's IdP groups on Claude apps gateways with `admin:` set, kept for `admin.identity_retention_days`, which the cost report groups by
+- Added `CLAUDE_CODE_DISABLE_NESTED_SESSION_ID`: set it to `1` on a self-hosted runner to have `claude -p` run inside a session use that session's ID and transcript, as in earlier versions
+- Fixed project and local MCP servers disconnecting after the first turn in some Claude desktop sessions
+- Fixed auto mode failing every turn when an LLM gateway set as the base URL answers 403 or 422 to its server-side safety check (a 403 with an apiKeyHelper is unchanged)
+- Fixed `claude auth status` exiting before a slow token refresh was saved, which could sign you out on the next run
+- Fixed a project's `effortLevel` setting being ignored by sessions that an app starts ahead of time and then opens in the project, such as new sessions in the desktop app's Code tab
+- Fixed `claude --from-pr` reporting "No conversations found" in projects with many ses
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
