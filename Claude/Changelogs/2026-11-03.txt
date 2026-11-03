@@ -1,0 +1,33 @@
+Claude Code Skills Sync - 2026-11-03
+Version: 2.1.129 -> 2.1.317 (source: anthropics/claude-code CHANGELOG.md, 156 releases)
+File: Claude/skills/SKILLS_CATALOG.yaml
+
+[추가된 스킬 / Added]
+/code-review, /dataviz, /run, /skill-doctor, /reload-skills, /goal, /auto-mode-setup,
+/doctor (prompt-audit), /config key=value, /advisor, /output-style, /cd, /plugin list/install, /mcp reconnect all, /diff
+/claude-api subcommands: api-version, upgrade, cost-optimize, managed-agents-onboard, managed-agents-secure
+Hooks: PreModelSwitch, PostModelSwitch, DirectoryAdded, MessageDisplay, PostToolUse.continueOnBlock
+Settings/env: idleCompaction, forceLoginMethod, CLAUDE_CODE_{EFFORT_LEVEL,SUBAGENT_MODEL,IDLE_COMPACT_MIN_TOKENS,DISABLE_ADVISOR_TOOL,MAX_RETRIES,RESUME_INTERRUPTED_TURN,MCP_STARTUP_WAIT_MS}
+
+[수정된 스킬 / Modified]
+/effort (per-model, s=session), /usage (warnings), /loop (self-paced w/o interval), /undo (resume pre-/clear),
+/claude-api (models, OTEL tracing), /ultrareview (git>=2.31), models -> fable-5-1, opus-5-5, sonnet-5-5, haiku-5-5,
+fast mode: Opus 5 / 4.8
+
+[삭제된 스킬 / Removed]
+/agents wizard (edit .claude/agents/ directly), fast-mode Opus 4.7, "Default teammate model" setting
+/team-onboarding,/powerup,/tui,/theme,/color,/usage-credits etc. folded into one 'others' entry (still valid)
+
+[최적화된 구조 / Structure]
+- Skill entries -> one-line flow maps; hooks grouped (blockable vs events); removed per-item "added:" tags and notes
+- Layout kept: Claude/skills/{SKILLS_CATALOG.yaml,.version}; changelogs in Claude/Changelogs/YYYY-MM-DD.txt
+
+[토큰 절감 / Token savings]
+- Catalog 9,230 B -> 5,000 B (~46% smaller) while covering ~2x more commands
+- Long descriptions/triggers shortened; duplicated notes dropped
+
+[충돌 해결 / Conflicts]
+- Rule "날짜/skills" vs existing Claude/skills: existing path kept (scripts/consumers reference it); date lives in changelog filename + 'updated' field
+- scripts/update_skills.py writes to top-level changelogs/; spec requires Claude/Changelogs -> script not run; follow-up: repoint CHANGELOGS_DIR
+- Old catalog's /review kept alongside new /code-review (both exist upstream)
+- Old claude-api model IDs (4.x) replaced by current IDs
