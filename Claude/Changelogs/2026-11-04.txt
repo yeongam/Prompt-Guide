@@ -1,0 +1,33 @@
+Prompt-Guide Claude Skills Changelog - 2026-11-04
+Source: anthropics/claude-code CHANGELOG.md | 2.1.129 -> 2.1.318
+Snapshot: Claude/skills/2026-11-04/skills (prev: Claude/skills/2026-05-06/skills)
+
+[추가된 스킬]
+- code-review, verify, schedule, goal, workflows, dataviz, plugin-authoring
+- skill-doctor, doctor(prompt-audit), auto-mode-setup, reload-skills, advisor, fast, design-sync
+- claude-api: managed-agents-secure 서브커맨드, OTel tracing
+
+[수정된 스킬]
+- review -> code-review (/review 는 alias)
+- claude-api: 모델 ID 갱신 (sonnet-5-5 / opus-5-5 / haiku-5-5), Managed Agents multiagent_20261001
+- usage: 경고(max effort, workflows, 큰 tool 결과) 추가
+- hooks: onFailure:"block", UserPromptSubmit 이 스킬 확장 전 실행, 스킬당 훅 한도
+- settings/env: 신규 항목 반영 (deniedModels, allowedProviders, idleCompaction, CLAUDE_CODE_SUBAGENT_EFFORT 등)
+
+[삭제된 스킬]
+- ultraplan (업스트림 제거)
+- /agents wizard (업스트림 제거)
+- review 독립 항목 (code-review 로 통합)
+
+[최적화된 구조]
+- Claude/skills/<날짜>/skills/ 규칙 적용; 기존 평면 카탈로그는 2026-05-06/skills/ 로 이동(보존)
+- 항목당 1줄 문자열 형식 "cmd | use when | does"; 훅/설정/env 요약 블록화
+
+[토큰 절감]
+- 카탈로그 9,230B -> 4,303B (약 53% 감소)
+- trigger/desc/example/note/added 다단 필드 제거, 버전 태그 삭제, 중복 주석 제거
+
+[충돌 해결]
+- /review 와 /code-review 중복 -> code-review 단일 항목으로 통합
+- 평면 구조 vs 날짜 구조 -> 이전 파일을 날짜 폴더로 이동
+- 미해결: scripts/update_skills.py 와 daily-skill-update.yml 은 여전히 평면 경로(Claude/skills/SKILLS_CATALOG.yaml)와 changelogs/ 를 참조함. 다음 실행 전 날짜 구조로 수정 필요 (이번 실행에서는 기존 기능 보호를 위해 미수정)

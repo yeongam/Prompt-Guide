@@ -1,0 +1,56 @@
+# Claude Code skills catalog (src: anthropics/claude-code CHANGELOG) v2.1.318 · 2026-11-04
+# fmt: name: "cmd | use when | does"
+version: 2.1.318
+skills:
+  init: "/init | document codebase | write CLAUDE.md (arch, conventions, cmds)"
+  code-review: "/code-review [low..max|ultra] [PR#|branch] [--comment|--fix] | review diff/PR | bug+cleanup review; /review is alias; ultra=cloud deep review"
+  ultrareview: "/ultrareview [PR#] | multi-agent cloud review | billed; needs git repo"
+  security-review: "/security-review | security audit of branch diff | risk-ranked findings"
+  simplify: "/simplify | clean changed code | reuse/quality/efficiency fixes"
+  verify: "/verify | check change works | project 'verify' skill runs before commits (not docs/tests-only)"
+  session-start-hook: "/session-start-hook | tests/lint on web session start | SessionStart hook"
+  update-config: "/update-config | automate/permissions/env | edit settings.json"
+  keybindings-help: "/keybindings-help | rebind keys | edit keybindings.json (effortSlider:* actions)"
+  fewer-permission-prompts: "/fewer-permission-prompts | fewer dialogs | allowlist from transcripts"
+  loop: "/loop [interval] [cmd] | recurring task | interval or self-paced"
+  schedule: "/schedule | cloud scheduled task | warns on unrequested connectors"
+  goal: "/goal | long-running objective | max 3 idle check-ins/goal"
+  workflows: "/workflows | view multi-agent runs | status filter (f)"
+  claude-api: "/claude-api [managed-agents-secure] | Anthropic SDK code | caching, tools, OTel tracing, Managed Agents (multiagent_20261001), ant CLI"
+  dataviz: "/dataviz | charts/dashboards | ranked bars over pie/donut; APCA contrast; full y-labels <10K"
+  plugin-authoring: "(auto) | build mods/hooks | share-mod flow"
+  skill-doctor: "/skill-doctor | prune skills | shows unused skills + context cost"
+  doctor: "/doctor [prompt-audit] | diagnose | audit CLAUDE.md/skills for old-model prompting"
+  auto-mode-setup: "/auto-mode-setup | tune auto mode | guided env setup"
+  reload-skills: "/reload-skills | skills missing after compaction | resend changed/full list"
+  advisor: "/advisor | advisor model | off: CLAUDE_CODE_DISABLE_ADVISOR_TOOL=1"
+  effort: "/effort | effort level | slider; ${CLAUDE_EFFORT}"
+  fast: "/fast | fast mode | Opus 5 / 4.8 only"
+  usage: "/usage | tokens/cost | warns: max effort, workflows, big tool results"
+  focus: "/focus | compact view | prompt+tools+final"
+  tui: "/tui | flicker-free | CLAUDE_CODE_NO_FLICKER=1"
+  team-onboarding: "/team-onboarding | teammate ramp-up | from usage history"
+  powerup: "/powerup | feature demos | interactive"
+  design-sync: "/design-sync, /design-login | Claude Design | standalone closes 2026-12-14"
+  undo: "/undo | revert last | alias /rewind"
+  theme: "/theme [name] | colors | custom themes"
+  color: "/color | session color | random"
+removed: [ultraplan, "/agents wizard (edit .claude/agents/ or ask Claude)", TaskOutput tool]
+hooks:
+  # block: exit 2 | {decision:"block"} | onFailure:"block" (fail-closed). `if` = permission-rule filter. types: shell|mcp_tool|http
+  block_capable: [PreToolUse, PreCompact, UserPromptSubmit]  # UserPromptSubmit runs before skill expansion
+  observe: [PostToolUse, Notification, Stop, SubagentStop, TaskCreated, WorktreeCreate, PermissionDenied]  # PermissionDenied: {retry:true}
+  limits: "skills per source: ≤1024 hooks, ≤16384 matcher chars; subagent preloads ≤32 skills"
+settings: [skillOverrides(off|user-invocable-only|name-only), disableSkillShellExecution, showThinkingSummaries, idleCompaction, maxProseWidth, deniedModels, availableModelsMatch(exact), allowedProviders, prUrlTemplate, sandbox.network.deniedDomains, autoScrollEnabled]
+env:
+  CLAUDE_EFFORT: skill-template var
+  CLAUDE_CODE_SUBAGENT_EFFORT: subagent effort
+  CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL: workflow agent model
+  CLAUDE_CODE_AUTO_MODE_MODEL: client auto-mode classifier model
+  CLAUDE_CODE_DISABLE_ULTRATHINK: 1=off
+  CLAUDE_CODE_DISABLE_WEB_FETCH: 1=off
+  CLAUDE_CODE_DISABLE_FILE_MENTIONS: 1=@paths only
+  CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS: default 200K
+  CLAUDE_CODE_RETRY_WATCHDOG: unattended retry (+_MAX_WAIT_MS)
+  CLAUDE_CODE_NO_FLICKER: /tui
+models: {default: claude-sonnet-5-5, opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5}
