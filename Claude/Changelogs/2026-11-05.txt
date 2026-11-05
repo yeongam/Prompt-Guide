@@ -1,0 +1,35 @@
+Claude Skills Changelog 2026-11-05
+Source: anthropics/claude-code CHANGELOG (2.1.129 -> 2.1.318)
+
+[Added skills]
+- code-review (replaces /review), skill-doctor, doctor-prompt-audit, auto-mode-setup,
+  advisor, output-style, fast, workflows, reload-skills
+- claude-api subcommands: api-version, upgrade, cost-optimize, managed-agents-onboard/-secure
+- hooks: PermissionRequest, UserPromptSubmit, PreModelSwitch, PostModelSwitch, onFailure:"block"
+- settings/env: maxEffortLevel, idleCompaction, promptCacheTtl, attribution:false,
+  CLAUDE_CODE_SUBAGENT_EFFORT, _DISABLE_FILE_MENTIONS, _IDLE_COMPACT_MIN_TOKENS, etc.
+
+[Modified skills]
+- models: opus 4-7 -> claude-opus-5-5, sonnet 4-6 -> claude-sonnet-5-5,
+  haiku -> claude-haiku-5-5, added claude-fable-5-1
+- loop, effort, usage, ultrareview: descriptions refreshed
+- version 2.1.129 -> 2.1.318
+
+[Deleted skills]
+- review (superseded by code-review)
+
+[Optimized structure]
+- Claude/skills/SKILLS_CATALOG.yaml -> Claude/skills/2026-11-05/skills/catalog.yaml (date/skills rule)
+- One line per skill: "cmd | trigger | desc"; example/note/added fields dropped
+- Changelogs dir: Claude/Changelogs/ (created)
+
+[Token savings]
+- Catalog 9230 -> ~4460 bytes (~52%) despite ~10 more skills/hooks/env entries
+- Removed per-entry "added:" tags, examples, and TOKEN NOTES comment block
+
+[Conflict resolution]
+- /review vs /code-review: kept only code-review (upstream rename)
+- Old flat catalog moved via git mv (history kept), no duplicate copies
+- Obsolete model IDs replaced; no existing entry behavior removed otherwise
+- .github/workflows/daily-skill-update.yml references missing scripts/update_skills.py
+  and a stale branch; left unchanged (not fixed in this run)

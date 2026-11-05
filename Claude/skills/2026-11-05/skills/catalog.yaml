@@ -1,0 +1,83 @@
+# Claude Code skills catalog | src: anthropics/claude-code | v2.1.318 | 2026-11-05
+# fmt: name: cmd | trigger | desc   (compact; one line each)
+v: 2.1.318
+skills:
+  init: "/init | init/document codebase | write CLAUDE.md"
+  code-review: "/code-review [low|medium|high|xhigh|max] [target] [--comment|--fix|--max-findings n|all] | review diff/PR | bug findings; replaces /review"
+  security-review: "/security-review | security audit of branch | risk-ranked findings"
+  simplify: "/simplify | clean up changed code | reuse/efficiency fixes applied"
+  session-start-hook: "/session-start-hook | web: tests/lint on start | SessionStart hook"
+  update-config: "/update-config | 'when X'/allow/env | edit settings.json (hooks, perms, env)"
+  keybindings-help: "/keybindings-help | remap keys | ~/.claude/keybindings.json"
+  fewer-permission-prompts: "/fewer-permission-prompts | fewer prompts | allowlist from transcripts"
+  loop: "/loop [interval] [cmd] | recurring/poll | repeat prompt; no interval=self-paced"
+  claude-api: "/claude-api [api-version|upgrade|cost-optimize|managed-agents-onboard|managed-agents-secure] | anthropic SDK/API work | build, migrate, tune"
+  ultrareview: "/ultrareview [PR#] | multi-agent review | billed cloud review"
+  ultraplan: "/ultraplan | complex planning | cloud multi-agent plan"
+  team-onboarding: "/team-onboarding | teammate ramp-up | guide from usage"
+  skill-doctor: "/skill-doctor | prune skills | unused skills + context cost"
+  doctor-prompt-audit: "/doctor prompt-audit (=/checkup) | old-model prompt patterns | audit CLAUDE.md/skills/agents"
+  auto-mode-setup: "/auto-mode-setup | teach auto mode env | guided setup"
+  advisor: "/advisor [model|off] | advisor model | pick/disable"
+  output-style: "/output-style [name] | list/switch style"
+  effort: "/effort | effort level | slider; env CLAUDE_EFFORT; Agent tool takes effort"
+  fast: "/fast | fast mode | Opus 4.8 fast deprecated, removed 2026-11-30"
+  usage: "/usage | tokens/cost/warnings | f applies fixes; /cost shows cache-miss cause"
+  focus: "/focus | compact view"
+  tui: "/tui | flicker-free fullscreen"
+  undo: "/undo | alias /rewind"
+  powerup: "/powerup | feature demos"
+  theme: "/theme [name] | themes"
+  color: "/color | session color"
+  workflows: "/workflows | watch Workflow runs (needs explicit opt-in)"
+  reload-skills: "/reload-skills | send new/changed skills only"
+hooks:  # block: exit 2 | {decision:block} | onFailure:"block" (cmd/http/SDK)
+  PreToolUse: block
+  PostToolUse: -
+  PermissionRequest: block
+  PermissionDenied: "{retry:true}"
+  UserPromptSubmit: "block; runs before skill/slash expansion"
+  Notification: -
+  Stop: -
+  SubagentStop: -
+  PreCompact: block
+  TaskCreated: -
+  WorktreeCreate: "http: hookSpecificOutput.worktreePath"
+  PreModelSwitch: block/confirm/annotate
+  PostModelSwitch: annotate
+  types: [shell, mcp_tool, http, prompt, agent]
+  limits: "prompt/agent hooks <=24 concurrent/session; timeout min 1s"
+settings:
+  skillOverrides: "off|user-invocable-only|name-only"
+  disableSkillShellExecution: bool
+  attribution: "false hides commit/PR attribution"
+  maxEffortLevel: cap effort
+  idleCompaction: "false disables"
+  promptCacheTtl/subagentPromptCacheTtl: "5m|1h"
+  syncClaudeAiSkills/syncClaudeAiPlugins: "false opts out"
+  modelPicker: curate /model
+  bashOutputMaxChars/taskOutputMaxChars: "<=128K"
+  timeFormat/timeZone/maxProseWidth/spellcheck/keybindingFlavor: UI
+  managed: "allowedProviders availableModelsMatch deniedModels modelPricing managedMcpServers"
+  agent-frontmatter: "autoCompactWindow omitClaudeMd experimental.cacheTtl"
+env:
+  CLAUDE_EFFORT: current effort
+  CLAUDE_CODE_SUBAGENT_EFFORT: subagent default effort
+  CLAUDE_CODE_SUBAGENT_MODEL(_FORCE): subagent model
+  CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL: workflow agent model
+  CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS: "1-256"
+  CLAUDE_CODE_DISABLE_FILE_MENTIONS: "@ gives paths only (saves tokens)"
+  CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS: "default 200K"
+  CLAUDE_CODE_DISABLE_ULTRATHINK: 1
+  CLAUDE_CODE_DISABLE_WEB_FETCH: 1
+  CLAUDE_CODE_DISABLE_ADVISOR_TOOL: 1
+  CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH: "default 2048"
+  CLAUDE_CODE_AUTO_MODE_MODEL: classifier model
+  CLAUDE_CODE_RESTRICTED: "1 = no cmd/web tools"
+  CLAUDE_CODE_RETRY_WATCHDOG: unattended retry
+  ANTHROPIC_DEFAULT_MODEL: start model
+models:
+  fable: claude-fable-5-1
+  opus: claude-opus-5-5
+  sonnet: claude-sonnet-5-5   # default sonnet
+  haiku: claude-haiku-5-5
