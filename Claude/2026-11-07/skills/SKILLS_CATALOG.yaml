@@ -1,0 +1,82 @@
+# Claude Code skills catalog (src: anthropics/claude-code, compact)
+version: 2.1.319
+updated: 2026-11-07
+# skill: "cmd | use | desc"
+skills:
+  init: "/init | document codebase | write CLAUDE.md (AGENTS.md read if no CLAUDE.md)"
+  review: "/review | review PR/branch | multi-pass logic/style/security/tests"
+  security-review: "/security-review | audit branch diff | risk-ranked findings"
+  simplify: "/simplify | clean changed code | reuse/quality/efficiency fixes"
+  session-start-hook: "/session-start-hook | test/lint on web session start | SessionStart hook"
+  update-config: "/update-config | automation/permissions/env | edit settings.json; also /config key=value"
+  keybindings-help: "/keybindings-help | remap keys | edit keybindings.json (chords, effortSlider:*)"
+  fewer-permission-prompts: "/fewer-permission-prompts | fewer dialogs | transcript-based allowlist"
+  loop: "/loop [interval] [cmd] | recurring task | default 10m; cloud timer dies with container"
+  claude-api: "/claude-api [sub] | Claude API apps | subs: latency-optimize cost-optimize api-version upgrade managed-agents-onboard|secure"
+  ultrareview: "/ultrareview [PR#] | multi-agent review | billed; no-arg=local branch"
+  ultraplan: "/ultraplan | complex planning | cloud multi-agent"
+  team-onboarding: "/team-onboarding | teammate ramp-up | guide from usage history"
+  dataviz: "/dataviz | charts/dashboards | design guide + palette validator"
+  goal: "/goal <cond> | run until condition met | multi-turn"
+  skill-doctor: "/skill-doctor | prune unused skills | shows context cost"
+  doctor: "/doctor [prompt-audit] | config health | audits CLAUDE.md/skills for old-model patterns; alias /checkup"
+  reload-skills: "/reload-skills | rescan skills | no restart"
+  auto-mode-setup: "/auto-mode-setup | tune auto mode | reads project+sessions"
+  effort: "/effort | effort level | slider; ${CLAUDE_EFFORT}"
+  fast: "/fast | fast mode | Opus 5/4.8 only"
+  advisor: "/advisor | advisor model | off: CLAUDE_CODE_DISABLE_ADVISOR_TOOL=1"
+  output-style: "/output-style [name] | list/switch style | works headless"
+  cd: "/cd | change working dir | keeps prompt cache"
+  usage: "/usage | tokens/cost | merged /cost+/stats; warns on max effort, workflows, big tool results"
+  diff: "/diff | uncommitted-changes panel | fullscreen"
+  focus: "/focus | compact view | prompt+summary+reply"
+  tui: "/tui | alt-screen render | CLAUDE_CODE_NO_FLICKER=1"
+  plugin: "/plugin [list|install --marketplace] | plugins | /reload-plugins; mods enable via /plugin enable"
+  mcp: "/mcp [reconnect all] | MCP servers | retry failed"
+  powerup: "/powerup | feature demos"
+  undo: "/undo | alias /rewind | rewind can resume pre-/clear"
+  theme: "/theme [name] | theme"
+  color: "/color | session color"
+  scroll-speed: "/scroll-speed | wheel speed"
+# removed upstream: /agents wizard (edit .claude/agents/ or ask Claude)
+
+hooks:  # block: exit 2 | {decision:"block",reason}; types: shell|mcp_tool|http; args:[..] = exec form
+  PreToolUse: "before tool; can block"
+  PostToolUse: "after tool; continueOnBlock:true feeds rejection back"
+  Notification: "push events"
+  Stop: "turn end"
+  SubagentStop: "subagent end"
+  PreCompact: "before compaction; can block"
+  TaskCreated: "TaskCreate"
+  WorktreeCreate: "http returns hookSpecificOutput.worktreePath"
+  PermissionDenied: "{retry:true} reruns classifier"
+  PreModelSwitch: "block/confirm/annotate switch"
+  PostModelSwitch: "after switch"
+  DirectoryAdded: "after /add-dir"
+  MessageDisplay: "transform/hide assistant text"
+  output: "terminalSequence = notifications/title/bell"
+
+settings:
+  skillOverrides: "off|user-invocable-only|name-only"
+  disableSkillShellExecution: bool
+  syncClaudeAiSkills: "false opts out of claude.ai skill sync"
+  syncClaudeAiPlugins: "false opts out"
+  autoScrollEnabled: bool
+  showThinkingSummaries: bool
+  prUrlTemplate: string
+  sandbox.network.deniedDomains: list
+  forceLoginMethod: "gateway (+forceLoginGatewayUrl)"
+
+env:
+  CLAUDE_EFFORT: effort level
+  CLAUDE_CODE_NO_FLICKER: 1=alt-screen
+  CLAUDE_CODE_USE_POWERSHELL_TOOL: 1=PowerShell
+  CLAUDE_STREAM_IDLE_TIMEOUT_MS: idle watchdog
+  OTEL_LOG_RAW_API_BODIES: 1=raw bodies
+  DISABLE_UPDATES: 1=block updates
+  CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: 1=/v1/models
+  CLAUDE_CODE_GATEWAY_MODEL_DISCOVERY_TIMEOUT_MS: default 3000
+  CLAUDE_CODE_AUTO_MODE_SERVER: "0|1 server-side auto-mode check"
+  CLAUDE_CODE_DISABLE_ADVISOR_TOOL: 1=off
+
+models: {fable: claude-fable-5-1, opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5}

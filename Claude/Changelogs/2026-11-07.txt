@@ -1,0 +1,29 @@
+Claude Skills Sync - 2026-11-07
+Version: 2.1.129 -> 2.1.319 (src: anthropics/claude-code CHANGELOG)
+
+[추가된 스킬]
+dataviz, goal, skill-doctor, reload-skills, auto-mode-setup, advisor, fast, output-style, cd, diff, doctor(prompt-audit), scroll-speed
+claude-api 하위: latency-optimize, cost-optimize, api-version, upgrade, managed-agents-onboard/secure
+Hooks: PreModelSwitch, PostModelSwitch, DirectoryAdded, MessageDisplay (+terminalSequence, continueOnBlock, args)
+Settings/Env: syncClaudeAiSkills/Plugins, forceLoginMethod, CLAUDE_CODE_AUTO_MODE_SERVER, CLAUDE_CODE_DISABLE_ADVISOR_TOOL 등
+
+[수정된 스킬]
+claude-api (서브커맨드 확장), usage(경고 추가), update-config(/config key=value), init(AGENTS.md 폴백), plugin/mcp(list, reconnect all)
+models: opus-4-7->opus-5-5, sonnet-4-6->sonnet-5-5, haiku-4-5-20251001->haiku-5-5, +fable-5-1
+
+[삭제된 스킬]
+/agents 마법사 (업스트림 제거; 카탈로그 주석으로만 유지)
+
+[최적화된 구조]
+Claude/2026-11-07/skills/ 신규(날짜/skills 규칙). Claude/skills/ 는 최신본 복사(기존 scripts 호환 유지).
+항목을 "cmd | use | desc" 한 줄 형식으로 통합, 개별 YAML 블록 제거.
+
+[토큰 절감]
+카탈로그 9,230B -> 약 6.2KB(사이즈 약 -30%), trigger/desc 중복 제거, added: 버전 태그 삭제.
+(스킬 사용량 점검은 /skill-doctor 활용 가능)
+
+[충돌 해결]
+- 기존 Claude/skills 경로를 쓰는 scripts/update_skills.py와의 충돌: 최신본 복사를 유지해 호환.
+- scripts의 changelogs/(소문자) 경로는 요구사항의 Claude/Changelogs와 다름: 스크립트 미수정, 로그는 Claude/Changelogs에 저장.
+- 업스트림 모델 ID 변경은 models 블록 한 곳에서만 갱신.
+- 한계: 환경 제약으로 GitHub MCP 외 API 접근 불가, raw CHANGELOG.md 기준으로 추출(정규식 기반이므로 일부 누락 가능).
