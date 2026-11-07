@@ -1,0 +1,85 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-11-07 03:49 UTC
+Version : 2.1.318 → 2.1.319
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-11-07/
+============================================================
+
+[ ★ 신규 감지 스킬 (11개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /branch  ← 수동 추가 필요
+  ? /cd  ← 수동 추가 필요
+  ? /context  ← 수동 추가 필요
+  ? /diff  ← 수동 추가 필요
+  ? /feedback  ← 수동 추가 필요
+  ? /permissions  ← 수동 추가 필요
+  ? /rename  ← 수동 추가 필요
+  ? /rewind  ← 수동 추가 필요
+  ? /sandbox  ← 수동 추가 필요
+  ? /stats  ← 수동 추가 필요
+  ? /tasks  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /branch
+  ~ /cd
+  ~ /claude-api
+  ~ /clear
+  ~ /context
+  ~ /diff
+  ~ /feedback
+  ~ /login
+  ~ /loop
+  ~ /model
+  ~ /permissions
+  ~ /plugin
+  ~ /rename
+  ~ /rewind
+  ~ /sandbox
+  ~ /status
+  ~ /usage
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-11-07/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Added `/claude-api latency-optimize` to find where your Claude API code makes people wait and try faster settings against your eval
+  - Fixed a terminal whose Claude apps gateway sign-in had expired sending telemetry and managed-settings requests that the gateway refused and logged as `invalid_token`
+  - Fixed subagents being told after compaction to expect a completion notice for background agents they neither started nor took over
+  - [VSCode] Improved the chat panel's diagnostics tool for large workspaces: it leaves out files with no problems, returns compact JSON, and accepts an optional minimum severity
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Added `admin.pooled_conflict_rule` and `admin.pooled_priority_order` to the Claude apps gateway, to set which pooled group budget pays first for a developer in several groups
+
+[ Hooks ]
+  PostToolUse
+
+[ Settings ]
+  HEAD
+  guardrail
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.319
+
+- Changed auto mode with telemetry or feature flags off, including behind LLM gateways: calls the server can't check are asked about or denied, with no fallback to the built-in classifier; set `CLAUDE_CODE_AUTO_MODE_SERVER=0` to keep using it (Bedrock, Vertex and Foundry are unchanged)
+- Changed auto mode behind an LLM gateway: `CLAUDE_CODE_AUTO_MODE_SERVER=1` turns on the server-side check even with `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS` set; if managed settings set the latter, they must set the `1` too
+- Added support for MCP tasks in the terminal: when an MCP server runs a tool call as a task, Claude Code moves it to the background right away and tells Claude the result when it finishes
+- Added the `CLAUDE_CODE_DISABLE_MCP_TASK_BACKGROUND` environment variable to make Claude Code wait for an MCP task inside its tool call instead of moving it to the background right away
+- Added `permissions.denyInsteadOfPrompting` setting: a tool call that would wait on a permission prompt is denied and the turn continues, in terminal sessions, subagents and teammates
+- Added `/claude-api latency-optimize` to find where your Claude API code makes people wait and try faster settings against your eval
+- Added the `CLAUDE_CODE_DISABLE_FEATURE_FLAGS` environment variable, which stops feature-flag fetching without turning off telemetry; every flag then uses its built-in default
+- Added spend for today, this week and this month to `/usage` for developers behind a Claude apps gateway who have no spend limit, when the gateway runs this version or later
+- Added `admin.pooled_conflict_rule` and `admin.pooled_priority_order` to the Claude apps gateway, to set which pooled group budget pays first for a developer in several groups
+- Added an optional `login_notice` setting to the Claude apps gateway that shows an operator-defined message on the gateway's browser verification page and on Claude Code's sign-in screen
+- Added `CLAUDE_GATEWAY_LOG_FORMAT=json` to the Claude apps gate
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
