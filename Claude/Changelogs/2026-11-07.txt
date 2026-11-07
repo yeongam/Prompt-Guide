@@ -19,7 +19,7 @@ Claude/2026-11-07/skills/ 신규(날짜/skills 규칙). Claude/skills/ 는 최�
 항목을 "cmd | use | desc" 한 줄 형식으로 통합, 개별 YAML 블록 제거.
 
 [토큰 절감]
-카탈로그 9,230B -> 약 6.2KB(사이즈 약 -30%), trigger/desc 중복 제거, added: 버전 태그 삭제.
+카탈로그 9,230B -> 4,541B (약 -51%), trigger/desc 중복 제거, added: 버전 태그 삭제.
 (스킬 사용량 점검은 /skill-doctor 활용 가능)
 
 [충돌 해결]
