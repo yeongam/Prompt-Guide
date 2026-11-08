@@ -1,8 +1,8 @@
 # Claude Code Skills Catalog
 # Source: anthropics/claude-code (public)
 # Maintained: yeongam/Prompt-Guide (auto-updated daily 00:00 UTC)
-version: 2.1.129
-updated: 2026-05-06
+version: 2.1.319
+updated: 2026-11-08
 
 # ─── SKILLS ────────────────────────────────────────────────────────────────────
 # Format: cmd | trigger | desc
@@ -58,9 +58,9 @@ skills:
     trigger: code imports anthropic SDK; user asks about Claude API features
     desc: Build/debug Claude API apps; prompt caching, tool use, model migration
     models:
-      opus: claude-opus-4-7
-      sonnet: claude-sonnet-4-6
-      haiku: claude-haiku-4-5-20251001
+      opus: claude-opus-5-5
+      sonnet: claude-sonnet-5-5
+      haiku: claude-haiku-5-5
 
   ultrareview:
     cmd: /ultrareview [PR#]
@@ -117,6 +117,45 @@ skills:
     cmd: /color
     trigger: user wants a session color
     desc: Set random session color (no args = random pick)
+  auto-mode-setup:
+    cmd: /auto-mode-setup
+    trigger: user wants auto mode tuned to project
+    desc: Guided setup; reads project+sessions to teach auto-mode classifier
+
+  skill-doctor:
+    cmd: /skill-doctor
+    trigger: user wants to prune unused skills / cut context cost
+    desc: List unused loaded skills + context cost
+
+  doctor:
+    cmd: /doctor (alias /checkup)
+    trigger: user asks to diagnose setup
+    desc: Full setup checkup; diagnoses and fixes issues
+
+  goal:
+    cmd: /goal [condition]
+    trigger: user wants work to continue until condition met
+    desc: Keep working across turns until condition met; interactive/-p/Remote Control
+
+  diff:
+    cmd: /diff
+    trigger: user wants to see uncommitted changes live
+    desc: Toggle diff panel beside conversation (fullscreen)
+
+  advisor:
+    cmd: /advisor [model|off]
+    trigger: user wants advisor model
+    desc: Select advisor model (also advisorModel setting, --advisor)
+
+  workflows:
+    cmd: /workflows
+    trigger: user wants multi-agent workflow progress
+    desc: List/monitor workflow runs
+
+  web-setup:
+    cmd: /web-setup
+    trigger: user wants Claude Code on the web
+    desc: Connect GitHub for web sessions
 
 # ─── HOOKS ─────────────────────────────────────────────────────────────────────
 # Hooks execute shell commands or MCP tools on lifecycle events.
@@ -168,6 +207,12 @@ hooks:
     added: v2.1.88
     type_http: returns hookSpecificOutput.worktreePath
     use: Custom worktree provisioning via HTTP endpoint
+
+  DirectoryAdded:
+    fires: After /add-dir registers dir
+    can_block: false
+    added: v2.1.2xx
+    use: React to new working dirs
 
   PermissionDenied:
     fires: After auto-mode classifier denial
@@ -228,9 +273,9 @@ env:
 # ─── MODELS ────────────────────────────────────────────────────────────────────
 models:
   default: claude-sonnet-4-6
-  opus: claude-opus-4-7        # Fast mode available; Max subscribers only auto mode
-  sonnet: claude-sonnet-4-6
-  haiku: claude-haiku-4-5-20251001
+  opus: claude-opus-5-5        # Fast mode available; Max subscribers only auto mode
+  sonnet: claude-sonnet-5-5
+  haiku: claude-haiku-5-5
 
 # ─── TOKEN OPTIMIZATION NOTES ──────────────────────────────────────────────────
 # This catalog is structured for minimal token overhead:

@@ -1,0 +1,26 @@
+Claude Skills Changelog - 2026-11-08
+Source: anthropics/claude-code CHANGELOG | 2.1.129 -> 2.1.319
+
+[추가된 스킬]
+/auto-mode-setup, /skill-doctor, /doctor(alias /checkup), /goal, /diff, /advisor, /workflows, /web-setup
+Hook: DirectoryAdded
+
+[수정된 스킬]
+claude-api: 모델 ID 갱신 (opus-5-5 / sonnet-5-5 / haiku-5-5)
+version/updated 필드: 2.1.319 / 2026-11-08
+
+[삭제된 스킬]
+없음
+
+[최적화된 구조]
+신규 항목을 기존 "cmd/trigger/desc" 3필드 형식으로 통일 (1~2줄 desc)
+Changelogs/ 디렉토리 신규 생성 (Claude/Changelogs)
+
+[토큰 절감]
+신규 항목 desc 최소화; 원문 변경로그(6600줄) 미반영, 스킬/훅만 발췌
+중복 설명 없음 (기존 카탈로그 구조 유지)
+
+[충돌 해결]
+이름 충돌 없음. /doctor는 /checkup alias로 통합 표기
+참고: 규칙 2의 "날짜/skills" 구조는 기존 Claude/skills 경로와 충돌하여 기존 경로 유지 (안정성 우선)
+참고: scripts/update_skills.py는 changelogs/(소문자) 경로 사용 - 미수정, 별도 정리 필요
