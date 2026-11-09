@@ -1,0 +1,73 @@
+# Claude Code skills catalog | src: anthropics/claude-code | v2.1.319 | 2026-11-09
+# fmt: name: "cmd | use-when | effect"
+version: 2.1.319
+updated: 2026-11-09
+skills:
+  # coding
+  init: "/init | document codebase | generate CLAUDE.md"
+  code-review: "/code-review [low..max] [target] [--comment|--fix] | review diff/PR | correctness+cleanup findings"
+  review: "/review [PR] | review PR/branch | multi-pass review"
+  ultrareview: "/ultrareview [PR#] | multi-agent review | parallel cloud review (billed)"
+  security-review: "/security-review | audit pending diff | risk-ranked findings"
+  simplify: "/simplify | clean changed code | reuse/efficiency fixes"
+  claude-api: "/claude-api [upgrade|cost-optimize|latency-optimize|api-version|managed-agents-onboard|managed-agents-secure] | anthropic SDK code | build/debug/migrate"
+  run: "/run | verify change in app | launch+drive app"
+  session-start-hook: "/session-start-hook | cloud test/lint on start | SessionStart hook"
+  workflow-authoring: "/workflow-authoring | write Workflow script | script API ref"
+  # docs
+  docs: "docs skill | doc/report/memo | editable shared doc"
+  docx: "docx skill | Word file | create/edit .docx"
+  pptx: "pptx skill | PowerPoint | create/edit .pptx"
+  xlsx: "xlsx skill | spreadsheet | create/edit tabular files"
+  pdf: "pdf skill | PDF | read/merge/split/fill"
+  dataviz: "/dataviz | chart/dashboard | design guide + palette validator"
+  # config/ops
+  update-config: "/update-config | hooks/perms/env | edit settings.json"
+  fewer-permission-prompts: "/fewer-permission-prompts | fewer dialogs | allowlist"
+  keybindings-help: "/keybindings-help | remap keys | keybindings.json"
+  skill-doctor: "/skill-doctor | prune skills | unused skills + context cost"
+  doctor: "/doctor [prompt-audit] | audit setup | checks CLAUDE.md/skills for old-model patterns"
+  auto-mode-setup: "/auto-mode-setup | tune auto mode | guided env setup"
+  loop: "/loop [interval] [cmd] | recurring task | interval/self-paced"
+  ultraplan: "/ultraplan | complex planning | cloud multi-agent plan"
+  team-onboarding: "/team-onboarding | ramp-up guide | from usage history"
+  # session ui
+  config: "/config [key=value|--help] | set any setting"
+  effort: "/effort | quality level | CLAUDE_EFFORT"
+  usage: "/usage | tokens+cost | spend, warnings"
+  output-style: "/output-style [name] | list/switch style"
+  tui: "/tui | flicker-free | CLAUDE_CODE_NO_FLICKER"
+  focus: "/focus | compact view"
+  undo: "/undo | alias /rewind (can resume pre-/clear)"
+  advisor: "/advisor | pick advisor model"
+  powerup: "/powerup | feature demos"
+  theme: "/theme [name] | color theme"
+  color: "/color | session color"
+hooks:
+  # block: exit 2 | {decision:block,reason}; onFailure:block = fail closed (cmd/http/SDK)
+  block-capable: [PreToolUse, PreCompact, PreModelSwitch]
+  observe: [PostToolUse, PostModelSwitch, Notification, Stop, SubagentStop, TaskCreated, WorktreeCreate, PermissionDenied(retry:true), SessionStart(resume: staleness+recache cost)]
+  types: [shell, mcp_tool, http]
+settings:
+  skillOverrides: "off|user-invocable-only|name-only"
+  disableSkillShellExecution: bool
+  permissions.denyInsteadOfPrompting: bool
+  maxEffortLevel: cap effort (per model ok)
+  promptCacheTtl: "5m|1h"
+  subagentPromptCacheTtl: "5m|1h"
+  idleCompaction: bool   # CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS
+  bashOutputMaxChars: "<=128K"
+  taskOutputMaxChars: "<=128K"
+  attribution: "false hides all; sessionUrl omits session link"
+  modelPicker: curated /model list
+  workflowSizeGuideline: small|medium|large
+  sandbox: [network.deniedDomains, network.strictAllowlist, credentials, filesystem.disabled]
+  managed-only: [allowedProviders, deniedModels, availableModelsMatch, modelPricing, managedMcpServers]
+env:
+  CLAUDE_EFFORT: effort level
+  CLAUDE_CODE_NO_FLICKER: "1=/tui"
+  CLAUDE_CODE_RESTRICTED: "1=no command/web tools (--restricted)"
+  CLAUDE_CODE_DISABLE_FEATURE_FLAGS: "1=stop flag fetch"
+  CLAUDE_CODE_DISABLE_ADVISOR_TOOL: "1=off"
+  CLAUDE_CODE_AUTO_MODE_SERVER: "0=keep built-in classifier"
+models: {default: claude-sonnet-5-5, opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5, fable: claude-fable-5-1}

@@ -1,0 +1,33 @@
+Claude Skills Changelog 2026-11-09
+Source: anthropics/claude-code CHANGELOG.md  (2.1.129 -> 2.1.319)
+
+[Added skills]
+code-review, run, workflow-authoring, dataviz, skill-doctor, doctor(prompt-audit),
+auto-mode-setup, config, output-style, advisor, docs/docx/pptx/xlsx/pdf (document skills)
+Hooks: PreModelSwitch, PostModelSwitch, onFailure:block
+Settings: maxEffortLevel, promptCacheTtl, subagentPromptCacheTtl, idleCompaction,
+bashOutputMaxChars, taskOutputMaxChars, permissions.denyInsteadOfPrompting, modelPicker, sandbox.*
+
+[Modified skills]
+claude-api: +upgrade, cost-optimize, latency-optimize, api-version, managed-agents-*
+review -> kept; code-review added as the primary review skill
+undo: also resumes from before /clear
+models: updated to claude-5 family ids
+
+[Deleted skills]
+None (nothing removed upstream; /agents wizard stub is outside the catalog)
+
+[Optimized structure]
+Claude/skills/SKILLS_CATALOG.yaml -> Claude/skills/<date>/skills/ (date/skills rule)
+Previous catalog preserved at Claude/skills/2026-05-06/skills/
+One line per skill: "cmd | use-when | effect"; hooks/settings/env grouped into lists
+scripts/update_skills.py now writes to the dated path and Claude/Changelogs
+
+[Token savings]
+Catalog 9230 -> 4179 bytes (-55%) while covering ~2x more skills
+Removed per-entry added: tags, multi-line trigger/desc fields, and prose footer
+
+[Conflict resolution]
+No name collisions. 'review' vs 'code-review' overlap: both kept, distinct commands.
+Old path Claude/skills/SKILLS_CATALOG.yaml moved via git mv (history kept).
+Note: upstream was read from raw CHANGELOG.md (GitHub API not reachable this run).
