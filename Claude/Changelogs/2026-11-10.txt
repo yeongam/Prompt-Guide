@@ -1,0 +1,41 @@
+Claude Skills Sync - 2026-11-10
+Source: anthropics/claude-code CHANGELOG.md | 2.1.129 -> 2.1.322
+
+[추가된 스킬 / Added]
+/dataviz, /goal, /skill-doctor, /reload-skills, /doctor prompt-audit,
+/auto-mode-setup, /cd, /config key=value, /output-style, "other" group
+(/advisor /scroll-speed /plugin list /mcp reconnect all /rate-limit-options
+/usage-credits /reload-plugins)
+Settings: permissions.denyInsteadOfPrompting, maxEffortLevel, modelPicker,
+deniedModels, disableBundledSkills, syncClaudeAiSkills, sandbox.network.strictAllowlist,
+sandbox.filesystem.disabled, crossSessionInbound
+Env: CLAUDE_CODE_SAFE_MODE, _DISABLE_BUNDLED_SKILLS, _SUBAGENT_MODEL_FORCE,
+_WORKFLOW_SUBAGENT_MODEL, _DISABLE_FILE_MENTIONS
+Hooks: onFailure:"block"
+
+[수정된 스킬 / Modified]
+- claude-api: models list replaced by sub-commands (latency-optimize, api-version,
+  cost-optimize, upgrade, prompt-audit, managed-agents-*)
+- undo: description shortened
+- models: fable-5-2 / opus-5-5 / sonnet-5-5 (default) / haiku-5-5
+- version/updated -> 2.1.322 / 2026-11-10
+
+[삭제된 스킬 / Removed]
+- None (upstream removed /agents wizard & TaskOutput tool; not in catalog)
+- Per-item "added: vX" audit tags dropped; token-notes footer shortened
+
+[최적화된 구조 / Structure]
+- Canonical: Claude/skills/ (unchanged path, keeps scripts working)
+- Dated snapshot: Claude/2026-11-10/skills/ (date/skills rule)
+- Changelogs: Claude/Changelogs/ (created; scripts/update_skills.py now writes here)
+- New small skills grouped in one "other" entry
+
+[토큰 절감 / Token savings]
+- Removed "added:" tags and duplicated notes; one-line descs; inline-map settings
+- Net file size +~20% for +10 skills, +9 settings, +5 env (per-item cost down)
+
+[충돌 해결 / Conflicts]
+- Existing YAML was invalid (unquoted ": " in desc/note) -> quoted; now parses (31 skills)
+- Old model IDs (opus-4-7, sonnet-4-6) conflicted with upstream -> replaced
+- Rule 2 (date/skills) vs existing flat skills/ -> kept both: canonical + dated snapshot
+- Rule 9 (no edit popups) is a client permission setting, not enforceable from repo; not changed
