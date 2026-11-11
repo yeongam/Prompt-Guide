@@ -5,6 +5,7 @@ Fetches latest changelog from anthropics/claude-code, updates catalog and change
 
 import os
 import re
+import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -12,9 +13,11 @@ import urllib.request
 import urllib.error
 
 REPO_ROOT = Path(__file__).parent.parent
-CATALOG_FILE = REPO_ROOT / "Claude" / "skills" / "SKILLS_CATALOG.yaml"
-VERSION_FILE = REPO_ROOT / "Claude" / "skills" / ".version"
-CHANGELOGS_DIR = REPO_ROOT / "changelogs"
+SKILLS_DIR = REPO_ROOT / "Claude" / "skills"  # layout: skills/YYYY-MM-DD/skills/
+TODAY = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+CATALOG_FILE = SKILLS_DIR / TODAY / "skills" / "SKILLS_CATALOG.yaml"
+VERSION_FILE = SKILLS_DIR / ".version"
+CHANGELOGS_DIR = REPO_ROOT / "Claude" / "Changelogs"
 CHANGELOG_SRC = "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md"
 DESKTOP_LOG_DIR = Path(os.environ.get("DESKTOP_LOG_PATH", "/root/바탕화면/Claude-Text/Claude_skills"))
 
@@ -82,9 +85,19 @@ def build_changelog_entry(ver: str, prev: str, section: str, items: dict) -> str
     return "\n".join(lines)
 
 
+def latest_snapshot() -> Path | None:
+    snaps = sorted(SKILLS_DIR.glob("????-??-??/skills/SKILLS_CATALOG.yaml"))
+    return snaps[-1] if snaps else None
+
+
 def update_catalog_version_field(ver: str) -> None:
     if not CATALOG_FILE.exists():
-        return
+        src = latest_snapshot()
+        if not src:
+            return
+        CATALOG_FILE.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, CATALOG_FILE)
+    (CATALOG_FILE.parent / ".version").write_text(ver)
     text = CATALOG_FILE.read_text()
     text = re.sub(r"^version:.*$", f"version: {ver}", text, flags=re.MULTILINE)
     text = re.sub(r"^updated:.*$", f"updated: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}", text, flags=re.MULTILINE)
@@ -94,8 +107,8 @@ def update_catalog_version_field(ver: str) -> None:
 def write_log(path: Path, content: str, date_str: str) -> None:
     try:
         path.mkdir(parents=True, exist_ok=True)
-        (path / f"skill_update_{date_str}.txt").write_text(content, encoding="utf-8")
-        print(f"Log written: {path}/skill_update_{date_str}.txt")
+        (path / f"{date_str}.txt").write_text(content, encoding="utf-8")
+        print(f"Log written: {path}/{date_str}.txt")
     except OSError as e:
         print(f"Warning: {e}", file=sys.stderr)
 
@@ -121,7 +134,7 @@ def main() -> int:
         return 0
 
     items = extract_new_items(section)
-    date_str = datetime.now(timezone.utc).strftime("%Y%m%d")
+    date_str = TODAY
     entry = build_changelog_entry(ver, prev, section, items)
 
     write_log(CHANGELOGS_DIR, entry, date_str)

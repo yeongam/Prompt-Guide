@@ -1,0 +1,38 @@
+Claude Skills Sync - 2026-11-11
+Source: anthropics/claude-code @ e379c8eca0af (CHANGELOG 2.1.322)
+Baseline: 2026-11-10 run (2.1.322) | main branch catalog (2.1.129)
+Snapshot: Claude/skills/2026-11-11/skills/SKILLS_CATALOG.yaml
+
+[추가된 스킬]
+- 신규 업스트림 없음 (2.1.322 유지, 전일 대비 변경 없음)
+- main 기준 반영: /dataviz /goal /skill-doctor /reload-skills /doctor prompt-audit
+  /auto-mode-setup /cd /config /output-style, other(/advisor 등 7종)
+  + settings 9, env 5, hook onFailure (전일 run에서만 있던 항목을 main 계열에 적용)
+
+[수정된 스킬]
+- 전 항목: 다중 라인 -> 한 줄 inline map, 설명 축약 (의미 유지)
+- skills 31개를 coding / docs·data / config / session·UI 그룹으로 재정렬
+- models: "(default)" 문자열이 모델 ID 값에 섞이던 문제 -> default: sonnet 키로 분리
+
+[삭제된 스킬]
+- 없음 (31 skills / 10 hooks / 15 settings / 12 env 전일과 1:1 일치, YAML 검증)
+
+[최적화된 구조]
+- Claude/skills/YYYY-MM-DD/skills/ 규칙 적용
+  - 기존 평면 SKILLS_CATALOG.yaml -> skills/2026-05-06/skills/ 로 이동 (원본 보존)
+  - 신규 스냅샷 skills/2026-11-11/skills/ (+ .version)
+- Claude/skills/.version 은 updater용 포인터로 유지
+- scripts/update_skills.py: 최신 날짜 스냅샷을 오늘 날짜로 복사 후 갱신,
+  로그는 Claude/Changelogs/YYYY-MM-DD.txt 로 저장
+
+[토큰 절감 관련 변경 사항]
+- 카탈로그 10,854 B -> 6,869 B (-37%), 항목 수 동일
+- 훅 can_block/fires 중복 필드 -> block/use 2필드, 공통 규칙은 헤더 1줄
+- 중복 주석·"Token notes" 푸터·hook_invoke_types 블록 -> 헤더 1줄로 통합
+
+[충돌 해결 내역]
+- 전일 run의 Claude/2026-11-10/skills (skills 폴더 밖) 와 date/skills 규칙 충돌
+  -> Claude/skills/<date>/skills 로 통일
+- updater가 평면 경로/Changelogs 외 경로(changelogs/, skill_update_*.txt)를 사용
+  -> 날짜 경로 + Claude/Changelogs/<date>.txt 로 수정, 실행 검증(no-op 정상)
+- 규칙 9(편집 권한 팝업 미표시)는 클라이언트 권한 설정 사항으로 레포에서 변경 불가
