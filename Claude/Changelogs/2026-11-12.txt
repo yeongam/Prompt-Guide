@@ -1,0 +1,27 @@
+Claude Skills Sync - 2026-11-12
+Source: anthropics/claude-code @ 927b66497b89 (CHANGELOG 2.1.322)
+Baseline: 2026-11-11 run (2.1.322, @ e379c8eca0af)
+Snapshot: Claude/skills/2026-11-12/skills/SKILLS_CATALOG.yaml
+
+[추가된 스킬]
+- 없음. 업스트림 신규 커밋 2건(4136352, 927b664)은 mods/ 내부
+  보안정책 훅·테스트(sec-default, telemetry) 변경으로 사용자용 스킬 아님
+
+[수정된 스킬]
+- 없음 (헤더 updated / upstream_commit 2개 필드만 갱신)
+
+[삭제된 스킬]
+- 없음 (31 skills / 10 hooks / 15 settings / 12 env, 전일과 1:1 일치, YAML 검증)
+
+[최적화된 구조]
+- 변경 없음. Claude/skills/YYYY-MM-DD/skills/ 규칙 유지, 신규 스냅샷 2026-11-12 추가
+- Changelogs 디렉토리 기존 것 재사용 (중복 생성 없음)
+
+[토큰 절감 관련 변경 사항]
+- 추가 축약 없음: 카탈로그 6,876 B (전일 대비 +7 B, 커밋 해시 길이 차이)
+- 이미 한 줄 inline map 형식이라 추가 축약 시 정보 손실 → 보류
+
+[충돌 해결 내역]
+- 충돌 없음. updater(scripts/update_skills.py) 실행 결과 no-op 정상
+- 참고: 동일 날짜 타 브랜치(zealous-sagan-FdaL5)는 skills/<date>/ (내부 skills 폴더 없음)
+  구조라 규칙 2 불일치 → 미채택, 규칙 준수 계열(2026-11-11)을 기준으로 이어감
