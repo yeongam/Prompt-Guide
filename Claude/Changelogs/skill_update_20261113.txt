@@ -1,0 +1,113 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-11-13 04:13 UTC
+Version : 2.1.322 → 2.1.323
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-11-13/
+============================================================
+
+[ ★ 신규 감지 스킬 (19개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /autocompact  ← 수동 추가 필요
+  ? /branch  ← 수동 추가 필요
+  ? /btw  ← 수동 추가 필요
+  ? /chrome  ← 수동 추가 필요
+  ? /context  ← 수동 추가 필요
+  ? /diff  ← 수동 추가 필요
+  ? /export  ← 수동 추가 필요
+  ? /fast  ← 수동 추가 필요
+  ? /fork  ← 수동 추가 필요
+  ? /home  ← 수동 추가 필요
+  ? /logout  ← 수동 추가 필요
+  ? /memory  ← 수동 추가 필요
+  ? /plugins  ← 수동 추가 필요
+  ? /proc  ← 수동 추가 필요
+  ? /resume  ← 수동 추가 필요
+  ? /rewind  ← 수동 추가 필요
+  ? /skill  ← 수동 추가 필요
+  ? /stickers  ← 수동 추가 필요
+  ? /usage-credits  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /autocompact
+  ~ /branch
+  ~ /btw
+  ~ /chrome
+  ~ /clear
+  ~ /context
+  ~ /diff
+  ~ /export
+  ~ /fast
+  ~ /fork
+  ~ /home
+  ~ /login
+  ~ /logout
+  ~ /mcp
+  ~ /memory
+  ~ /model
+  ~ /plugin
+  ~ /plugins
+  ~ /proc
+  ~ /resume
+  ~ /rewind
+  ~ /security-review
+  ~ /skill
+  ~ /status
+  ~ /stickers
+  ~ /upgrade
+  ~ /usage
+  ~ /usage-credits
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-11-13/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed running `/compact` again, or after a command such as `/context`, summarizing away a message that Claude had not answered yet
+  - Fixed `claude plugin` commands and `claude mcp list` signing you out of a Console profile when they ended while the token was being renewed
+  - Fixed a session on an API key, auth token or workload identity from its shell (not a setup token) moving to another sign-in in the background; it now stops and says so
+  - Fixed MCP tool calls ending in the sign-in server's error, such as `TOKEN_EXPIRED`, instead of asking you to sign in again
+  - macOS: Fixed "Not logged in · Please run /login" coming back right after a successful `/login` or a token refresh when the keychain was slow to answer
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Changed `MCP_SDK_GENERATION=v1` to run the v2 MCP client in a compatibility mode (earlier handshake, relaxed OAuth sign-in checks), because the v1 MCP client is removed
+  - Deprecated a plugin's `agent` setting: it still applies, and now warns at startup, in `claude plugin list` and in `claude plugin validate`
+
+[ Hooks ]
+  PostCompact
+  PostToolUse
+  PreCompact
+  PreToolUse
+  Stop
+  WorktreeCreate
+
+[ Settings ]
+  cleanupPeriodDays
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.323
+
+- Added Code Mode, an experimental opt-in in which Claude writes JavaScript to call its tools; see https://code.claude.com/docs/en/code-mode to turn it on, or to turn it off for an organization
+- Added `engines["claude-code"]` to `plugin.json`: plugins outside their stated Claude Code version range are not installed, updated or loaded, and install and update pick the newest version that fits
+- Added type checking of a plugin's TypeScript hooks module to `claude plugin validate`; each finding is a warning, and `--strict` fails on it
+- Added to `claude plugin validate` the `$` nouns a mod's `engine.create` hook adds, withholds or replaces
+- Added support for `CLAUDE_CODE_AUTO_MODE_MODEL` in managed settings for Claude Desktop sessions on third-party providers (takes effect once Claude Desktop includes this version)
+- Added an options menu (stop, switch to usage credits, upgrade) when a model needs usage credits that are turned off or used up
+- Added a progress heartbeat every 30 seconds while hooks run long in `claude -p` and SDK sessions, so a host such as Claude Desktop won't end the turn as hung (once it includes this version)
+- Added `.docx` support to Artifact tool asset uploads
+- Added a `/diff to close` hint to the diff panel, and the keys that focus and close a panel to the `?` shortcut guide
+- Added a start-up warning for Bash allow rules with a `*` in a variable's value, such as `Bash(PORT=* npm run dev)`
+- Added a warning when a plugin's language server can't start, naming the server and what to check
+- Added a one-time startup notice naming `CLAUDE_CODE_PERFORCE_MODE` when Perforce settings are found and the mode is off
+- Added `CLAUDE_CODE_DISABLE_AGENT_PROGRESS_SUMMARIES` (available since 2.1.318): set it to `1` to turn off subagent progress summaries and the requests that write them (anthropics/claude-code#86879)
+- Added `CLAUDE_CODE_RESUME_HINT_COMMAND`, which a program that starts Claude Code can set to have the exit hint name its own resu
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
