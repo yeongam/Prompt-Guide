@@ -1,0 +1,34 @@
+Claude Skills Sync - 2026-11-13
+Source: anthropics/claude-code @ 14bb83918b86 (CHANGELOG 2.1.323)
+Baseline: 2026-11-12 run (2.1.322, @ 927b66497b89)
+Snapshot: Claude/skills/2026-11-13/skills/SKILLS_CATALOG.yaml
+
+[추가된 스킬]
+- plugins: engines["claude-code"] 버전 범위, claude plugin validate --strict (TS 훅 타입체크)
+- code-mode: 실험적 opt-in (Claude가 JS로 도구 호출)
+- env 3종: CLAUDE_CODE_DISABLE_1M_CONTEXT, CLAUDE_CODE_DISABLE_AGENT_PROGRESS_SUMMARIES,
+  CLAUDE_CODE_RESUME_HINT_COMMAND
+
+[수정된 스킬]
+- security-review: 실행 전 확인 요청으로 변경 반영 (desc 갱신)
+- plugin agent 설정 deprecated 표기
+- 헤더 version/updated/upstream_commit 갱신, .version 2.1.322 -> 2.1.323
+
+[삭제된 스킬]
+- 없음 (업스트림 삭제 subagentStatusLine, /stickers 는 카탈로그 미등재 항목)
+
+[최적화된 구조]
+- Claude/skills/YYYY-MM-DD/skills/ 규칙 유지, 신규 스냅샷 2026-11-13 추가
+- PLUGINS/EXPERIMENTAL 섹션을 한 줄 inline map 2개로 추가 (MODELS 앞)
+- Changelogs 디렉토리 기존 것 재사용 (중복 생성 없음)
+
+[토큰 절감 관련 변경 사항]
+- desc와 중복되는 trigger 6개 제거 (simplify, ultraplan, dataviz, team-onboarding,
+  keybindings-help, usage) -> -180 B
+- 순증 6,876 B -> 7,293 B (+417 B, 신규 항목 6건 반영분)
+- CLAUDE_CODE_DISABLE_AGENT_PROGRESS_SUMMARIES=1 로 서브에이전트 요약 요청 절감 가능
+
+[충돌 해결 내역]
+- 충돌 없음. 기존 31 skills / 10 hooks / 15 settings 유지, env 12 -> 15 (YAML 검증 통과)
+- 기준 브랜치: 규칙 2 준수 계열(zealous-sagan-mwrbjy, 2026-11-12)에서 이어감
+  (zealous-sagan-FdaL5 계열은 skills/<date>/ 구조로 규칙 불일치 -> 미채택)
