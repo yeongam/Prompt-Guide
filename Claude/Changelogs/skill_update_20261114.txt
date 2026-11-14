@@ -1,0 +1,92 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-11-14 04:09 UTC
+Version : 2.1.323 → 2.1.325
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-11-14/
+============================================================
+
+[ ★ 신규 감지 스킬 (11개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /cost  ← 수동 추가 필요
+  ? /fast  ← 수동 추가 필요
+  ? /feedback  ← 수동 추가 필요
+  ? /insights  ← 수동 추가 필요
+  ? /remote-control  ← 수동 추가 필요
+  ? /resume  ← 수동 추가 필요
+  ? /rewind  ← 수동 추가 필요
+  ? /stats  ← 수동 추가 필요
+  ? /tasks  ← 수동 추가 필요
+  ? /teleport  ← 수동 추가 필요
+  ? /voice  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /bug
+  ~ /clear
+  ~ /cost
+  ~ /fast
+  ~ /insights
+  ~ /login
+  ~ /loop
+  ~ /mcp
+  ~ /model
+  ~ /remote-control
+  ~ /resume
+  ~ /security-review
+  ~ /stats
+  ~ /tasks
+  ~ /teleport
+  ~ /voice
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-11-14/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed sessions on many third-party gateways and Foundry stopping with a context length error on every turn instead of compacting
+  - Fixed background sessions started on your claude.ai login using (and billing) an API key or token from the shell that started the background service
+  - Fixed token counting on Amazon Bedrock sending the conversation to Bedrock when the `allowedProviders` managed setting does not allow it
+  - Fixed an MCP server staying "needs authentication", and its `mcp_tool` hooks being skipped, after a token refresh that was refused only for a moment
+  - Fixed Claude Desktop's third-party deployments staying on "Stopping" until a token renewal finished (once it includes this version)
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Fixed the welcome header showing control characters or splitting across lines when an agent's name or the working folder contains them or a line break
+  - Changed plugins of a remote marketplace that managed settings declare, enable and list in `prependPlugins` or `appendPlugins` to count as the organization's; `pluginDigests` is deprecated and ignored
+
+[ Hooks ]
+  WorktreeCreate
+
+[ Settings ]
+  cd
+  haiku
+  prompt.id
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.325
+
+- Fixed a security issue in how zstd-compressed responses are decoded
+- Added a spinner tip in VS Code and similar integrated terminals about re-running a notebook cell, shown once Claude has read or edited a Jupyter notebook
+- Added a line under the error shown when your organization's policy blocks a request, saying how to continue: run `/rewind` and change the message, or run `/clear`
+- Added a note for Claude when a sandboxed `git checkout`, `git stash` or autostash pull cannot update protected files such as those in `.claude`
+- Fixed `/security-review` and skills' inline git commands stopping with an error in worktrees of bare repositories, `--separate-git-dir` checkouts and Android `repo` checkouts
+- Fixed subagents with their own model being moved to the plan-mode model when the model setting is `opusplan` or `haiku`
+- Fixed subagents on a different model sizing file reads and MCP results with the main session's model
+- Fixed sessions on many third-party gateways and Foundry stopping with a context length error on every turn instead of compacting
+- Fixed recent turns sometimes going missing from a resumed session after Claude Code stopped without a clean exit
+- Fixed shell commands running in the launch directory after the working directory was deleted; the command now fails with a message and can be re-issued
+- Fixed an approved plan edit being lost when the `plansDirectory` folder can't take it: the plan is now saved in the default plans folder, and a warning says where and why
+- Fixed a saved `sonnet[1m]` model setting being rewritten on a new install to a model id the API rejects
+- Fixed focus view hiding the reply to your prompt when a scheduled task replied after it
+- Fixed the prompt sometimes missing from a background subagent's view when fullscreen is off
+- Fixed long options in lists and permission prompts being partly overwritten when they wrap, and first-run screens losing lines on narrow terminals
+- Fixed startup warnings about permis
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
