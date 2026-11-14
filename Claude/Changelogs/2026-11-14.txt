@@ -1,0 +1,34 @@
+Claude Skills Sync - 2026-11-14
+Source: anthropics/claude-code @ 1c0586016060 (CHANGELOG 2.1.325)
+Baseline: 2026-11-13 run (2.1.323, @ 14bb83918b86)
+Snapshot: Claude/skills/2026-11-14/skills/SKILLS_CATALOG.yaml
+
+[추가된 스킬]
+- settings: sandbox.autoAllowBashIfSandboxed (샌드박스 Bash 기본값이 '확인 요청'으로 변경됨
+  -> true 설정 시 무팝업 유지), promptSuggestionEnabled (다음 프롬프트 제안 on/off)
+- env: CLAUDE_CODE_MAX_CONTEXT_TOKENS (미인식 claude-* 모델 ID에도 컨텍스트 창 적용)
+
+[수정된 스킬]
+- loop: 예약 작업//loop 에서 allowed-tools/hooks 선언 스킬 실행 전 확인 요청 ->
+  permissions.allow 에 Skill(name) 추가 시 무인 실행 (규칙 9 무팝업 유지 방법)
+- security-review: bare repo 워크트리 / --separate-git-dir 에서 동작 수정 반영
+- plugins.deprecated: pluginDigests (무시됨) 추가
+- 헤더 version/updated/upstream_commit 갱신, .version 2.1.323 -> 2.1.325 (2.1.324 미배포)
+
+[삭제된 스킬]
+- 없음
+
+[최적화된 구조]
+- Claude/skills/YYYY-MM-DD/skills/ 규칙 유지, 신규 스냅샷 2026-11-14 추가
+- Changelogs 디렉토리 기존 것 재사용 (중복 생성 없음)
+
+[토큰 절감 관련 변경 사항]
+- desc와 중복되는 trigger 3개 제거 (review, ultrareview, loop) -> 약 -75 B
+- 순증 7,293 B -> 7,646 B (+353 B, 신규/수정 항목 6건 반영분)
+- 업스트림: 백그라운드/예약 작업 8턴 연속 시 프롬프트 제안 갱신 축소(사용량 절감),
+  출력 한도 초과 서브에이전트는 전체 답을 간결히 재요청
+
+[충돌 해결 내역]
+- 충돌 없음. skills 31 / hooks 10 유지, settings 15 -> 17, env 15 -> 16 (YAML 검증 통과)
+- 업스트림 신규 커밋은 mods/ (privacy, sec-default 훅·타입) 변경뿐, 신규 스킬 디렉토리 없음
+- 기준 브랜치: 규칙 2 준수 계열(zealous-sagan-smnfpr, 2026-11-13)에서 fast-forward 후 이어감

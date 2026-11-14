@@ -1,0 +1,107 @@
+# Claude Code Skills Catalog | src: anthropics/claude-code | auto-sync daily 00:00
+# Rule: single source of truth; one-line desc; inline maps. Layout: skills/YYYY-MM-DD/skills/
+version: 2.1.325
+updated: 2026-11-14
+upstream_commit: 1c0586016060
+
+# ── SKILLS: {cmd, trigger?, desc} ──
+skills:
+  # coding
+  init: {cmd: /init, trigger: init/document codebase, desc: Generate CLAUDE.md (architecture, conventions, commands)}
+  review: {cmd: /review, desc: "Multi-pass PR review: logic, style, security, tests"}
+  security-review: {cmd: /security-review, trigger: security audit of branch diff, desc: OWASP audit of pending diff; risk-ranked findings; asks before run; works in bare-repo worktrees}
+  ultrareview: {cmd: "/ultrareview [PR#]", desc: "Billed multi-agent cloud review; no-arg=local branch, arg=GitHub PR"}
+  simplify: {cmd: /simplify, desc: Reuse/quality/efficiency pass on diff, then fix}
+  claude-api:
+    cmd: /claude-api
+    trigger: anthropic SDK code / Claude API question
+    desc: Build/debug Claude API apps (caching, tool use, migration)
+    sub: [latency-optimize, api-version, cost-optimize, upgrade, prompt-audit, managed-agents-secure, managed-agents-onboard]
+  goal: {cmd: "/goal <condition>", trigger: work autonomously until condition met, desc: Continue across turns until done (interactive, -p, RC)}
+  loop: {cmd: "/loop [interval] [/command]", desc: Repeat prompt/command on interval (default 10m); skills w/ allowed-tools|hooks ask first unless Skill(name) in permissions.allow, ex: /loop 5m /review}
+  ultraplan: {cmd: /ultraplan, desc: Auto-create cloud worktrees for multi-agent planning}
+  session-start-hook: {cmd: /session-start-hook, trigger: test/lint on web session start, desc: Create SessionStart hook for tests/linters}
+  # docs / data
+  dataviz: {cmd: /dataviz, desc: Chart design guidance + palette validator}
+  team-onboarding: {cmd: /team-onboarding, desc: Onboarding guide from local usage history}
+  doctor-prompt-audit: {cmd: /doctor prompt-audit, desc: Audit CLAUDE.md/skills/agents for old-model prompt patterns}
+  # config / skills mgmt
+  update-config: {cmd: /update-config, trigger: '"when X"/"allow Y"/"set Z=v"', desc: Edit settings.json (hooks, permissions, env)}
+  config: {cmd: /config key=value, desc: Set any setting inline (--help lists keys)}
+  fewer-permission-prompts: {cmd: /fewer-permission-prompts, trigger: fewer permission dialogs, desc: Scan transcripts -> allowlist in .claude/settings.json}
+  auto-mode-setup: {cmd: /auto-mode-setup, desc: Guided auto-mode setup from project + recent sessions}
+  skill-doctor: {cmd: /skill-doctor, trigger: prune skills / context cost, desc: Show unused loaded skills + context cost}
+  reload-skills: {cmd: /reload-skills, desc: Rescan skill dirs; send only new/changed}
+  keybindings-help: {cmd: /keybindings-help, desc: Edit ~/.claude/keybindings.json (chords ok)}
+  effort: {cmd: /effort, desc: "Effort slider (env: CLAUDE_EFFORT)"}
+  cd: {cmd: "/cd <dir>", desc: Move cwd; reload settings/hooks/skills, keep cache}
+  # session / UI
+  undo: {cmd: /undo, desc: Alias /rewind (can resume from before /clear)}
+  usage: {cmd: /usage, desc: Token usage + cost (merged /cost, /stats)}
+  focus: {cmd: /focus, desc: "Compact view: prompt + tool summary + final response"}
+  tui: {cmd: /tui, desc: "Flicker-free alt-screen (env: CLAUDE_CODE_NO_FLICKER)"}
+  output-style: {cmd: "/output-style [name]", desc: List/switch output styles}
+  theme: {cmd: "/theme [name]", desc: Create/switch color theme}
+  color: {cmd: /color, desc: Random session color}
+  powerup: {cmd: /powerup, desc: Interactive feature demos}
+  other: {cmds: [/advisor, /scroll-speed, "/plugin list|install --marketplace", /mcp reconnect all, /rate-limit-options, /usage-credits, /reload-plugins]}
+
+# ── HOOKS ── block: exit 2 or {decision:block,reason}; `if` = permission-rule filter
+# invoke types: shell (default) | mcp_tool | http
+hooks:
+  PreToolUse: {block: true, use: validate/log before tool; inject context}
+  PostToolUse: {block: false, use: log results; follow-ups}
+  Notification: {block: false, use: forward alerts (Remote Control)}
+  Stop: {block: false, use: post-turn logging}
+  SubagentStop: {block: false, use: aggregate subagent results}
+  PreCompact: {block: true, use: prevent compaction}
+  TaskCreated: {block: false, use: track TaskCreate}
+  WorktreeCreate: {block: false, use: "http type returns hookSpecificOutput.worktreePath"}
+  PermissionDenied: {block: false, use: "return {retry:true} to re-run classifier"}
+  onFailure: {value: block, use: failing/timed-out command|http hook blocks action}
+
+# ── SETTINGS (.claude/settings.json | ~/.claude/settings.json) ──
+settings:
+  skillOverrides: {type: "off|user-invocable-only|name-only", desc: limit skill exposure to model/slash}
+  disableBundledSkills: {type: bool, desc: hide bundled skills from model}
+  disableSkillShellExecution: {type: bool, desc: no inline shell in skills}
+  syncClaudeAiSkills: {type: bool, desc: sync claude.ai skills (also syncClaudeAiPlugins)}
+  permissions.denyInsteadOfPrompting: {type: bool, desc: deny calls that would prompt}
+  maxEffortLevel: {type: string, desc: cap effort}
+  modelPicker: {type: list, desc: curate /model picker}
+  deniedModels: {type: list, desc: managed model block}
+  showThinkingSummaries: {type: bool, desc: thinking summaries (default false)}
+  autoScrollEnabled: {type: bool, desc: fullscreen auto-scroll}
+  prUrlTemplate: {type: string, desc: PR footer badge URL}
+  sandbox.autoAllowBashIfSandboxed: {type: bool, desc: "sandboxed Bash runs w/o prompt (default now prompts)"}
+  promptSuggestionEnabled: {type: bool, desc: "false=off next-prompt suggestions (CLI+VSCode)"}
+  sandbox.network.deniedDomains: {type: list, desc: block domains over allowlist}
+  sandbox.network.strictAllowlist: {type: bool, desc: silently deny non-allowlisted hosts}
+  sandbox.filesystem.disabled: {type: bool, desc: no fs isolation; keep network control}
+  crossSessionInbound: {type: string, desc: accept/hold/refuse cross-session msgs (+dialogExpiry)}
+
+# ── ENV ──
+env:
+  CLAUDE_EFFORT: effort level; usable as ${CLAUDE_EFFORT} in skills
+  CLAUDE_CODE_NO_FLICKER: 1=alt-screen (/tui)
+  CLAUDE_CODE_SAFE_MODE: 1=no customizations (--safe-mode)
+  CLAUDE_CODE_DISABLE_BUNDLED_SKILLS: 1=hide bundled skills
+  CLAUDE_CODE_SUBAGENT_MODEL_FORCE: 1=force subagent model
+  CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL: model for workflow agents
+  CLAUDE_CODE_DISABLE_FILE_MENTIONS: 1=@mentions give paths only
+  CLAUDE_CODE_USE_POWERSHELL_TOOL: 1=PowerShell tool (Windows)
+  CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: 1=gateway /v1/models discovery
+  CLAUDE_STREAM_IDLE_TIMEOUT_MS: stream idle watchdog (ms)
+  OTEL_LOG_RAW_API_BODIES: 1=raw API bodies as OTEL events
+  DISABLE_UPDATES: 1=block all updates
+  CLAUDE_CODE_MAX_CONTEXT_TOKENS: context window; also for unknown claude-* model IDs
+  CLAUDE_CODE_DISABLE_1M_CONTEXT: 1=keep 200K window (unknown model IDs now assume 1M)
+  CLAUDE_CODE_DISABLE_AGENT_PROGRESS_SUMMARIES: 1=no subagent progress summaries (saves requests)
+  CLAUDE_CODE_RESUME_HINT_COMMAND: custom resume cmd in exit hint (wrappers)
+
+# ── PLUGINS / EXPERIMENTAL ──
+plugins: {engines: 'plugin.json engines["claude-code"] = supported version range', validate: "claude plugin validate [--strict] (TS hook type-check)", deprecated: "plugin agent setting, pluginDigests (ignored)"}
+code-mode: {desc: "Experimental opt-in: Claude writes JS to call tools (docs/en/code-mode)"}
+
+# ── MODELS ──
+models: {default: sonnet, fable: claude-fable-5-2, opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5}
