@@ -1,0 +1,101 @@
+# Claude Code Skills Catalog | src: anthropics/claude-code@0cb75ce | v2.1.325 | 2026-11-15
+# Format: name: "trigger → action". Command = /name unless `cmd` given. Changelog: Claude/Changelogs/
+version: 2.1.325
+updated: 2026-11-15
+
+skills:
+  # coding / review
+  code-review: "review diff or PR → correctness bugs at level (low..max|ultra); --comment posts inline, --fix applies; /code-review <lvl> <pr#>"
+  review: "alias of /code-review"
+  ultrareview: "deep multi-agent cloud review (= /code-review ultra); no arg=local branch, arg=PR#; billed"
+  simplify: "clean up changed code → reuse/simplify/efficiency/altitude fixes applied; no bug hunt"
+  security-review: "security audit of branch diff → risk-ranked findings"
+  init: "document codebase → generate CLAUDE.md"
+  goal: "set completion condition → Claude keeps working across turns until met (-p, interactive, Remote Control)"
+  workflows: "view dynamic multi-agent workflow runs; trigger keyword 'ultracode' or ask in own words"
+  loop: "recurring task → /loop [interval] [/cmd]; no interval=self-paced; cloud timers die with container"
+  cd: "move session to new working dir without breaking prompt cache"
+  diff: "toggle side panel of uncommitted changes (fullscreen)"
+  # docs / data
+  dataviz: "any chart/dashboard → design guidance + palette validator"
+  claude-api: "Anthropic SDK/API work → models, caching, tool use, migration"
+  # config / setup
+  update-config: "automated behavior, permissions, env vars → edit settings.json/hooks"
+  session-start-hook: "web session needs tests/linters at start → SessionStart hook"
+  fewer-permission-prompts: "too many prompts → allowlist read-only Bash/MCP in .claude/settings.json"
+  auto-mode-setup: "teach auto mode about project/env from recent sessions"
+  keybindings-help: "remap keys/chords → ~/.claude/keybindings.json"
+  skill-doctor: "find unused skills + their context cost → prune"
+  reload-skills: "re-scan skill dirs without restart (also /reload-plugins)"
+  advisor: "pick/disable advisor model: /advisor [model|off]"
+  effort: "effort slider (Faster↔Smarter); s=session only; Tab or /effort ultracode [on|off]"
+  team-onboarding: "teammate ramp-up guide from local usage"
+  # session / UI
+  usage: "token/cost stats + loops breakdown, spend limits, waste warnings"
+  usage-credits: "request/buy higher usage limit (was /extra-usage)"
+  undo: "alias of /rewind (can rewind past /clear)"
+  focus: "compact view: prompt + summary + response"
+  tui: "flicker-free fullscreen rendering (CLAUDE_CODE_NO_FLICKER=1)"
+  scroll-speed: "tune mouse wheel speed"
+  powerup: "interactive feature demos"
+  theme: "create/switch color theme"
+  color: "random session color"
+
+# Hooks: block = exit 2 or {decision:"block",reason}; `if` field = permission-rule filter; types: shell|mcp_tool|http
+hooks:
+  PreToolUse: "before tool; can block; validate/inject context"
+  PostToolUse: "after tool; log/follow-up"
+  Notification: "push events → forward alerts"
+  Stop: "after turn; logging"
+  SubagentStop: "after subagent turn"
+  SessionStart: "session start/resume; resume gets staleness + re-cache cost"
+  PreCompact: "before compaction; can block"
+  TaskCreated: "TaskCreate fired"
+  WorktreeCreate: "worktree created; http type returns worktreePath"
+  PermissionDenied: "auto-mode denial; {retry:true} reruns classifier"
+  DirectoryAdded: "after /add-dir registers a dir"
+  MessageDisplay: "transform/hide assistant text on display"
+  PreModelSwitch: "before model switch; block/confirm/annotate"
+  PostModelSwitch: "after model switch"
+
+# Settings: .claude/settings.json (project) | ~/.claude/settings.json (user)
+settings:
+  permissions.denyInsteadOfPrompting: "bool; deny instead of prompting, turn continues (no popups)"
+  disableBundledSkills: "bool; hide bundled skills/commands from model"
+  skillOverrides: "off|user-invocable-only|name-only per skill"
+  disableSkillShellExecution: "bool; no inline shell in skills"
+  fallbackModel: "list ≤3; tried when primary overloaded"
+  maxEffortLevel: "cap effort (top-level or modelSettings)"
+  workflowSizeGuideline: "small|medium|large advisory agent count"
+  worktree.baseRef: "fresh|head; worktree branch base"
+  attribution.sessionUrl: "bool; omit session link in commits/PRs"
+  sandbox.network.strictAllowlist: "bool; deny non-allowlisted hosts silently"
+  sandbox.network.deniedDomains: "list; always-blocked domains"
+  sandbox.credentials: "block sandboxed reads of secrets"
+  modelPicker: "ordered labeled /model list"
+  showThinkingSummaries: "bool"
+  prUrlTemplate: "PR footer badge URL template"
+  autoScrollEnabled: "bool; fullscreen auto-scroll"
+
+env:
+  ANTHROPIC_DEFAULT_MODEL: "start model; /model pick overrides"
+  CLAUDE_EFFORT: "current effort; usable as ${CLAUDE_EFFORT} in skills"
+  CLAUDE_CODE_DISABLE_BUNDLED_SKILLS: "1 = same as disableBundledSkills"
+  CLAUDE_CODE_SUBAGENT_MODEL: "subagent model"
+  CLAUDE_CODE_SUBAGENT_EFFORT: "subagent effort"
+  CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS: "parallel subagent cap"
+  CLAUDE_CODE_GOAL_CHECKIN_MINUTES: "0 = no /goal check-ins on bg work"
+  CLAUDE_CODE_DISABLE_ADVISOR_TOOL: "1 = advisor off"
+  CLAUDE_CODE_NO_FLICKER: "1 = /tui mode"
+  CLAUDE_STREAM_IDLE_TIMEOUT_MS: "stream idle watchdog ms"
+  DISABLE_UPDATES: "1 = block all updates"
+  CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1 = gateway /v1/models discovery"
+
+models:
+  fable: claude-fable-5-2   # 1M ctx; $8/$40 per Mtok
+  opus: claude-opus-5-5     # fast mode; Opus 4.8 fast mode removed 2026-11-30
+  sonnet: claude-sonnet-5-5
+  haiku: claude-haiku-5-5
+
+local_skills:   # usable SKILL.md files in this snapshot
+  commit-push-pr: commit-push-pr/SKILL.md

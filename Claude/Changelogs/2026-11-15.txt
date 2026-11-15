@@ -1,0 +1,56 @@
+Prompt-Guide Claude Skills Changelog - 2026-11-15
+
+Snapshot : Claude/skills/2026-11-15/skills
+Previous : Claude/skills/2026-05-06/skills (기존 평면 구조에서 이동)
+Source   : anthropics/claude-code @0cb75ce (CHANGELOG v2.1.129 -> v2.1.325)
+
+[추가된 스킬] 12 + 로컬 1
+- code-review   : 버그 리뷰, 레벨 지정(low..max|ultra), --comment / --fix
+- goal          : 완료 조건까지 여러 턴 자동 진행
+- workflows     : 동적 멀티 에이전트 워크플로 실행 조회 (트리거 'ultracode')
+- cd            : 프롬프트 캐시 유지하며 작업 디렉토리 이동
+- diff          : 미커밋 변경 사이드 패널
+- dataviz       : 차트/대시보드 설계 + 팔레트 검증
+- auto-mode-setup, skill-doctor, reload-skills, advisor, usage-credits, scroll-speed
+- [로컬] commit-push-pr/SKILL.md : 공식 레포 .claude/commands 변환, 바로 사용 가능
+
+[수정된 스킬]
+- review      : 단독 리뷰 -> /code-review 별칭
+- simplify    : 정리 전용(reuse/simplify/efficiency/altitude) + 자동 수정, 버그 탐지 제외
+- ultrareview : = /code-review ultra 명시
+- effort      : Faster/Smarter 라벨, s=세션 한정, ultracode 토글
+- usage       : 루프별 사용량, 지출 한도, 낭비 경고 추가
+- undo        : /clear 이전으로도 되감기 가능
+- loop        : 클라우드 타이머는 컨테이너 종료 시 중단
+- claude-api / models : opus-4-7, sonnet-4-6, haiku-4-5 -> opus-5-5, sonnet-5-5, haiku-5-5, fable-5-2
+
+[삭제된 스킬]
+- ultraplan : 공식 제거 ("Removed ultraplan feature")
+
+[훅/설정/환경변수]
+- 훅 추가 : SessionStart, DirectoryAdded, MessageDisplay, PreModelSwitch, PostModelSwitch (9 -> 14)
+- 설정 추가 : permissions.denyInsteadOfPrompting, disableBundledSkills, fallbackModel, maxEffortLevel,
+             workflowSizeGuideline, worktree.baseRef, attribution.sessionUrl, sandbox.network.strictAllowlist,
+             sandbox.credentials, modelPicker (6 -> 16)
+- 환경변수 추가 : ANTHROPIC_DEFAULT_MODEL, CLAUDE_CODE_DISABLE_BUNDLED_SKILLS, CLAUDE_CODE_SUBAGENT_MODEL/EFFORT,
+             CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS, CLAUDE_CODE_GOAL_CHECKIN_MINUTES, CLAUDE_CODE_DISABLE_ADVISOR_TOOL
+- 환경변수 제거 : CLAUDE_CODE_USE_POWERSHELL_TOOL, OTEL_LOG_RAW_API_BODIES (코딩/문서 작업과 무관, 경량화)
+
+[최적화된 구조]
+- Claude/skills/SKILLS_CATALOG.yaml (평면) -> Claude/skills/YYYY-MM-DD/skills/ 날짜 구조로 통일 (GPT/ 와 동일 규칙)
+- 스킬 항목: cmd/trigger/desc 3필드 -> 한 줄 "trigger → action" (cmd는 /name 일 때 생략)
+- 스킬을 coding / docs / config / session 그룹으로 정렬
+- scripts/update_skills.py : 최신 날짜 스냅샷 읽고 오늘 날짜 스냅샷에 기록, 로그는 Claude/Changelogs/YYYY-MM-DD.txt
+- scripts/sync_changelogs.sh : Claude/Changelogs 경로 사용, 하드코딩된 오래된 브랜치명 제거
+
+[토큰 절감 관련 변경 사항]
+- 카탈로그 8,418 B / 968 단어 -> 5,636 B / 624 단어 (약 -33%), 항목 수는 48 -> 79
+- "added: vX" 버전 태그, 중복 cmd 필드, 설명용 주석 블록 제거
+- commit-push-pr: 전체 diff 주입 -> diff --stat (필요 시 git diff 허용), 795 B -> 642 B
+
+[충돌 해결 내역]
+- 구 카탈로그 YAML 파싱 오류(설명 안 콜론) -> 신규 카탈로그는 따옴표 처리, safe_load 검증 통과
+- /review vs /code-review 중복 -> review 를 별칭으로 통합
+- /simplify 의미 변경 -> 정리 전용으로 갱신, 버그 리뷰는 code-review 로 분리
+- 공식 명령의 잘못된 allowed-tools "git checkout --branch" -> "git checkout:*" 로 수정
+- 기존 스냅샷(2026-05-06)은 덮어쓰지 않고 git mv 로 이력 보존
