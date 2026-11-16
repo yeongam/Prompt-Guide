@@ -1,0 +1,49 @@
+Prompt-Guide Claude Skills Changelog - 2026-11-16
+
+Snapshot : Claude/skills/2026-11-16/skills  (prev: 2026-05-06/skills)
+Version  : 2.1.129 -> 2.1.325
+Source   : anthropics/claude-code@eba1240 (CHANGELOG, marketplace)
+           anthropics/claude-plugins-official@b5b01ac (plugins listed by claude-code marketplace)
+
+[추가된 스킬]
+- builtin: goal, schedule, dataviz, skill-doctor, reload-skills, doctor prompt-audit, auto-mode-setup, cd, diff, output-style, advisor, code-review(levels/--comment/--fix)
+- claude-api 하위: upgrade, cost-optimize, latency-optimize, api-version, prompt-audit, managed-agents-onboard/secure
+- plugins(coding): feature-dev, commit-commands, frontend-design, ralph-loop, hookify
+- plugins(review): code-review, pr-review-toolkit, security-guidance
+- plugins(dev): agent-sdk-dev, plugin-dev
+- plugins(docs): explanatory-output-style, learning-output-style
+- hooks: PreModelSwitch, PostModelSwitch, DirectoryAdded, MessageDisplay
+- settings/env: disableBundledSkills, syncClaudeAiSkills, /config key=value, CLAUDE_CODE_SAFE_MODE, CLAUDE_CODE_DISABLE_ADVISOR_TOOL
+
+[수정된 스킬]
+- review -> /code-review 의 alias (effort level, PR 번호 지원)
+- simplify -> 정리 전용(reuse/simplify/efficiency) + 자동 수정
+- ultrareview -> /code-review ultra 와 동일 경로
+- init -> CLAUDE.md 없으면 AGENTS.md 사용
+- effort -> 선택값이 신규 세션 기본값으로 유지
+- models -> opus-5-5 / sonnet-5-5 / haiku-5-5 / fable-5-2
+- usage -> spend, loops 분석 포함 (/cost 는 캐시 적중률)
+
+[삭제된 스킬]
+- /agents 마법사 (CLI에서 제거 -> .claude/agents/ 직접 편집)
+- /extra-usage -> /usage-credits 로 이름 변경 (alias 유지)
+- 카탈로그에서 제외(저가치/UI 전용, catalog의 ui 한 줄로 통합): undo, powerup, team-onboarding, ultraplan, theme, color, focus, tui
+
+[최적화된 구조]
+- 날짜/skills 규칙 적용: Claude/skills/<YYYY-MM-DD>/skills/
+- 기존 평면 파일 SKILLS_CATALOG.yaml -> skills/2026-05-06/skills/ 로 이동(이력 보존, 덮어쓰기 없음)
+- 신규 스냅샷 = catalog.yaml(인덱스) + 상세 4개(coding/review/agent-dev/docs.md), 필요 시에만 상세 로드
+- scripts/update_skills.py: 최신 날짜 스냅샷 catalog 자동 탐색, 로그 경로 Claude/Changelogs/<YYYY-MM-DD>.txt
+- scripts/sync_changelogs.sh: Claude/Changelogs 경로로 수정
+
+[토큰 절감 관련 변경 사항]
+- 스킬당 3~4줄 YAML -> "cmd | when | what" 한 줄 (인덱스 9.2KB -> 4.5KB, 약 -51%)
+- 플러그인 상세는 분리 파일로 이동(점진적 로딩), 원문 복사 없이 커밋 해시만 기록
+- 출력 스타일 플러그인에 매 턴 토큰 비용 경고 추가, ralph-loop 대신 builtin /goal 권장
+- pr-review-toolkit: 필요한 aspect만 지정해 에이전트 수 축소 안내
+
+[충돌 해결 내역]
+- code-review: builtin 과 plugin 명칭 충돌 -> plugin 은 /code-review:code-review 네임스페이스로 구분 기재
+- simplify vs code-review: 역할 분리(정리 vs 버그) 명시
+- 기존 SKILLS_CATALOG.yaml 은 이전 날짜 스냅샷으로 보존, 스크립트는 최신 스냅샷 자동 선택 -> 기존 동작 유지
+- .version 파일 위치 유지(2.1.325 로 갱신)

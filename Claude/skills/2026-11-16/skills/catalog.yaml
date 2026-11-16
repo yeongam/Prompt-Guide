@@ -1,0 +1,82 @@
+# Claude Code Skills Catalog (compact)
+# Format: name: "cmd | when | what"  — one line per entry
+version: 2.1.325
+updated: 2026-11-16
+source:
+  cli: anthropics/claude-code@eba1240 (CHANGELOG 2.1.325)
+  plugins: anthropics/claude-plugins-official@b5b01ac (via claude-code marketplace)
+prev: ../../2026-05-06/skills/SKILLS_CATALOG.yaml   # v2.1.129
+detail: [coding.md, review.md, agent-dev.md, docs.md]
+
+builtin:
+  init: "/init | new repo | CLAUDE.md (AGENTS.md read if no CLAUDE.md)"
+  code-review: "/code-review [low..max|ultra] [pr#] [--comment|--fix] | review diff/PR | correctness bugs by effort; /review = alias"
+  simplify: "/simplify | clean changed code | reuse/simplify/efficiency only, applies fixes"
+  security-review: "/security-review | audit branch | OWASP-ranked findings"
+  ultrareview: "/ultrareview [pr#] | deep review | parallel cloud multi-agent (billed); = /code-review ultra"
+  goal: "/goal <cond> | long task | keep working across turns until condition met"
+  loop: "/loop [interval] [cmd] | recurring | interval or self-paced repeat"
+  schedule: "/schedule | cloud cron | scheduled remote tasks"
+  claude-api: "/claude-api [upgrade|cost-optimize|latency-optimize|api-version|prompt-audit|managed-agents-*] | Anthropic SDK code | build/migrate/optimize"
+  dataviz: "/dataviz | charts/dashboards | palette + validator"
+  skill-doctor: "/skill-doctor | context bloat | unused skills + token cost → prune"
+  reload-skills: "/reload-skills | edited skills | rescan without restart (sends only changed)"
+  doctor: "/doctor [prompt-audit] | setup issues | diagnostics; prompt-audit flags old-model patterns"
+  update-config: "/update-config | 'when X do Y', allow, env | edit settings.json/hooks"
+  fewer-permission-prompts: "/fewer-permission-prompts | too many prompts | allowlist from transcripts"
+  auto-mode-setup: "/auto-mode-setup | enable auto mode | teach classifier your env"
+  session-start-hook: "/session-start-hook | web sessions | SessionStart hook for tests/lint"
+  keybindings-help: "/keybindings-help | remap keys | ~/.claude/keybindings.json"
+  cd: "/cd <dir> | switch dir | keeps prompt cache"
+  diff: "/diff | see edits | uncommitted-changes panel"
+  output-style: "/output-style [name] | change tone | list/switch styles"
+  usage: "/usage | tokens/cost | limits, loops, spend; /cost = cache hit ratio"
+  effort: "/effort | quality vs speed | persists as default (env CLAUDE_EFFORT)"
+  advisor: "/advisor [model|off] | second opinion model | advisor tool"
+  ui: "/tui /focus /theme /color /scroll-speed /btw | display prefs"
+removed:
+  agents: "wizard removed → ask Claude or edit .claude/agents/"
+  extra-usage: "renamed /usage-credits (alias kept)"
+
+plugins:   # install: /plugin install <name>@claude-code-plugins
+  feature-dev: coding.md
+  commit-commands: coding.md
+  frontend-design: coding.md
+  ralph-loop: coding.md
+  hookify: coding.md
+  code-review: review.md
+  pr-review-toolkit: review.md
+  security-guidance: review.md
+  agent-sdk-dev: agent-dev.md
+  plugin-dev: agent-dev.md
+  explanatory-output-style: docs.md
+  learning-output-style: docs.md
+
+hooks:  # block: exit 2 or {decision:block}
+  PreToolUse: block/validate tool calls
+  PostToolUse: log/follow-up
+  UserPromptSubmit: inject/validate prompt
+  Stop / SubagentStop: post-turn
+  SessionStart: setup; resume hooks get session state
+  PreCompact: can block compaction
+  Notification: forward alerts
+  TaskCreated / WorktreeCreate / PermissionDenied: lifecycle ({retry:true} on denial)
+  PreModelSwitch / PostModelSwitch: block/confirm/annotate model switch   # new
+  DirectoryAdded: after /add-dir                                          # new
+  MessageDisplay: transform/hide displayed text                           # new
+  types: [shell, mcp_tool, http]
+
+settings:
+  skillOverrides: "off | user-invocable-only | name-only"
+  disableBundledSkills: hide bundled skills (env CLAUDE_CODE_DISABLE_BUNDLED_SKILLS)   # new
+  disableSkillShellExecution: no inline shell in skills
+  syncClaudeAiSkills: sync claude.ai skills/plugins to CLI   # new
+  config_cli: "/config key=value ; /config --help"           # new
+
+env:
+  CLAUDE_EFFORT: effort level in skill templates
+  CLAUDE_CODE_SAFE_MODE: start with no customizations (--safe-mode)   # new
+  CLAUDE_CODE_DISABLE_ADVISOR_TOOL: disable /advisor                   # new
+  CLAUDE_CODE_NO_FLICKER: same as /tui
+
+models: {opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5, fable: claude-fable-5-2}
