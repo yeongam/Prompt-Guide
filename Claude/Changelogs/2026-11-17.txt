@@ -1,0 +1,40 @@
+Prompt-Guide Claude Skills Changelog - 2026-11-17
+
+Snapshot : Claude/skills/2026-11-17/skills  (prev: 2026-11-16/skills)
+Version  : 2.1.325 -> 2.1.326
+Source   : anthropics/claude-code@afb24c5 (CHANGELOG 2.1.326, marketplace)
+           anthropics/claude-plugins-official@fd30cee (b5b01ac 이후 변경: security-guidance 만)
+Note     : main 브랜치 기준 이전 상태는 v2.1.129 (2026-05-06). 2026-11-16 스냅샷(v2.1.325)을 함께 포함.
+
+[추가된 스킬]
+- 신규 스킬/플러그인 없음 (marketplace 12종 동일)
+- settings: sandbox.filesystem.allowWrite (샌드박스가 새로 막는 홈 폴더 재허용)
+- env: OTEL_RESOURCE_INCLUDE_HOST
+
+[수정된 스킬]
+- claude-api: 에이전트 생성 시 Managed Agents 기본 사용 (자체 루프는 명시 요청)
+- update-config: 컨텍스트 사용 ~93k -> ~13k 토큰
+- doctor: 결과를 진행 중 스트리밍
+- hooks/PreToolUse: 여러 훅의 updatedInput 병합, exit 127 경고
+- hooks 공통: {decision:block} 적용 범위 확대 / HTTP 훅 Content-Length·Transfer-Encoding 헤더 무시
+- settings: allowedHttpHookUrls·httpHookAllowedEnvVars 의 managed 훅 적용 방식 변경
+- security-guidance(review.md): MAX_COMMIT_REVIEWS_PER_HOUR(기본 20), 커스텀 규칙 glob 중괄호 지원,
+  JS 오탐 감소, Edit 훅 timeout 60s
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜/skills 규칙 유지: Claude/skills/2026-11-17/skills (이전 스냅샷 덮어쓰기 없음)
+- catalog.yaml plugins 맵: 플러그인별 12줄 -> 상세파일별 4줄, 중복 detail 목록 제거
+- 이전 스냅샷의 '# new' 표식 제거, 오늘 변경만 '# new'/'# chg' 표시 (변경점 즉시 식별)
+
+[토큰 절감 관련 변경 사항]
+- catalog.yaml 4,886B -> 4,763B (신규 항목 추가 후에도 감소), 스냅샷 합계 ~9.2KB
+- /update-config 사용 시 약 80k 토큰 절감 (upstream 개선 반영)
+- security-guidance: 커밋 리뷰 상한 하향으로 LLM 리뷰 토큰 제어 가능 명시
+
+[충돌 해결 내역]
+- {decision:block} 확대 -> 항상 block 을 출력하는 훅은 호출을 막을 수 있음: 카탈로그에 경고 기재
+- 2026-11-16 스냅샷(미병합 브랜치)을 현 브랜치에 통합하여 이력 연속성 확보, 파일명/구조 충돌 없음
+- 스크립트(update_skills.py)는 최신 날짜 catalog.yaml 자동 선택 -> 기존 동작 유지
