@@ -1,0 +1,101 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-11-18 05:13 UTC
+Version : 2.1.325 → 2.1.327
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-11-18/
+============================================================
+
+[ ★ 신규 감지 스킬 (14개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /artifacts  ← 수동 추가 필요
+  ? /autofix-pr  ← 수동 추가 필요
+  ? /chrome  ← 수동 추가 필요
+  ? /config  ← 수동 추가 필요
+  ? /desktop  ← 수동 추가 필요
+  ? /export  ← 수동 추가 필요
+  ? /hooks  ← 수동 추가 필요
+  ? /install-github-app  ← 수동 추가 필요
+  ? /resume  ← 수동 추가 필요
+  ? /rewind  ← 수동 추가 필요
+  ? /sandbox  ← 수동 추가 필요
+  ? /statusline  ← 수동 추가 필요
+  ? /tasks  ← 수동 추가 필요
+  ? /teleport  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /artifacts
+  ~ /autofix-pr
+  ~ /chrome
+  ~ /clear
+  ~ /config
+  ~ /desktop
+  ~ /effort
+  ~ /export
+  ~ /hooks
+  ~ /install-github-app
+  ~ /login
+  ~ /mcp
+  ~ /model
+  ~ /plugin
+  ~ /resume
+  ~ /rewind
+  ~ /statusline
+  ~ /tasks
+  ~ /teleport
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-11-18/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Added `claude mcp add-json <name> -` to read the server's JSON from stdin, so tokens can stay off the command line; not available inside a Claude Code session
+  - Fixed a nested `claude` with its own token being refused by `forceLoginOrgUUID`: commands that don't get the session's token no longer get its `CLAUDE_CODE_OAUTH_SCOPES`; set it on any that need it
+  - Fixed a compaction right after a reply cut at the output token limit losing that reply's tool call and its result
+  - Fixed stalls on a compaction reply with thousands of unclosed tags and on some very long WebFetch URLs; WebFetch now refuses a URL over 2,000 characters before any permission prompt
+  - Fixed Edit refusing with "File has not been read yet" after a compaction on unchanged files outside the project that Claude had already read in full
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Fixed cloud sessions breaking when a program left thousands of connections open to the session's network proxy
+
+[ Hooks ]
+  PostToolUse
+  PreToolUse
+  Stop
+  SubagentStop
+
+[ Settings ]
+  SendMessage
+  console
+  fg
+  servers
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.327
+
+- Added a confirmation before `/install-github-app` changes a repository
+- Added `claude mcp add-json <name> -` to read the server's JSON from stdin, so tokens can stay off the command line; not available inside a Claude Code session
+- Added a line when a resumed session's earlier messages can't be loaded
+- Added a list in `/status` of broken agent, skill, command and output style files, keybinding errors, an unavailable sandbox, ignored permission settings and hook matchers that never match
+- Added a note in `/config` when other settings override a row
+- Added `x-claude-code-managed-settings-checksum` to the gateway hint headers; sent where managed settings set `CLAUDE_CODE_GATEWAY_HINT_HEADERS=1`, including where they already do
+- Added support for naming a session's billing group with the `attributionProject` setting, for Claude apps gateways that set `admin.billing_group_tag`
+- Added `/tui classic` as the name for the non-fullscreen renderer; `/tui default` still works
+- Remote Control: Fixed stopping the server in worktree mode deleting a running session's git-ignored files, such as `.env`
+- Fixed self-hosted runners with `--use-anthropic-git-proxy` deleting a non-empty directory named by `GIT_CONFIG_GLOBAL` at startup: the runner now keeps it, ignores the variable and warns
+- Fixed `claude mcp add` and `claude mcp remove` with project scope deleting other top-level keys from `.mcp.json`, such as `$schema` or another tool's `servers`
+- Fixed `/export` overwriting an existing file without asking: the dialog now asks, and `/export <name>` keeps the file and says to run `/export`
+- Fixed a command you had allowed still running after you pressed Stop, when the approval arrived after a restart, in cloud and self-hosted runner sessions with no feature flags loaded
+- Fixed Enter closing `/teleport`'s load error screen
+- Fixed a click followed by Enter in `/plugin` installing or disabling a plugin
+- Fixed a half-typed `!` command running on an extra Enter a
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
