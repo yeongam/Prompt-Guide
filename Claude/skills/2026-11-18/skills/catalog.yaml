@@ -1,0 +1,79 @@
+# Claude Code Skills Catalog (compact)
+# Format: name: "cmd | when | what"  — one line per entry
+version: 2.1.327
+updated: 2026-11-18
+source:
+  cli: anthropics/claude-code@52dd3a1 (CHANGELOG 2.1.327)
+  plugins: anthropics/claude-plugins-official@e6143c98 (via claude-code marketplace)
+prev: ../../2026-11-17/skills/catalog.yaml   # v2.1.326
+
+builtin:
+  init: "/init | new repo | CLAUDE.md (AGENTS.md read if no CLAUDE.md)"
+  code-review: "/code-review [low..max|ultra] [pr#] [--comment|--fix] | review diff/PR | correctness bugs by effort; /review = alias"
+  simplify: "/simplify | clean changed code | reuse/simplify/efficiency only, applies fixes"
+  security-review: "/security-review | audit branch | OWASP-ranked findings"
+  ultrareview: "/ultrareview [pr#] | deep review | parallel cloud multi-agent (billed); = /code-review ultra"
+  goal: "/goal <cond> | long task | keep working across turns until condition met"
+  loop: "/loop [interval] [cmd] | recurring | interval or self-paced repeat"
+  schedule: "/schedule | cloud cron | scheduled remote tasks"
+  claude-api: "/claude-api [upgrade|cost-optimize|latency-optimize|api-version|prompt-audit|managed-agents-*] | Anthropic SDK code | build/migrate/optimize; agents default to Managed Agents"
+  dataviz: "/dataviz | charts/dashboards | palette + validator"
+  skill-doctor: "/skill-doctor | context bloat | unused skills + token cost → prune"
+  reload-skills: "/reload-skills | edited skills | rescan without restart (sends only changed)"
+  doctor: "/doctor [prompt-audit] | setup issues | streams findings; prompt-audit flags old-model patterns"
+  status: "/status | broken config | broken skill/agent/cmd/style files, dead hook matchers"  # new
+  update-config: "/update-config | 'when X do Y', allow, env | edit settings.json/hooks (~13k ctx, was 93k)"
+  fewer-permission-prompts: "/fewer-permission-prompts | too many prompts | allowlist from transcripts; auto mode ignores pkg-runner rules (pnpm dlx *)"  # chg
+  auto-mode-setup: "/auto-mode-setup | enable auto mode | teach classifier your env"
+  session-start-hook: "/session-start-hook | web sessions | SessionStart hook for tests/lint"
+  keybindings-help: "/keybindings-help | remap keys | ~/.claude/keybindings.json"
+  cd: "/cd <dir> | switch dir | keeps prompt cache"
+  diff: "/diff | see edits | uncommitted-changes panel"
+  output-style: "/output-style [name] | change tone | list/switch styles"
+  usage: "/usage | tokens/cost | limits, loops, spend; /cost = cache hit ratio"
+  effort: "/effort | quality vs speed | persists as default (env CLAUDE_EFFORT)"
+  advisor: "/advisor [model|off] | second opinion model | advisor tool"
+  ui: "/tui [classic] /focus /theme /color /scroll-speed /btw | display prefs; /export asks before overwrite"  # chg
+removed:
+  agents: "wizard removed → ask Claude or edit .claude/agents/"
+  extra-usage: "renamed /usage-credits (alias kept)"
+
+plugins:   # install: /plugin install <name>@claude-code-plugins ; key = detail file
+  coding.md: [feature-dev, commit-commands, frontend-design, ralph-loop, hookify]
+  review.md: [code-review, pr-review-toolkit, security-guidance]
+  agent-dev.md: [agent-sdk-dev, plugin-dev]
+  docs.md: [explanatory-output-style, learning-output-style]
+
+hooks:  # block: exit 2 | {decision:block} (never emit unconditionally)
+  PreToolUse: block/validate/rewrite (updatedInput merged across hooks; exit 127 = check may not have run)
+  PostToolUse: log/follow-up
+  UserPromptSubmit: inject/validate prompt
+  Stop / SubagentStop / SessionEnd: post-turn/exit (failures now shown)  # chg
+  SessionStart: setup; resume hooks get session state
+  PreCompact: can block compaction
+  Notification: forward alerts
+  TaskCreated / WorktreeCreate / PermissionDenied: lifecycle ({retry:true} on denial)
+  PreModelSwitch / PostModelSwitch: block/confirm/annotate model switch
+  DirectoryAdded / CwdChanged / FileChanged: fs events  # chg
+  MessageDisplay: transform/hide displayed text
+  types: [shell, mcp_tool, http]   # http: Content-Length/Transfer-Encoding headers ignored
+
+settings:
+  skillOverrides: "off | user-invocable-only | name-only"
+  disableBundledSkills: hide bundled skills (env CLAUDE_CODE_DISABLE_BUNDLED_SKILLS)
+  disableSkillShellExecution: no inline shell in skills
+  syncClaudeAiSkills: sync claude.ai skills/plugins to CLI
+  config_cli: "/config key=value ; /config --help"
+  sandbox.filesystem.allowWrite: re-allow sensitive home dirs sandbox now blocks (user/managed)
+  allowedHttpHookUrls / httpHookAllowedEnvVars: apply differently to managed-settings hooks
+  attributionProject: gateway billing-group name  # new
+  permissions.blockReadsOutsideWorkingDirectories: stricter on Bash  # chg
+
+env:
+  CLAUDE_EFFORT: effort level in skill templates
+  CLAUDE_CODE_SAFE_MODE: start with no customizations (--safe-mode)
+  CLAUDE_CODE_DISABLE_ADVISOR_TOOL: disable /advisor
+  OTEL_RESOURCE_INCLUDE_HOST: add host.name/host.id to OTel resource
+  CLAUDE_CODE_DISABLE_SHELL_HEAD_START: 1 = no shell pre-start  # new
+
+models: {opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5, fable: claude-fable-5-2}
