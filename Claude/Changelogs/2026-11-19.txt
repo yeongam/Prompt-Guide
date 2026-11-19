@@ -1,0 +1,51 @@
+Prompt-Guide Claude Skills Changelog - 2026-11-19
+
+Snapshot : Claude/skills/2026-11-19/skills/SKILLS_CATALOG.yaml
+Previous : Claude/skills/2026-05-06/skills/SKILLS_CATALOG.yaml (기존 루트 파일 이관)
+Source   : anthropics/claude-code CHANGELOG.md
+Version  : 2.1.129 -> 2.1.328
+
+[추가된 스킬] (18)
+- 코딩: code-review, goal, diff, run, workflow-authoring, plugin-authoring
+- 문서: docs, docx, pdf, xlsx, pptx, dataviz
+- 유지보수: skill-doctor, reload-skills, doctor(prompt-audit), auto-mode-setup
+- 세션: advisor, cd
+
+[수정된 스킬]
+- simplify: 정리/효율화 전용, 버그 탐지는 code-review로 분리
+- ultrareview: /code-review ultra 별칭으로 정리
+- security-review: 실행 전 확인 절차 반영
+- init: CLAUDE.md 없으면 AGENTS.md 사용 반영
+- claude-api: Managed Agents 기본, 모델 목록은 models 섹션 참조
+- loop: allowed-tools/hooks 선언 스킬은 실행 전 확인 (무인 실행: Skill(name) 허용)
+- effort: ultracode 독립 토글, s=현재 세션 한정
+- usage: loops 사용량/effort 경고 반영
+- keybindings-help: effortSlider:* 액션 반영
+- models: opus-5-5 / sonnet-5-5 / haiku-5-5 / fable-5-2, 기본=opus-5-5
+
+[삭제된 스킬]
+- review: /code-review 별칭이 되어 code-review 항목에 통합
+
+[추가된 훅/설정/환경변수]
+- 훅: UserPromptSubmit, SessionStart, PreModelSwitch, PostModelSwitch, MessageDisplay, DirectoryAdded
+- 설정: syncClaudeAiSkills, modelPicker, workflowSizeGuideline, feedbackDrafts
+- 환경변수: ANTHROPIC_DEFAULT_MODEL, CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION,
+  CLAUDE_CODE_DISABLE_ADVISOR_TOOL, CLAUDE_CODE_PLUGIN_DIR_WATCH
+
+[최적화된 구조]
+- 날짜/skills 규칙 적용: Claude/skills/<YYYY-MM-DD>/skills/ (최신 날짜 = 활성)
+- 스킬을 코딩/문서/유지보수/세션 4개 그룹으로 재배치
+- 스크립트(update_skills.py, sync_changelogs.sh)가 최신 날짜 폴더와 Claude/Changelogs/<날짜>.txt를 사용하도록 경로 갱신
+
+[토큰 절감 관련 변경 사항]
+- 스킬/훅/설정을 다중 키 블록에서 "cmd | trigger | desc" 한 줄 형식으로 축약
+- added: 버전 태그 제거 (이력은 Changelogs로 이동)
+- claude-api 내부 중복 모델 목록 제거 -> models 섹션 단일화
+- 결과: 9,230B -> 6,477B (-30%), 스킬 수는 21 -> 38
+
+[충돌 해결 내역]
+- review vs code-review: 공식 별칭화에 따라 code-review로 통합
+- simplify vs code-review: 역할 분리 (정리 vs 버그) 명시
+- ultrareview vs code-review ultra: 별칭으로 유지해 기존 호출 호환
+- 루트 SKILLS_CATALOG.yaml/.version: git mv로 2026-05-06 스냅샷 이관 (이력 보존, 덮어쓰기 없음)
+- 스크립트 경로: 구 changelogs/ 대신 Claude/Changelogs/ 사용, 구 버전 비교 로직은 유지

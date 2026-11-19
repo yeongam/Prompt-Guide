@@ -1,0 +1,101 @@
+# Claude Code Skills Catalog — src: anthropics/claude-code CHANGELOG
+# Layout: Claude/skills/<YYYY-MM-DD>/skills/ (latest date = active)
+# Row format: "cmd | trigger | desc"  (history → Claude/Changelogs/)
+version: 2.1.328
+updated: 2026-11-19
+
+skills:
+  # ── coding / review ──
+  code-review: "/code-review [low|medium|high|xhigh|max|ultra] [pr#] [--comment|--fix] | review diff/PR for bugs | Bugs + CLAUDE.md violations; ultra=cloud multi-agent; /review=alias"
+  ultrareview: "/ultrareview [pr#] | deep cloud review | Alias of /code-review ultra (billed)"
+  simplify: "/simplify | clean up changed code | Reuse/simplify/efficiency fixes only; no bug hunt"
+  security-review: "/security-review | audit branch changes | Risk-ranked security findings; asks before run"
+  goal: "/goal <condition> | keep working until done | Multi-turn run until condition met; shows turns/tokens"
+  diff: "/diff | see uncommitted edits | Toggle side diff panel (fullscreen)"
+  run: "/run | run/screenshot app to verify | Launch project app (CLI/server/TUI/browser)"
+  init: "/init | document codebase | Generate CLAUDE.md (AGENTS.md read if no CLAUDE.md)"
+  claude-api: "/claude-api | Anthropic SDK/API work | Models, caching, tools; Managed Agents by default"
+  workflow-authoring: "skill | write Workflow script | Multi-agent script API (trigger word: ultracode)"
+  plugin-authoring: "skill | build mod/hook/slash cmd | Create/debug plugins and hooks"
+  # ── docs ──
+  docs: "skill | doc/report/guide | Editable shared doc; exports Word/PDF/MD"
+  docx: "skill | .docx named | Create/edit Word incl. tracked changes"
+  pdf: "skill | .pdf in/out | Extract, merge, split, fill, OCR"
+  xlsx: "skill | spreadsheet file | Edit/create .xlsx/.csv with formulas"
+  pptx: "skill | .pptx named | Create/edit/parse decks"
+  dataviz: "/dataviz | any chart/dashboard | Chart design rules + palette validator"
+  # ── skills / config maintenance ──
+  skill-doctor: "/skill-doctor | prune skills | Show unused skills and their context cost"
+  reload-skills: "/reload-skills | skills changed on disk | Re-scan; sends only new/changed skills"
+  doctor: "/doctor [prompt-audit] | config issues / stale prompts | prompt-audit flags outdated patterns in CLAUDE.md/skills/agents"
+  update-config: "/update-config | 'when X'/'allow Y'/'set Z' | Edit settings.json hooks/permissions/env"
+  fewer-permission-prompts: "/fewer-permission-prompts | too many prompts | Build allowlist from transcripts"
+  auto-mode-setup: "/auto-mode-setup | teach auto mode env | Guided auto-mode classifier setup"
+  session-start-hook: "/session-start-hook | cloud session test/lint setup | Create SessionStart hook"
+  keybindings-help: "/keybindings-help | remap keys | Edit ~/.claude/keybindings.json (chords, effortSlider:*)"
+  # ── session ──
+  loop: "/loop [interval] [/cmd] | recurring task | Interval or self-paced; asks before skills with allowed-tools"
+  effort: "/effort [level|ultracode on|off] | change effort | s=session only; ultracode toggle independent"
+  advisor: "/advisor [model|off] | pick advisor model | Off until chosen"
+  cd: "/cd <dir> | change working dir | Path suggestions like /add-dir"
+  usage: "/usage | token/cost stats | Incl. loops breakdown and effort warnings"
+  ultraplan: "/ultraplan | complex cloud planning | Cloud worktrees for multi-agent plans"
+  team-onboarding: "/team-onboarding | teammate ramp-up | Guide from local usage history"
+  undo: "/undo | undo last action | Alias of /rewind"
+  focus: "/focus | compact view | Prompt + one-line summary + response"
+  tui: "/tui | flicker | Alt-screen render (CLAUDE_CODE_NO_FLICKER=1)"
+  powerup: "/powerup | learn features | Interactive demos"
+  theme: "/theme [name] | change theme | Create/switch color theme"
+  color: "/color | session color | Random if no args"
+
+# Hooks: block = exit 2 or {decision:"block"}; invoke types: shell|mcp_tool|http
+hooks:
+  PreToolUse: "before tool | block | validate/inject context"
+  PostToolUse: "after tool | - | log/follow-up"
+  UserPromptSubmit: "before prompt+skill expansion | block | stops skill's ! shell cmds too"
+  SessionStart: "session start/resume | - | resume gets staleness + re-cache cost"
+  Stop: "turn end | - | post-turn log/notify"
+  SubagentStop: "subagent end | - | aggregate results"
+  Notification: "push event | - | forward alerts"
+  PreCompact: "before compaction | block | protect critical ops"
+  TaskCreated: "TaskCreate | - | track tasks"
+  WorktreeCreate: "worktree create | - | http returns worktreePath"
+  PermissionDenied: "auto-mode deny | - | {retry:true} re-runs classifier"
+  PreModelSwitch: "before /model change | block/confirm | gate model switch"
+  PostModelSwitch: "after model change | - | annotate"
+  MessageDisplay: "assistant text shown | - | transform/hide text"
+  DirectoryAdded: "/add-dir | - | react to new working dir"
+  # limit: per skill source ≤1024 hooks, ≤16384 matcher chars/session
+
+settings:
+  skillOverrides: "off|user-invocable-only|name-only — skill exposure"
+  syncClaudeAiSkills: "bool — sync claude.ai skills (also syncClaudeAiPlugins)"
+  disableSkillShellExecution: "bool — block inline ! shell in skills"
+  modelPicker: "ordered labeled /model list"
+  workflowSizeGuideline: "small|medium|large — advisory workflow size"
+  feedbackDrafts: "bool — SendFeedback drafts"
+  showThinkingSummaries: "bool (default false)"
+  autoScrollEnabled: "bool — fullscreen auto-scroll"
+  prUrlTemplate: "string — PR footer badge URL"
+  sandbox.network.deniedDomains: "list — always-blocked domains"
+  # unattended skill in /loop/schedule: permissions.allow += "Skill(name)"
+
+env:
+  ANTHROPIC_DEFAULT_MODEL: "start model; /model overrides"
+  CLAUDE_EFFORT: "effort level; usable as ${CLAUDE_EFFORT} in skills"
+  CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION: "subagent spawn cap (default 200)"
+  CLAUDE_CODE_DISABLE_ADVISOR_TOOL: "1 = advisor off"
+  CLAUDE_CODE_PLUGIN_DIR_WATCH: "0 = no skill hot-reload in headless"
+  CLAUDE_CODE_NO_FLICKER: "1 = alt-screen render"
+  CLAUDE_CODE_USE_POWERSHELL_TOOL: "1 = PowerShell tool (Windows)"
+  CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1 = gateway /v1/models"
+  CLAUDE_STREAM_IDLE_TIMEOUT_MS: "stream idle timeout ms"
+  OTEL_LOG_RAW_API_BODIES: "1 = log raw API bodies"
+  DISABLE_UPDATES: "1 = block all updates"
+
+models:  # all 1M context
+  default: claude-opus-5-5
+  opus: claude-opus-5-5
+  sonnet: claude-sonnet-5-5
+  haiku: claude-haiku-5-5
+  fable: claude-fable-5-2
