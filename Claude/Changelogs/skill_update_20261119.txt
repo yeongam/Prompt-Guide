@@ -1,0 +1,95 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-11-19 05:08 UTC
+Version : 2.1.327 → 2.1.328
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-11-19/
+============================================================
+
+[ ★ 신규 감지 스킬 (13개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /chrome  ← 수동 추가 필요
+  ? /code-review  ← 수동 추가 필요
+  ? /config  ← 수동 추가 필요
+  ? /diff  ← 수동 추가 필요
+  ? /exit  ← 수동 추가 필요
+  ? /export  ← 수동 추가 필요
+  ? /goal  ← 수동 추가 필요
+  ? /hooks  ← 수동 추가 필요
+  ? /install-github-app  ← 수동 추가 필요
+  ? /list-agents  ← 수동 추가 필요
+  ? /metrics  ← 수동 추가 필요
+  ? /permissions  ← 수동 추가 필요
+  ? /tasks  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /bug
+  ~ /clear
+  ~ /code-review
+  ~ /compact
+  ~ /config
+  ~ /diff
+  ~ /exit
+  ~ /export
+  ~ /goal
+  ~ /hooks
+  ~ /install-github-app
+  ~ /list-agents
+  ~ /login
+  ~ /model
+  ~ /permissions
+  ~ /plugin
+  ~ /simplify
+  ~ /tasks
+  ~ /terminal-setup
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-11-19/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed automatic compaction reusing the session's earlier system prompt instead of rebuilding it the way `/compact` does
+  - Fixed a case where a resumed cloud session could lose its compaction summary or recent messages when a message was saved late
+  - Fixed the token counts on the spinner and for subagents counting a retried reply twice, missing replies that were not streamed, and standing still while Claude thinks
+  - Fixed the `/usage` plugin total stopping at 2,000 tokens on 1M context models, and low token estimates in `/usage` and `/plugin` when no model is picked
+  - Fixed agent hooks running past their timeout while compacting after a request was refused as too large
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  PostToolBatch
+  PostToolUse
+  Stop
+
+[ Settings ]
+  http.proactiveAuth
+  return
+  updatedToolOutput
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.328
+
+- Added auto mode for Claude Opus 4.6 and Sonnet 4.6 on Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry and Claude apps gateway; interactive sessions with no permission mode start in it
+- Added `"onFailure": "block"` for `mcp_tool` hooks, as for command and HTTP hooks: a hook whose call fails blocks the action
+- Added a warning when a message from a session that skips permission prompts may be held and dropped by a cloud session
+- Added a notice in `/status` and `claude doctor` when an OpenTelemetry exporter has no endpoint and its data would likely be lost
+- Added `CLAUDE_CODE_DISABLE_DEFERRED_TOOL_RESUME`, which lets a host stop `claude -p --resume` and `--continue` from running a tool call that a hook deferred
+- Added support for apps that embed Claude Code to switch on the policy plugin's `allowManagedModsOnly` option; an admin's managed settings still win
+- Added a startup warning to the Claude apps gateway when a policy's `maxEffortLevel` is not a valid effort level
+- Self-hosted runner: Added `--repository-folder` to name the folder that sessions use for a repository at `--capacity 1`, in place of its path under the base folder, which can't be a symbolic link
+- Self-hosted runner: Added a start-up warning when the host's settings.json sets a default permission mode that sessions ignore
+- Self-hosted runner: Added `--hook-label` to `claude self-hosted-runner orchestrator`, to hand chosen session labels to the `spawn-runner` hook
+- Self-hosted runner: Added `--metadata key=value` to `claude --environment`, to label a session for the `spawn-runner` hook
+- Self-hosted runner: Added `claude_code_self_hosted_orchestrator_session_queue_wait_by_reason_seconds` to the orchestrator's `/metrics`, so a re-opened session's wait can be told from a new one's
+- Self-hosted runner: Added an orchestrator metric, `claude_code_self_hosted_orchestrator_sessions_given_up_total`, that counts by cause how often Anthropic gave up starting a runner for a s
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
