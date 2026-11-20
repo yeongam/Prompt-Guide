@@ -1,0 +1,95 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-11-20 04:57 UTC
+Version : 2.1.328 → 2.1.329
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-11-20/
+============================================================
+
+[ ★ 신규 감지 스킬 (14개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /add-dir  ← 수동 추가 필요
+  ? /auto-mode-setup  ← 수동 추가 필요
+  ? /code-review  ← 수동 추가 필요
+  ? /config  ← 수동 추가 필요
+  ? /help  ← 수동 추가 필요
+  ? /install-github-app  ← 수동 추가 필요
+  ? /passes  ← 수동 추가 필요
+  ? /rename  ← 수동 추가 필요
+  ? /resume  ← 수동 추가 필요
+  ? /rewind  ← 수동 추가 필요
+  ? /sandbox  ← 수동 추가 필요
+  ? /tasks  ← 수동 추가 필요
+  ? /teleport  ← 수동 추가 필요
+  ? /usage-credits  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /auto-mode-setup
+  ~ /clear
+  ~ /code-review
+  ~ /config
+  ~ /help
+  ~ /install-github-app
+  ~ /login
+  ~ /mcp
+  ~ /model
+  ~ /passes
+  ~ /rename
+  ~ /resume
+  ~ /rewind
+  ~ /sandbox
+  ~ /status
+  ~ /tasks
+  ~ /team-onboarding
+  ~ /terminal-setup
+  ~ /tui
+  ~ /usage-credits
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-11-20/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed an MCP server being signed in again after you cleared its authentication while a token refresh was running
+  - Fixed Remote Control using memory for the earlier conversation after a compaction or `/clear` in sessions run by Claude Desktop, IDEs or the SDK
+  - Fixed sessions started from a pre-warmed process ignoring the `autoCompactWindow` setting in the project's `.claude/settings.json`
+  - Fixed `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` staying in effect in a running session after it is removed from settings.json
+  - Fixed auto-scroll, the PR status badge, the auto-compact warning and the ultracode tag not following the `/config` switches that control them in a running session
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  PreToolUse
+  Stop
+  SubagentStop
+
+[ Settings ]
+  keybindings.json
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.329
+
+- Added a trust dialog warning that says where a folder's hooks are declared
+- Added a warning in the conversation, in Claude Desktop and other non-interactive hosts, when hooks in managed settings fail to load
+- Added this session's scheduled tasks, `/loop` wakeups, the goal and this conversation's forks to `/tasks`; x stops one after asking
+- Added a "Server message" row to a server's page in `/mcp` that shows the JSON-RPC error message of a remote HTTP MCP server that refuses the connection
+- Added a "Marketplace auto-update" row to `/status` that names managed marketplaces that get no automatic updates, and why
+- Added support for turning on Code Mode while OpenTelemetry events and metrics are enabled; each tool call the code makes sends its events; tracing still keeps it off
+- Fixed `~/.claude.json` sometimes being reset to defaults when a network stall or file lock made it unreadable and cleared during a save
+- Fixed repeated sign-outs on macOS when Claude Code could read the Keychain but not save to it. That session now stops at expiry and says why, and other sessions stay signed in
+- Fixed `/terminal-setup` corrupting VS Code settings or keybindings files around block comments, and reporting success while losing the Shift+Enter binding where keybindings.json has an unclosed string
+- Fixed files accepted through the IDE diff being saved without their last newline, and losing their byte order mark (BOM) when an edit was accepted by saving the diff in VS Code
+- Fixed picking a cloud session in `/teleport` replacing your open conversation: the pick now starts a new session, as `/clear` does, and `/resume` brings the old one back
+- Fixed `/usage-credits` asking Pro and Max users to log in again after opening the browser, and the link disappearing after 8 seconds if the browser doesn't open and a task stops for usage credits
+- Fixed `/usage` saying usage credits are off when they had run out or reached the monthly limit, and `/model` not telling Pro an
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
