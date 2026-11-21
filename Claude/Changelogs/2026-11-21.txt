@@ -1,0 +1,57 @@
+Prompt-Guide Claude Skills Changelog - 2026-11-21
+
+Snapshot: Claude/skills/2026-11-21/skills
+Previous: Claude/skills/2026-05-06/skills (v2.1.129)
+Source  : anthropics/claude-code CHANGELOG.md (v2.1.129 -> v2.1.330)
+
+[추가된 스킬]  (사용 가능한 SKILL 형식 .md, frontmatter 포함)
+- code-review       : 버그 탐지 리뷰 (/code-review level, --comment, --fix)
+- simplify          : 변경 코드 정리 전용 (재사용/단순화/효율)
+- claude-api        : SDK 코딩 + upgrade/api-version/cost-/latency-optimize/prompt-audit/managed-agents
+- docs-maintenance  : CLAUDE.md/AGENTS.md/스킬 문서 생성·축약·감사 (/init, /doctor prompt-audit, /skill-doctor)
+- dataviz           : 차트/대시보드 가이드
+- catalog 신규 명령 : goal, schedule, tasks, workflows, cd, diff, reload-skills, skill-doctor, doctor,
+                      config, output-style, auto-mode-setup, advisor, fast, cost, usage-credits, plugin, mcp
+- 신규 훅           : PreModelSwitch, PostModelSwitch, DirectoryAdded, MessageDisplay
+- 신규 설정/환경변수: disableBundledSkills, syncClaudeAiSkills, modelPicker, workflowSizeGuideline,
+                      feedbackDrafts, ANTHROPIC_DEFAULT_MODEL, CLAUDE_CODE_SAFE_MODE,
+                      CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION
+
+[수정된 스킬]
+- review         -> code-review 로 통합 (upstream 명칭 변경, effort level/--comment/--fix 반영)
+- simplify       : "리뷰+수정" -> 정리 전용으로 역할 축소 (upstream 2.1.x 변경 반영)
+- claude-api     : 모델 opus-4-7/sonnet-4-6/haiku-4-5 -> opus-5-5/sonnet-5-5/haiku-5-5/fable-5-2
+- effort         : 라벨 Faster/Smarter, s=현재 세션만
+- usage          : loop breakdown, 경고 추가 / cost: 프롬프트 캐시 hit ratio
+- tui            : classic|default 인자
+- Notification 훅: agent_needs_input / agent_completed 이벤트
+- models         : default 항목 제거, 최신 4개 모델 ID로 교체
+
+[삭제된 스킬]
+- agents     : upstream에서 /agents 위저드 제거 -> removed 섹션에 대체 방법만 기록
+- extra-usage: /usage-credits 로 이름 변경 (removed 섹션에 alias 기록)
+- ultraplan, team-onboarding, powerup, undo, theme, color: 카탈로그에서 제외
+  (코딩/문서 작업과 무관하거나 upstream 변경 이력 없음, 2026-05-06 스냅샷에 원본 보존)
+
+[최적화된 구조]
+- Claude/skills/SKILLS_CATALOG.yaml (flat) -> 날짜/skills 규칙 적용:
+    Claude/skills/2026-05-06/skills/SKILLS_CATALOG.yaml (이전본, git mv로 이력 보존)
+    Claude/skills/2026-11-21/skills/{catalog.yaml, 5 x skill.md}
+- 카탈로그: 항목당 4~6줄 블록 -> "cmd | when | what" 1줄 형식
+- 상세 절차는 사용 가능한 스킬 5개에만 별도 .md (나머지는 1줄 인덱스)
+- Claude/Changelogs/ 신규 생성, 파일명 YYYY-MM-DD.txt
+
+[토큰 절감 관련 변경 사항]
+- 카탈로그 9,230 B -> 4,672 B (약 -50%), 항목 수는 증가 (명령 30, 훅 13)
+- added: 버전 태그, 중복 models 블록(claude-api 내부 + 최상위), 주석형 설명 제거
+- 스킬 본문 ≤10줄, description 1줄 (when/not-when)로 트리거 비용 최소화
+- 각 스킬은 범위를 diff/변경 코드로 한정하도록 명시해 불필요한 파일 읽기 방지
+
+[충돌 해결 내역]
+- 구조 충돌: flat 카탈로그 vs 날짜/skills 규칙 -> 이전본을 2026-05-06/skills 로 이동
+- 경로 충돌: scripts/update_skills.py, scripts/sync_changelogs.sh, .claude/settings.json(Stop 훅)이
+  changelogs/ 와 flat 카탈로그를 참조 -> Claude/Changelogs/ 및 최신 날짜 스냅샷 자동 탐색으로 갱신
+  (로그 파일명 skill_update_YYYYMMDD.txt -> YYYY-MM-DD.txt)
+- 명칭 충돌: review/simplify/code-review 역할 중복 -> code-review(버그), simplify(정리)로 분리
+- .version 2.1.129 -> 2.1.330 (업데이트 스크립트 중복 실행 방지)
+- 미변경(안정성): GPT/, Gemini/, Claude 모델 프롬프트 파일, .github/workflows/*
