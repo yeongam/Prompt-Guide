@@ -1,0 +1,87 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-11-21 04:52 UTC
+Version : 2.1.329 → 2.1.330
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-11-21/
+============================================================
+
+[ ★ 신규 감지 스킬 (12개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /config  ← 수동 추가 필요
+  ? /context  ← 수동 추가 필요
+  ? /design-login  ← 수동 추가 필요
+  ? /design-sync  ← 수동 추가 필요
+  ? /fork  ← 수동 추가 필요
+  ? /install-github-app  ← 수동 추가 필요
+  ? /metrics  ← 수동 추가 필요
+  ? /recap  ← 수동 추가 필요
+  ? /resume  ← 수동 추가 필요
+  ? /rewind  ← 수동 추가 필요
+  ? /stats  ← 수동 추가 필요
+  ? /workflows  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /compact
+  ~ /config
+  ~ /context
+  ~ /design-login
+  ~ /design-sync
+  ~ /effort
+  ~ /loop
+  ~ /mcp
+  ~ /model
+  ~ /plugin
+  ~ /recap
+  ~ /resume
+  ~ /rewind
+  ~ /stats
+  ~ /ultrareview
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-11-21/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Fixed Claude Code freezing for up to several minutes right after compacting a very long conversation
+  - Fixed Code Mode not restoring a file that a script had read after Esc and `/compact`
+  - Self-hosted runner: Fixed a 403, such as an IP allowlist's, logged as a bad secret or token: most such lines now lead with the server's reason, so update log alerts that match the old words
+  - Reverted 2.1.329's removal of the automatic retry when `max_tokens` exceeds a model's or gateway's limit
+  - Improved the claude.ai sign-in link shown by /login, `claude auth login` and `claude setup-token`: it is now much shorter
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - Fixed Grep reporting no matches when the pattern held a line break without multiline mode; it now reports the rejected pattern
+  - Fixed line breaks and class stereotypes missing from Mermaid diagrams in HTML artifacts
+
+[ Hooks ]
+  Stop
+
+[ Settings ]
+  haiku
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.330
+
+- Added sign-in to organizations managed in Anthropic's Enterprise Admin Console: after `claude auth login`, Claude Code applies the organization's settings and uses its cloud provider or gateway
+- Added easel, a built-in mod that draws charts when asked and under MCP metrics results, on Pro, Max and, where available, Team and Enterprise on macOS and Linux; turn automatic charts off in `/config`
+- Added `CLAUDE_CODE_FULL_SIGN_IN_LINK=1` to print the full sign-in link, if the short one shows an error or a script reads values from it
+- Self-hosted runner: Added `--start-dir` / `SELF_HOSTED_RUNNER_START_DIR` to have Claude start its work in a folder of a repository, while settings and hooks load as without it
+- Added a notice in cloud and self-hosted runner sessions when a plugin marketplace can't be fetched because its repository isn't one of the session's
+- Self-hosted runner: Added a notice when Anthropic-managed git refuses a plugin's own repository, naming the plugin and what to do
+- Added `commandPrinted` to `claude plugin install --json` results, true when the plugin's install command wrote to stderr, and `commandFailed` when it exited with an error, was killed or timed out
+- Added `claude_code_self_hosted_runner_order_to_registered_seconds` to the self-hosted runner's `/metrics`: seconds from work order issued to registration accepted, on orchestrator-spawned runners
+- Added `claude_code_self_hosted_runner_order_to_first_session_seconds` to the self-hosted runner's `/metrics`: seconds from work order to first session handed over, on runners started for a session
+- Fixed Claude Code freezing for up to several minutes right after compacting a very long conversation
+- Fixed WebFetch freezing the session for minutes on some pages, and returning an empty result for some others
+- Fixed `ExitWorktree` and the worktree exit dialog deleting a worktree that another running Claude Code session was working in
+- Fixed changes to user settings being lost when sev
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
