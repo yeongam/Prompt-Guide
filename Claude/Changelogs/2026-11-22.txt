@@ -1,0 +1,44 @@
+Prompt-Guide Claude Skills Changelog - 2026-11-22
+
+Snapshot: Claude/skills/2026-11-22/skills
+Previous: Claude/skills/2026-11-21/skills
+Source  : anthropics/claude-code @1006c2e (2026-11-22, "Update mods/")
+          CHANGELOG 최신 = 2.1.330 (버전 변경 없음) + mods/ 신규 반영
+
+[추가된 스킬]
+- 신규 스킬 파일 없음 (5개 유지)
+- catalog mods 섹션 신규: agents-md, easel, diff, privacy, sec-default|hipaa-default
+- catalog commands: fork (/fork, VSCode)
+- catalog settings: instructionFiles (-> mods.agents-md)
+- catalog hooks: invoke_types 에 prompt 추가 (model 필드 alias 허용: haiku|sonnet)
+
+[수정된 스킬]
+- dataviz          : Claude Code 에서 mcp__easel__chart 우선 사용 규칙 추가 (x/y/by, line ≤8, sparks ≤40)
+- docs-maintenance : AGENTS.md 로딩 규칙을 instructionFiles 옵션 기준으로 갱신,
+                     스킬 frontmatter model 동작(2.1.330 변경) 명시
+- catalog loop/schedule : 반복 실행 7일 -> 30일
+- catalog plugin        : 공식 플러그인 출처 claude-plugins-official 명시
+- 변경 없음: code-review, simplify, claude-api
+
+[삭제된 스킬]
+- 없음
+- catalog commands.diff -> mods.diff 로 이동 (중복 제거, 기능 동일)
+- catalog project_instructions -> mods.agents-md 로 통합
+
+[최적화된 구조]
+- 날짜/skills 규칙 유지: Claude/skills/2026-11-22/skills (기존 2026-11-21 스냅샷은 수정하지 않음)
+- 내장 mod 정보를 단일 mods 블록에 1줄씩 집약
+- sec-default/hipaa-default 2줄 -> 1줄 병합
+
+[토큰 절감 관련 변경 사항]
+- 헤더 주석 축약, prev 키 제거(이력은 Changelogs 로 일원화)
+- hooks "(new)" 태그 4개 제거, 섹션 주석 및 장문 설명 6건 축약
+- catalog 4,672 B -> 5,115 B (+443 B, 신규 mods 6항목 수록분; 축약으로 약 120 B 상쇄)
+- 스킬 .md 합계 3,455 B -> 3,685 B (+230 B, 규칙 2줄 추가)
+
+[충돌 해결 내역]
+- /diff: commands 와 mods 중복 -> mods 로 단일화
+- AGENTS.md 규칙: project_instructions(고정 문구) vs agents-md mod(옵션형) -> mod 기준으로 통합,
+  settings.instructionFiles 는 참조만 둠
+- .version 2.1.330 유지 -> scripts/update_skills.py 정상 동작 확인 ("Already up to date")
+- 미변경(안정성): GPT/, Gemini/, Claude 모델 프롬프트 파일, scripts/, .github/workflows/, .claude/settings.json
