@@ -1,0 +1,101 @@
+Claude Code Skills Changelog - 2026-11-23
+Snapshot: Claude/skills/2026-11-23/skills | Prev: legacy SKILLS_CATALOG.yaml
+Source: anthropics/claude-code@50cdc7005318 (v2.1.330)
+
+[추가된 스킬]
+- [plugin] agent-sdk-dev-agent-sdk-verifier-py
+- [plugin] agent-sdk-dev-agent-sdk-verifier-ts
+- [plugin] agent-sdk-dev-new-sdk-app
+- [plugin] code-review-plugin
+- [plugin] commit-commands-clean-gone
+- [plugin] commit-commands-commit
+- [plugin] commit-commands-commit-push-pr
+- [plugin] feature-dev
+- [plugin] feature-dev-code-architect
+- [plugin] feature-dev-code-explorer
+- [plugin] feature-dev-code-reviewer
+- [plugin] frontend-design
+- [plugin] hookify
+- [plugin] hookify-configure
+- [plugin] hookify-conversation-analyzer
+- [plugin] hookify-list
+- [plugin] hookify-writing-hookify-rules
+- [plugin] plugin-dev-agent-creator
+- [plugin] plugin-dev-agent-development
+- [plugin] plugin-dev-command-development
+- [plugin] plugin-dev-create-plugin
+- [plugin] plugin-dev-hook-development
+- [plugin] plugin-dev-mcp-integration
+- [plugin] plugin-dev-plugin-settings
+- [plugin] plugin-dev-plugin-structure
+- [plugin] plugin-dev-plugin-validator
+- [plugin] plugin-dev-skill-development
+- [plugin] plugin-dev-skill-reviewer
+- [plugin] pr-review-toolkit-code-reviewer
+- [plugin] pr-review-toolkit-code-simplifier
+- [plugin] pr-review-toolkit-comment-analyzer
+- [plugin] pr-review-toolkit-pr-test-analyzer
+- [plugin] pr-review-toolkit-review-pr
+- [plugin] pr-review-toolkit-silent-failure-hunter
+- [plugin] pr-review-toolkit-type-design-analyzer
+- [plugin] ralph-loop
+- [plugin] ralph-loop-cancel-ralph
+- [core] commands.auto-mode-setup
+- [core] commands.cd
+- [core] commands.code-review
+- [core] commands.config
+- [core] commands.dataviz
+- [core] commands.doctor
+- [core] commands.fast
+- [core] commands.goal
+- [core] commands.mcp
+- [core] commands.output-style
+- [core] commands.plugin
+- [core] commands.reload-skills
+- [core] commands.scroll-speed
+- [core] commands.skill-doctor
+- [core] commands.usage-credits
+- [core] hooks.DirectoryAdded
+- [core] hooks.MessageDisplay
+- [core] hooks.PostModelSwitch
+- [core] hooks.PreModelSwitch
+- [core] hooks.SessionStart
+
+[수정된 스킬]
+- [core] 30개 기존 항목 compact 1줄 포맷으로 이전 (의미 변경은 아래 별도 표기)
+- [core] review: 독립 명령 -> /code-review 별칭
+- [core] simplify: 정리 전용(reuse/simplify/efficiency/altitude) + 자동 수정, 버그 탐지는 /code-review로 분리
+- [core] claude-api: upgrade/cost-optimize/latency-optimize/api-version/managed-agents-* 하위명령, 모델 ID 5.x로 갱신
+- [core] effort: 라벨 Faster/Smarter · tui: default|classic · undo: /clear 이전 복원 · usage: 컨텍스트 비용 경고
+- [core] hooks.Notification: agent_needs_input/agent_completed · SessionStart: staleness/re-cache cost
+- [core] models: opus-4-7/sonnet-4-6/haiku-4-5 -> fable-5-2/opus-5-5/sonnet-5-5/haiku-5-5 (default 고정값 제거, 플랜 기본값 사용)
+
+[삭제된 스킬]
+- [plugin] none
+- [core] 없음 (Claude/skills/SKILLS_CATALOG.yaml, .version 은 날짜 구조로 이전 후 제거)
+
+[최적화된 구조]
+- 날짜별 스냅샷 유지: skills/2026-11-23/skills (이전 날짜 덮어쓰지 않음)
+- core.yaml(내장 명령/훅/설정) + <slug>/SKILL.md(플러그인 카드) + catalog.json(해시)
+- 공통 규칙은 _shared.md 1곳으로 통합
+- 엔트리포인트 Claude/scripts/sync_claude_skills.py 로 일원화 (scripts/update_skills.py 는 위임 래퍼)
+- 워크플로: 00:00 KST, main 체크아웃, Claude/ 외 변경 차단 · 로그 경로 changelogs/ -> Claude/Changelogs/
+
+[토큰 절감 관련 변경 사항]
+- core 카탈로그 추정 토큰: 2104 -> 1262 (chars/4)
+- core: 중첩 YAML(cmd/trigger/desc) -> 1줄 문자열, added: 버전 태그·중복 주석 제거
+- 스냅샷 전체 추정 토큰: 2307 -> 8614 (신규 카드 37개 포함)
+- 카드당 설명 200자, 개요 5단계 x 80자 상한; 원문 900자 이하만 인라인, 나머지는 링크
+
+[충돌 해결 내역]
+- code-review (code-review) -> code-review-plugin [core built-in /code-review 우선]
+
+[core.yaml 미반영 신규 명령 (CHANGELOG 감지, 검토 필요)]
+# 오늘: 코딩/문서와 무관한 계정·세션 관리 명령이라 의도적으로 제외
+- /advisor
+- /rate-limit-options
+- /reload-plugins
+- /resume
+- /rewind
+
+[요약] added=57 modified=0 deleted=0 cards=37

@@ -19,7 +19,7 @@
     "Stop": [
       {
         "type": "shell",
-        "command": "bash -c 'if ls \"${REPO_ROOT:-/home/user/Prompt-Guide}/changelogs/\"*.txt 1>/dev/null 2>&1; then cp -u \"${REPO_ROOT:-/home/user/Prompt-Guide}/changelogs/\"*.txt \"/root/바탕화면/Claude-Text/Claude_skills/\" 2>/dev/null; fi'"
+        "command": "bash -c 'if ls \"${REPO_ROOT:-/home/user/Prompt-Guide}/Claude/Changelogs/\"*.txt 1>/dev/null 2>&1; then cp -u \"${REPO_ROOT:-/home/user/Prompt-Guide}/Claude/Changelogs/\"*.txt \"/root/바탕화면/Claude-Text/Claude_skills/\" 2>/dev/null; fi'"
       }
     ]
   }

@@ -1,38 +1,40 @@
-name: Daily Claude Code Skills Update
+name: Claude Code Skills Sync
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 15 * * *" # 00:00 KST
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: claude-skills-sync
+  cancel-in-progress: false
+
 jobs:
-  update-skills:
+  sync:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: claude/zealous-sagan-FdaL5
-          token: ${{ secrets.GITHUB_TOKEN }}
-
+          ref: main
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
-      - name: Run skill update script
-        run: python scripts/update_skills.py
-
-      - name: Commit and push if changed
+      - name: Sync from anthropics/claude-code
+        run: python Claude/scripts/sync_claude_skills.py
+      - name: Block changes outside Claude/
+        run: |
+          bad="$(git status --porcelain | awk '{print $2}' | grep -Ev '^Claude/' || true)"
+          [ -z "$bad" ] || { echo "Unexpected: $bad"; exit 1; }
+      - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "No changes - already up to date"
-          else
-            DATE=$(date -u +%Y-%m-%d)
-            git commit -m "chore: Claude Code skills update ${DATE}"
-            git push -u origin claude/zealous-sagan-FdaL5
-          fi
+          git add Claude
+          git diff --cached --quiet && { echo "No changes"; exit 0; }
+          git commit -m "chore: sync Claude Code skills $(TZ=Asia/Seoul date +%Y-%m-%d)"
+          git pull --rebase origin main
+          git push origin HEAD:main
