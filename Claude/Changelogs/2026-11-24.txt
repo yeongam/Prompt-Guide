@@ -1,0 +1,41 @@
+Claude Code Skills Changelog - 2026-11-24
+Snapshot: Claude/skills/2026-11-24/skills | Prev: 2026-11-23
+Source: anthropics/claude-code@112541d8e85f (v2.1.331)
+
+[추가된 스킬]
+- none
+
+[수정된 스킬]
+- [core] commands.doctor
+- [core] hooks.PermissionDenied
+  · doctor: API 연결 진단 섹션 추가 (v2.1.331)
+  · PermissionDenied: retry:true는 사용자가 요청한 호출일 때만 재실행
+- [core] settings/env 신규 3건 (v2.1.331, 코딩 관련만 선별)
+  · settings.extraKnownMarketplaces[].autoUpdate (11/30부터 기본 자동 업데이트, false로 제외)
+  · settings.optionalDependencies (plugin.json 선택 의존 플러그인)
+  · env.CLAUDE_CODE_DISABLE_RESPONSE_COMPRESSION
+- [plugin] 37개 카드 해시 동일 (변경 없음, 2026-11-23에서 재생성)
+
+[삭제된 스킬]
+- none
+
+[최적화된 구조]
+- 날짜별 스냅샷 유지: skills/2026-11-24/skills (이전 날짜 덮어쓰지 않음)
+- core.yaml(내장 명령/훅/설정) + <slug>/SKILL.md(플러그인 카드) + catalog.json(해시)
+- 공통 규칙은 _shared.md 1곳으로 통합
+- core.yaml 버전 2.1.330 -> 2.1.331, 기존 키/네이밍 유지 (호환성 보존)
+
+[토큰 절감 관련 변경 사항]
+- core 카탈로그 추정 토큰: 1262 -> 1354 (chars/4)
+- 증가분 +92 토큰은 신규 설정/환경변수 1줄 항목; VSCode·Windows 전용/UI 수정 항목은 제외하여 비대화 방지
+- 스냅샷 전체 추정 토큰: 8614 -> 8706 (신규 카드 37개 포함)
+- 카드당 설명 200자, 개요 5단계 x 80자 상한; 원문 900자 이하만 인라인, 나머지는 링크
+
+[충돌 해결 내역]
+- code-review (code-review) -> code-review-plugin [core built-in /code-review 우선] (기존 규칙 유지)
+- 신규 충돌 없음; 2026-11-23 스냅샷은 덮어쓰지 않음
+
+[core.yaml 미반영 신규 명령 (CHANGELOG 감지, 검토 필요)]
+- none
+
+[요약] added=0 modified=2 deleted=0 cards=37

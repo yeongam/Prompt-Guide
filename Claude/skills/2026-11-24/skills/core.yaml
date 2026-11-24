@@ -1,0 +1,88 @@
+# Claude Code core catalog (built-in commands/hooks/settings). Source: anthropics/claude-code CHANGELOG.md
+# Format: name: "cmd | when → what". Shared rules: _shared.md
+version: 2.1.331
+updated: 2026-11-24
+
+commands:
+  init: "/init | document codebase → generate CLAUDE.md"
+  code-review: "/code-review [level] [pr#|branch] [--comment|--fix] | review diff/PR → correctness bugs + CLAUDE.md violations; `ultra`=deep cloud review"
+  review: "/review | alias of /code-review"
+  security-review: "/security-review | audit branch changes → risk-ranked security findings"
+  simplify: "/simplify | clean changed code → reuse/simplify/efficiency/altitude fixes applied (no bug hunt)"
+  session-start-hook: "/session-start-hook | web sessions need tests/linters → SessionStart hook"
+  update-config: "/update-config | 'when X'/'allow Y'/'set Z' → edit settings.json hooks/permissions/env"
+  config: "/config key=value | set any setting inline; /config --help lists keys"
+  keybindings-help: "/keybindings-help | remap keys/chords → ~/.claude/keybindings.json"
+  fewer-permission-prompts: "/fewer-permission-prompts | too many dialogs → allowlist in .claude/settings.json"
+  auto-mode-setup: "/auto-mode-setup | teach auto mode the project environment"
+  loop: "/loop [interval] [/cmd] | recurring task; omit interval = self-paced"
+  goal: "/goal <condition> | keep working across turns until condition met"
+  claude-api: "/claude-api [upgrade|cost-optimize|latency-optimize|api-version|managed-agents-onboard|managed-agents-secure] | Anthropic SDK/API work"
+  dataviz: "/dataviz | charts/dashboards → design guidance + palette validator"
+  skill-doctor: "/skill-doctor | find unused skills and their context cost → prune"
+  doctor: "/doctor [prompt-audit] | config + API connectivity check; prompt-audit flags outdated prompting in CLAUDE.md/skills/agents"
+  reload-skills: "/reload-skills | rescan skill dirs without restart"
+  plugin: "/plugin [list|install <p> --marketplace <src>] | manage plugins"
+  output-style: "/output-style [name] | list/switch output styles"
+  cd: "/cd <dir> | move session cwd, keeps prompt cache"
+  ultrareview: "/ultrareview [pr#] | billed multi-agent cloud review"
+  ultraplan: "/ultraplan | cloud planning environment"
+  team-onboarding: "/team-onboarding | teammate ramp-up guide from usage"
+  effort: "/effort | Faster↔Smarter slider (env CLAUDE_EFFORT)"
+  fast: "/fast [on|off] | fast mode (Opus 5.x / 4.8)"
+  powerup: "/powerup | interactive feature lessons"
+  tui: "/tui [default|classic] | fullscreen vs classic renderer"
+  focus: "/focus | prompt + summary + response only"
+  undo: "/undo | alias of /rewind (also before /clear)"
+  usage: "/usage | tokens/cost + context-cost warnings"
+  usage-credits: "/usage-credits | request higher limit (alias /extra-usage)"
+  mcp: "/mcp [reconnect all] | MCP status/retry"
+  theme: "/theme [name] | create/switch theme"
+  color: "/color | random session color"
+  scroll-speed: "/scroll-speed | tune wheel speed"
+
+# Block: exit 2 or {decision:"block",reason}. Retry (PermissionDenied): {retry:true}. `if` = permission-rule filter.
+hooks:
+  PreToolUse: "before tool | block | validate/log, inject context"
+  PostToolUse: "after tool | - | log, follow-ups"
+  Notification: "alerts incl. agent_needs_input/agent_completed | - | forward to phone/Slack"
+  Stop: "turn end | - | post-turn logging"
+  SubagentStop: "subagent end | - | aggregate results"
+  SessionStart: "session start/resume (staleness, re-cache cost) | - | env setup"
+  PreCompact: "before compaction | block | protect critical ops"
+  TaskCreated: "TaskCreate | - | track tasks"
+  WorktreeCreate: "worktree created | - | http type returns worktreePath"
+  PermissionDenied: "auto-mode denial | retry (re-run only if user asked for that call) | escalation"
+  PreModelSwitch: "before model switch | block/confirm | guard model changes"
+  PostModelSwitch: "after model switch | - | annotate"
+  DirectoryAdded: "after /add-dir | - | per-dir setup"
+  MessageDisplay: "assistant text shown | transform/hide | redact/format"
+hook_types: [shell, mcp_tool, http]
+
+settings:
+  skillOverrides: "off|user-invocable-only|name-only — skill exposure"
+  autoScrollEnabled: "bool — fullscreen auto-scroll"
+  showThinkingSummaries: "bool (default false)"
+  disableSkillShellExecution: "bool — no inline shell in skills"
+  prUrlTemplate: "string — PR footer badge URL"
+  sandbox.network.deniedDomains: "list — always-blocked domains"
+  advisorModel: "string — advisor model (/advisor)"
+  extraKnownMarketplaces[].autoUpdate: "bool — managed marketplaces auto-update by default from 2026-11-30; false = opt out"
+  optionalDependencies: "plugin.json list — co-installed plugins, separately disableable"
+
+env:
+  CLAUDE_EFFORT: "effort level; ${CLAUDE_EFFORT} in skill templates"
+  CLAUDE_CODE_NO_FLICKER: "1 = fullscreen renderer"
+  CLAUDE_CODE_USE_POWERSHELL_TOOL: "1 = PowerShell tool (Windows)"
+  CLAUDE_STREAM_IDLE_TIMEOUT_MS: "stream idle watchdog ms"
+  OTEL_LOG_RAW_API_BODIES: "1 = raw API bodies as OTEL events"
+  DISABLE_UPDATES: "1 = block all updates"
+  CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1 = gateway /v1/models discovery"
+  CLAUDE_CODE_DISABLE_ADVISOR_TOOL: "1 = disable advisor"
+  CLAUDE_CODE_DISABLE_RESPONSE_COMPRESSION: "1 = uncompressed responses (proxy truncation fix)"
+
+models:
+  fable: claude-fable-5-2
+  opus: claude-opus-5-5
+  sonnet: claude-sonnet-5-5
+  haiku: claude-haiku-5-5
