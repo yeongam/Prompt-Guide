@@ -1,0 +1,79 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-11-24 07:40 UTC
+Version : 2.1.330 → 2.1.331
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-11-24/
+============================================================
+
+[ ★ 신규 감지 스킬 (10개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /add-dir  ← 수동 추가 필요
+  ? /api  ← 수동 추가 필요
+  ? /cd  ← 수동 추가 필요
+  ? /desktop  ← 수동 추가 필요
+  ? /diff  ← 수동 추가 필요
+  ? /ide  ← 수동 추가 필요
+  ? /install-github-app  ← 수동 추가 필요
+  ? /rewind  ← 수동 추가 필요
+  ? /usage-credits  ← 수동 추가 필요
+  ? /word  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /add-dir
+  ~ /api
+  ~ /bug
+  ~ /desktop
+  ~ /diff
+  ~ /install-github-app
+  ~ /rewind
+  ~ /usage-credits
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-11-24/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Added `gen_ai.usage.*`, `gen_ai.response.model` and `gen_ai.operation.name` to `claude_code.llm_request` trace spans; `gen_ai.usage.input_tokens` includes prompt cache tokens
+  - Fixed /compact and auto-compact sometimes losing part of the conversation summary when the summary quoted certain XML tags
+  - Changed the questions for stopping auto-connect in `/ide` and for `/clear`, `/compact` or `/rewind` in a subagent's view to list Yes first; they still start on No, so Down then Enter now answers No
+  - [VSCode] Fixed a quick double click in the panel pressing a button or row that appeared after the first click, or starting a second compaction from the context usage circle
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  - [VSCode] Added "Resolve Merge Conflicts" to the editor title of a file with merge conflicts and to the Merge Changes group in Source Control
+  - [VSCode] Fixed an edited command on the permission prompt running without the line breaks that were typed or pasted into it
+
+[ Hooks ]
+  PermissionDenied
+  Stop
+  SubagentStop
+
+[ Settings ]
+  cd
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.331
+
+- Added Code Mode support in terminal sessions on Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry and Claude Platform on AWS
+- Added `oidc.groups_jsonpath` to the Claude apps gateway, to read groups from the matching entries of a list of objects with a small subset of JSONPath (RFC 9535)
+- Added an API connectivity section to `claude doctor` that reports whether the API can be reached, with the HTTP status or the error, or says why it wasn't tested
+- Added a notice when tap-mode voice dictation stops by itself, after 15 seconds without recognized speech or at its 2-minute limit
+- Added `CLAUDE_CODE_DISABLE_RESPONSE_COMPRESSION` to ask for uncompressed model responses behind a proxy that cuts compressed ones off; not advised yet for self-hosted runners or Remote Control
+- Added `CLAUDE_GATEWAY_IDP_CONNECT_BY_HOSTNAME=1` for Claude apps gateways: with `oidc.use_proxy: true`, sign-in requests hand the proxy an `https` IdP's hostname even with `NO_PROXY` set
+- Added `gen_ai.usage.*`, `gen_ai.response.model` and `gen_ai.operation.name` to `claude_code.llm_request` trace spans; `gen_ai.usage.input_tokens` includes prompt cache tokens
+- Added `optionalDependencies` to plugin manifests: plugins that install with the plugin listing them and can be disabled or uninstalled on their own
+- Fixed MCP tool calls hanging for up to 30 minutes on some malformed replies from a local or WebSocket server
+- Fixed PushNotification telling a headless run, such as a scheduled one, that the terminal was active in its first minute, instead of saying whether a mobile push was requested
+- Fixed `/install-github-app` skipping the repository step after setup warnings when no repository was found, and Esc not going back from its workflow list and sign-in steps
+- Fixed one-line tool results cut with no ellipsis in narrow windows, Markdown stars in the Auto mode tab of /permissions, and a hook's reason to stop a forked skill showing twice
+- Fixed `/diff` hiding its key h
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
