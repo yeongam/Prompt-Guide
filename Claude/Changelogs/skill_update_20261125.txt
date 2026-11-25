@@ -1,0 +1,83 @@
+============================================================
+Claude Code Skills Update Report
+Date    : 2026-11-25 06:10 UTC
+Version : 2.1.331 → 2.1.332
+Source  : anthropics/claude-code (CHANGELOG.md)
+Snapshot: Claude/skills/2026-11-25/
+============================================================
+
+[ ★ 신규 감지 스킬 (10개) — 카탈로그 미등록 / Upstream New (Not Applied) ]
+  ? /autocompact  ← 수동 추가 필요
+  ? /context  ← 수동 추가 필요
+  ? /feedback  ← 수동 추가 필요
+  ? /install-github-app  ← 수동 추가 필요
+  ? /permissions  ← 수동 추가 필요
+  ? /reload-plugins  ← 수동 추가 필요
+  ? /rewind  ← 수동 추가 필요
+  ? /routines  ← 수동 추가 필요
+  ? /schedule  ← 수동 추가 필요
+  ? /stats  ← 수동 추가 필요
+
+[ 수정된 스킬 / Modified Skills ]
+  ~ /autocompact
+  ~ /clear
+  ~ /compact
+  ~ /context
+  ~ /feedback
+  ~ /install-github-app
+  ~ /model
+  ~ /permissions
+  ~ /reload-plugins
+  ~ /routines
+  ~ /stats
+  ~ /usage
+
+[ 삭제된 스킬 / Removed Skills ]
+  (없음)
+
+[ 최적화된 구조 / Structure ]
+  SKILLS_CATALOG.yaml 버전 필드 갱신
+  날짜별 스냅샷: Claude/skills/2026-11-25/
+  CLAUDE.md 컨텍스트 주입 파일 갱신
+  .claude/commands/ 커스텀 명령어 갱신
+
+[ 토큰 절감 관련 변경 사항 / Token Optimization ]
+  - Added a warning in VS Code and Desktop's Code tab when part of a session couldn't be saved, saying how to save it with `/compact`
+  - Fixed Read, @-mentions and compaction hanging on a named pipe that nothing writes to, such as a `.env` mounted by a locked secrets manager; the read now fails after 20 seconds
+  - Fixed turns ending in "Prompt is too long" after repeated auto-compaction failures when one more compaction at the context limit could have kept them going
+  - Fixed compaction failing when a summary kept running past the output limit: after three cut-off replies, the last try now asks for a shorter summary
+  - Fixed a freeze and context overflow when a hook blocks or fails during a turn, or after `/compact`, with a very large log; text over about 50,000 characters is now shortened
+
+[ 충돌 해결 내역 / Conflict Resolution ]
+  신규 항목 SKILLS_CATALOG.yaml에 통합; 기존 항목 유지
+
+[ Hooks ]
+  PreSkillShellCommand
+  PreToolUse
+
+[ Settings ]
+  (없음)
+
+----------------------------------------
+[ 원문 변경사항 / Raw Upstream Changes ]
+
+## 2.1.332
+
+- Added skills from MCP servers (beta). They show as `server:skill` in the `/` menu; other skills keep their names
+- Added a `PreSkillShellCommand` hook event that can refuse a skill or command's inline shell commands as it loads; on 2.1.331 and older, a settings file naming it opens a dialog at start
+- Added "Always deliver" to the prompt for held messages from other sessions
+- Added a footer line that stays while a flagged message has your session on a different model, until you pick one with `/model`
+- Added an OpenTelemetry `assistant_response` event for text Claude sends through SendUserMessage or Cowork's message tool, when response logging is on
+- Added a warning in VS Code and Desktop's Code tab when part of a session couldn't be saved, saying how to save it with `/compact`
+- Added a notice in VS Code and Desktop's Code tab when a resumed session's earlier messages weren't loaded, as the terminal already shows
+- Added your Cyber Verification Program access tier to the startup header, beside the model name when your tier applies to that model and you're signed in with a claude.ai account
+- Fixed `claude auth login` reporting `Login successful.` when a claude.ai login could not be saved: it now exits 1 and says what to check, such as a leftover lock file or a full disk
+- Fixed Read, @-mentions and compaction hanging on a named pipe that nothing writes to, such as a `.env` mounted by a locked secrets manager; the read now fails after 20 seconds
+- Fixed turns ending in "Prompt is too long" after repeated auto-compaction failures when one more compaction at the context limit could have kept them going
+- Fixed compaction failing when a summary kept running past the output limit: after three cut-off replies, the last try now asks for a shorter summary
+- Fixed a freeze when a permission rule or hook condition with several wildcards was checked against a long command
+- Fixed freezes and runaway memory use in most cases while a hook prints output without e
+
+============================================================
+[적용 상태] SKILLS_CATALOG.yaml / CLAUDE.md / .claude/commands/ 최신화 완료
+[Status]   All targets updated → yeongam/Prompt-Guide
