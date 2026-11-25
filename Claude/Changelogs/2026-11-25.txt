@@ -1,0 +1,61 @@
+Prompt-Guide Claude Skills Changelog - 2026-11-25
+
+Snapshot : Claude/skills/2026-11-25/skills
+Previous : Claude/skills/2026-05-06/skills (v2.1.129)
+Source   : anthropics/claude-code@4cc5e8b (CHANGELOG 2.1.332, marketplace.json)
+Version  : 2.1.129 -> 2.1.332
+
+[추가된 스킬]
+- 로컬 SKILL.md 7종 (코딩/프로그래밍/문서): code-review, feature-dev, commit-pr,
+  claude-api, docs-maintenance, hooks-config, long-tasks
+- 카탈로그 신규 명령: /code-review, /goal, /schedule, /tasks, /workflows(ultracode),
+  /cd, /btw, /diff, /config key=value, /advisor, /fast, /skills, /reload-skills,
+  /skill-doctor, /plugin, /reload-plugins, /mcp reconnect all, /permissions,
+  /auto-mode-setup, /doctor prompt-audit, /status, /output-style, /rewind,
+  /resume, /teleport, /dataviz, /usage-credits
+- 공식 플러그인 섹션 신설 (11종, claude-plugins-official)
+- 훅: SessionStart, UserPromptSubmit, PermissionRequest, PostToolBatch,
+  PreSkillShellCommand, Pre/PostModelSwitch, PostCompact, SubagentStart,
+  WorktreeRemove, DirectoryAdded, FileChanged/CwdChanged, ConfigChange,
+  MessageDisplay, SessionEnd
+- 설정: permissions.denyInsteadOfPrompting, autoMode.classifyAllShell,
+  maxEffortLevel, fallbackModel, modelPicker, worktree.baseRef,
+  workflowSizeGuideline, sandbox.*, attribution.sessionUrl, feedbackDrafts
+- 환경변수: ANTHROPIC_DEFAULT_MODEL, CLAUDE_CODE_DISABLE_ADVISOR_TOOL,
+  CLAUDE_CODE_MAX_OUTPUT_TOKENS, CLAUDE_CODE_GATEWAY_MODEL_DISCOVERY_TIMEOUT_MS
+
+[수정된 스킬]
+- /review -> /code-review 별칭으로 통합 (effort 레벨, --comment/--fix)
+- /simplify: 버그 제외, 정리(재사용/단순화/효율) 전용으로 역할 축소
+- /claude-api: upgrade, api-version, cost/latency-optimize, managed-agents-* 하위명령
+- /loop: 간격 생략 시 self-paced
+- /usage: Loops 분석·경고 추가, /cost는 prompt-cache 상세
+- /tui: classic|fullscreen 명칭
+- 모델: opus-4-7/sonnet-4-6/haiku-4-5 -> fable-5-2/opus-5-5/sonnet-5-5/haiku-5-5
+
+[삭제된 스킬]
+- /ultraplan (업스트림 기능 제거)
+- /powerup, /team-onboarding, /color 상세 항목 (표시용; /theme 등과 한 줄로 병합)
+- 설정 subagentStatusLine (업스트림 제거)
+- 참고: /agents 마법사, TaskOutput 도구, 200 서브에이전트 상한 업스트림 제거 기록
+
+[최적화된 구조]
+- 날짜 규칙 적용: Claude/skills/YYYY-MM-DD/skills
+- 기존 루트 SKILLS_CATALOG.yaml/.version -> 2026-05-06/skills 로 이동(보존)
+- 카탈로그: 항목당 cmd/trigger/desc 3줄 -> "cmd: desc" 1줄
+- 상세 절차는 각 */SKILL.md 로 분리 (.claude/skills/ 에 바로 복사 가능)
+- scripts/update_skills.py: 최신 날짜 스냅샷 자동 탐색, 로그는 Claude/Changelogs/YYYY-MM-DD.txt
+- scripts/sync_changelogs.sh: Claude/Changelogs 경로로 수정
+
+[토큰 절감 관련 변경 사항]
+- 카탈로그 9,230B -> 6,911B (-25%) 이면서 항목 수 약 2.3배 (명령 18 -> 33, 훅 9 -> 19)
+- SKILL.md 7종 평균 ~510B, 본문 4~6줄, 설명은 트리거 1줄
+- 중복 설명(훅 can_block/use/added 필드, 버전 태그) 제거 -> !B 마커·+/- 접두어로 축약
+- 업스트림 원문 복사 대신 커밋 해시만 기록
+
+[충돌 해결 내역]
+- /review vs /code-review: 별칭 관계로 단일 항목 통합
+- /simplify vs /code-review: 버그=code-review, 정리=simplify 로 역할 분리
+- code-review 내장 명령 vs code-review 플러그인: 로컬 SKILL.md 에서 둘 다 경로로 안내
+- 기존 스냅샷 덮어쓰기 없음; 신규 날짜 디렉토리에만 기록
+- 스크립트 경로 변경은 구 파일명(SKILLS_CATALOG.yaml) 폴백 유지로 하위호환

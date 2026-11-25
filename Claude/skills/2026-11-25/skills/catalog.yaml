@@ -1,0 +1,113 @@
+# Claude Code Skills Catalog (compact)
+# Source: anthropics/claude-code@4cc5e8b CHANGELOG + .claude-plugin/marketplace.json
+# Rule: Claude/skills/YYYY-MM-DD/skills ; one line per entry ; details live in */SKILL.md
+version: 2.1.332
+updated: 2026-11-25
+prev: 2026-05-06 (2.1.129)
+
+# ─── LOCAL SKILLS (this dir; copy to .claude/skills/) ─────────────────────────
+local: [code-review, feature-dev, commit-pr, claude-api, docs-maintenance, hooks-config, long-tasks]
+
+# ─── BUILT-IN COMMANDS  cmd: desc ─────────────────────────────────────────────
+commands:
+  "/init": "Generate CLAUDE.md (AGENTS.md read when no CLAUDE.md)"
+  "/code-review [low..max] [pr#] [--comment|--fix]": "Correctness bugs + CLAUDE.md violations; /review = alias"
+  "/simplify": "Reuse/simplification/efficiency cleanups on changed code, then fix"
+  "/security-review": "Security audit of pending branch diff"
+  "/ultrareview [pr#]": "Billed multi-agent cloud review (also /code-review ultra)"
+  "/goal <condition>": "Keep working across turns until condition met"
+  "/loop [interval] [cmd]": "Recurring prompt; no interval = self-paced"
+  "/schedule": "Cloud scheduled task (survives container)"
+  "/tasks": "Background tasks, loops, goal, forks, finished subagents"
+  "/workflows": "Watch dynamic multi-agent workflows (trigger word: ultracode)"
+  "/cd <dir>": "Move session dir without breaking prompt cache"
+  "/add-dir <dir>": "Add working directory"
+  "/btw": "Side question; c copies answer"
+  "/diff": "Toggle uncommitted-changes panel (fullscreen)"
+  "/config [key=value]": "Settings panel or one-shot set; --help lists keys"
+  "/effort": "Effort slider (s = this session only)"
+  "/model | /fast | /advisor": "Model, fast mode, advisor model"
+  "/usage": "Tokens, cost, loops breakdown, warnings (/cost = prompt-cache detail)"
+  "/skills | /reload-skills | /skill-doctor": "List, rescan, prune unused skills by context cost"
+  "/plugin [list|install --marketplace] | /reload-plugins": "Plugins and mods"
+  "/mcp [reconnect all]": "MCP servers"
+  "/permissions": "Rules incl. auto mode tab"
+  "/auto-mode-setup": "Teach auto mode about your environment"
+  "/doctor [prompt-audit] | /checkup": "Diagnostics; audit CLAUDE.md/skills for stale prompting"
+  "/status": "Health, broken files, policy, sandbox"
+  "/output-style [name]": "List/switch output styles"
+  "/rewind | /undo": "Roll back (works across /clear)"
+  "/resume | /teleport": "Resume (incl. bg sessions), pull cloud session local"
+  "/tui [classic|fullscreen] | /focus | /theme | /color | /scroll-speed": "Display"
+  "/update-config | /keybindings-help | /fewer-permission-prompts": "Config helpers"
+  "/dataviz": "Chart/dashboard design guidance"
+  "/claude-api [sub]": "See claude-api/SKILL.md"
+  "/usage-credits": "Request higher limit (was /extra-usage)"
+
+# ─── OFFICIAL PLUGINS (claude-plugins-official, via marketplace) ──────────────
+plugins:
+  code-review: "Multi-agent PR review, confidence-scored"
+  pr-review-toolkit: "Agents for comments/tests/errors/types/quality"
+  feature-dev: "Explore -> architect -> implement -> review workflow"
+  commit-commands: "/commit, push, PR creation"
+  security-guidance: "Edit-time warnings + Stop-time diff review"
+  hookify: "Generate hooks from conversation patterns"
+  plugin-dev: "7 skills for building plugins/hooks/MCP"
+  agent-sdk-dev: "Claude Agent SDK kit"
+  frontend-design: "Production-grade UI generation"
+  ralph-loop: "Self-referential iterative loop"
+  "explanatory-output-style | learning-output-style": "Teaching styles"
+
+# ─── HOOKS  event: note (!B = can block) ─────────────────────────────────────
+hooks:
+  SessionStart: "resume gets staleness + re-cache cost"
+  UserPromptSubmit: "!B inspect/inject on prompt"
+  PreToolUse: "!B validate before tool"
+  PermissionRequest: "!B auto-allow/deny prompts"
+  PermissionDenied: "return {retry:true} to re-classify"
+  PostToolUse: "after tool (not for refused calls)"
+  PostToolBatch: "after a batch of tool calls"
+  PreSkillShellCommand: "!B refuse skill inline shell (2.1.332+)"
+  "PreModelSwitch / PostModelSwitch": "!B block/confirm/annotate switch"
+  "PreCompact / PostCompact": "!B guard compaction"
+  "SubagentStart / SubagentStop": "subagent lifecycle"
+  TaskCreated: "on TaskCreate"
+  "WorktreeCreate / WorktreeRemove": "http type returns worktreePath"
+  DirectoryAdded: "after /add-dir"
+  "FileChanged / CwdChanged": "watchPaths"
+  ConfigChange: "settings changed"
+  MessageDisplay: "transform/hide displayed text"
+  "Notification / Stop / SessionEnd": "lifecycle"
+  types: [command, mcp_tool, http]
+
+# ─── SETTINGS (new since 2.1.129 marked +) ────────────────────────────────────
+settings:
+  skillOverrides: "off | user-invocable-only | name-only"
+  disableSkillShellExecution: "bool"
+  "+permissions.denyInsteadOfPrompting": "deny instead of waiting on prompt"
+  "+autoMode.classifyAllShell": "classify every shell command"
+  "+maxEffortLevel": "cap effort (top-level or modelSettings)"
+  "+fallbackModel": "up to 3 fallbacks"
+  "+modelPicker": "curated /model list"
+  "+worktree.baseRef": "fresh | head"
+  "+workflowSizeGuideline": "small | medium | large"
+  +sandbox: "network.strictAllowlist, filesystem.disabled, credentials"
+  "+attribution.sessionUrl": "omit session link in commits/PRs"
+  "+feedbackDrafts": "SendFeedback tool on/off"
+  "-subagentStatusLine": "removed (ignored)"
+
+# ─── ENV ──────────────────────────────────────────────────────────────────────
+env:
+  ANTHROPIC_DEFAULT_MODEL: "start model (pick still overrides)"
+  CLAUDE_EFFORT: "effort in skill templates"
+  CLAUDE_CODE_NO_FLICKER: "=/tui fullscreen"
+  CLAUDE_CODE_DISABLE_ADVISOR_TOOL: "1 = off"
+  CLAUDE_CODE_MAX_OUTPUT_TOKENS: "output cap"
+  CLAUDE_CODE_GATEWAY_MODEL_DISCOVERY_TIMEOUT_MS: "default 3000"
+  "DISABLE_UPDATES / DISABLE_TELEMETRY": "1 = off"
+
+# ─── MODELS ───────────────────────────────────────────────────────────────────
+models: {fable: claude-fable-5-2, opus: claude-opus-5-5, sonnet: claude-sonnet-5-5, haiku: claude-haiku-5-5}
+
+# ─── REMOVED since 2.1.129 ────────────────────────────────────────────────────
+removed: [/ultraplan, /agents wizard, TaskOutput tool, 200-subagent cap, Task.mode param (ignored)]
