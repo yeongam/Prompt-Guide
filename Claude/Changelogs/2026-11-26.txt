@@ -1,0 +1,34 @@
+Prompt-Guide Claude Skills Changelog - 2026-11-26
+
+Snapshot : Claude/skills/2026-11-26/skills
+Previous : Claude/skills/2026-11-25/skills (v2.1.332)
+Source   : anthropics/claude-code@a3b7a20 (CHANGELOG 2.1.332, marketplace.json)
+Version  : 2.1.332 -> 2.1.332 (업스트림 버전 변동 없음)
+
+[요약]
+- 업스트림 CHANGELOG.md / marketplace.json: 4cc5e8b 대비 내용 변경 없음
+- 전일 누락 항목 1건 보강 + 경량화 2건
+
+[추가된 스킬]
+- 카탈로그: MCP 서버 제공 스킬(server:skill, beta, 2.1.332) 표기를 /skills 항목에 병합
+
+[수정된 스킬]
+- claude-api/SKILL.md: Rules 문구 축약
+- feature-dev/SKILL.md: Explore 단계 문구 축약
+- 그 외 5종(code-review, commit-pr, docs-maintenance, hooks-config, long-tasks) 변경 없음
+
+[삭제된 스킬]
+- 없음 (공식 플러그인 12종 유지, 업스트림 삭제 없음)
+
+[최적화된 구조]
+- 날짜 규칙 유지: Claude/skills/2026-11-26/skills (전일 스냅샷 보존)
+- 카탈로그 헤더: source 해시 갱신, prev 를 직전 스냅샷(2026-11-25)으로 연결
+- 별도 항목 신설 대신 기존 /skills 줄에 병합 (항목 수 유지)
+
+[토큰 절감 관련 변경 사항]
+- SKILL.md 7종 합계 3,574B -> 3,552B (-22B)
+- catalog.yaml 6,911B -> 6,944B (+33B, MCP 스킬 정보 추가분; 신규 줄 없이 흡수)
+
+[충돌 해결 내역]
+- 충돌 없음. MCP 스킬은 server:skill 접두로 로컬 스킬 이름과 분리되어 이름 충돌 불가
+- 기존 스냅샷 덮어쓰기 없음; scripts/update_skills.py 최신 날짜 자동 탐색으로 호환
