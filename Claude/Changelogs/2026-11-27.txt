@@ -1,0 +1,58 @@
+Prompt-Guide Claude Skills Changelog - 2026-11-27
+
+Version : 2.1.129 (2026-05-06) -> 2.1.332
+Snapshot: Claude/skills/2026-11-27/skills  (baseline: Claude/skills/2026-05-06/skills)
+Source  : anthropics/claude-code@102fafb0953d, anthropics/claude-plugins-official@0fbfda5a91f4
+
+[추가된 스킬]
+- 플러그인 스킬 11개 (<slug>/SKILL.md, .claude/skills/에 바로 복사해 사용 가능)
+  coding     : code-review, commit-workflow, security-scan, frontend-design
+  programming: feature-dev, code-modernization, mcp-server-dev, plugin-dev, agent-sdk-dev
+  docs       : claude-md-management, project-docs
+- 카탈로그 내장 명령 추가: /code-review(옵션 포함), /goal, /schedule, /tasks, /workflows, /diff,
+  /skills, /skill-doctor, /reload-skills, /reload-plugins, /plugin, /mcp, /permissions,
+  /auto-mode-setup, /dataviz, /model·/fast, /compact·/clear·/rewind, /doctor
+- 훅: DirectoryAdded, MessageDisplay, PreModelSwitch/PostModelSwitch, PreSkillShellCommand,
+  UserPromptSubmit, SessionStart, SessionEnd (목록 보강)
+- 설정: disableBundledSkills, permissions.denyInsteadOfPrompting, autoMode.classifyAllShell,
+  fallbackModel, maxEffortLevel, promptCacheTtl/subagentPromptCacheTtl, bashOutputMaxChars,
+  worktree.baseRef, attribution.sessionUrl, sandbox.credentials/strictAllowlist/filesystem.disabled
+- 환경변수: CLAUDE_CODE_DISABLE_BUNDLED_SKILLS, CLAUDE_CODE_MAX_OUTPUT_TOKENS
+
+[수정된 스킬]
+- /review -> /code-review 별칭으로 통합 ([level] [PR#] [--comment|--fix])
+- /loop: 인터벌 생략 시 자기 페이스 실행으로 설명 갱신
+- /usage: /cost 별칭 + /insights 병기
+- PostToolUse: continueOnBlock 옵션 반영
+- 모델: opus-4-7/sonnet-4-6/haiku-4-5 -> claude-opus-5-5 / claude-sonnet-5-5 / claude-haiku-5-5 / claude-fable-5-2
+
+[삭제된 스킬]
+- /ultraplan (2.1.222 공식 제거)
+- /agents 위저드 참조 (2.1.198 제거, .claude/agents/ 직접 편집)
+- 카탈로그 소형 항목 /undo·/color·/theme 개별 항목 -> /rewind·/tui 줄로 병합 (기능 유지)
+
+[최적화된 구조]
+- 루트 SKILLS_CATALOG.yaml, .version -> 날짜/skills 규칙으로 이동 (2026-05-06/skills 기준선 보존)
+- 신규 스냅샷 2026-11-27/skills: SKILLS_CATALOG.yaml(단일 인덱스) + <slug>/SKILL.md
+- 명령/훅 항목을 3줄 블록 -> 1줄 key: value 형식으로 변경
+- scripts/update_skills.py: 최신 날짜 스냅샷 자동 탐지, 새 버전 시 YYYY-MM-DD/skills 신규 생성(기존 덮어쓰기 없음),
+  로그를 Claude/Changelogs/YYYY-MM-DD.txt로 저장; .version 파일 대신 카탈로그 version 필드 사용
+- scripts/sync_changelogs.sh: Claude/Changelogs 경로, SYNC_BRANCH 환경변수 지원(기본값 유지)
+
+[토큰 절감 관련 변경 사항]
+- 원본 플러그인 문서 약 320KB -> SKILL.md 11개 합계 약 8.9KB (약 97% 축소)
+- 카탈로그 9.2KB -> 7.2KB (항목 수는 증가, 약 22% 축소)
+- 원문 복사 대신 출처 경로+커밋 해시만 기록; 상세는 SKILL.md에만 두고 카탈로그는 slug만 참조
+- 중복 플러그인(code-review+pr-review-toolkit+code-simplifier 등)을 하나의 스킬로 병합
+- 토큰 관련 설정(disableBundledSkills, skillOverrides, /skill-doctor) 카탈로그에 명시
+
+[충돌 해결 내역]
+- 플러그인 code-review vs 내장 /code-review: 내장 우선, 플러그인 절차는 대체 경로로 통합
+- 플러그인 claude-security vs 내장 /security-review: 별도 slug(security-scan)로 분리, diff 감사는 내장 우선
+- skill-creator / plugin-dev / hookify: 동일 영역 -> plugin-dev 하나로 통합
+- mcp-server-dev vs plugin-dev/mcp-integration: mcp-server-dev로 통합
+- 기존 2026-05-06 스냅샷은 수정 없이 보존; 스크립트 경로 변경으로 기존 일일 업데이트 동작 유지
+
+[요약]
+- skills: added=11(plugin) / builtin catalog added=19, modified=5, deleted=1(+1 removed ref)
+- hooks: added=7, modified=1 · settings: added=11 · env: added=2

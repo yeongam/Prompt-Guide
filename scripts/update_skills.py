@@ -8,13 +8,14 @@ import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+import shutil
 import urllib.request
 import urllib.error
 
 REPO_ROOT = Path(__file__).parent.parent
-CATALOG_FILE = REPO_ROOT / "Claude" / "skills" / "SKILLS_CATALOG.yaml"
-VERSION_FILE = REPO_ROOT / "Claude" / "skills" / ".version"
-CHANGELOGS_DIR = REPO_ROOT / "changelogs"
+SKILLS_ROOT = REPO_ROOT / "Claude" / "skills"  # layout: YYYY-MM-DD/skills/
+CHANGELOGS_DIR = REPO_ROOT / "Claude" / "Changelogs"
+TODAY = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 CHANGELOG_SRC = "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md"
 DESKTOP_LOG_DIR = Path(os.environ.get("DESKTOP_LOG_PATH", "/root/바탕화면/Claude-Text/Claude_skills"))
 
@@ -36,8 +37,18 @@ def parse_version(changelog: str) -> tuple[str, str]:
     return ver, changelog[start:end].strip()
 
 
+def latest_snapshot() -> Path | None:
+    dated = sorted(d for d in SKILLS_ROOT.glob("????-??-??") if (d / "skills").is_dir())
+    return dated[-1] / "skills" if dated else None
+
+
 def current_version() -> str:
-    return VERSION_FILE.read_text().strip() if VERSION_FILE.exists() else ""
+    snap = latest_snapshot()
+    cat = snap / "SKILLS_CATALOG.yaml" if snap else None
+    if not cat or not cat.exists():
+        return ""
+    m = re.search(r"^version:\s*(\S+)", cat.read_text(), re.MULTILINE)
+    return m.group(1) if m else ""
 
 
 def extract_new_items(section: str) -> dict:
@@ -83,19 +94,25 @@ def build_changelog_entry(ver: str, prev: str, section: str, items: dict) -> str
 
 
 def update_catalog_version_field(ver: str) -> None:
-    if not CATALOG_FILE.exists():
+    """Copy latest snapshot to today's YYYY-MM-DD/skills (never overwrite old ones), bump version."""
+    src = latest_snapshot()
+    dst = SKILLS_ROOT / TODAY / "skills"
+    if src and src != dst:
+        shutil.copytree(src, dst, dirs_exist_ok=True)
+    cat = dst / "SKILLS_CATALOG.yaml"
+    if not cat.exists():
         return
-    text = CATALOG_FILE.read_text()
+    text = cat.read_text()
     text = re.sub(r"^version:.*$", f"version: {ver}", text, flags=re.MULTILINE)
     text = re.sub(r"^updated:.*$", f"updated: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}", text, flags=re.MULTILINE)
-    CATALOG_FILE.write_text(text)
+    cat.write_text(text)
 
 
 def write_log(path: Path, content: str, date_str: str) -> None:
     try:
         path.mkdir(parents=True, exist_ok=True)
-        (path / f"skill_update_{date_str}.txt").write_text(content, encoding="utf-8")
-        print(f"Log written: {path}/skill_update_{date_str}.txt")
+        (path / f"{date_str}.txt").write_text(content, encoding="utf-8")
+        print(f"Log written: {path}/{date_str}.txt")
     except OSError as e:
         print(f"Warning: {e}", file=sys.stderr)
 
@@ -121,13 +138,12 @@ def main() -> int:
         return 0
 
     items = extract_new_items(section)
-    date_str = datetime.now(timezone.utc).strftime("%Y%m%d")
+    date_str = TODAY
     entry = build_changelog_entry(ver, prev, section, items)
 
     write_log(CHANGELOGS_DIR, entry, date_str)
     write_log(DESKTOP_LOG_DIR, entry, date_str)
 
-    VERSION_FILE.write_text(ver)
     update_catalog_version_field(ver)
 
     print(f"Updated: {prev or 'none'} -> {ver}")

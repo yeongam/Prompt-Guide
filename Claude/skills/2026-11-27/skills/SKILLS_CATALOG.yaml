@@ -1,0 +1,120 @@
+# Claude Code Skills Catalog — single index; detail lives in <slug>/SKILL.md
+# Src: anthropics/claude-code@102fafb0953d · anthropics/claude-plugins-official@0fbfda5a91f4
+# Rule: Claude/skills/YYYY-MM-DD/skills · copy any <slug>/ dir into .claude/skills/ to use
+version: 2.1.332
+updated: 2026-11-27
+prev: 2026-05-06 (2.1.129)
+
+# ─── BUILT-IN COMMANDS: cmd: desc ─────────────────────────────────────────────
+builtin:
+  /init: Generate CLAUDE.md (architecture, conventions, commands)
+  /code-review: "[level] [PR#|branch] [--comment|--fix] [--max-findings n]; correctness review (alias /review)"
+  /security-review: Security audit of pending branch diff
+  /simplify: Reuse/quality/efficiency cleanup of changed code, then apply
+  /ultrareview: "[PR#] multi-agent cloud review (billed)"
+  /goal: Set completion condition; keeps working across turns until met
+  /loop: "[interval] [/cmd] recurring run; no interval = self-paced"
+  /schedule: Create cloud scheduled task (routine)
+  /tasks: List/stop background tasks, loops, goal, forks
+  /workflows: Running multi-agent workflows (agent map)
+  /diff: Uncommitted changes pane beside transcript
+  /skills: Installed skills list
+  /skill-doctor: Unused skills + their context cost → prune
+  /reload-skills: Re-scan skill dirs without restart
+  /reload-plugins: Reload plugins
+  /plugin: Install/manage plugins & marketplaces
+  /mcp: MCP servers status/auth
+  /permissions: Allow/deny rules; Auto mode classifier rules tab
+  /auto-mode-setup: Teach auto mode your environment from project + sessions
+  /fewer-permission-prompts: Transcript scan → allowlist in .claude/settings.json
+  /update-config: settings.json hooks/permissions/env
+  /session-start-hook: SessionStart hook for web sessions (tests/linters)
+  /claude-api: Claude API/SDK reference; model migration
+  /dataviz: Chart/dashboard design + palette validator
+  /model: Pick model; /fast toggles fast mode; /effort sets effort
+  /usage: Token/cost stats (/cost alias); /insights usage analysis
+  /compact: Summarize context; /clear resets; /rewind (/undo) reverts
+  /focus: Prompt + 1-line summary + response view
+  /tui: Flicker-free fullscreen; /theme /color /scroll-speed cosmetics
+  /keybindings-help: Edit ~/.claude/keybindings.json
+  /team-onboarding: Teammate guide from usage history
+  /powerup: Interactive feature lessons
+  /doctor: Diagnose install/config
+
+# ─── PLUGIN SKILLS (coding · programming · docs): slug: [cat, src plugin(s)] ──
+skills:
+  code-review: [coding, code-review+pr-review-toolkit+code-simplifier]
+  commit-workflow: [coding, commit-commands]
+  security-scan: [coding, claude-security+security-guidance]
+  frontend-design: [coding, frontend-design]
+  feature-dev: [programming, feature-dev]
+  code-modernization: [programming, code-modernization]
+  mcp-server-dev: [programming, mcp-server-dev+plugin-dev/mcp-integration]
+  plugin-dev: [programming, plugin-dev+skill-creator+hookify]
+  agent-sdk-dev: [programming, agent-sdk-dev]
+  claude-md-management: [docs, claude-md-management+claude-code-setup]
+  project-docs: [docs, project-artifact+session-report+playground]
+# LSP plugins (no skill body; install via /plugin): clangd csharp gopls jdtls kotlin lua php pyright ruby rust-analyzer swift typescript
+
+# ─── HOOKS: event: [can_block, note] ──────────────────────────────────────────
+# Block: exit 2 | {decision:"block",reason}; types: shell|mcp_tool|http|prompt; `if` = permission-rule condition
+hooks:
+  PreToolUse: [y, validate/inject before tool]
+  PostToolUse: [n, "continueOnBlock:true feeds reason back and continues"]
+  UserPromptSubmit: [y, inject context/validate prompt]
+  Stop: [y, post-turn]
+  SubagentStop: [y, subagent result]
+  SessionStart: [n, resume hooks get staleness + re-cache cost]
+  SessionEnd: [n, cleanup]
+  PreCompact: [y, guard compaction]
+  Notification: [n, forward alerts]
+  TaskCreated: [n, track TaskCreate]
+  WorktreeCreate: [n, "http → hookSpecificOutput.worktreePath"]
+  PermissionDenied: [n, "{retry:true} re-runs classifier"]
+  DirectoryAdded: [n, after /add-dir (2.1.219)]
+  MessageDisplay: [n, transform/hide displayed text (2.1.152)]
+  PreModelSwitch: [y, block/confirm model switch (2.1.251); PostModelSwitch after]
+  PreSkillShellCommand: [y, refuse skill inline shell (2.1.332)]
+
+# ─── SETTINGS (dev-relevant) ──────────────────────────────────────────────────
+settings:
+  skillOverrides: "off|user-invocable-only|name-only — per-skill exposure"
+  disableBundledSkills: hide bundled skills/commands from model (token saver)
+  disableSkillShellExecution: block skill inline shell
+  permissions.denyInsteadOfPrompting: deny instead of prompt; turn continues
+  autoMode.classifyAllShell: route all shell through auto-mode classifier
+  fallbackModel: up to 3 fallback models
+  maxEffortLevel: cap effort (top-level or modelSettings)
+  promptCacheTtl/subagentPromptCacheTtl: 1h main / 5m subagents
+  bashOutputMaxChars: inline output cap before file spill (≤128K)
+  worktree.baseRef: "fresh|head"
+  attribution.sessionUrl: omit session link in commits/PRs
+  sandbox.credentials: block secret reads in sandbox
+  sandbox.network.strictAllowlist: deny non-allowlisted hosts silently
+  sandbox.network.deniedDomains: domain denylist
+  sandbox.filesystem.disabled: network-only sandbox
+  prUrlTemplate: custom PR footer badge URL
+  showThinkingSummaries: thinking summaries (default false)
+
+# ─── ENV ──────────────────────────────────────────────────────────────────────
+env:
+  CLAUDE_EFFORT: effort level; usable as ${CLAUDE_EFFORT} in skills
+  CLAUDE_CODE_DISABLE_BUNDLED_SKILLS: "1 = same as disableBundledSkills"
+  CLAUDE_CODE_MAX_OUTPUT_TOKENS: output cap (set to gateway limit)
+  CLAUDE_CODE_NO_FLICKER: "1 = /tui"
+  CLAUDE_CODE_USE_POWERSHELL_TOOL: "1 = PowerShell tool (Windows)"
+  CLAUDE_STREAM_IDLE_TIMEOUT_MS: stream idle watchdog ms
+  OTEL_LOG_RAW_API_BODIES: "1 = raw API bodies as OTEL events"
+  DISABLE_UPDATES: "1 = block all updates"
+  CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: "1 = gateway /v1/models"
+
+# ─── MODELS ───────────────────────────────────────────────────────────────────
+models:
+  opus: claude-opus-5-5     # default Opus, 1M ctx
+  sonnet: claude-sonnet-5-5
+  haiku: claude-haiku-5-5
+  fable: claude-fable-5-2   # 1M ctx
+
+# ─── REMOVED since 2.1.129 ────────────────────────────────────────────────────
+# /ultraplan (2.1.222) · /agents wizard (2.1.198; edit .claude/agents/) · TaskOutput tool (2.1.277)
+# subagentStatusLine setting (2.1.323) · Task tool `mode` param deprecated (2.1.212)
